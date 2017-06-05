@@ -1,0 +1,5 @@
+
+-----------org.eclipse.core.resources.prefs
+eclipse.preferences.version=1
+encoding//src/apache_httpclient/TestHttpClient.java=UTF-8
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<students>
+	<student id="1" name="lisi">
+		<birthday>1985-11-22T06:20:15</birthday>
+		<teacher>张老师</teacher>
+	</student>
+	<student id="2" name="小王">
+		<birthday>1995-11-22T06:20:15</birthday>
+		<teacher>孙老师</teacher>
+	</student>
+</students>

@@ -1,0 +1,17 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<ns2:execPay xmlns:ns2="http://zhaojin.org/">
+			<arg0>
+				<extFeilds>{"DEV_IP":"127.0.0.1"}</extFeilds>
+				<paymentMode>8192</paymentMode>
+				<tranDetails>
+					<currencyCode>CNY</currencyCode>
+					<payAcctId>FP900000000009000000000000000253</payAcctId> <!--  agreeId -->
+					<payAmt>1000000</payAmt>
+					<payType>13</payType> <!-- 协议 -->
+				</tranDetails>
+				<transId>${transId}</transId>
+			</arg0>
+		</ns2:execPay>
+	</soap:Body>
+</soap:Envelope>

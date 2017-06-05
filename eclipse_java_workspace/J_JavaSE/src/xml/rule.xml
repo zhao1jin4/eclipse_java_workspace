@@ -1,0 +1,35 @@
+<root>
+<!-- 
+<?xml version="1.0" encoding="UTF-8"?>
+ -->
+
+	<rule>
+		<Transform_Rule>Rule.xml</Transform_Rule>
+		<FieldList>
+			<Field>r.*</Field>
+			<Field>u.I_USER_TYPE</Field>
+		</FieldList>
+		<TableList>
+			<Table alias='r'>eximtrx3.com_report_maintain</Table>
+			<Table alias='u'>eximuser3.SEC_USER_INFO</Table>
+		</TableList>
+		<Clause>
+			<SQL Type="FLD">r.C_OPERATOR_ID</SQL>
+			<SQL Type="OP"> = </SQL>
+			<SQL Type='Value' ST='V' RULE=''>zhaojin</SQL>
+
+			<SQL Type="OP"> AND </SQL>
+
+			<SQL Type="FLD">r.C_OPERATOR_ID</SQL>
+			<SQL Type="OP"> = </SQL>
+			<SQL Type='Value' ST='F' RULE=''>u.C_USER_ID</SQL>
+
+		</Clause>
+	</rule>
+
+<!--
+
+select r.*,u.I_USER_TYPE from eximtrx3.com_report_maintain r,eximuser3.SEC_USER_INFO u where r.C_OPERATOR_ID = 'zhaojin'  AND  r.C_OPERATOR_ID = u.C_USER_ID
+-->
+
+</root>

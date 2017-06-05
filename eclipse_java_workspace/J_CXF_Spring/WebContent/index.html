@@ -1,0 +1,67 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+ 
+	<a href="http://127.0.0.1:8080/J_CXF_Spring/ws"> 列出所有的 SOAP  web.xml配置 的 </a>
+	
+	<br/>
+	
+	webservice 和 resetful 在web.xml中 好像只可运行一个
+	<br/>
+	
+	spring CXF Soap Webservice 做 client   时 只有一种可以传对象，另两种不能传对象???? <br/>
+<hr/>
+	
+----------------------------------------------resetful	<br/>
+---------本地服务 <br/>  demo.jaxrs.server   Firefox Poster DELETE 请求   <br/>
+
+<a href="http://127.0.0.1:9000/customerservice/customers/123"> getCustomerId </a>  (测试加    "Accept"    text/xml,application/xml)  <br/>
+<a href="http://localhost:9000/customerservice/orders/223/products/323"> getOrder -> get Product </a>  <br/>
+<a href="http://localhost:9000/customerservice/getCustomerById/123">getCustomerById返回response </a>  <br/>
+
+ http://localhost:9000/customerservice/showAccept  <br/>
+
+ 
+---------Web 服务 <br/>
+<a href="http://127.0.0.1:8080/J_CXF_Spring/rs/config/hello/echo/a"> hello 传参数a </a>  <br/>
+
+---------以下未成功
+<a href="http://127.0.0.1:8080/J_CXF_Spring/rs/config/hello/jsonBean"> jsonBean   </a>  <br/>
+<a href="http://127.0.0.1:8080/J_CXF_Spring/rs/config/hello/changeXMLResponse"> changeXMLResponse   </a>  <br/>
+<a href="http://127.0.0.1:8080/J_CXF_Spring/rs/config/hello/changeXMLObject"> changeXMLObject   </a>  <br/>
+ 
+ 
+jax_rs，jax_rs_spring包都没有测试
+
+<form  method="POST" action="chat">
+    Enter message: <input type="text" name="messageText" /> <br/>
+    <button type="submit" >POST 提交  根</button>
+</form>
+
+<br/>
+
+<a href="chat/array">查  array </a> <br/>
+
+ 
+
+<a href="chat/queue">异步 查消息 </a> <br/>
+
+
+<a href="chat/structure">查JSON </a> <br/>
+
+
+
+
+<a href="chat/generator">查 generator </a> <br/>
+
+<a href="chat/object">查 object </a> <br/>
+
+<a href="chat/parser">查parser </a> <br/>
+	
+	
+</body>
+</html>

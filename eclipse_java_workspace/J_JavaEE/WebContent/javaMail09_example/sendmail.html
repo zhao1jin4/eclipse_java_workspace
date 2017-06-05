@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>发送e-mail的表单</title>
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<body bgcolor="#CFF1E1">
+<center><h2>
+写信
+</h2></center>
+<form action="sendmail.jsp" method="post">
+<table align="center"> 
+  <tr> 
+    <td> 
+      收件人地址:<br><input name="to" size="30"> 
+    </td> 
+  </tr> 
+  <tr> 
+    <td> 
+      主题:<br><input name="subject" size="60"> 
+    </td> 
+  </tr> 
+  <tr> 
+    <td> 
+      <p>内容:<br>
+        <textarea name="text" rows=8 cols=60></textarea>
+      </p> 
+    </td> 
+  </tr> 
+  <tr>
+    <td>
+       附件：<br>
+       <input type="file" name="attachment" size="25">
+    </td>
+  </tr>
+</table> 
+<center><p><br>
+  <input type="submit" value="发送">&nbsp&nbsp&nbsp&nbsp&nbsp;
+  <input type="reset" value="重写"> 
+</p></center>  
+</form> 
+</body>
+</html>

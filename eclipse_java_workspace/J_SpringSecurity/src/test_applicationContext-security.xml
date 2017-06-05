@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns:b="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/security 
+	http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<ldap-server/> <!-- 为测试用途,在应用内部启动一个内嵌LDAP服务器,比配置一个 Apache Directory Server 要简单得多 -->
+
+
+	<global-method-security secured-annotations="enabled" jsr250-annotations="enabled" access-decision-manager-ref="">
+			<protect-pointcut access="ROLE" expression=""/>
+	</global-method-security>
+	<http pattern="/nodebug.jsp" security="none" access-denied-page=""></http>
+	<http auto-config="true" access-decision-manager-ref="" >
+		<intercept-url pattern="/css/**" access="ROLE" method="GET" requires-channel="http" filters="none"/>
+		<intercept-url pattern="/" access="" method="GET" requires-channel="https" />
+		
+		<session-management  session-authentication-error-url="" invalid-session-url="/noSession.html" session-fixation-protection="migrateSession" >
+			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true"  />
+		</session-management>
+		<form-login default-target-url="/home.html" always-use-default-target="true" authentication-failure-url="/loginFail.html" />
+		<remember-me/>
+		<port-mappings>
+			<port-mapping http="8080" https="8081"/>
+		</port-mappings>
+		<openid-login>
+			<attribute-exchange>
+				<openid-attribute name="" type="" required="true" />
+			</attribute-exchange>
+		</openid-login>		
+    	<custom-filter ref="" after="LAST" />
+    <form-login />
+    <http-basic />
+    <logout delete-cookies="" />
+
+	</http>
+	
+	<authentication-manager>
+		<authentication-provider >
+			<password-encoder ref="aa" hash="sha"></password-encoder>
+			<user-service >
+				<user name="lisi" authorities="test" password="123"/>
+				<user name="zhaojin" authorities="dev" password="123"/>
+			</user-service>
+		</authentication-provider>
+		
+		<authentication-provider user-service-ref="myUserDetail">
+			<jdbc-user-service data-source-ref=""/>
+		</authentication-provider>
+	</authentication-manager>
+
+
+	<b:bean id="myUserDetail" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+		<b:property  name="dataSource" ref="" />
+	</b:bean>
+	
+	
+	<b:bean id="myfilterChainProxy" class="org.springframework.security.util.FilterChjainProxy">
+	     <filter-chain-map request-matcher="ant" path-type="ant">
+	     	<filter-chain filters="" pattern=""/>
+	     </filter-chain-map>
+	     <!-- 
+	     <security:filter-chain-map request-matcher="ant">
+	         <security:filter-chain pattern="/do/not/filter*" filters="none"/>
+	         <security:filter-chain pattern="/**" filters="filter1,filter2,filter3"/>
+	     </security:filter-chain-map>
+	      -->
+ 	</b:bean>
+ 
+</b:beans>

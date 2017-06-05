@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="GB18030"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="my.org">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <ns:respone1>
+      <ResponseHeader>
+      </ResponseHeader>
+      <ResponseBody/>
+      <Fault>
+        <FaultCode>100</FaultCode>
+        <FaultString>服务端内部请求失败</FaultString>
+      </Fault>
+    </ns:respone1>
+  </soapenv:Body>
+</soapenv:Envelope>

@@ -1,0 +1,74 @@
+ 
+============Spring 4.0.6
+aopalliance-1.0.jar
+
+spring-aop-4.0.6.RELEASE.jar
+spring-beans-4.0.6.RELEASE.jar
+spring-context-4.0.6.RELEASE.jar
+spring-context-support-4.0.6.RELEASE.jar
+spring-core-4.0.6.RELEASE.jar
+spring-expression-4.0.6.RELEASE.jar
+spring-test-4.0.6.RELEASE.jar
+spring-tx-4.0.6.RELEASE.jar
+spring-web-4.0.6.RELEASE.jar
+spring-webmvc-4.0.6.RELEASE.jar
+spring-websocket-4.0.6.RELEASE.jar
+spring-hateoas-0.16.0.RELEASE.jar
+hessian-4.0.37.jar
+
+-------Spring MVC JSON
+	jackson-annotations-2.2.3.jar
+	jackson-core-2.2.3.jar
+	jackson-databind-2.2.3.jar
+	
+commons-fileupload-1.2.2.jar
+commons-logging-1.1.1.jar
+commons-lang3-3.1.jar
+commons-beanutils-1.8.3.jar
+log4j-1.2.15.jar
+dom4j-1.6.1.jar
+
+jstl.jar
+standard.jar
+commons-io-2.0.1.jar
+
+freemarker-2.3.18.jar
+
+---JSR-349 - Bean Validation 1.1
+validation-api-1.1.0.Final.jar
+hibernate-validator-5.1.1.Final.jar
+classmate-1.0.0.jar
+jboss-logging-3.1.1.GA.jar
+ 
+slf4j-api-1.5.11.jar
+slf4j-log4j12-1.5.11.jar
+
+
+commons-beanutils-1.8.3.jar
+commons-lang3-3.1.jar
+
+c3p0-0.9.5.2.jar
+mchange-commons-java-0.2.11.jar
+---------------
+spring_freemarker.xml  ,spring_jstl.xml　,　spring_annotaion.xml，　spring_jstl_mapping.xml同时就一个配置上
+
+新的@Contoller和@RequestMapping注解支持类 
+处理器映射RequestMappingHandlerMapping 和 处理器适配器RequestMappingHandlerAdapter组合
+来代替Spring2.5开始的处理器映射 DefaultAnnotationHandlerMapping 和处理器适配器 AnnotationMethodHandlerAdapter 
+
+
+ JSP annotation 的@Validate无效   RequestMappingHandlerAdapter 这个配置影响　?????
+
+Validtor 验证userid_password
+
+<spring:hasBindErrors />怎么用???
+不使用ContexLoaderListener Spring MVC 的代码国际化 ???
+
+
+MultiActionController 的Session不能得到???
+
+ControllerClassNameHandlerMapping 对 ParameterMethodNameResolver 不行的???????
+ 
+httpEntity ??
+
+

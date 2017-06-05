@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+	<!-- 这个文件是不需要的 <%@taglib tagdir 会自动生成这种文件 -->
+	<tlib-version>1.0</tlib-version>
+	<short-name>a-b</short-name><!-- /WEB-INF/tags/a/b会生成a-b ,而a-b也是a-b -->
+	<tag-file>
+			<name>hello</name>
+			<path>/WEB-INF/tags/a/b/hello.tag</path>
+	</tag-file>
+</taglib>

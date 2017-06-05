@@ -1,0 +1,30 @@
+mybatis-3.3.0.jar
+cglib-nodep-2.1_3.jar
+
+mysql-connector-java-5.1.21-bin.jar
+slf4j-api-1.7.5.jar
+-------Spring 集成
+ spring-aop-4.1.2.RELEASE.jar
+ spring-aspects-4.1.2.RELEASE.jar
+ spring-beans-4.1.2.RELEASE.jar
+ spring-context-4.1.2.RELEASE.jar
+ spring-context-support-4.1.2.RELEASE.jar
+ spring-core-4.1.2.RELEASE.jar
+ spring-expression-4.1.2.RELEASE.jar
+ spring-jdbc-4.1.2.RELEASE.jar
+ spring-tx-4.1.2.RELEASE.jar
+ 
+ spring-batch-core-3.0.5.RELEASE.jar
+ spring-batch-infrastructure-3.0.5.RELEASE.jar
+ 
+commons-logging-1.1.1.jar
+log4j-1.2.15.jar
+
+dom4j-1.6.1.jar
+
+c3p0-0.9.1.jar
+aopalliance-1.0.jar
+
+mybatis-spring-1.1.0.jar
+
+mybatis-ehcache-1.0.0.jar    未测试出效果 ???

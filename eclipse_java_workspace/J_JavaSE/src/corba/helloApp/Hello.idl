@@ -1,0 +1,15 @@
+module corba
+{
+module helloApp
+{
+  interface Hello
+  {
+    string sayHello();
+    oneway void shutdown();
+  };
+ }; 
+};
+//idlj -fall Hello.idl
+//idlj -fallTIE Hello.idl 如果使用这个,会多生成会一个HelloPOATie.java文件,只在写Server类时有点不一样
+
+

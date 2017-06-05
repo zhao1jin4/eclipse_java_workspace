@@ -1,0 +1,84 @@
+package my_code.samples 
+ 
+import my_code.Message;
+ 
+
+/*  
+rule "update"
+    when
+        m : Message( status == Message.HELLO, myMessage : message ) //myMessage是调用了getMessage()的返回结果
+    then
+        System.out.println( myMessage ); 
+        m.setStatus( Message.GOODBYE );
+        modify(m){
+			 setMessage("Goodbye Drools");//书写语法
+		}
+        
+         update( m );
+         update(drools.getWorkingMemory().getFactHandleByIdentity(m), m);  //作用不循环吗????
+        
+		// insert( m ); //什么作用呢？？？
+        System.out.println("drools.getClass()="+drools.getClass().getName()); //org.drools.core.base.DefaultKnowledgeHelper
+        System.out.println("message = "+ m.getMessage());
+        System.out.println("status = "+ m.getStatus());
+         return; //可有可无
+end
+ */
+ 
+
+/*
+rule "retract 回收fact"
+    when
+        m : Message( status == Message.HELLO, myMessage : message )
+    then
+        System.out.println( myMessage );
+        m.setMessage( "Goodbye Drools" );
+        m.setStatus( Message.GOODBYE );
+        retract(m); //【retract的作用是回收该fact，后面的类型为Message的 rule不会再 判断 对象】
+end
+*/
+ 
+ 
+/////////////////////////下面规则用来做同样的判断条件，如何执行  start/////////////////////////
+
+
+
+
+rule "rule1"
+    when
+        m : Message( get("key") == Message.HELLO, myMessage : message ) //get是Messga类的方法名,可直接调
+    then
+        System.out.println( "RuleName= " + kcontext.getRule().getName() );
+        m.set("key",0);//set是Messga类的方法名
+       
+end
+
+rule "rule2"
+    when
+        m : Message( status == Message.HELLO, myMessage : message )
+    then
+        System.out.println( "RuleName= " + kcontext.getRule().getName() );
+         retract(m); //retract后，后面的rule3，rule4不再做判断,是根据类型判断,而不是名字m
+end
+
+rule "rule3"
+    when
+        m1 : Message( status == Message.HELLO, myMessage : message )
+    then
+        System.out.println( "RuleName= " + kcontext.getRule().getName() );
+end
+
+
+
+
+rule "rule4"
+    when
+        m2 : Message( status == Message.HELLO, myMessage : message )
+    then
+        System.out.println( "RuleName= " + kcontext.getRule().getName() );
+end
+/*
+
+*/
+
+/////////////////////////下面规则用来做同样的判断条件，如何执行  end/////////////////////////

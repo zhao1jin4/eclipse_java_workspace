@@ -1,0 +1,15 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<name xmlns="http://zhaojin.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://zhaojin.org/substitude  substitude.xsd">
+	<!-- {namespace} {location} -->
+	<customer>
+		<name>John Smith</name>
+	</customer>
+	
+	<!-- 
+	或类似这样：
+	<kunde>
+		<navn>John Smith</navn>
+	</kunde>
+	 -->
+</name>

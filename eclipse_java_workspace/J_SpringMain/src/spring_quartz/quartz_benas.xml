@@ -1,0 +1,109 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:tool="http://www.springframework.org/schema/tool"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:lang="http://www.springframework.org/schema/lang"
+    xmlns:jms="http://www.springframework.org/schema/jms"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:cache="http://www.springframework.org/schema/cache"
+    xmlns:oxm="http://www.springframework.org/schema/oxm"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:websocket="http://www.springframework.org/schema/websocket"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:redis="http://www.springframework.org/schema/redis"
+    xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+    xmlns:hdp="http://www.springframework.org/schema/hadoop"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xmlns:batch="http://www.springframework.org/schema/batch"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:c="http://www.springframework.org/schema/c"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/util
+                        http://www.springframework.org/schema/util/spring-util.xsd
+                        http://www.springframework.org/schema/tool
+                        http://www.springframework.org/schema/tool/spring-tool.xsd
+                        http://www.springframework.org/schema/jee
+                        http://www.springframework.org/schema/jee/spring-jee.xsd
+                        http://www.springframework.org/schema/jms
+                        http://www.springframework.org/schema/jms/spring-jms.xsd
+                        http://www.springframework.org/schema/task
+                        http://www.springframework.org/schema/task/spring-task.xsd
+                        http://www.springframework.org/schema/cache
+                        http://www.springframework.org/schema/cache/spring-cache.xsd
+                        http://www.springframework.org/schema/lang
+                        http://www.springframework.org/schema/lang/spring-lang.xsd
+                        http://www.springframework.org/schema/jdbc
+                        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+                        http://www.springframework.org/schema/oxm
+                        http://www.springframework.org/schema/oxm/spring-oxm.xsd
+                        http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                        http://www.springframework.org/schema/websocket
+                        http://www.springframework.org/schema/websocket/spring-websocket.xsd
+                        http://www.springframework.org/schema/security
+                        http://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/redis
+                        http://www.springframework.org/schema/redis/spring-redis.xsd
+                        http://www.springframework.org/schema/data/mongo
+                        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd 
+                        http://www.springframework.org/schema/hadoop
+                        http://www.springframework.org/schema/hadoop/spring-hadoop.xsd
+                        http://www.springframework.org/schema/data/jpa
+                        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                        http://www.springframework.org/schema/batch
+                        http://www.springframework.org/schema/batch/spring-batch.xsd">
+
+<!-- 方式一 -->
+<bean id="mytask" class="spring_quartz.MyTask"/>
+<bean id="myJobDeatail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> <!-- 就不用实现Job接口了 -->
+	<property name="targetObject" ref="mytask"/>
+	<property name="targetMethod" value="frequencyCheck"/>
+	<property name="concurrent" value="false" />  <!-- 单线程,如果第一个调度卡到第二次调度,现在过了第二次时间,第一个调度又继续,第二个调度还可以继续执行 -->
+</bean> 
+<bean id="mySimpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean"><!-- SimpleTriggerBean 不可用于Quartz2.0 -->
+	<property name="startDelay"  value="3000"/>
+	<property name="repeatInterval"  value="1000"/>
+	<property name="jobDetail"  ref="myJobDeatail"/>
+</bean>
+<!-- 方式二 -->
+ <bean id="myJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean" scope="singleton"><!-- JobDetailBean 不可用于Quartz2.0 -->
+	<property name="jobClass"  value="spring_quartz.MyQuartzJob"/><!-- implements Job -->
+	<property name="jobDataAsMap" >
+		<map>
+			<entry key="data" value="sping配置的数据"/>
+		</map>
+	</property>
+</bean>
+<bean id="myCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"><!-- SimpleTriggerBean 不可用于Quartz2.0 -->
+	<property name="cronExpression" value="3/5 * 8-17 * * ?"></property>
+	<property name="jobDetail"  ref="myJob"/> 
+</bean>
+
+<util:properties id="quartzProperties" location="classpath:spring_quartz/quartz.properties"/>
+<bean  id="schedulerFactory"  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="quartzProperties" ref="quartzProperties"/> 
+            <!--  如使用了Spring不会默认读 classpath下的quartz.properties , 要配置quartzProperties属性  -->
+	<property name="triggers">
+		<list>
+			<!-- <ref bean="mySimpleTrigger"/>  -->
+			<ref bean="myCronTrigger"/>
+		</list>
+	</property>
+	<!-- 持久化,quartz-2.1.6\docs\dbTables\[数据库].sql,示例在quartz-2.1.6\examples\example10\quartz.properties -->
+	<property name="configLocation" value="classpath:spring_quartz/quartz.properties"/>
+</bean> 
+
+
+</beans>

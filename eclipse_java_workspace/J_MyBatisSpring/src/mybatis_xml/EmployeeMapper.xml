@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="org.zhaojin.mybatis.ns">
+    
+    <!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志
+ 	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>   -->  
+    <!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->  
+    
+    <select id="queryAllEmployee"  resultType="Employee" useCache="true"> 
+		select id as id ,username as username,password as password ,birthday as birthday 
+		from employee  
+	</select>
+	
+ 	<select id="queryAllEmployeeByPage"  parameterType="map"  resultType="Employee" useCache="true"> 
+		select id as id ,username as username,password as password ,birthday as birthday 
+		from employee  
+		
+		<where>
+			<trim>
+				<if test="username != null">
+					and username = #{username,jdbcType=VARCHAR} 
+				</if>
+			</trim>
+		</where>
+	</select>
+	<select id="selectEmployee" parameterType="int" resultType="Employee" >  <!-- 对应<typeAliases>配置  -->
+		select id as id ,username as username,password as password ,birthday as birthday 
+		from employee 
+		where id = #{value}
+	</select>
+	<!-- parameterType="string" 和  parameterType="int"
+   如使用MyBatis的session方法调用,如selectOne(),要使用#{value},如使用Spring的MapperFactoryBean叫什么都可
+-->
+	
+	<resultMap id="selectEmpMap" type="EmployeeDept">	<!-- 对应<typeAliases>配置  -->
+		<id property="id" column="id" />
+		<result property="username" column="username" />
+		<result property="department" column="dept" />
+	</resultMap>
+	
+	<sql id="employee_field">e.id as id ,e.username as username,d.dep_name as dept </sql>
+	
+	<select id="selectEmpDept" parameterType="int" resultMap="selectEmpMap"> <!--  resultMap="selectEmpMap" -->
+		select 
+		  <include refid="employee_field"/>
+		from employee e ,department d 
+		where e.department_id =d.id and e.id=#{value}
+	</select>
+	
+	<select id="selectEmpDeptHashMap" parameterType="int" resultType="hashmap"> <!-- resultType="hashmap" -->
+		select  <include refid="employee_field"/>
+		from employee e ,department d 
+		where e.department_id =d.id and e.id=#{value}
+	</select>
+	<select id="selectEmployeeByDept" parameterType="int" resultType="Employee" >  
+		select id as id ,username as username,password as password ,birthday as birthday
+		from employee where department_id = #{value}
+	</select>
+	 
+	 <select id="dynSelectEmployee" parameterType="Employee" resultType="Employee" >  
+		select id as id ,username as username,password as password ,birthday as birthday 
+		from employee
+		<where>
+			<!--  使用   &gt;=  和 &lt;= 
+			<if test="username != null and username != '' ">username = #{username} </if>
+			<if test="department_id != null">AND department_id = #{department_id} </if>
+			 -->
+			<choose>
+				<when test="username != null">username = #{username}</when>
+				<when test="department_id != null">department_id = #{department_id}</when>
+				<otherwise>department_id = 10</otherwise>
+			</choose>
+		</where>
+	</select>
+	 <!--
+	<insert id="insertEmployee" parameterType="Employee" >
+		insert into employee (id,username,password,birthday,department_id)
+		values(#{id}, #{username}, #{password}, #{birthday},#{department_id});
+	</insert>
+	-->
+	<insert id="insertEmployee" parameterType="Employee" >
+		<selectKey keyProperty="id" resultType="int" order="BEFORE"> <!-- MySQL --> 
+			select cast(rand()*100 as SIGNED )
+		</selectKey>
+
+		insert into employee 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+            <if test="username != null">username,</if>
+            <if test="password != null">password,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+        	<if test="id != null">#{id},</if>
+            <if test="username != null">#{username},</if>
+            <if test="password != null">#{password},</if>
+        </trim>
+	</insert>
+	 
+	 <delete id="deletePartEmployeeOfDept" parameterType="map">
+        delete  employee 
+        where department_id=#{department_id}  and id in
+		 <foreach collection="employee_ids" index="index" item="employee_id" open="(" separator="," close=")">
+            #{employee_id}  <!--  #{employee_id,jdbcType=CHAR}  -->
+        </foreach>
+    </delete>
+    
+	<update id="updateEmployee" parameterType="Employee">
+		update Employee
+		<set>
+			<trim suffixOverrides=",">
+				<if test="username != null">username=#{username},</if>
+				<if test="password != null">password=#{password},</if>
+				<if test="birthday != null">birthday=#{birthday},</if>
+				<if test="department_id != 0">department_id=#{department_id},</if>
+			</trim>
+		</set>
+			where id=#{id}
+	</update>
+	
+	<!-- 关联父类,只select -->
+	<resultMap id="employeeWithDept" type="Employee">
+		<id property="id" column="e_id" />
+		<result property="username" column="e_name"/>
+		<association property="department" column="department_id" javaType="Department">
+			<id property="id" column="d_id"/>
+			<result property="name" column="d_name"/>
+		</association>
+	</resultMap>
+	<select id="selectEmloyeeWithDept" parameterType="int" resultMap="employeeWithDept">
+		select e.id as e_id, 
+			e.username as e_name,
+			d.id as d_id ,
+			d.dep_name as d_name
+		from employee e left outer join department d 
+		on e.department_id = d.id
+		where e.id = #{id}
+	</select>
+	<select id="selectAllEmloyeeWithDept"   resultMap="employeeWithDept">
+		select e.id as e_id, 
+			e.username as e_name,
+			d.id as d_id ,
+			d.dep_name as d_name
+		from employee e left outer join department d 
+		on e.department_id = d.id
+	</select>
+	<!-- 关联子集合,只select -->
+	<resultMap id="departmentWithEmps" type="Department">
+		<id property="id" column="id" />
+		<result property="name" column="d_name"/>
+		<collection property="emps" ofType="Employee">
+			<id property="id" column="e_id"/>
+			<result property="username" column="e_name"/>
+		</collection>
+	</resultMap>
+	<select id="selectDepartmentWithEmps" parameterType="int" resultMap="departmentWithEmps">
+		select e.id as e_id, 
+			e.username as e_name,
+			d.id as d_id ,
+			d.dep_name as d_name
+		from department d   left outer join  employee e
+		on e.department_id = d.id
+		where d.id = #{id}
+	</select>
+	<select id="selectAllDepartmentWithEmps"   resultMap="departmentWithEmps">
+		select e.id as e_id, 
+			e.username as e_name,
+			d.id as d_id ,
+			d.dep_name as d_name
+		from department d   left outer join  employee e
+		on e.department_id = d.id
+	</select>
+	
+	<!-- discriminator -->
+	<resultMap id="EmployeeKind" type="Employee">
+		<id property="id" column="id" />
+		<result property="username" column="username"/>
+		<discriminator javaType="int" column="employee_type">
+			<case value="1" resultType="GoodEmployee">
+				<result property="raiseSalary" column="raise_salary" />
+			</case>
+			<case value="2" resultType="BadEmployee">
+				<result property="deductSalary" column="deduct_salary" />
+			</case>
+		</discriminator>
+	</resultMap>
+	
+	<select id="selectGoodEmps"   resultMap="EmployeeKind">
+		select *
+		from  employee  
+		where employee_type=1
+	</select>
+	<select id="selectBadEmps"   resultMap="EmployeeKind">
+		select *
+		from  employee  
+		where employee_type=2
+	</select>
+	
+</mapper>

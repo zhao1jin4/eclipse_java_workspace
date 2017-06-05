@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+	<display-name>My Custom Tag</display-name>
+	<tlib-version>1.0</tlib-version>
+	<short-name>my</short-name>
+	<uri>http://zhaojin.org/tags</uri>
+	<tag>
+		<name>hello</name>
+		<tag-class>myservlet.tag.MyEmptyTag</tag-class>
+		<body-content>empty</body-content> <!-- empty 空标签  -->
+	</tag>
+	<tag>
+		<name>max</name>
+		<tag-class>myservlet.tag.MyAttributeTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>num1</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>num2</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute> 
+	</tag>
+	<tag>
+		<name>greet</name>
+		<tag-class>myservlet.tag.MyBodyTag</tag-class>
+		<body-content>JSP</body-content><!-- JSP -->
+	</tag>
+	<tag>
+		<name>switch</name>
+		<tag-class>myservlet.tag.MySwitchTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
+		<name>case</name>
+		<tag-class>myservlet.tag.MyCaseTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>cond</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>default</name>
+		<tag-class>myservlet.tag.MyDefaultTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
+		<name>iterator</name>
+		<tag-class>myservlet.tag.MyIteratorTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>var</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue> <!-- false -->
+		</attribute>
+		<attribute>
+			<name>items</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<variable> <!-- 迭代的中间变量 -->
+			<name-from-attribute>var</name-from-attribute>
+			<variable-class>myservlet.tag.ValueLabelBean</variable-class>
+			<scope>NESTED</scope> <!-- NESTED  -->
+		</variable>
+	</tag>
+	<tag>
+		<name>welcom</name>
+		<tag-class>myservlet.tag.simple.MySimpleTagSupport</tag-class>
+		<body-content>tagdependent</body-content> <!--不能是JSP,因 setJspBody(JspFragment), tagdependent -->
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>max_ex</name>
+		<tag-class>myservlet.tag.simple.MyMaxSimpleTagSupport</tag-class>
+		<body-content>empty</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+		<variable>
+			<name-given>max</name-given> <!--对应于 context.setAttribute("max" -->
+			<variable-class>Integer</variable-class>
+			<declare>true</declare>
+			<scope>AT_END</scope><!--AT_END ,AT_BEGIN -->
+		</variable>
+	</tag>
+	
+	<function>
+		<name>toGBK</name>
+		<function-class>myservlet.tag.MyELFunc</function-class>
+		<function-signature>java.lang.String toGBK(java.lang.String,java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>toUTF8</name>
+		<function-class>myservlet.tag.MyELFunc</function-class>
+		<function-signature>java.lang.String toUTF8(java.lang.String,java.lang.String)</function-signature>
+	</function>
+</taglib>

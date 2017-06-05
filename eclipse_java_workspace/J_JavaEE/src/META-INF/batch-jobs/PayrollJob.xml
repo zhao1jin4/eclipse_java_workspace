@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Batch   .war\WEB-INF\classes\META-INF\batch-jobs\PayrollJob.xml -->
+<job id="payroll" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
+    <step id="process">
+        <chunk item-count="3">
+            <reader ref="SimpleItemReader"></reader>   <!-- 对应 @Named("SimpleItemReader"), 类要 extends AbstractItemReader  从哪读要做的记录 -->
+            <processor ref="SimpleItemProcessor"></processor> <!-- implements ItemProcessor  处理读到的记录 -->
+            <writer ref="SimpleItemWriter"></writer> <!-- extends AbstractItemWriter  存储处理结果-->
+        </chunk>
+		<partition>
+            <mapper ref="PayrollPartitionMapper"/> <!-- implements PartitionMapper  -->
+        </partition>
+    </step>
+</job>

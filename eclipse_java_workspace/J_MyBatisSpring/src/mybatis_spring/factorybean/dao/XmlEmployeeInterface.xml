@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis_spring.factorybean.dao.XmlEmployeeInterface">
+<!-- MapperFactoryBean, namespace对应 的类名要一样   ,
+ parameterType="int" 和  parameterType="string"如使用MapperFactoryBean #{} 中的名字随便叫 ,如使用Session的方法要用#{value}-->
+	<delete id="deleteByEmployeeId"  parameterType="int" >  
+		delete from employee   where id = #{my_named_id}
+	</delete>
+	
+	<insert id="insertXML" parameterType="mybatis_spring.Employee">
+	   insert into employee(id,username,password,age) values(#{id},#{username},#{password},#{age})
+	</insert>
+	
+	<insert id="insertManyParam" parameterType="map">
+       insert into employee(id,username,password,age) values(#{id},#{username},#{password},#{age})
+    </insert>
+    
+	
+	
+	 
+</mapper>

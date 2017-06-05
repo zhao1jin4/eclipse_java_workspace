@@ -1,0 +1,186 @@
+
+<html>
+	<head>
+		<meta http-equiv="pragma" content="no-cache">
+		<meta http-equiv="cache-control" content="no-cache">
+		<meta http-equiv="expires" content="0">    
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+<body>
+---------remoting-servlet.xml <br/>
+<a href="/remoting/hessianClient" >Spring MVC hessian 二进制 调用 </a><br/>
+
+---------spring_jstl.xml  <br/>
+<a href="helloWorld.mvc" >helloWorld.mvc</a> <br/>
+ 
+<a href="login.mvc" >学生登录</a> <br/>
+
+<a href="queryStudentDetailById.mvc?student_id=123" >根据ID查询学生</a>MultiActionController  InternalPathMethodNameResolver<br/>
+<a href="queryStudentByClazz.mvc?clazz_id=123" >根据Clazz 查询学生</a>MultiActionController InternalPathMethodNameResolver<br/>
+
+<a href="showClazzDetailById.mvc?doMethod=queryClazzDetailById&clzz_id=123" >根据ID查询班级</a>MultiActionController ParameterMethodNameResolver<br/>
+<a href="showAllClazz.mvc?doMethod=queryAllClazz" >查询所有班级</a>　有Session 报??　　MultiActionController ParameterMethodNameResolver<br/>
+
+<a href="showTeacherDetailById.mvc?teacher_id=123" >根据ID查询老师</a>MultiActionController propertiesMethodNameResolver<br/>
+
+<a href="showAllTeacher.mvc" >查询所有老师</a>MultiActionController propertiesMethodNameResolver<br/>
+
+<a href="delegateMulti/method1.mvc" >Delegate方式的Multi 方式1</a><br/>
+<a href="delegateMulti/method2.mvc" >Delegate方式的Multi 方式2</a><br/>
+
+<hr/>
+----------spring_jstl_mapping.xml 
+ ControllerClassNameHandlerMapping   
+<br/>
+<a href="helloworld.mvc" >helloworld.mvc 要全小写</a> <br/>
+<a href="studentmultiaction/queryStudentDetailById.mvc?student_id=123" >根据ID查询学生</a>MultiActionController  InternalPathMethodNameResolver<br/>
+<a href="studentmultiaction/queryStudentByClazz.mvc?clazz_id=123" >根据Clazz 查询学生</a>MultiActionController InternalPathMethodNameResolver<br/>
+
+<br/>不行???<br/>
+<a href="clazzmultiaction.mvc?doMethod=queryClazzDetailById&clzz_id=123" >根据ID查询班级</a>MultiActionController ParameterMethodNameResolver<br/>
+<a href="clazzmultiaction.mvc?doMethod=queryAllClazz" >查询所有班级</a>MultiActionController ParameterMethodNameResolver<br/>
+
+<br/>
+ControllerBeanNameHandlerMapping  <br/>
+<a href="helloWorldABC.mvc" >helloWorldABC.mvc</a> <br/>
+
+<hr/>
+----------Annotation Employee <br/>
+
+<a href="employee/list/1.mvc" >查询员工 ,国际化</a><br/>
+<a href="employee.mvc" >员工默认页</a><br/>
+<a href="home.mvc" >默认首页</a><br/>
+<a href="employee/add/1/lisi/2012-11-22.mvc" >提交增加员工   特殊方式</a><br/>
+<a href="employee/updateEmployeeByDept.mvc?dep_id=232" >进入页面  更新员工 按部门</a><br/>
+
+<a href="download.mvc?file_id=20">开始下载文件</a><br/>
+<a href="initUpload.mvc">准备上传文件</a><br/>
+其它的
+<a href="other/cookie_header.mvc" >读Cookie和http头</a><br/>
+<a href="other/returnVoid.mvc" >返回Void 的ViweName</a>默认根据请求路径来生成viewName <br/>
+<a href="other/redirect.mvc" >redirect: 的ViweName</a> <br/>
+<a href="other/returnObject.mvc" >返回List,Object ,的ViweName</a>默认根据请求路径来生成viewName <br/>
+<a href="other/webRequest.mvc" > webRequest </a>  <br/>
+<a href="session.mvc?method=testParams1" >params 传方法名 初始化session </a><br/>
+<a href="session.mvc?method=testParams2" >params 传方法名 取session</a><br/>
+
+<a href="testform/login.mvc" >表单  @ModelAttribute 一页中多表单 , 自定义验证 ,@Validate无效 ?????,代码国际化??</a>  <br/>
+
+<a href="other/deferredResult.mvc" >deferredResult  </a>  <br/>
+<a href="other/responseBody.mvc" >responseBody </a>  <br/>
+<a href="other/responseBodyJSON.mvc" >responseBodyJSON </a>  <br/>
+<a href="other/responseBodyXML.mvc" >responseBodyXML </a>  <br/>
+<a href="resetController.mvc" >REST </a>  <br/>
+<a href="resetControllerText.mvc" >REST Text View  </a>  <br/>
+
+<a href="other/httpEntity.mvc" >httpEntity  未成功 </a>  <br/>
+  
+----------RESET HATEOAS <br/>
+
+<a href="reset.mvc?name=World" >reset </a>  <br/>
+<a href="hateoas.mvc?name=World" >HATEOAS </a>  <br/>
+
+----------JSON <br/>
+要打开JSON,关闭 InternalResourceViewResolver  <br/>
+请求和响应都是JSON 
+<script type="text/javascript" src="js/jquery-2.0.3.js"></script>
+<script type="text/javascript">
+var root="http://localhost:8080/J_SpringMVC";
+function createXmlHttp()
+{
+	if (window.XMLHttpRequest)
+	{
+	  xmlHttp=new XMLHttpRequest(); 
+	}
+	else if (window.ActiveXObject)
+	{
+	  xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	if (xmlHttp==null)
+	{
+		  alert("Your browser does not support XMLHTTP.");
+	}
+	return xmlHttp;
+}
+function ajaxJSONRequest()//OK
+{
+	var xmlHttp=createXmlHttp();
+	xmlHttp.onreadystatechange=function()
+	{
+		if(xmlHttp.readyState!=4) 
+			return;
+		if(xmlHttp.status!=200)
+		{
+			alert("error:"+xmlHttp.statusText);
+		 	return;
+		}
+		alert("success:"+xmlHttp.responseText);
+	}
+	xmlHttp.open("POST", root+"/json/queryEmployeeVO.mvc", false);//是否异步,true 异步,false同步
+	xmlHttp.setRequestHeader("Content-Type","application/json;charset=UTF-8");//请求是JSON 
+	xmlHttp.send('{"employee_id":123,"first_name":"李四"}');
+}
+function jQueryJSONRequest() //OK
+{
+	var config=
+	{
+		type: 'POST',
+		contentType:'application/json;charset=UTF-8',//请求是JSON   
+		dataType: 'json',//响应是JSON
+		url:root+'/json/queryEmployeeVO.mvc' ,
+		//data:JSON.stringify({employee_id:'123',first_name:'李四'}),//OK
+		data:'{"employee_id":123,"first_name":"李四"}',//OK,内部Key必须是"
+		success:function(response)
+		{
+			alert("success:"+response.allClothes[1]);
+		}
+	};
+	$.ajax (config);
+}
+</script>
+<input type="button" value="多条件封装查询VO ajax POST JSON" onclick="jQueryJSONRequest()"/><br/>
+
+<a href="sqlView.html">easy UI 表格动态列</a>
+
+----------spring websocket<br/>
+<script type="text/javascript">
+function sendWebsocket()
+{
+	if ("WebSocket" in window)
+	{
+	   alert("WebSocket is supported by your Browser!");
+	   
+	   var ws = new WebSocket("ws://localhost:8080/J_SpringMVC/myHandler");//tomcat 8 支持 标准
+	   ws.onopen = function()
+	   {
+	      ws.send("JS 端 消息");
+	      alert("Message is sent...");
+	   };
+	   ws.onmessage = function (evt) 
+	   { 
+	      var received_msg = evt.data;
+	      alert("Message is received:"+received_msg);
+	   };
+	   ws.onclose = function()
+	   { 
+	      alert("Connection is closed..."); 
+	   };
+	}
+	else
+	{
+	  alert("WebSocket NOT supported by your Browser!");
+	}
+}
+</script>
+<button type="button" onclick="sendWebsocket()">测试websocket,未成功???</button>
+<hr/>
+----------Freemarker
+
+<a href="helloFreemarker.mvc" >helloFreemarker </a><br/>
+<a href="freemarkerRegister/initRegister.mvc" > Register with validator </a><br/>
+<a href="freemarkerQuery/initQuery.mvc" >queryFreemarker  </a><br/>
+<hr/>
+ 
+
+</body>
+</html>

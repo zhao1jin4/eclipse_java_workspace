@@ -1,0 +1,11 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<shipto  xmlns="http://zhaojin.org"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://zhaojin.org  example.xsd"><!-- {namespace} {location} -->
+	
+	<address></address>
+	<name>11</name>
+	<city></city>
+	<country>
+	</country>
+</shipto>

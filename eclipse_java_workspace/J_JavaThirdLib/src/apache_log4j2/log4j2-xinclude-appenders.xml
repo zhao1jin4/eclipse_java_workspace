@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 加 log4j-nosql-2.1.jar mongo-java-driver-2.13.0-rc1.jar 
+ 目前不支持  mongo-java-driver-3的版本
+	<NoSql name="mongodbAppender">
+		<MongoDb databaseName="log4j2" collectionName="MyApp"
+			server="127.0.0.1" username="log4j2Admin" password="log4j2" />
+	</NoSql>
+ -->
+<!--
+<Flume name="eventLogger" compress="true" type="Embedded">
+	<Agent host="192.168.10.101" port="8800" />
+	<Agent host="192.168.10.102" port="8800" />
+	<RFC5424Layout enterpriseNumber="18060" includeMDC="true"
+		appName="MyApp" />
+</Flume>
+
+<Flume name="eventLogger" compress="true" type="persistent"
+	dataDir="./logData">
+	<Agent host="192.168.10.101" port="8800" />
+	<Agent host="192.168.10.102" port="8800" />
+	<RFC5424Layout enterpriseNumber="18060" includeMDC="true"
+		appName="MyApp" />
+	<Property name="keyProvider">MySecretProvider</Property>
+</Flume>
+
+
+
+<Flume name="eventLogger" compress="true" type="Embedded">
+	<Property name="channels">file</Property>
+	<Property name="channels.file.type">file</Property>
+	<Property name="channels.file.checkpointDir">target/file-channel/checkpoint</Property>
+	<Property name="channels.file.dataDirs">target/file-channel/data</Property>
+	<Property name="sinks">agent1 agent2</Property>
+	<Property name="sinks.agent1.channel">file</Property>
+	<Property name="sinks.agent1.type">avro</Property>
+	<Property name="sinks.agent1.hostname">192.168.10.101</Property>
+	<Property name="sinks.agent1.port">8800</Property>
+	<Property name="sinks.agent1.batch-size">100</Property>
+	<Property name="sinks.agent2.channel">file</Property>
+	<Property name="sinks.agent2.type">avro</Property>
+	<Property name="sinks.agent2.hostname">192.168.10.102</Property>
+	<Property name="sinks.agent2.port">8800</Property>
+	<Property name="sinks.agent2.batch-size">100</Property>
+	<Property name="sinkgroups">group1</Property>
+	<Property name="sinkgroups.group1.sinks">agent1 agent2</Property>
+	<Property name="sinkgroups.group1.processor.type">failover</Property>
+	<Property name="sinkgroups.group1.processor.priority.agent1">10</Property>
+	<Property name="sinkgroups.group1.processor.priority.agent2">5</Property>
+	<RFC5424Layout enterpriseNumber="18060" includeMDC="true"
+		appName="MyApp" />
+</Flume>
+ -->

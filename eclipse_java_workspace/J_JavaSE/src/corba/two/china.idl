@@ -1,0 +1,7 @@
+ module ChinaApp
+    {
+     interface China
+     {
+     string MorningChina();
+     };
+    };

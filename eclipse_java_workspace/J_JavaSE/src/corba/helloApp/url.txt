@@ -1,0 +1,16 @@
+http://download.java.net/jdk8/docs/technotes/guides/idl/GShome.html
+http://download.java.net/jdk8/docs/technotes/guides/idl/tutorial/GSserver.html
+
+idlj -fall Hello.idl
+idlj -fallTIE Hello.idl 如果使用这个,会多生成会一个HelloPOATie.java文件,只在写Server类时有点不一样
+
+orbd -ORBInitialPort 11050 -ORBInitialHost localhost 
+
+ java HelloServer -ORBInitialPort 11050 -ORBInitialHost localhost 
+ java HelloClient -ORBInitialPort 11050 -ORBInitialHost localhost
+ 
+ 可以成功运行
+ 
+ HelloServer和HelloClient自己写的，其它是生成的，有自己写的注释
+
+

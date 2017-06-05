@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+  <!-- .plugins\org.eclipse.wst.xml.core  -->
+  <!--
+  
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+
+  <public publicId="-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" uri="platform:/resource/WEB_LIB/WebContent/schema_dtd/struts-2.3.dtd" webURL="http://struts.apache.org/dtds/struts-2.3.dtd"/>
+  <public publicId="-//Apache Struts//XWork Validator 1.0.3//EN" uri="platform:/resource/WEB_LIB/WebContent/schema_dtd/xwork-validator-1.0.3.dtd" webURL="http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd"/>
+
+  <public publicId="-//Hibernate/Hibernate Mapping DTD 3.0//EN" uri="platform:/resource/WEB_LIB/WebContent/schema_dtd/hibernate-mapping-3.0.dtd" webURL="http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"/>
+  <public publicId="-//Hibernate/Hibernate Configuration DTD 3.0//EN" uri="platform:/resource/WEB_LIB/WebContent/schema_dtd/hibernate-configuration-3.0.dtd" webURL="http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"/>
+
+  <public publicId="-//mybatis.org//DTD Config 3.0//EN" uri="platform:/resource/WEB_LIB/WebContent/schema_dtd/mybatis-3-config.dtd" webURL="http://mybatis.org/dtd/mybatis-3-config.dtd"/>
+  <public publicId="-//mybatis.org//DTD Mapper 3.0//EN" uri="platform:/resource/WEB_LIB/WebContent/schema_dtd/mybatis-3-mapper.dtd" webURL="http://mybatis.org/dtd/mybatis-3-mapper.dtd"/>
+  
+  <public publicId="-//GetAhead Limited//DTD Direct Web Remoting 3.0//EN" uri="platform:/resource/WEB_LIB/WebContent/schema_dtd/dwr30.dtd" webURL="http://getahead.org/dwr/dwr30.dtd"/>
+
+  <uri name="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" uri="platform:/resource/WEB_LIB/WebContent/schema_dtd/portlet-app_2_0.xsd"/>
+   
+</catalog>
+-->

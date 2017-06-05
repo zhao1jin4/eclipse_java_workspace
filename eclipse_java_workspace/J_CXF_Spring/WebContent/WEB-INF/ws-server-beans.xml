@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+       xmlns:jaxws="http://cxf.apache.org/jaxws"  
+       xsi:schemaLocation=" http://www.springframework.org/schema/beans 
+							http://www.springframework.org/schema/beans/spring-beans-4.1.xsd    
+							http://cxf.apache.org/jaxws 
+							http://cxf.apache.org/schemas/jaxws.xsd">
+
+<!--  <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />   新版本不必加这个-->
+
+       <import resource="classpath:META-INF/cxf/cxf.xml" />  
+       <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />  
+     
+     	<!-- 这个应该是用于来做 非标准对象的  ,不必加@XmlType -->
+       <bean id="aegisBean" class="org.apache.cxf.aegis.databinding.AegisDatabinding" />  
+       <bean id="jaxWsServiceFactoryBean" class="org.apache.cxf.jaxws.support.JaxWsServiceFactoryBean">  
+          <property name="wrapped" value="true" />  
+          <property name="dataBinding" ref="aegisBean" />  
+       </bean>  
+       <!-- 测试使用  http://localhost:8080/J_CXF_Spring/ws -->
+       <!-- 方法1 
+      <jaxws:endpoint  
+          implementor="org.zhaojin.cxf.spring.server.SpringHelloWorldImpl" address="/HelloWorld">  
+			<jaxws:serviceFactory>  
+				<ref bean="jaxWsServiceFactoryBean"/>  
+			</jaxws:serviceFactory>  
+       </jaxws:endpoint>  
+       -->
+      <!-- 方法2  引用id使用#  -->
+      <bean id="hello" class="org.zhaojin.cxf.spring.server.SpringHelloWorldImpl" />  
+      <jaxws:endpoint  
+         implementor="#hello" address="/HelloWorld">  
+         <jaxws:serviceFactory>  
+             <ref bean="jaxWsServiceFactoryBean"/>  
+         </jaxws:serviceFactory>  
+        <jaxws:inInterceptors>
+     	 	<bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+    	</jaxws:inInterceptors>
+    	<jaxws:outInterceptors>
+	       <bean  class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+	    </jaxws:outInterceptors>
+      </jaxws:endpoint>  
+  	
+	
+    <jaxws:endpoint id="calcPlusService" implementor="ws_provider.CalcPlusServiceProvider" address="/calcPlus" />
+		
+	<!--  只标准的 -->
+	<bean id="myServiceImpl" class="org.zhaojin.cxf.spring.MyWebServcieImpl">
+	</bean>
+	<jaxws:server  serviceClass="org.zhaojin.cxf.spring.MyWebServcie" address="/myWebService">
+	    <jaxws:features>
+	        <bean class="org.apache.cxf.feature.LoggingFeature"/>
+	    </jaxws:features>
+	    <jaxws:serviceBean>
+	        <ref bean="myServiceImpl"/>
+	    </jaxws:serviceBean>
+	</jaxws:server>
+    
+   
+  </beans>  

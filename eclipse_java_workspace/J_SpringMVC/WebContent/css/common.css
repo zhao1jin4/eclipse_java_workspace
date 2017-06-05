@@ -1,0 +1,4 @@
+body,td,th{ font-size: 12; }
+input[type="button"],input[type="submit"],input[type="reset"] { font-size: 12; }
+table {  border-collapse: collapse;table-layout:fixed;word-wrap:break-word}
+table td{ border: 1px solid #EEEEEE; padding: .6em 10px; }

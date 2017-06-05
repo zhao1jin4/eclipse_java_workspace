@@ -1,0 +1,62 @@
+javax.resource-api.jar  JavaEE-7 JCA 
+
+javax.security.auth.message-api.jar
+
+javax.json.jar   
+javax.ws.rs-api.jar
+
+javax.enterprise.concurrent-api.jar
+javax.transaction-api.jar
+
+---------commons-fileupload
+commons-fileupload-1.2.2.jar
+commons-io-2.0.1.jar
+
+
+---------jfreechart
+jfreechart-1.0.14.jar
+jcommon-1.0.17.jar
+
+---------Freemarker
+freemarker-2.3.18.jar
+
+---------JSTL
+jstl.jar
+standard.jar
+h2-1.3.170.jar
+xalan.jar
+serializer.jar   xalan.jar的子包
+
+---
+displaytag-1.2.jar
+commons-lang-2.5.jar
+commons-collections-3.2.1.jar
+
+---------Pluto 不要把pluto中已有的.jar放在自己的项目中,只供编译使用
+portlet-api_2.0_spec-1.0.jar
+pluto-taglib-2.0.3.jar
+
+
+commons-digester-1.8.jar  用于把XML->Bean
+commons-beanutils-1.8.3.jar
+
+commons-logging-1.1.1.jar
+------
+
+
+有进无法进入edit模式,有时debug就可
+
+如何在Action处理后Redirect???
+如何只在当前portlet中刷新(如列表项进入修改页) ?????
+
+portlet 下载,如何设置文件名???
+
+---------.settings\org.eclipse.core.resources.prefs
+
+eclipse.preferences.version=1
+encoding//src/mail/JavaMailUTF8.java=UTF-8
+encoding/<project>=UTF-8
+
+
+
+

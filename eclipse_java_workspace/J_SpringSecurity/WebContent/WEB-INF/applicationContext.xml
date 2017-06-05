@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context-3.1.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+						http://www.springframework.org/schema/util 
+						http://www.springframework.org/schema/util/spring-util-3.1.xsd
+						http://www.springframework.org/schema/mvc 
+						http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+						http://www.springframework.org/schema/security 
+						http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+	
+	
+	<!-- 激活spring的注解. -->
+	<context:annotation-config />
+
+	<!-- 扫描注解组件并且自动的注入spring beans中. 
+	例如,他会扫描@Controller 和@Service下的文件.所以确保此base-package设置正确. -->
+	<context:component-scan base-package="org.liukai.tutorial" />
+
+	<!-- 配置注解驱动的Spring MVC Controller 的编程模型.注:次标签只在 Servlet MVC工作! -->
+	<mvc:annotation-driven />
+
+
+
+<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<property name="location" value="classpath:jdbc.properties"></property>
+</bean>
+<!-- context:标签方式 -->
+<!-- <context:property-placeholder location="jdbc.properties"/>  -->
+
+<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName"><value>${jdbc.driverClass}</value></property>
+	<property name="url" value="${jdbc.url}"></property>
+	<property name="username" value="${jdbc.username}"></property>
+	<property name="password" value="${jdbc.password}"></property>
+</bean>
+
+<!--
+
+为 JDBC implementation of the UserDetailsService (JdbcDaoImpl) 或 <jdbc-user-service data-source-ref= >
+
+drop table users;
+create table users(
+      username varchar2(50) not null primary key,
+      password varchar2(50) not null,
+      enabled number(1) not null);
+
+drop table  authorities;
+create table authorities (
+    username varchar2(50) not null,
+    authority varchar2(50) not null,
+    constraint fk_authorities_users foreign key(username) references users(username));
+    create unique index ix_auth_username on authorities (username,authority);
+    
+   insert into users(username,password,enabled)values('user','ee11cbb19052e40b07aac0ca060c23ee',1);//密码是user的MD5
+   insert into users(username,password,enabled)values('admin','21232f297a57a5a743894a0e4a801fc3',1);
+   
+   insert into authorities(username,authority)values('user','ROLE_USER');
+   insert into authorities(username,authority)values('admin','ROLE_ADMIN');
+   insert into authorities(username,authority)values('admin','ROLE_USER');
+ -->
+
+<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+	<property name="basename" value="message" />
+</bean>
+
+<bean id="hello" class="org.liukai.tutorial.service.HelloServiceImpl" />
+
+</beans>

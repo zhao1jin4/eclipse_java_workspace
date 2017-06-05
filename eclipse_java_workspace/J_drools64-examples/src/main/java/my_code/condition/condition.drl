@@ -1,0 +1,182 @@
+package com.sample.lhs
+ 
+import my_code.condition.Account;
+import my_code.condition.Customer;
+import java.util.ArrayList
+
+
+
+//条件元素  and
+rule "and element"
+	when
+		$customer : Customer(city == '北京') and $account : Account(name == '哈尔滨银行')
+	then
+		System.out.println("and element 测试成功");
+end
+
+
+
+//条件元素 or	【【then会执行两遍】】
+rule "or element"
+	when
+		Customer( city == '上海') or Account(name == '浦发银行')
+	then
+		System.out.println("or element 测试成功");
+end
+
+
+
+//条件元素 exists  【【同时触发上面 or element的规则】】
+rule "exists element"
+	when
+		exists Customer()  
+	then
+		System.out.println("exists element:存在 customer 类型");
+end
+
+
+
+//条件元素 not
+rule "not element"
+	when
+		not Customer()  
+	then
+		System.out.println("not element:不存在 customer 类型");
+end
+
+
+ 
+rule "from element"
+	when
+		$customer : Customer()  
+		Account(name == 'a2') from $customer.accounts  //from后是一个List类型的，匹配中所有的条件
+	then
+		System.out.println("from element 测试成功");
+end
+
+
+
+//条件元素 collect
+rule "collect element"
+	when
+	    $customer : Customer()
+	    $accounts : ArrayList( size >= 3 ) from collect( Account(status == 'Y') )
+	then
+   	    System.out.println("collect element 测试成功");
+end
+
+
+
+//条件元素 accumulate
+rule "accumulate element"
+	when
+	    $total : Number( intValue > 400 )  from accumulate( Account( $num : num ),sum( $num ) )
+	then
+	    System.out.println("accumulate element 测试成功     "+$total);
+end
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//约束连接    &&/||
+rule "&&/|| 约束"
+	when
+		$customer : Customer(age > 20 || (gender == 'male' && city == '深圳'))
+	then
+		//若符合年龄大于20 或者（性别为男，城市为深圳的就打印客户姓名）
+		System.out.println("&&/| 约束测试成功");
+end
+
+
+
+
+//约束操作符   Contains
+rule "比较操作符-Contains"
+	when
+		$account : Account()
+		$customer : Customer(name=='张三' && accounts contains $account)
+	then
+		System.out.println("比较操作符-Contains 测试成功");
+end
+
+
+
+//约束操作符    not contains
+rule "比较操作符- not contains"
+	when
+		$account : Account()
+		Customer(name=='张三'  && accounts not contains $account)
+	then
+		System.out.println("比较操作符-not contains 测试成功");
+end
+
+
+
+
+//约束操作符    memberOf
+rule "比较操作符- memberOf"
+	when
+		$customer : Customer()
+		Account(this memberOf $customer.getAccounts())  
+	then
+		System.out.println("比较操作符-memberOf 测试成功");
+end
+
+
+
+//约束操作符    not memberOf
+rule "比较操作符- not memberOf"
+	when
+		$customer : Customer()
+		Account(this not memberOf $customer.getAccounts())  
+	then
+		System.out.println("比较操作符-not memberOf 测试成功");
+end
+
+
+
+//约束操作符    matches
+rule "比较操作符- matches"
+	when
+		$customer : Customer(name matches "matches.*"  )
+	then
+		System.out.println("比较操作符- matches 测试成功");
+end
+//约束操作符    matches
+rule "比较操作符- not-matches"
+	when
+		$customer : Customer(name not matches "matches.*"  )
+	then
+		System.out.println("比较操作符-not matches 测试成功");
+end
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//when部分，调用外部方法   eval
+rule "eval element"
+	when
+		$customer : Customer()
+		eval($customer.getName() == '张三')
+	then
+		System.out.println("eval element 测试成功");
+end
+
+
+
+//when部分，this关键字调用外部方法   eval
+rule "this keyword"
+	when
+		Customer(this.getName() == 'david_this')
+	then
+		System.out.println("this keyword 测试成功");
+end
+
+
+
+
+
+
+	

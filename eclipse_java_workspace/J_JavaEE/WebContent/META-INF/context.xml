@@ -1,0 +1,2 @@
+<Context crossContext="true" /> 
+<!--为Tomcat使用,Pluto的Portlet,生成的conf/server.xml  <Context 中会加上crossContext="true"  -->

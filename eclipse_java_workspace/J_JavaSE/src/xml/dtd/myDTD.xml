@@ -1,0 +1,11 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<!DOCTYPE TVSCHEDULE SYSTEM "mydtd.dtd">
+<TVSCHEDULE NAME="test">
+	<CHANNEL CHAN="11">
+		<BANNER></BANNER>
+		<DAY>
+			<DATE>2012</DATE>
+			<HOLIDAY></HOLIDAY>
+		</DAY>
+	</CHANNEL>
+</TVSCHEDULE>

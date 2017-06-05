@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[3.8.4.201703310634-RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[false]]></enableImports>
+	<configs>
+		<config>src/org/zhaojin/applicationContext.xml</config>
+		<config>src/spring_listener/listener_beans.xml</config>
+		<config>src/spring_db_jdbc/class_jdbc_beans.xml</config>
+		<config>src/spring_db_transaction/class_transaction_beans.xml</config>
+		<config>src/spring_db_transaction/tag_transaction_beans.xml</config>
+		<config>src/spring_mail/mail_benas.xml</config>
+	</configs>
+	<autoconfigs>
+	</autoconfigs>
+	<configSets>
+	</configSets>
+</beansProjectDescription>

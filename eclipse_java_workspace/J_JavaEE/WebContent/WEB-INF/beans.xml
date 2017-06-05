@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 是 JavaEE 的 interceptors 用途 -->
+<beans xmlns="http://java.sun.com/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+    <interceptors>
+   <!-- <class>javaee_intercepter.LoggingInterceptorSimple</class> -->
+     <class>javaee_intercepter.LoggingInterceptorDetail</class>
+    </interceptors>           
+</beans>

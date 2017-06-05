@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="pepole.xsl"?>
+<people>
+  <person>
+    <name>Peter</name>
+    <age>54</age>
+  </person>
+  <person>
+    <name>Patricia</name>
+    <age>50</age>
+  </person>
+</people>

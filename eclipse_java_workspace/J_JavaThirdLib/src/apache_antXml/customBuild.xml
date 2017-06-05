@@ -1,0 +1,31 @@
+<?xml  version="1.0" encoding="UTF-8" ?>
+<project name="tasks" default="main" basedir=".">
+	<property name="build.dir" location="build" />
+	
+	<echo level="debug">路径是 is: ${my.path} </echo>
+	
+	<target name="init">
+		<mkdir dir="${build.dir}" />
+	</target>
+	<target name="compile" depends="init">
+		<javac srcdir="src" destdir="${build.dir}" />
+	</target>
+	<target name="simpletask" depends="compile">
+		<taskdef name="simpletask" classname="ant_xml_.MyTask" classpath="${build.dir}" />
+		<simpletask size="30"   dir="${build.dir}">
+		</simpletask>
+		
+		<junit printsummary="true">
+			<classpath id="my.path">
+					<fileset dir="./lib">
+						<include name="*.jar"/>
+					</fileset>
+			</classpath>
+		</junit>
+		
+	</target>
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+	<target name="main" depends="simpletask"  />
+</project>

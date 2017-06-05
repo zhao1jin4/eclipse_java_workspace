@@ -1,0 +1,22 @@
+package new_project_code
+ 
+import new_project_code.DroolsTest.Message;
+
+/*
+rule "Hello World_abc"
+    when
+        $message : Message($status : status == Message.HELLO)
+    then
+        System.out.println( "OK  "  + $message+" status="+$status);
+       
+end
+*/
+
+ // 可以不使用$
+rule "Hello World_abc"
+    when
+         message : Message( status : status == Message.HELLO)
+    then
+        System.out.println( "OK  "  +  message+" status="+ status);
+       
+end

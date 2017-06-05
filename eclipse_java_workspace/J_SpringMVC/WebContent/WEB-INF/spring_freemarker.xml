@@ -1,0 +1,110 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:tool="http://www.springframework.org/schema/tool"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:lang="http://www.springframework.org/schema/lang"
+    xmlns:jms="http://www.springframework.org/schema/jms"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:cache="http://www.springframework.org/schema/cache"
+    xmlns:oxm="http://www.springframework.org/schema/oxm"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:websocket="http://www.springframework.org/schema/websocket"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:redis="http://www.springframework.org/schema/redis"
+    xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+    xmlns:hdp="http://www.springframework.org/schema/hadoop"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xmlns:batch="http://www.springframework.org/schema/batch"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:c="http://www.springframework.org/schema/c"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/util
+                        http://www.springframework.org/schema/util/spring-util.xsd
+                        http://www.springframework.org/schema/tool
+                        http://www.springframework.org/schema/tool/spring-tool.xsd
+                        http://www.springframework.org/schema/jee
+                        http://www.springframework.org/schema/jee/spring-jee.xsd
+                        http://www.springframework.org/schema/jms
+                        http://www.springframework.org/schema/jms/spring-jms.xsd
+                        http://www.springframework.org/schema/task
+                        http://www.springframework.org/schema/task/spring-task.xsd
+                        http://www.springframework.org/schema/cache
+                        http://www.springframework.org/schema/cache/spring-cache.xsd
+                        http://www.springframework.org/schema/lang
+                        http://www.springframework.org/schema/lang/spring-lang.xsd
+                        http://www.springframework.org/schema/jdbc
+                        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+                        http://www.springframework.org/schema/oxm
+                        http://www.springframework.org/schema/oxm/spring-oxm.xsd
+                        http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                        http://www.springframework.org/schema/websocket
+                        http://www.springframework.org/schema/websocket/spring-websocket.xsd
+                        http://www.springframework.org/schema/security
+                        http://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/redis
+                        http://www.springframework.org/schema/redis/spring-redis.xsd
+                        http://www.springframework.org/schema/data/mongo
+                        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd 
+                        http://www.springframework.org/schema/hadoop
+                        http://www.springframework.org/schema/hadoop/spring-hadoop.xsd
+                        http://www.springframework.org/schema/data/jpa
+                        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                        http://www.springframework.org/schema/batch
+                        http://www.springframework.org/schema/batch/spring-batch.xsd">
+	<context:component-scan base-package="spring_freemarker" />
+	
+	<!--  为@Valid  要加 hibernate-validator-.jar -->
+	<mvc:annotation-driven  validator="validator" />
+	
+	<bean id="validator"  class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass"  value="org.hibernate.validator.HibernateValidator"/>
+        <property name="validationMessageSource" ref="messageSource"/> <!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
+	</bean> 
+	
+	
+	<!--  Freemarker 不能在群集上面发布应用  -->					
+	<bean  class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="viewClass" 		value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+		 <property name="suffix" 		value=".ftl" />
+		 <property name="contentType" 	value="text/html;charset=UTF-8"/>
+		 <property name="cache" 		value="false"/>
+	</bean>
+	<bean   class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/freemarker/" />
+		<property name="freemarkerSettings">
+			<props>
+			    <prop key="number_format">#</prop> <!-- 防止生成的数字带"," <@spring.formHiddenInput "form.id" />  -->
+				<prop key="defaultEncoding">UTF-8</prop>
+				<prop key="template_update_delay">1</prop><!-- 生产环境加大 -->
+			</props>
+		</property>
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="webRoot" value="/J_SpringMVC"></entry>   <!--就可在ftl中使用 ${webRoot} 得到上下的根来导入js-->
+			</map>
+		</property>
+	</bean>
+	
+	<mvc:resources mapping="/js/**" location="/js/" /> <!-- 不会被拦截 -->
+	
+	<bean name="/helloFreemarker.mvc" class="spring_freemarker.HelloFreemarkerController" />
+	
+	<!-- 国际化 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages"/> 
+	</bean>
+	
+</beans>

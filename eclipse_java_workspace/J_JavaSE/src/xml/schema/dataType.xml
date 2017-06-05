@@ -1,0 +1,72 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<dataType xmlns="http://zhaojin.org/dataType" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://zhaojin.org/dataType   dataType.xsd"><!-- {namespace} {location} -->
+	<lastname>aa</lastname>
+	<families>5</families>
+	<dateborn>2012-02-20</dateborn>
+	<isGraduated>true</isGraduated>
+	<workBeginTime>17:02:39</workBeginTime>
+	<loginDateTime>2012-02-20T17:02:39</loginDateTime>
+	<salary>5000.3</salary>
+	<password>156456</password>
+	<age>23</age>
+	<email>asdf@aa.com</email>
+	<gender>male</gender>
+	
+	<product prodid="22" prodname="testname" />
+	
+	<letter>
+		adfsa<name>aaa</name>asdf
+		asdf<orderid>23</orderid>asdf
+		asdf<shipdate>2012-02-20</shipdate>asdf
+	</letter>
+	<person>
+		<lastname></lastname>
+		<firstname></firstname>
+	</person>
+	<personType>
+		<employee></employee>
+	</personType>
+
+	<workProject>
+		<project></project>
+		<project></project>
+		<project></project>
+	</workProject>
+
+
+
+
+	<!-- 下面的在 eclipse有验证,但是不在文本上提示,在右边提示 -->
+	<shoesize country="aa">123</shoesize>
+
+	<!-- 下面的在 eclipse中没有验证, -->
+	
+	<car>sadf</car> 
+	
+	<techer>
+	</techer>
+	<neighbor>
+	</neighbor>
+	
+	
+
+	<childPeple>
+	</childPeple>
+	
+	<person123></person123>
+	
+	<workExperence >
+		<company></company>
+		<abc></abc>
+		<a></a>
+	</workExperence>
+	
+	
+	<myAnyAttribute > <!-- a="1" b="2"  报错???? -->
+		<company  ></company>
+	</myAnyAttribute>
+	
+	
+</dataType>

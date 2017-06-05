@@ -1,0 +1,138 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:tool="http://www.springframework.org/schema/tool"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:lang="http://www.springframework.org/schema/lang"
+    xmlns:jms="http://www.springframework.org/schema/jms"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:cache="http://www.springframework.org/schema/cache"
+    xmlns:oxm="http://www.springframework.org/schema/oxm"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:websocket="http://www.springframework.org/schema/websocket"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:redis="http://www.springframework.org/schema/redis"
+    xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+    xmlns:hdp="http://www.springframework.org/schema/hadoop"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xmlns:batch="http://www.springframework.org/schema/batch"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:c="http://www.springframework.org/schema/c"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/util
+                        http://www.springframework.org/schema/util/spring-util.xsd
+                        http://www.springframework.org/schema/tool
+                        http://www.springframework.org/schema/tool/spring-tool.xsd
+                        http://www.springframework.org/schema/jee
+                        http://www.springframework.org/schema/jee/spring-jee.xsd
+                        http://www.springframework.org/schema/jms
+                        http://www.springframework.org/schema/jms/spring-jms.xsd
+                        http://www.springframework.org/schema/task
+                        http://www.springframework.org/schema/task/spring-task.xsd
+                        http://www.springframework.org/schema/cache
+                        http://www.springframework.org/schema/cache/spring-cache.xsd
+                        http://www.springframework.org/schema/lang
+                        http://www.springframework.org/schema/lang/spring-lang.xsd
+                        http://www.springframework.org/schema/jdbc
+                        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+                        http://www.springframework.org/schema/oxm
+                        http://www.springframework.org/schema/oxm/spring-oxm.xsd
+                        http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                        http://www.springframework.org/schema/websocket
+                        http://www.springframework.org/schema/websocket/spring-websocket.xsd
+                        http://www.springframework.org/schema/security
+                        http://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/redis
+                        http://www.springframework.org/schema/redis/spring-redis.xsd
+                        http://www.springframework.org/schema/data/mongo
+                        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd 
+                        http://www.springframework.org/schema/hadoop
+                        http://www.springframework.org/schema/hadoop/spring-hadoop.xsd
+                        http://www.springframework.org/schema/data/jpa
+                        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                        http://www.springframework.org/schema/batch
+                        http://www.springframework.org/schema/batch/spring-batch.xsd">
+						
+	<bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean"> <!-- 用来建立MBeanServer -->
+		<property name="locateExistingServerIfPossible" value="true"/>
+	</bean> 
+	
+	<bean id="myBean" class="spring.jmx.MyBean"  lazy-init="true"/> <!--对普通类  lazy-init 注册的是代理对象,第一次调用才会真的实例化 -->
+	<bean name="mydomain:myType=Standard" class="spring.jmx.Standard"/> <!-- 标准MBean ,对应于 autodetect -->
+
+	<bean class="org.springframework.jmx.export.MBeanExporter">
+		<property name="server" ref="mbeanServer" />
+		<property name="registrationBehaviorName" value="REGISTRATION_FAIL_ON_EXISTING"/> <!--  REGISTRATION_FAIL_ON_EXISTING, REGISTRATION_IGNORE_EXISTING, REGISTRATION_REPLACE_EXISTING -->
+		<!-- 如果加了MetadataMBeanInfoAssembler这里的类也要有@ManagedResource
+		<property name="beans">
+			<map>
+				<entry key="mydomain:myType=MyBean" value-ref="myBean"></entry>    
+			</map>
+		</property> -->
+		<property name="autodetect" value="true" />  <!--要以MBean结尾的接口 ,<bean name="domain:key=val" -->
+		<property name="assembler" ref="assembler" />
+		
+		<property name="namingStrategy" ref="namingStrategy" />
+	<!--	<property name="namingStrategy" ref="myStrategy" /> 生成ObjectName的方式,失败?????? -->
+	</bean>
+	<bean id="namingStrategy" class="org.springframework.jmx.export.naming.MetadataNamingStrategy"> <!-- 读@ManagedResource 中的objectName属性 -->
+		<property name="attributeSource" ref="jmxAttributeSource"/>
+	</bean>
+	<bean id="jmxAttributeSource" class="org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource"/>
+	<bean id="assembler" class="org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler"><!-- 带@ManagedResource的类就不用注册到MBeanExporter -->
+		<property name="attributeSource" ref="jmxAttributeSource"/>
+	</bean>
+	<bean id="testBean" class="spring.jmx.AnnotationTestBean"> 
+		<property name="name" value="TEST"/>
+		<property name="age" value="100"/>
+	</bean>
+
+	
+  
+  
+  
+  
+  <!-- 以下是失败的?????? -->
+  
+  
+	<bean id="yourBean" class="spring.jmx.YourBean"/>
+	<bean id="herBean" class="spring.jmx.HerBean"/> 
+	<bean id="myStrategy" class="org.springframework.jmx.export.naming.KeyNamingStrategy">
+		<property name="mappings">
+			<props>
+				<prop key="yourBean">mydomain:myType=YourBean</prop> <!-- key是已有<bean id="" -->
+			</props>
+		</property>
+		<property name="mappingLocation" value="classpath:spring/jmx/names.properties"/>
+	</bean>
+	
+	<!-- Server -->
+	<!-- 不行???  还是要手工运行命令 rmiregistry 1099 & 
+	<bean id="rmiRegistry" class="org.springframework.remoting.rmi.RmiRegistryFactoryBean" > 
+		<property name="port" value="1099" />
+	</bean>
+	-->
+	<!-- 会建立 JMXConnectorServer,报错????????javax.management.MalformedObjectNameException: Key properties cannot be empty 
+	<bean  class="org.springframework.jmx.support.ConnectorServerFactoryBean" depends-on="rmiRegistry"> 
+		<property name="objectName" value="mydomain:myType=Remote"/>
+		<property name="serviceUrl" value="service:jmx:rmi:///jndi/rmi://127.0.0.1:1099/jmxconnector" />
+	</bean>
+	-->
+	
+	
+	
+	
+</beans>
+

@@ -1,0 +1,70 @@
+package com.sample.header
+ 
+import my_code.Message;
+ 
+
+global java.util.List list; //对应于.java中 kSession.setGlobal("list", listData);
+global my_code.header.GlobalService service;
+
+ 
+
+rule "global"
+    when
+    	$message : Message(this.message == service.name())//可用this
+    then
+		list.add("helloworld");
+		list.add(service.name());
+end
+ 
+function void sayHello() {
+	System.out.println("hello everyone");
+}
+
+rule "function"
+    when
+    	eval(true)
+    then
+		sayHello();
+end
+
+ 
+query "queryDavid" () 
+	msg:Message(message == 'david') //java代码中读msg做key,message是类的成员
+end
+
+query "queryDavid2" (String $attr) 
+	message:Message(message == $attr)
+end
+
+ 
+
+declare Address
+	city: String
+	addressName: String
+end
+
+
+
+declare User
+	@author(davidOne)
+	@dateOfCreation(01-Feb-2009)
+	username: String @maxLength(30)  //maxLength无用???
+	userid: String @key
+	birthday : java.util.Date
+end
+
+rule "declare"
+    when
+    	Address(city == 'wuhan')
+    then
+	 	Address address1 = new Address();
+		address1.setCity("shenzhen");		
+		System.out.println(address1.getCity());
+		
+		User user = new User();
+		user.setUsername("davi22222222222222222222222222ddddddddddddddddddddddddddddddddddddddddddddddddddddddd22222d");
+		user.setUserid("1");
+		user.setBirthday(new java.util.Date());
+		System.out.println(user);
+end
+ 

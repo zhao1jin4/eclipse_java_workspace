@@ -1,0 +1,162 @@
+package com.sample
+ 
+import my_code.Message;
+import java.util.List;
+
+
+
+//salience 值越大优先级越高，若不设置，则规则随机执行】
+rule "salience1"
+	 salience 1
+     when
+     	eval(true)
+     then
+		System.out.println( kcontext.getRule().getName() );//salience1
+		System.out.println("kcontext class:"+ kcontext.getClass().getName() );//org.drools.core.base.DefaultKnowledgeHelper
+end
+
+
+rule "salience2"
+	 salience 2
+     when
+     	//eval(true)  //不写任何condition，，默认为true
+     then
+        System.out.println( kcontext.getRule().getName() );
+end
+
+
+
+//【默认为false】
+rule "no-loop"
+	no-loop true 
+    when
+    	$message : Message()
+    then
+    	update($message);	//【检查fact更新引起的引擎是否再次启动检查规则】
+		System.out.println( "no-loop 测试成功" );
+end
+
+ 
+ 
+//【系统时间>= date-effective才会触发】
+rule "date-effective"
+date-effective "17-Oct-2016"    //"17-Aug-2016"
+	when 
+		eval(true)
+    then
+		System.out.println( "date-effective 测试成功" );
+end
+
+
+
+
+//【系统时间<= date-expires才会触发】 【"expires":"到期，失效"】
+rule "date-expires"	
+date-expires "18-Oct-2016"
+	when 
+		eval(true)
+    then
+		System.out.println( "date-expires 测试成功" );
+end
+
+
+
+
+//【默认值为true，设置为false则表示禁用该规则】
+rule "enabled"
+	enabled true
+	when 
+		eval(true)
+    then
+		System.out.println( "enabled 测试成功" );
+end
+
+
+/*
+//【？？？？无法执行】
+rule "duration"
+	duration 1  
+	when 
+		eval(true)
+    then
+		System.out.println( "duration 测试成功, rule thread id : " + Thread.currentThread().getId() );
+end
+
+*/
+
+
+rule "activation-group1"
+	activation-group 'test' //同一组 只有一个会被执行 start
+	 
+	when 
+    then
+		System.out.println( "activation-group-1" );
+end
+
+rule "activation-group2"
+	activation-group 'test'
+	salience 5
+	when 
+    then
+		System.out.println( "activation-group-2" );
+end
+
+
+
+rule "agenda-group1"
+	agenda-group 'agenda-group1'
+	auto-focus false    //需要得到focus才能执行,默认false
+	when 
+    then
+		System.out.println( "agenda-group1" );
+end
+
+rule "agenda-group2"
+	agenda-group 'agenda-group2'
+	auto-focus true
+	when 
+    then
+		System.out.println( "agenda-group2" );
+end
+
+
+
+
+rule "lock-on-active"
+	agenda-group 'agenda-group'
+	lock-on-active true   //增强版的no-loop,用在ruleflow-group或agenda-group属性
+	when 
+		$message : Message()
+    then
+    	update($message);
+		System.out.println( "lock-on-active 测试成功" );
+end
+
+
+
+
+rule "dialect1"
+	dialect 'mvel'
+	when 
+		$message : Message()
+    then
+		List list = ["001", "002", "003"];
+		System.out.println("dialect= mvel," +  $message.message + ";" + list);
+end
+
+
+rule "dialect2"
+	dialect 'java'
+	when 
+		$message : Message()
+    then
+		System.out.println("dialect= java," +  $message.getMessage());
+end
+/*
+*/
+
+
+
+
+
+

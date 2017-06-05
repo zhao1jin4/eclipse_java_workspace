@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!-- 
+    <properties resource="mybatis_annotation/jdbc.properties"/>
+  -->
+  	 <properties resource="jdbc.properties"/>
+  	 
+   	<settings> <!-- 未测试出??? -->
+		<setting name="cacheEnabled" value="false"/> <!-- 默认是true -->
+	</settings>
+	
+	
+   <typeAliases><!-- 测试中 -->
+		<typeAlias alias="joinData" type="mybatis_annotation.JoinData"/>
+	</typeAliases>
+
+	<plugins>
+		<plugin interceptor="mybatis_annotation.SQLLogInterceptor" />
+	</plugins>
+	
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC" />
+            <dataSource type="POOLED">
+               <property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+            </dataSource>
+        </environment>
+    </environments>
+    
+    
+    
+    
+    <mappers><!-- 测试中 -->
+		<mapper resource="mybatis_annotation/ResultMapper.xml" />
+	</mappers>
+	
+	
+</configuration>

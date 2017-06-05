@@ -1,0 +1,31 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+		使用Apache Commons upload 的支持<br/>
+		
+	<form action="/J_JavaEE/upload"  method="post" enctype="multipart/form-data"> 
+	<!--  enctype="application/x-www-form-urlencoded" -->
+		用户名:<input type="text" name="username" />	<br/>
+		文件1:<input type="file" name="attache1" />	<br/>
+		file2:<input type="file" name="attache2" />	<br/>
+		<input type="submit" value="提交" />	<br/>
+	</form>
+	
+	
+	<hr/>
+	使用HttpServlet3的支持<br/>
+	
+	<form action="/J_JavaEE/uploadServlet3"  method="post" enctype="multipart/form-data"> 
+	<!--  enctype="application/x-www-form-urlencoded" -->
+		用户名:<input type="text" name="username" />	<br/>
+		文件1:<input type="file" name="attache1" /><input type="button" value="清除单个如何做??" onclick="document.getElementsByName('attache1')[0].value=''" />		<br/>
+		file2:<input type="file" name="attache2" />	<br/>
+		<input type="submit" value="提交" /><input type="reset" value="重写" />	<br/>
+	</form>
+</body>
+</html>

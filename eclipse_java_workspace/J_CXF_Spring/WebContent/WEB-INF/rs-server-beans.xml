@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:cxf="http://cxf.apache.org/core" 
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans 
+							http://www.springframework.org/schema/beans/spring-beans-4.1.xsd    
+							http://cxf.apache.org/jaxws 
+							http://cxf.apache.org/schemas/jaxws.xsd
+							http://cxf.apache.org/jaxrs
+							http://cxf.apache.org/schemas/jaxrs.xsd
+							http://cxf.apache.org/core
+      						http://cxf.apache.org/schemas/core.xsd   ">
+							
+	<import resource="classpath*:META-INF/cxf/cxf.xml" />
+	<import resource="classpath*:META-INF/cxf/cxf-servlet.xml" />
+	
+	
+	<jaxrs:server  address="/config">
+		<jaxrs:serviceBeans>
+			<bean class="jax_rs_spring2.HelloWorld" />  <!-- 类上有@Path("/hello"), 不支持@ApplicationPath("/chat")  -->
+		</jaxrs:serviceBeans>
+		
+		<jaxrs:features>
+		     <cxf:logging/>
+		</jaxrs:features>
+		<jaxrs:providers>
+			<bean class="org.apache.cxf.jaxrs.provider.JAXBElementProvider" /><!--  可选的  -->
+			
+			<!--  <bean class="jax_rs_spring2.MyExceptionMapper"/>  -->
+		</jaxrs:providers>
+		
+	</jaxrs:server>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+                    <property name="marshaller" ref="xStreamMarshaller"/>
+                    <property name="unmarshaller" ref="xStreamMarshaller"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    
+
+    <bean id="xStreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
+        <property name="annotatedClasses">
+            <array>                
+            </array>
+        </property>
+    </bean>
+    
+    <bean id="jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+    	<property name="packagesToScan" value="jax_rs_spring,jax_rs_spring2"></property>
+    </bean>
+<!-- 
+<context:property-placeholder />
+	<context:annotation-config />
+	<bean
+		class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer" />
+	<bean
+		class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer" />
+
+
+
+	<jaxrs:server id="saleRestService" address="/v1">
+		<jaxrs:serviceBeans>
+			<ref bean="saleService" />
+		</jaxrs:serviceBeans>
+	</jaxrs:server>
+
+	<jaxrs:server id="hello_rest" address="/hello-rest">
+		<jaxrs:serviceBeans>
+			<bean class="org.apache.cxf.systest.jaxrs.jaxws.HelloWorldImpl" />
+		</jaxrs:serviceBeans>
+
+		<jaxrs:providers>
+			<ref bean="jaxbProviderSoap" />
+		</jaxrs:providers>
+	</jaxrs:server>
+
+	<jaxws:endpoint xmlns:s="http://hello.com" serviceName="s:HelloWorld"
+		endpointName="s:HelloWorldPort" id="hello_soap-databinding"
+		implementor="org.apache.cxf.systest.jaxrs.jaxws.HelloWorldImpl"
+		address="/hello-soap-databinding">
+
+		<jaxws:dataBinding>
+			<ref bean="jaxrs-data-binding" />
+		</jaxws:dataBinding>
+
+	</jaxws:endpoint>
+
+	<bean id="jaxrs-data-binding" class="org.apache.cxf.jaxrs.provider.JAXRSDataBinding">
+		<property name="provider" ref="jaxbProviderSoap" />
+	</bean>
+
+	<bean id="jaxbProviderSoap" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider" />
+
+ -->
+
+
+</beans>
+  

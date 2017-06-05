@@ -1,0 +1,131 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:tool="http://www.springframework.org/schema/tool"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:lang="http://www.springframework.org/schema/lang"
+    xmlns:jms="http://www.springframework.org/schema/jms"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:cache="http://www.springframework.org/schema/cache"
+    xmlns:oxm="http://www.springframework.org/schema/oxm"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:websocket="http://www.springframework.org/schema/websocket"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:redis="http://www.springframework.org/schema/redis"
+    xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+    xmlns:hdp="http://www.springframework.org/schema/hadoop"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xmlns:batch="http://www.springframework.org/schema/batch"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:c="http://www.springframework.org/schema/c"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/util
+                        http://www.springframework.org/schema/util/spring-util.xsd
+                        http://www.springframework.org/schema/tool
+                        http://www.springframework.org/schema/tool/spring-tool.xsd
+                        http://www.springframework.org/schema/jee
+                        http://www.springframework.org/schema/jee/spring-jee.xsd
+                        http://www.springframework.org/schema/jms
+                        http://www.springframework.org/schema/jms/spring-jms.xsd
+                        http://www.springframework.org/schema/task
+                        http://www.springframework.org/schema/task/spring-task.xsd
+                        http://www.springframework.org/schema/cache
+                        http://www.springframework.org/schema/cache/spring-cache.xsd
+                        http://www.springframework.org/schema/lang
+                        http://www.springframework.org/schema/lang/spring-lang.xsd
+                        http://www.springframework.org/schema/jdbc
+                        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+                        http://www.springframework.org/schema/oxm
+                        http://www.springframework.org/schema/oxm/spring-oxm.xsd
+                        http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                        http://www.springframework.org/schema/websocket
+                        http://www.springframework.org/schema/websocket/spring-websocket.xsd
+                        http://www.springframework.org/schema/security
+                        http://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/redis
+                        http://www.springframework.org/schema/redis/spring-redis.xsd
+                        http://www.springframework.org/schema/data/mongo
+                        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd 
+                        http://www.springframework.org/schema/hadoop
+                        http://www.springframework.org/schema/hadoop/spring-hadoop.xsd
+                        http://www.springframework.org/schema/data/jpa
+                        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                        http://www.springframework.org/schema/batch
+                        http://www.springframework.org/schema/batch/spring-batch.xsd">
+	<context:property-placeholder location="jdbc.properties"/> <!-- context:标签方式 -->
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		
+                <!-- 初始化连接池时连接数量为5个 -->
+		<property name="initialPoolSize" value="5" />
+                <!-- 允许最小连接数量为5个 -->
+		<property name="minPoolSize" value="5" />
+                <!-- 允许最大连接数量为20个 -->
+		<property name="maxPoolSize" value="20" />
+                <!-- 允许连接池最大生成100个PreparedStatement对象 -->
+		<property name="maxStatements" value="100" />
+                <!-- 连接有效时间，连接超过3600秒未使用，则该连接丢弃 -->
+		<property name="maxIdleTime" value="3600" />
+                <!-- 连接用完时，一次产生的新连接步进值为2 -->
+		<property name="acquireIncrement" value="2" />
+                <!-- 获取连接失败后再尝试10次，再失败则返回DAOException异常 -->
+		<property name="acquireRetryAttempts" value="10" />
+                <!-- 获取下一次连接时最短间隔600毫秒，有助于提高性能 -->
+		<property name="acquireRetryDelay" value="600" />
+                <!-- 检查连接的有效性，此处小弟不是很懂什么意思 -->
+		<property name="testConnectionOnCheckin" value="true" />
+                <!-- 每个1200秒检查连接对象状态 -->
+		<property name="idleConnectionTestPeriod" value="1200" />
+                <!-- 获取新连接的超时时间为10000毫秒 -->
+		<property name="checkoutTimeout" value="10000" />
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+ 
+	<bean id="studentDaoAnnotation" class="spring_db_transaction.StudentDaoAnnotation">
+		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+	</bean>
+	 <tx:annotation-driven  proxy-target-class="true" />
+	<!-- 就可以使用@Transactional,如transactionManager就不用写transaction-manager="transactionManager" 默认值
+	如@Transactional写在接口上,必须使用proxy-target-class="false" JDK代理,true使用cglib代理,
+	
+	JDK代理报java.lang.ClassCastException: $Proxy5 cannot be cast to spring_db_transaction.StudentDaoAnnotation????
+	-->
+	
+	<bean id="studentDaoTag" class="spring_db_transaction.StudentDaoTag">
+		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+	</bean>
+	<tx:advice id="myAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" propagation="NOT_SUPPORTED" />
+			<tx:method name="*" rollback-for="Exception" propagation="REQUIRED" isolation="REPEATABLE_READ" timeout="20"/>
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut expression="execution(* spring_db_transaction.StudentDaoTag.*(..))" id="myPointCut"/>
+		<aop:advisor advice-ref="myAdvice" pointcut-ref="myPointCut"/>
+	</aop:config>
+	
+</beans>

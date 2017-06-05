@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <Properties>
+	<Property name="filename">c:/tomcat_log/${sys:os.name}/log4j2_app.log</Property> <!--  也可用  $${sys:os.name} -->
+	<Property name="LOG_HOME">c:/tomcat_log</Property>
+</Properties>

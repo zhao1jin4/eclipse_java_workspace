@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+groovy.compiler.level=21
+groovy.script.filters=**/*.dsld,n,scripts/**/*.groovy,n,src/main/resources/**/*.groovy,n,src/test/resources/**/*.groovy,n,src/spring_groovy/*.groovy,y
+groovy.script.filters.enabled=true
+org.codehaus.groovy.eclipse.preferences.compiler.project=true

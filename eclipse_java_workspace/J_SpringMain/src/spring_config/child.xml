@@ -1,0 +1,129 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:tool="http://www.springframework.org/schema/tool"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:lang="http://www.springframework.org/schema/lang"
+    xmlns:jms="http://www.springframework.org/schema/jms"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:cache="http://www.springframework.org/schema/cache"
+    xmlns:oxm="http://www.springframework.org/schema/oxm"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:websocket="http://www.springframework.org/schema/websocket"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:redis="http://www.springframework.org/schema/redis"
+    xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+    xmlns:hdp="http://www.springframework.org/schema/hadoop"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xmlns:batch="http://www.springframework.org/schema/batch"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:c="http://www.springframework.org/schema/c"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/util
+                        http://www.springframework.org/schema/util/spring-util.xsd
+                        http://www.springframework.org/schema/tool
+                        http://www.springframework.org/schema/tool/spring-tool.xsd
+                        http://www.springframework.org/schema/jee
+                        http://www.springframework.org/schema/jee/spring-jee.xsd
+                        http://www.springframework.org/schema/jms
+                        http://www.springframework.org/schema/jms/spring-jms.xsd
+                        http://www.springframework.org/schema/task
+                        http://www.springframework.org/schema/task/spring-task.xsd
+                        http://www.springframework.org/schema/cache
+                        http://www.springframework.org/schema/cache/spring-cache.xsd
+                        http://www.springframework.org/schema/lang
+                        http://www.springframework.org/schema/lang/spring-lang.xsd
+                        http://www.springframework.org/schema/jdbc
+                        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+                        http://www.springframework.org/schema/oxm
+                        http://www.springframework.org/schema/oxm/spring-oxm.xsd
+                        http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                        http://www.springframework.org/schema/websocket
+                        http://www.springframework.org/schema/websocket/spring-websocket.xsd
+                        http://www.springframework.org/schema/security
+                        http://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/redis
+                        http://www.springframework.org/schema/redis/spring-redis.xsd
+                        http://www.springframework.org/schema/data/mongo
+                        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd 
+                        http://www.springframework.org/schema/hadoop
+                        http://www.springframework.org/schema/hadoop/spring-hadoop.xsd
+                        http://www.springframework.org/schema/data/jpa
+                        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                        http://www.springframework.org/schema/batch
+                        http://www.springframework.org/schema/batch/spring-batch.xsd">	
+	<!-- <import resource="xx.xml"/> -->
+						
+	<bean id="beanUser" class="spring_config.User">
+		<property name="home">
+			<ref parent="beanHome"  /> <!-- parent 是在parent的BeanFactory , local表示只在当前xml文件中,bean表示可以在其它xml文件中 -->
+		</property>
+	</bean>
+	
+	<!-- lookup-method -->
+	<bean id="anotherBean" class="spring_config.AnotherBean" scope="prototype" />
+	<bean id="myLookup" class="spring_config.MyLookupBean">
+		<lookup-method name="newAnotherBean" bean="anotherBean"/>
+	</bean>
+	
+	<!-- replace-method -->
+	<bean id="myValueCalculaterReplacer" class="spring_config.MyValueCalculatorReplacer" scope="prototype" />
+	<bean id="myValueCalculater" class="spring_config.MyValueCalculator">
+		<replaced-method name="computeValue" replacer="myValueCalculaterReplacer"><!-- name 的值是方法名 -->
+			<arg-type>java.lang.String</arg-type> <!-- 方法签名,可是String,java.lang.String -->
+		</replaced-method>
+	</bean>
+	
+	
+	<!-- PropertyPathFactoryBean -->
+	<bean id="readAge" class="org.springframework.beans.factory.config.PropertyPathFactoryBean">
+		<property name="targetBeanName" > 
+			<idref bean="beanParent"/><!-- 只是传字串 -->
+		</property>
+		<property name="propertyPath" value="user.age"/>
+	</bean>
+	<bean id="readAge2" class="org.springframework.beans.factory.config.PropertyPathFactoryBean">
+		<property name="targetObject" >
+			<ref parent="beanParent"/><!-- parent -->
+		</property>
+		<property name="propertyPath" value="user.age"/>
+	</bean>
+	<bean id="beanParent.user.age" class="org.springframework.beans.factory.config.PropertyPathFactoryBean"/>
+	
+	<!-- FieldRetrievingFactoryBean -->
+	<bean id="readFeild" class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+		<property name="staticField" value="java.sql.Connection.TRANSACTION_SERIALIZABLE"/>
+	</bean>
+	<bean id="java.sql.Connection.TRANSACTION_SERIALIZABLE" class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean" />
+
+	<!-- MethodInvokingFactoryBean -->
+	<bean id="calender" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" >
+		<property name="staticMethod" value="java.util.Calendar.getInstance"/>
+	</bean>
+	<bean id="props" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" >
+		<property name="targetClass" value="java.lang.System"/>
+		<property name="targetMethod" value="getProperties"></property>
+	</bean>
+	<bean id="javaVersion" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" >
+		<property name="targetObject" ref="props"/>
+		<property name="targetMethod" value="getProperty"/>
+		<property name="arguments" >
+			<list>
+				<value>java.version</value>
+			</list>
+		</property>
+	</bean>
+	
+</beans>

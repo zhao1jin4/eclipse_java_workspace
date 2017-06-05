@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis_annotation">
+	<resultMap id="myMap" type="joinData">	<!-- 对应<typeAliases>  @Alias 配置   -->
+		<result property="username" column="user_name" />
+		<result property="works" column="works" />
+	</resultMap>
+</mapper>

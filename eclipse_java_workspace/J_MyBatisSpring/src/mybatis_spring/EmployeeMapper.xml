@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="EmployeeMapper">
+    <select id="selectEmployeeByName" parameterType="string" resultType="Employee" >  <!-- 对应<typeAliases>配置  -->
+        select id as id ,username as username,password as password ,birthday as birthday 
+        from employee 
+        where username = #{value}
+        <!-- org.apache.ibatis.type.JdbcType   jdbcType=VARCHAR -->
+    </select>
+	<select id="selectEmployeeById" parameterType="int" resultType="Employee" >  <!-- 对应<typeAliases>配置  -->
+		select id as id ,username as username,password as password ,birthday as birthday 
+		from employee 
+		where id = #{value}
+	</select>
+	<update id="addAgeEmployeeById" parameterType="int" >
+		update employee set age=age+1  where id = #{value}
+	</update>
+	<update id="plusAgeEmployeeById" parameterType="int" >
+		update employee set age=age-1  where id = #{value}
+	</update>
+	
+	<insert id="insert"  parameterType="map" >
+		insert into employee(id,username) 
+		values (#{id},#{username})
+	</insert>
+	
+	<insert id="insertEmployee"  parameterType="Employee" >
+        insert into employee(id,username,password,age) 
+        values (#{id},#{username},#{password},#{age})
+    </insert>
+	
+	<insert id="insertEmployeeBatch"  >
+	 	insert into employee(id,username,password,age) values
+	 	<foreach collection="employeeList" item="item" index="index" separator=",">
+	 		  ( #{item.id},#{item.username},#{item.password},#{item.age} )
+    	</foreach>
+    </insert>
+    
+	<select id="getAll" resultType="Employee" parameterType="map">
+	  SELECT id, username  FROM employee
+	  where id > #{idGt} 
+	  ORDER BY id 
+	  LIMIT #{_skiprows}, #{_pagesize}
+	</select> <!--  MyBatisPagingItemReader的属性有_page , _pagesize , _skiprows -->
+
+</mapper>

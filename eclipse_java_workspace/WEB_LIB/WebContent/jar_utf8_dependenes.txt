@@ -1,0 +1,325 @@
+----------
+建立JSP时,默认是使用UTF-8
+Preferences->web->JSP files->在Encoding中按I键,选中ISO (UTF-8)
+
+项目字符编码默认是继承工作区的字符编码
+preferences->General->workspace->设置Text file encoding 为UTF-8,这个也影响console和浏览器中输出JSP错误的编码
+
+<项目>\.settings\org.eclipse.core.resources.prefs   文件中记录了,项目的字符编码,单独的文件字符编码
+eclipse.preferences.version=1
+encoding/<project>=UTF-8
+encoding//src/mypacke/MyClass.java=UTF-8
+----------
+
+----
+	freemarker-2.3.23.jar
+============Spring 4.3.7
+
+ 
+	commons-logging-1.1.1.jar
+	
+	aopalliance-1.0.jar
+	aspectjweaver.jar
+	cglib-nodep-2.1_3.jar
+	
+	spring-aop-4.3.7.RELEASE.jar
+	spring-beans-4.3.7.RELEASE.jar
+	spring-context-4.3.7.RELEASE.jar
+	spring-context-support-4.3.7.RELEASE.jar
+	spring-core-4.3.7.RELEASE.jar
+	spring-expression-4.3.7.RELEASE.jar
+	spring-test-4.3.7.RELEASE.jar
+	spring-tx-4.3.7.RELEASE.jar
+	spring-web-4.3.7.RELEASE.jar
+	spring-websocket-4.3.7.RELEASE.jar
+	spring-webmvc-4.3.7.RELEASE.jar
+	spring-jms-4.3.7.RELEASE.jar
+	
+	spring-batch-core-3.0.5.RELEASE.jar
+	   spring-batch-infrastructure-3.0.5.RELEASE.jar
+	   spring-retry-1.1.0.RELEASE.jar
+	   xmlpull_1_0_5.jar
+	   
+	spring-data-redis-1.8.3.RELEASE.jar
+	spring-data-mongodb-1.6.1.RELEASE.jar
+	
+	spring-hateoas-0.16.0.RELEASE.jar
+		objenesis-2.1.jar 
+ 
+---
+	reactor-core-1.1.3.BUILD-SNAPSHOT.jar
+		disruptor-3.2.1.jar
+		jsr166e-1.0.jar										-------??? 等新版本删这个
+		gs-collections-api-5.0.0.jar
+
+	reactor-spring-context-1.1.3.BUILD-SNAPSHOT.jar
+	reactor-spring-core-1.1.3.BUILD-SNAPSHOT.jar
+	
+	
+	
+============Spring Security
+	spring-security-web-3.2.5.RELEASE.jar
+	spring-security-core-3.2.5.RELEASE.jar
+	spring-security-config-3.2.5.RELEASE.jar
+	spring-security-taglibs-3.2.5.RELEASE.jar
+
+	
+-------Spring MVC JSON
+	jackson-annotations-2.2.3.jar
+	jackson-core-2.2.3.jar
+	jackson-databind-2.2.3.jar
+	
+--------MyBatis
+mybatis-3.3.0.jar
+mybatis-ehcache-1.0.0.jar
+mybatis-spring-1.2.0.jar
+
+mybatis-generator-core-1.3.2.jar
+
+	commons-collections-3.2.jar
+	commons-digester-1.8.jar  用于把XML->Bean
+	commons-logging-1.1.1.jar
+	commons-beanutils-1.8.3.jar
+	jstl.jar
+	commons-codec-1.7.jar
+	
+============ActiveMQ
+slf4j-api-1.7.5.jar
+slf4j-log4j12-1.7.5.jar
+	
+--activemq-all-5.10.0.jar  用这个OK,有slf4j , 但用分包还不行，还在找要其它包
+	activemq-broker-5.10.0.jar
+	activemq-client-5.10.0.jar
+	
+	activemq-kahadb-store-5.10.0.jar
+	activemq-protobuf-1.1.jar
+	activemq-openwire-legacy-5.10.0.jar
+ 
+============logback   依赖 slf4j-api-1.7.5.jar
+	logback-core-1.1.2.jar
+	logback-classic-1.1.2.jar
+	janino-2.7.5.jar
+	commons-compiler-2.7.5.jar
+	jcl-over-slf4j-1.7.6.jar ### 如替代 Spring 使用的 commons-logging 加这个
+	
+============log4j2
+	log4j-api-2.8.2.jar
+	log4j-core-2.8.2.jar
+	log4j-slf4j-impl-2.8.2.jar
+	log4j-nosql-2.8.2.jar
+	
+json-lib依赖 	 json-lib-2.1-jdk15.jar
+	 commons-beanutils.jar
+	 commons-collections.jar
+	 commons-lang.jar
+	 commons-logging.jar
+	 dom4j-1.6.1.jar
+	 ezmorph-1.0.6.jar
+	 
+CXF的依赖   cxf-core-3.0.2.jar 
+	cxf-rt-frontend-jaxws-3.0.2.jar
+	cxf-rt-frontend-simple-3.0.2.jar
+	cxf-rt-wsdl-3.0.2.jar
+	cxf-rt-databinding-aegis-3.0.2.jar
+	cxf-rt-bindings-soap-3.0.2.jar
+	cxf-rt-transports-http-3.0.2.jar
+	cxf-rt-databinding-jaxb-3.0.2.jar
+	
+	------非web使用
+	cxf-rt-bindings-xml-3.0.2.jar
+	cxf-rt-transports-http-jetty-3.0.2.jar 
+	woodstox-core-asl-4.4.1.jar	
+	stax2-api-3.1.4.jar
+	
+	--rs相关
+		cxf-rt-rs-client-3.0.2.jar
+		javax.ws.rs-api-2.0.1.jar
+		cxf-rt-frontend-jaxrs-3.0.2.jar
+		
+	neethi-3.0.3.jar
+	geronimo-jaxws_2.2_spec-1.2.jar
+	xmlschema-core-2.1.0.jar
+	jaxb-api-2.2.11.jar
+	wsdl4j-1.6.3.jar
+	jetty-util-8.1.15.v20140411.jar    jetty嵌入式Servlet 容器
+	jetty-http-8.1.15.v20140411.jar
+	jetty-io-8.1.15.v20140411.jar
+	启动后还要
+	jetty-continuation-8.1.15.v20140411.jar
+	jetty-server-8.1.15.v20140411.jar
+	
+
+	
+HttpClient
+	httpclient-cache-4.1.3.jar
+	httpclient-4.1.3.jar
+	httpmime-4.1.3.jar
+	httpcore-4.1.4.jar
+	  
+
+jfreechart-1.0.14.jar  的依赖
+	jcommon-1.0.17.jar
+
+itextpdf-5.4.4.jar  的依赖
+	itext-asian.jar 在extrajars-2.3中
+	
+pdfbox-app-2.0.4.jar 的依赖
+	fontbox-2.0.4.jar
+	commons-logging-api-1.1.jar
+POI	的依赖 
+	poi-3.15.jar
+	poi-ooxml-3.15.jar
+	poi-ooxml-schemas-3.15.jar
+	xmlbeans-2.6.0.jar
+ 
+
+ 
+quartz-2.2.1.jar
+quartz-jobs-2.2.1.jar
+ 
+ 
+	
+---JSTL
+	jstl.jar
+	standard.jar
+---xalan
+	xalan.jar 		为JSTL xml标签的XPath
+	serializer.jar   xalan.jar的子包
+
+---Lucene-6.3.0
+	core/lucene-core-6.3.0.jar
+	analysis/common/lucene-analyzers-common-6.3.0.jar
+	analysis/smartcn/lucene-analyzers-smartcn-6.3.0.jar
+	queryparser/lucene-queryparser-6.3.0.jar
+	lucene-highlighter-6.3.0.jar   依赖于 lucene-memory-6.3.0.jar
+    tika-core-1.14.jar
+    tika-parsers-1.14.jar
+---JSR-349 - Bean Validation 1.1
+	validation-api-1.1.0.Final.jar
+	hibernate-validator-5.1.1.Final.jar
+	classmate-1.3.0.jar  		hibernate
+
+
+---JavaEE-7 
+	javax.management.j2ee-api.jar	ActiveMQ 有 geronimo-j2ee-management_1.1_spec-1.0.1.jar
+	javax.jms-api.jar   			ActiveMQ 有 geronimo-jms_1.1_spec-1.1.1.jar
+	javax.mail.jar
+	javax.persistence.jar
+	javax.transaction-api.jar
+	
+	javax.resource-api.jar   用于 JCA 
+	javax.security.auth.message-api.jar
+	javax.security.jacc-api.jar    备用
+	javax.json.jar
+	
+	javax.enterprise.concurrent-api.jar
+	javax.inject.jar
+	javax.interceptor-api.jar
+	javax.batch-api.jar
+	javax.el.jar
+----hadoop 为编译
+	hadoop-common-2.7.0.jar
+	hadoop-mapreduce-client-core-2.7.0.jar
+	hadoop-hdfs-2.7.0.jar
+		commons-cli-1.2.jar
+	
+	storm-core-1.0.2.jar			19M
+	
+	
+	//spark-assembly-1.0.0-hadoop2.2.0.jar		129M
+	spark-core_2.10-1.0.0.jar
+		scala-library.jar						5M
+	spark-sql_2.10-1.0.0.jar
+	spark-streaming_2.10-1.0.0.jar
+	spark-streaming-flume_2.10-1.0.0.jar
+	spark-streaming-kafka_2.10-1.0.0.jar
+	
+	kafka_2.10-0.8.1.1.jar
+	
+	hbase-common-1.0.1.jar
+	hbase-client-1.0.1.jar
+	hbase-server-1.0.1.jar
+	hbase-protocol-1.0.1.jar
+		protobuf-java-2.5.0.jar
+	//--htrace-core-2.04.jar
+ 	//--hbase-hadoop-compat-0.98.3-hadoop2.jar  很特别 (有hbase-hadoop2-compat-0.98.3-hadoop2.jar)
+	
+	pig-0.13.0.jar
+	zookeeper-3.4.6.jar
+	
+ant.jar 为ANT自定义任务
+jaxen-1.1-beta-7.jar 	是为Dom4j的Xpath
+xercesImpl.jar
+
+dwr.jar
+js.jar
+
+commons-fileupload-1.2.2.jar
+
+h2-1.3.166.jar
+mysql-connector-java-5.1.21-bin.jar
+ojdbc6.jar   Oracle12R1
+db2jcc.jar	 DB2
+
+mongodb-driver-3.4.0.jar
+mongodb-driver-async-3.4.0.jar
+	mongodb-driver-core-3.4.0.jar
+bson-3.4.0.jar
+
+----Third-lib
+mina-core-2.0.7.jar
+pinyin4j-2.5.0.jar
+shared-ldap-0.9.19.jar
+commons-vfs2-2.0.jar 为第三方库smb,
+commons-net-3.2.jar  为 ftp,
+commons-compress-1.9.jar
+jsch-0.1.44.jar
+velocity-1.7.jar
+displaytag-1.2.jar
+
+osgi.core-5.0.0.jar  只做编译用,运行使用apache Felix
+jcr-2.0.jar 只做编译用,运行使用apache Sling
+
+zxing_core-3.0.0-SNAPSHOT.jar 二维码
+zxing_javase-3.0.0-SNAPSHOT.jar
+
+spymemcached-2.10.3.jar	 -- MemCache Java Client
+
+xstream-1.4.7.jar
+	xmlpull-1.1.3.1.jar
+----alibaba taobao 阿里巴巴
+	alisoft-xplatform-asf-cache-2.5.1.jar -- MemCache Java Client 
+	dubbo-2.5.3.jar
+		zkclient-0.8.jar
+
+hessian-4.0.37.jar  dubbo使用的
+
+---redis client
+jedis-2.4.2.jar
+	commons-pool2-2.2.jar
+
+redisson-1.1.7-SNAPSHOT.jar 依赖 fasterxml的jackson
+	netty-all-4.1.8.Final.jar
+
+	
+--easymock-3.2.jar
+	objenesis-2.1.jar 
+junit 在eclipse中自带的
+
+
+jboss-client.jar  	JBoss 7.1.1 client
+
+bcprov-ext-1.4.9.jar --java security provider
+--large file
+weblogic.jar 	39.1M weblogic-12c client
+aocr.jar 		62.5M asprise-ocr-java-5.01    验证码识别
+WebSphere\AppServer\runtimes\com.ibm.ws.admin.client_8.5.0.jar  大小50MB 
+							com.ibm.ws.orb_8.5.0.jar 大小2M 
+jackrabbit-standalone-2.6.3.jar    63.5M
+
+JBPM 6 可先使用eclipse 插件 drools 使用Hibernagte
+---activiti
+
+
+
+

@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<project name="struts2" basedir="." default="usage">
+
+	<property name="src.dir" value="src"/>
+	<property name="project.name" value="struts2"/>
+	<property name="project.dir" value="./WebContent"/>
+	<property name="build.dir" value="${project.dir}/WEB-INF/classes"/>
+	<property name="lib.dir" value="${project.dir}/WEB-INF/lib"/>
+	<property name="tomcat-lib.dir" value="D:\apache-tomcat-6.0.14\lib"/>
+
+
+	<path id="master-classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${tomcat-lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		
+	</path>
+
+	<target name="clean" description="Clean output dirs (build, weblib, dist)">
+		<delete dir="${build.dir}"/>
+	</target>
+
+
+	<target name="build" description="Compile main source tree java files into class files, generate jar files">
+		<mkdir dir="${build.dir}"/>
+		<javac destdir="${build.dir}" source="1.5" target="1.5" debug="true"
+				deprecation="false" optimize="false" failonerror="true">
+			<src path="${src.dir}"/>
+			<classpath refid="master-classpath"/>
+		</javac>
+		
+	</target>
+
+	<target name="warfile" depends="build" description="Build the web application archive">
+		<war warfile="${project.name}.war" basedir="./WebContent" webxml="./WebContent/WEB-INF/web.xml">
+			<include name="*/**"/>
+		</war>
+
+	</target>
+
+	<target name="all" depends="clean,build,warfile" description="Clean,build,warfile"/>
+
+
+
+<target name="usage">
+		<echo message="Available targets are:"/>
+		<echo message=""/>
+		<echo message="clean    --> Clean output dirs"/>
+		<echo message="build    --> Compile main Java sources and copy libraries"/>
+		<echo message="warfile  --> Build the web application archive"/>
+		<echo message="all      --> Clean, build, warfile"/>
+		<echo message=""/>
+
+	</target>
+</project>
