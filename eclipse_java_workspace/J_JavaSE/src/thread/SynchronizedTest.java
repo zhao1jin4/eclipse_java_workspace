@@ -42,6 +42,7 @@ public class SynchronizedTest
 		}
 	}
 	
+	
   public static void main(String[] args) 
   {
 	  recursveSync();
@@ -71,7 +72,25 @@ public class SynchronizedTest
 			}
 		}.start();
 		
+		
+		LoggingWidget x=new LoggingWidget();
+		x.doSomething();
   }
 }
 
- 
+class Widget
+{
+	public synchronized void doSomething()
+	{
+		System.out.println("int Widget  doSomething" );
+	}
+}
+class LoggingWidget extends Widget
+{
+	public synchronized void doSomething()
+	{
+		System.out.println("int LoggingWidget  doSomething" );
+		super.doSomething();
+	}
+}
+  

@@ -53,5 +53,18 @@ object Test2 {
 //      println( p1.matchTest("two"))
 //      println( p1.matchTest(2))
 //      println( p1.matchTest("test"))
+      
+      
+      val firstArg = if (!args.isEmpty) args(0) else ""
+        val friend = firstArg match   //match 同  if 可以有返回值
+          { case "salt" => "pepper" 
+             case "chips" => "salsa" 
+             case "eggs" => "bacon" 
+             case _ => "huh?" 
+          }
+         println(friend)
+      
+      
+      
    }
 }

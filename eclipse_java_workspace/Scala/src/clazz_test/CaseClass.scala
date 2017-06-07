@@ -18,7 +18,12 @@ object Test1
                println("Age: " + age + " year, name: " + name + "?")
          }
       }
+   	
+   	
+     
    }
+   
+   
    // 样例类
    case class Person(name: String, age: Int)
 }

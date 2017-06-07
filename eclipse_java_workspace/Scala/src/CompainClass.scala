@@ -5,7 +5,6 @@
 class Marker private(val color:String) {
 
   println("创建" + this)
-  
   override def toString(): String = "颜色标记："+ color   //重写toString()方法 
   
 }
@@ -30,6 +29,7 @@ object Marker{
     def main(args: Array[String]) { 
         println(Marker("red"))  
         // 单例函数调用，省略了.(点)符号  
-		println(Marker getMarker "blue")  
+		println(Marker getMarker "blue") 
+		
     }
 }

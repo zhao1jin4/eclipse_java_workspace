@@ -1,10 +1,16 @@
 import scala.util.control._
 import Array._
-// 就不要main方法 了
-object HelloApp extends App { 
+
+// 就不要main方法 了,如果想访问命令行参数的话就不能用它
+object HelloApp extends App 
+{ 
   println("Hello, App!") //可不写分号
   
 
+  val a123 = 1;
+  { val a123 = 2 // 编译通过, 可以在一个内部范围内定义与外部范围里名称相同的变量
+    println(a123) 
+  }
   
      var a = 0;
      var numList = List(1,2,3,4,5,6);//List不可变的
@@ -52,7 +58,7 @@ object HelloApp extends App {
          println( "Value of a: " + a );
       }
     
-                      
+   */                      
       val loop = new Breaks;  //break方式scala.util.control.Breaks
       loop.breakable {
          for( a <- numList){
@@ -62,10 +68,25 @@ object HelloApp extends App {
             }
          }
       }
- */       
+  
+       val filesHere = (new java.io.File("./src")).listFiles
+      def fileLines(file: java.io.File) = scala.io.Source.fromFile(file).getLines.toList
       
+      def grep(pattern: String) = 
+         for { file <- filesHere 
+                   if file.isFile; //多个条件用;
+                   if file.getName.endsWith(".scala") 
+               line <- fileLines(file)  //双重循环
+                   trimmed = line.trim  //中间变量
+                  if trimmed.matches(pattern)
+          } 
+         println(file + ": " + trimmed) 
+       grep(".*gcd.*")
+       
+       
+       
+         
       printVeryChar("a","b","c")
-      
      def printVeryChar(c:String*)=  //动态参数个数
      {
         c.foreach( (x:String) => println(x) ) //=>函数文本
@@ -77,6 +98,16 @@ object HelloApp extends App {
         for(x<-c) //for 遍历
           println(x)
      }
+     printEveryInt(10 to 15:_*) //特殊用法 to 返回 Range.Inclusive
+     def printEveryInt(i:Int*) 
+     { 
+        println(i)
+     }
+       
+    def echo(args: String*) = for (arg <- args) println(arg)
+    val arr = Array("What's", "up", "doc?")
+    echo(arr: _*)
+    
       def defaultParam(name:String="world"):String= //参数默认值
      {
        return "hello " +name
@@ -91,7 +122,8 @@ object HelloApp extends App {
        return sum  //可不写return
    }
      println(addInt(3,3))
-     
+     println(addInt(b=3,a=4)) //可以使用参数名修改顺序
+      
     def add2(x:Int) (y:Int) =x+y //多参数写法2,如果函数只有一行代码可以不写{}
     println(add2(5)(3))
     
@@ -164,13 +196,15 @@ object HelloApp extends App {
       
        var myList1 = Array(1.9, 2.9, 3.4, 3.5)
       var myList2 = Array(8.9, 7.9, 0.4, 1.5)
-
-      var myList3 =  concat( myList1, myList2) //合并数组
+       var myList3 =myList1++ myList2
+     // var myList3 =  concat( myList1, myList2) //合并数组
       for ( x <- myList3 ) {
          println( x )
       }
-       
-       
+      
+       var zipList=for ( (item1, itme2) <-  myList1 zip  myList2) yield item1 + itme2
+       println(zipList mkString "_" )
+           
       // range() 方法最后一个参数为步长，默认为 1：
       var myList11 = range(10, 20, 2)
       var myList22 = range(10,20)

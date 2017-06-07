@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 enum ColorEnum {red,blue};
 
@@ -18,7 +19,7 @@ public class My {
 	public My()
 	{
 		System.out.println("PP");
-		
+		AtomicInteger x;
 	}
 	static class You extends My{
 		public You()

@@ -16,5 +16,14 @@ object TestException {
       } finally {
          println("Exiting finally...")
       }
+      
+      
+      def f(): Int = try { return 1 } finally { return 2 }// 调用f()产生结果值2 
+      def g(): Int = try { 1 } finally { 2 }  //调用g()产生1
+    //还是避免从finally子句中返回值
+    println(f()) 
+    println(g())
+
+
    }
 }
