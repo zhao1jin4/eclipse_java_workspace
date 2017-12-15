@@ -5,6 +5,9 @@ import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import spring_jsp.extention.DateRange;
+
+
 
 public class Employee {
 	
@@ -15,6 +18,15 @@ public class Employee {
 	private String last_name;
 	private String salary;
 	private Date birthDay;
+	private DateRange createTimeRange;
+	 
+	 
+	public DateRange getCreateTimeRange() {
+		return createTimeRange;
+	}
+	public void setCreateTimeRange(DateRange createTimeRange) {
+		this.createTimeRange = createTimeRange;
+	}
 	public int getEmployee_id() {
 		return employee_id;
 	}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+	
+<configuration>
+<!--
+	<properties resource="jdbc.properties">
+		<property name="username" value="sa" />
+		<property name="password" value="errorpassword" />
+	</properties>   低先级优，被.properties覆盖 -->
+	
+	<settings>
+	   <setting name="jdbcTypeForNull" value="NULL"/> <!-- 为 @Insert  中 #{_req.id} 的值是null,DB中也是null,如不配置则报错-->
+		<setting name="cacheEnabled" value="true" />
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="useGeneratedKeys" value="false" />
+		<setting name="defaultExecutorType" value="SIMPLE" /> <!-- BATCH -->
+		<setting name="defaultStatementTimeout" value="25000" />
+	</settings>
+	
+	<typeAliases>
+	   <!--  <typeAlias alias="Student" type="mybatis_spring.Student"/>
+		 <typeAlias alias="Employee" type="mybatis_spring.Employee"/>
+		   <package name="mybatis_xml"/> 加了这个 就可以直接写  resultType="Employee"-->
+	</typeAliases>
+	
+	<!-- 
+	<plugins>
+		<plugin interceptor="mybatis_annotation.SQLLogInterceptor" />
+	</plugins>
+	 -->
+	 <!-- 
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	 -->
+	 
+	<!-- 
+	<mappers>
+		<mapper resource="mybatis_spring/EmployeeMapper.xml" />
+		<mapper resource="mybatis_spring/StudentMapper.xml" />
+	</mappers>
+	 -->
+</configuration>

@@ -20,9 +20,9 @@ import spring_jsp.annotation.form.EmployeeResult;
 @RequestMapping("/json") 
 public class JSONController //OK
 {
-		@RequestMapping(value="/queryEmployeeVO",method=RequestMethod.POST)
+		@RequestMapping(value="/queryEmployeeVO")//,method=RequestMethod.POST
 		@ResponseStatus(HttpStatus.OK)
-	    @ResponseBody
+	    @ResponseBody //加这个表示只返回数据,不跳转页面(默认是和RequestMapping相同页)
 		public EmployeeResult queryEmployeeVO	( @RequestBody  Employee emp)
 		{
 			System.out.println(emp.getEmployee_id());

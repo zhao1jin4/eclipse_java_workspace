@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns:xi="http://www.w3.org/2001/XInclude"
+    status="WARN" monitorInterval="30" > <!-- monitorInterval 修改自动加载,单位是秒,这个配置最小5 -->
+  
+         
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        
+        <!--  MyBatis 输出SQL日志和参数  -->
+         <Logger name="log4j.logger.java.sql.Connection" level="DEBUG"  additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        
+          <!-- 如有批量insert  日志量就很大  -->
+         <Logger name="log4j.logger.java.sql.PreparedStatement" level="DEBUG"  additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        
+        <Root level="DEBUG">
+            <AppenderRef ref="Console" />
+        </Root>
+    </Loggers>
+</Configuration>

@@ -13,14 +13,16 @@ import javax.crypto.spec.DESKeySpec;
 
 public class DESUtil 
 {
+	 
 	private static Key getRandomKey()
 	{
 		SecretKey key=null;
 		try
 		{
 			SecureRandom random = new SecureRandom();
+			SecureRandom randomx = SecureRandom.getInstance("SHA1PRNG");
 			KeyGenerator keyGenerator = KeyGenerator.getInstance ("DES" );
-			keyGenerator.init (random);
+			keyGenerator.init (randomx);
 			key = keyGenerator.generateKey();	
 		}catch(Exception e)
 		{
@@ -151,6 +153,8 @@ public class DESUtil
 	 
 	public static void main(String[] args)
 	{
+		getRandomKey();
+		
 		String encode=DESUtil.encryptString("lzj", "44332211");
 		String expect="10d7974ad819cf52";
 		

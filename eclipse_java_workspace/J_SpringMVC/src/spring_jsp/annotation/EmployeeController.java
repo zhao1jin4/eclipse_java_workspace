@@ -35,6 +35,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import spring_jsp.annotation.form.Employee;
+import spring_jsp.extention.DateRange;
+import spring_jsp.extention.DateRangeEditor;
 
 @Controller
 @RequestMapping("/employee") //相当于一个目录
@@ -71,7 +73,8 @@ public class EmployeeController {
 	public void initBinder(WebDataBinder binder)//要用 WebDataBinder
 	{
 		System.out.println("调用initBinder");
-		binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
+		//binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
+		//binder.registerCustomEditor(DateRange.class, new DateRangeEditor() );//MyWebBindingInitializer中的
 	}
 	
 	@RequestMapping("/add/{id}/{name}/{birthday}") 
@@ -87,7 +90,12 @@ public class EmployeeController {
 		System.out.println("searchEmployee ");
 		return "/company_annotation/employeeList";
 	}
-
+	@RequestMapping(value="/submitQuery",method=RequestMethod.GET)  
+	public String submitQuery(Employee param,String otherParam )//表单参数可以单独参数同名传过来
+	{
+		System.out.println(String.format("submitQuery datarange =%s,otherParam=%s",param.getCreateTimeRange(),otherParam));
+		return "/company_annotation/employeeList";
+	}
 	@RequestMapping(value="/update",method=RequestMethod.GET) //可相当路径,Get,Post不同
 	public ModelAndView initUpdateEmployee(@RequestParam("id")int emp_id)
 	{

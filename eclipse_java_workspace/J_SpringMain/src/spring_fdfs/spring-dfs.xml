@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <context:component-scan base-package="spring_fdfs"></context:component-scan>
+    
+<!-- 
+  <bean id="dfsClientConnection"
+      class="org.csource.fastdfs.ClientGlobal" init-method="init1">
+    <property name="p_g_connect_timeout" value="${dfs.connTimeout}"></property>
+    <property name="p_g_network_timeout" value="${dfs.networkTimeout}"></property>
+    <property name="p_g_charset" value="${dfs.charset}"></property>
+    <property name="p_g_tracker_http_port" value="${dfs.trackerHttpPort}"></property>
+    <property name="p_g_anti_steal_token" value="${dfs.antiStealToken}"></property>
+    <property name="p_g_secret_key" value="${dfs.secretKey}"></property>
+    <property name="p_tracker_servers" value="${dfs.trackerServers}"></property>
+  </bean>
+   -->
+    <bean id="dfsClientConnection"
+      class="org.csource.fastdfs.ClientGlobal" init-method="init1">
+    <property name="p_g_connect_timeout" value="2000"></property>
+    <property name="p_g_network_timeout" value="2000"></property>
+    <property name="p_g_charset" value="GBK"></property>
+    <property name="p_g_tracker_http_port" value="8080"></property>
+    <property name="p_g_anti_steal_token" value="no"></property>
+    <property name="p_g_secret_key" value=""></property>
+    <property name="p_tracker_servers" value="172.16.37.41:22122,172.16.37.40:22122"></property>
+    
+    <!-- 172.16.37.41:22122,172.16.37.40:22122  测试OK   多个以,分隔 172.16.35.35:22122 -->
+  </bean>
+  
+  <bean id="stclient"
+      class="org.csource.fastdfs.StorageClient1">
+    <constructor-arg index="0" ref="dfsClientConnection" />
+  </bean>
+  <bean id="fileStorage"
+      class="spring_fdfs.FileSystemClient">
+  </bean>
+
+</beans>

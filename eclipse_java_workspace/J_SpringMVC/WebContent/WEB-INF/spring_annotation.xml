@@ -69,6 +69,7 @@
 	<context:component-scan base-package="spring_jsp.annotation" />
 	<context:component-scan base-package="hateoas" />
 	<context:component-scan base-package="reset" />
+	<context:component-scan base-package="swagger" />
 	
 	<!--基于UrlBasedViewResolver,就不用指定viewClass
 	<bean  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -107,11 +108,29 @@
 	</bean>
  -->
  
+ 
+ <!-- 也可以这样配置
+ <mvc:annotation-driven>
+ 	<mvc:message-converters>
+ 		<ref bean="mappingJacksonHttpMessageConverter" />
+ 	</mvc:message-converters>
+ </mvc:annotation-driven>
+ -->
    <!-- RequestMappingHandlerAdapter  　 的配置影响　@Valid的有效性 ???  -->
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="messageConverters">
 			<list>
-				<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/> <!-- application/json -->
+				<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"> <!-- application/json -->
+				 <property name="objectMapper">
+			        <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+			            <property name="dateFormat">
+			                <bean class="java.text.SimpleDateFormat">
+			                    <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/> <!-- JSON到SpringMVC日期格式-->
+			                </bean>
+			            </property>
+			        </bean>
+			    </property>
+				</bean>
 				<bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/> <!-- XML 为 @ResponseBody -->
 				<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>  <!--为 @ResponseBody 的 text/* --> 
 				<!-- <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>   application/x-www-form-urlencoded  --> 

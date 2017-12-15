@@ -14,7 +14,8 @@ public class MyWebBindingInitializer implements WebBindingInitializer
 	@Override
 	public void initBinder(WebDataBinder binder, WebRequest request) {
 		System.out.println("µ÷ÓÃ MyWebBindingInitializer ");
-		//binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
-		binder.registerCustomEditor(Date.class,new  MyPropertyEditor());
+		binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
+//		binder.registerCustomEditor(Date.class,new  MyPropertyEditor());
+		binder.registerCustomEditor(DateRange.class,new  DateRangeEditor());//employee/employeeList
 	}
 }

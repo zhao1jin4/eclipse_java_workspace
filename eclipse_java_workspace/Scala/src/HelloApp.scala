@@ -12,6 +12,7 @@ object HelloApp extends App
     println(a123) 
   }
   
+  
      var a = 0;
      var numList = List(1,2,3,4,5,6);//List不可变的
       for( a <- 1.to( 10)){    // str.subString(2) 也可以写成 str subString 2 形式

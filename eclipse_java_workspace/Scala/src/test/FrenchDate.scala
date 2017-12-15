@@ -18,13 +18,16 @@ object FrenchDate {
                               第二行
                               第n行"""
     
-    //方法返回值是元组
+    // 元组给变量赋值
     val (myVar1: Int, myVar2: String) = Tuple2(40, "Foo")
+    println(myVar1)
     
-    val pair = (99, "Luftballons") 
-    println(pair._1) 
+    val pair = (99, "Luftballons") //元组
+    println(pair._1) //开头
     println(pair._2)
     
+   val (id: Int, _)=pair  //可不要元组中的元素
+   
     
   }
 }

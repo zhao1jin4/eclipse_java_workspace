@@ -28,10 +28,16 @@
 <fmt:message key="employee_query"/>
 <br/>
 
-<form action="">
-	<spring:message code="employee_id"/><input type="text" name="byid" />
+<form action="<%=request.getContextPath() %>/employee/submitQuery.mvc">
+	<spring:message code="employee_id"/> <br/>
+	
+	first_name ：<input type="text" name="first_name" value="王"/> <br/>
+	otherParam ：<input type="text" name="otherParam" value="other"/> <br/>
+	bootstrap daterangepicker <input type="text" name="createTimeRange" value="2017/01/25 12:12:12 - 2017/03/25  13:13:13"/>
+	<input type="submit" /><br/>
 </form>
 
+<br/>
 
 <a href="<spring:url value="/employee/xxxxxx.mvc"/>">新增加员工spring</a>  
 <a href="<c:url value="/employee/xxxxxx.mvc"/>">新增加员工 c</a>

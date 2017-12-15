@@ -128,9 +128,14 @@
 			<bean class="org.apache.ibatis.transaction.managed.ManagedTransactionFactory"/>
 		</property>
 		 -->
-		 
+	
 		<property name="configLocation" value="classpath:mybatis_spring/Configuration.xml"></property>
 		 <!--
+		  <property name="configurationProperties">
+	        <props>
+	          <prop key="jdbcTypeForNull">NULL</prop>
+	        </props>
+	    </property>
 		<property name="mapperLocations" value="classpath*:org/zhaojin/mybatis/vo/**/*.xml" />
 		 
 		<property name="plugins">
@@ -138,7 +143,7 @@
 				<bean class="mybastis_spring.SQLLogInterceptor" />
 			</list>
 		</property>
-		-->
+		--> 
 	</bean>
 	
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

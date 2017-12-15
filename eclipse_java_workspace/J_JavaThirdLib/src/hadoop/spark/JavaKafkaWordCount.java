@@ -19,6 +19,7 @@ package hadoop.spark;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.regex.Pattern;
 
 
@@ -86,11 +87,14 @@ public final class JavaKafkaWordCount {
       }
     });
 
+  
     JavaDStream<String> words = lines.flatMap(new FlatMapFunction<String, String>() {
-      @Override
-      public Iterable<String> call(String x) {
-        return Lists.newArrayList(SPACE.split(x));
-      }
+
+		@Override
+		public Iterator<String> call(String x) throws Exception {
+			   return  Lists.newArrayList(SPACE.split(x)).iterator() ;
+		}
+    
     });
 
     JavaPairDStream<String, Integer> wordCounts = words.mapToPair(
@@ -108,6 +112,10 @@ public final class JavaKafkaWordCount {
 
     wordCounts.print();
     jssc.start();
-    jssc.awaitTermination();
+    try {
+		jssc.awaitTermination();
+	} catch (InterruptedException e) {
+		e.printStackTrace();
+	}
   }
 }

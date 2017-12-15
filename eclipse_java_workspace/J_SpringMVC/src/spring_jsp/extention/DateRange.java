@@ -1,0 +1,37 @@
+package spring_jsp.extention;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * 对应于 UI中的daterange 的日期组件
+ * Created by zhaojin on 7/12/2017.
+ */
+public class DateRange implements Serializable {
+	//是实现Serializable
+
+    private Date beginTime;
+    private Date endTime;
+
+    public Date getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+	@Override
+	public String toString() {
+		return "DateRange [beginTime=" + beginTime + ", endTime=" + endTime + "]";
+	}
+    
+}

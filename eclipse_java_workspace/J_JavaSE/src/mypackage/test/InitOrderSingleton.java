@@ -9,7 +9,7 @@ public class InitOrderSingleton {
 	private static  int num2=0;
 	
 	
-	
+	int x=3;
 	
 	private InitOrderSingleton()
 	{
@@ -25,42 +25,54 @@ public class InitOrderSingleton {
 		 
 		InitOrderSingleton instance = InitOrderSingleton.getInstance();
 		System.out.println("num1="+instance.num1);
-		System.out.println("num2="+instance.num2);//显示为0的原因是执行执行顺序,先为属性分配置空间给默认值,再给手工指定的值(属性从上到下执行),没有手工给值的不执行
+		System.out.println("num2="+instance.num2);//显示为0的原因是,static按执行顺序,就变为先构造了,所以在static num2前,再给手工指定的值(属性从上到下执行),没有手工给值的不执行
+		
+		ParentInit x;// 这样不会调用 static 块
 		
 		Init init=new Init();
 		System.out.println("init.a="+init.a);
 		
-		FinalTest x;// 这样不会调用 static 块
+		
 //		System.out.println("FinalTest.n="+FinalTest.n);
 //		System.out.println("FinalTest.m="+FinalTest.m);
 	}
 	
 }
 
-class FinalTest
+class ParentInit
 {
-	public static final int n=6/3;//   6/3  编译时就可以给出的值常量
+	public static final int n=6/3;//  final 类型的  6/3  编译时就可以给出的值常量
 	public static final int m=new Random().nextInt();
 	static{
-		System.out.println("in FinalTest static block");  
-		//如n=6/3 是final这里不会被执行,但如是Random,要运行时才知道会执行,会对类初始化,就要执行,但只static也会执行,因为可能会被修改
+		System.out.println("in ParentInit static block");   
 	}
+	
+	public ParentInit()  
+	{
+		System.out.println("in Init ParentInit");  
+	}
+	int a=3;
+	{
+		System.out.println("in  ParentInit block");  
+	}
+	
 }
 
-class Init //extends FinalTest 
+class Init  extends ParentInit 
 {
-	int a=1;
+	
 	static int s=2;
 	static {
 		s=3;
 		System.out.println("in Init static block");  
 	}
-	public Init() //初始化顺序 static属性块->先初始化非static有值字段->构造方法 
+	{
+		System.out.println("in  Init block");  
+	}
+	public Init() //类的初始化顺序   static 属性或块按书写的顺序 (有父类先父类,再子类)  -> 1. {}块  , 初始化非static有值字段 按书写的顺序来 ,2.构造方法 (有父类先父类,再子类)
 	{
 		a=2;
 	}
-}
-// 初始化一个类时,如有有实现接口,接口不会被初始化,  如初始化接口时不会初始化父接口,除非使用接口静态变量才初始化
-
- 
+	int a=1;
+} 
 

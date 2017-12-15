@@ -24,6 +24,7 @@ public class MainBeanValidation {
 		 order.setEmail(""); 
 		 order.setStatus(""); 
 		 order.setIsPay("X");
+		 order.setPrice(9823.34f); //4523.534
 		 User user=new User();
 		 user.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse("2018-02-03"));
 		 user.setPassword("abc123");

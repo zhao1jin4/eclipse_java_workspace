@@ -4,4 +4,6 @@ encoding//WebContent/WEB-INF/freemarker/hello.ftl=UTF-8
 encoding//WebContent/WEB-INF/freemarker/ok.ftl=UTF-8
 encoding//WebContent/WEB-INF/freemarker/query.ftl=UTF-8
 encoding//WebContent/WEB-INF/freemarker/register.ftl=UTF-8
+encoding//src/spring_jsp/extention/DateRange.java=UTF-8
+encoding//src/spring_jsp/extention/DateRangeEditor.java=UTF-8
 encoding/<project>=GBK

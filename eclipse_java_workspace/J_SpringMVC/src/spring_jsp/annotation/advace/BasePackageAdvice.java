@@ -12,6 +12,8 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.http.HttpStatus;
 
 import spring_jsp.annotation.form.UserDetails;
+import spring_jsp.extention.DateRange;
+import spring_jsp.extention.DateRangeEditor;
 import spring_jsp.extention.MyPropertyEditor;
 
 @ControllerAdvice("spring_jsp.annotation")
@@ -20,6 +22,7 @@ public class BasePackageAdvice
 	 @ModelAttribute
 	 public UserDetails newUser() 
 	 {
+	 
         System.out.println("============应用到所有@RequestMapping注解方法，在其执行之前把返回值放入Model");
         return new UserDetails();
     }
@@ -28,6 +31,7 @@ public class BasePackageAdvice
     public void initBinder(WebDataBinder binder) 
     {
     	binder.registerCustomEditor(Date.class,new  MyPropertyEditor());
+    	binder.registerCustomEditor(DateRange.class,new  DateRangeEditor());
         System.out.println("============应用到所有@RequestMapping注解方法，在其执行之前初始化数据绑定器");
     }
     @ExceptionHandler(RuntimeException.class)

@@ -38,6 +38,7 @@ function   generateMd5()
 	<hr/> 第三方库  <br/>
 	
 	<a href="fileUpload.html">fileUpload  测试</a> <br/>
+	<a href="jQueryFileUpload/upload.html">jquery fileUpload  插件 测试</a> <br/>
 	<a href="jfreechart.jsp">jfreechart  测试</a> <br/>
 	<a href="freemaker">Freemaker 测试</a> <br/>
 	

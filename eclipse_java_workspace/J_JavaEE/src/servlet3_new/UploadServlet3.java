@@ -24,6 +24,7 @@ public class UploadServlet3 extends HttpServlet{
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		System.out.println("UploadServlet3 in doGet");
 	}
 
 	@Override

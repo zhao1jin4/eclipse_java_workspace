@@ -21,6 +21,7 @@ class Super
 class Sub extends Super
 {
     f()
+    
 }
 
 //Scala没有静态成员,单例对象用object关键字替换了class ,定义object 名与class名相同时叫伴生对象,不与伴生同名的对象叫孤立对象

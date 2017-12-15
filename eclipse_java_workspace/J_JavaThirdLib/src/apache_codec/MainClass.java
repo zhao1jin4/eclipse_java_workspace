@@ -34,7 +34,7 @@ public class MainClass
 		System.out.println(new String(encoded_buffer));
 		
 		
-		byte[]apache=Base64Util.encodeAsBytes(buffer);
+		byte[]apache=ApacheBase64Util.base64Encode(buffer);
 		System.out.println("==========My=====apache======");
 		System.out.println(new String(apache));
 		
@@ -47,7 +47,6 @@ public class MainClass
 			System.out.println(new String(apache,"ISO-8859-1"));
 		} catch (UnsupportedEncodingException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -8,6 +8,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="F:/all_code_workspace/eclipse_java_workspace/WEB_LIB/WebContent/WEB-INF/slf4j-impl/logback-classic-1.1.11.jar"/>
+	<classpathentry kind="lib" path="/WEB_LIB/WebContent/WEB-INF/slf4j-impl/log4j-slf4j-impl-2.8.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

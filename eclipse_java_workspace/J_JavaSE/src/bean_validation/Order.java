@@ -1,7 +1,13 @@
 package bean_validation;
 
 import javax.validation.Valid;
+import javax.validation.constraints.AssertFalse;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -30,18 +36,27 @@ public class Order
 	@Pattern(regexp="^[0-9]{13}$" ,message="手机号必须是13位数字")
 	private String telepone;
 	
-	@javax.validation.constraints.Pattern(regexp="^(Y|N){1}$" ,message="isPay必须是Y或N")
+	@Pattern(regexp="^(Y|N){1}$" ,message="isPay必须是Y或N")
     private String isPay;
 	
-	@Range(min=0,message="单价要大于0")//hiberante
+	
+	@Digits(integer=4,fraction=2) //整数最多4位，小数最多2位
+	@DecimalMax("5555.32")
+	@DecimalMin("10.00")
 	private float price;
 	
 	@Status(message="状态应只可是 'created', 'paid', shipped', closed'") //自定义验证
 	private String status;  
 	
-	 @Valid   // 嵌套验证
-	 private User user;
-
+	@Null(message="下一个必须为空")
+	private Order nextOrder;
+	
+	@AssertTrue(message="有效必须为true")  // @AssertFalse 
+	private boolean available;
+	
+	@Valid   // 嵌套验证
+	private User user;
+	
 	 
 	public String getIsPay() {
 		return isPay;

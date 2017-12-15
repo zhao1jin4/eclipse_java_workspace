@@ -85,7 +85,7 @@ ControllerBeanNameHandlerMapping  <br/>
 请求和响应都是JSON 
 <script type="text/javascript" src="js/jquery-2.0.3.js"></script>
 <script type="text/javascript">
-var root="http://localhost:8080/J_SpringMVC";
+var root="/J_SpringMVC";
 function createXmlHttp()
 {
 	if (window.XMLHttpRequest)
@@ -133,6 +133,10 @@ function jQueryJSONRequest() //OK
 		success:function(response)
 		{
 			alert("success:"+response.allClothes[1]);
+		},
+		error:function(  jqXHR,  textStatus,  errorThrown )
+		{ 
+			alert(textStatus);
 		}
 	};
 	$.ajax (config);
@@ -180,7 +184,12 @@ function sendWebsocket()
 <a href="freemarkerRegister/initRegister.mvc" > Register with validator </a><br/>
 <a href="freemarkerQuery/initQuery.mvc" >queryFreemarker  </a><br/>
 <hr/>
+
+ <br/>
+ 使用 http://127.0.0.1:8080/J_SpringMVC/api-docs.mvc  或者 修改   <url-pattern>/</url-pattern>
  
+<a href="http://127.0.0.1:8080/J_SpringMVC/sdoc.jsp">swagger sdoc.jsp </a>
+
 
 </body>
 </html>

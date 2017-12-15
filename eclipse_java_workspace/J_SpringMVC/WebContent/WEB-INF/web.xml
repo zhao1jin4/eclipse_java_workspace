@@ -60,7 +60,7 @@
       /WEB-INF/spring_annotation.xml
       classpath:springweb_websocket/websocket_beans.xml
        -->
-      <param-value>     /WEB-INF/spring_freemarker.xml
+      <param-value>    /WEB-INF/spring_annotation.xml
       </param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
@@ -68,7 +68,10 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>spring_mvc</servlet-name>
-    <url-pattern>*.mvc</url-pattern>
+    <url-pattern>*.mvc</url-pattern>  
+    <!-- <url-pattern>/</url-pattern>  fow swagger
+		<url-pattern>*.mvc</url-pattern> 
+		-->
   </servlet-mapping>
   
   
@@ -94,6 +97,5 @@
 	    <url-pattern>/remoting/hessianServer</url-pattern>
 	</servlet-mapping>
 	
-	
-
+	 
 </web-app>

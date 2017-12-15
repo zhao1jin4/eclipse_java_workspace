@@ -1,4 +1,4 @@
-class Rational(n: Int, d: Int) extends Ordered[Rational]
+class Rational(n: Int, d: Int) extends Ordered[Rational]  // Ordered  ,自动实现了 > ,<,<=,>=
  {
     def compare(that: Rational) = (this.numer * that.denom) - ( that.numer * this.denom)
   
@@ -33,16 +33,13 @@ object MainImplicit  {
   implicit val name1="the implicit name!!" //不根据变量名字
   
 
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]): Unit =
+  {
         implicit def intToRational(x: Int) = new Rational(x)  //自动把整数转换为Rational分数的隐式转换
         val r = new Rational(2,3)
        println( 2*r )
-       
+       println(  r > new Rational(3,4) )
        testImplicitParam
-       
-       
-       
-       
        
      }
  }
