@@ -23,7 +23,8 @@ function   generateMd5()
 	<a href="sessionForm.jsp">基本Servlet 测试</a> <br/>
 	<a href="tag_jstl.jsp">自定义标签__JSTL</a> <br/>
 	<a href="async">Async Servlet 测试</a> <br/>
-	<a href="nowebxml">Servlet 3 no web.xml 测试,要建立.jar/META-INF/services</a> <br/>
+	<a href="nowebxml">Servlet 3 no web.xml 测试,classpath 下 META-INF/services</a> <br/>
+	<a href="nowebxml2">Servlet 3 no web.xml 2  测试,classpath 下 META-INF/services</a> <br/>
 	<a href="cookieServ">Cookie 测试</a> <br/>
 	<a href="download">download 测试</a> <br/>
 	<a href="loginWithValidateCode.jsp">验证码 测试</a> <br/>

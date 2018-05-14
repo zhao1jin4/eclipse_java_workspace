@@ -18,7 +18,7 @@ CXF的依赖   cxf-core-3.0.2.jar
 		cxf-rt-rs-client-3.0.2.jar
 		javax.ws.rs-api-2.0.1.jar
 		cxf-rt-frontend-jaxrs-3.0.2.jar
-		
+		xmlpull_1_0_5.jar
 		 
 	neethi-3.0.3.jar
 	geronimo-jaxws_2.2_spec-1.2.jar

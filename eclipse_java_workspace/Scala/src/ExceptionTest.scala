@@ -7,7 +7,7 @@ object TestException {
       try {
          val f = new FileReader("input.txt")
       } catch {
-         case ex: FileNotFoundException => {
+         case _: FileNotFoundException => {//可用_
             println("Missing file exception")
          }
          case ex: IOException => {
@@ -23,6 +23,19 @@ object TestException {
     //还是避免从finally子句中返回值
     println(f()) 
     println(g())
+
+    
+    
+    
+   
+     //scala -g:notailcalls 或者 scalc 下加入 ，会得到一个长长的信息
+     def bang(x: Int): Int ={
+    	if( x == 0) 
+    		throw new Exception("bang!") 
+    	else 
+    		bang(x-1)
+    }
+    //bang(5) 
 
 
    }

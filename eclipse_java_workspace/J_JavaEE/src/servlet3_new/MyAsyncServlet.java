@@ -16,32 +16,42 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
  
-//@WebServlet(urlPatterns = {"/async"} ,asyncSupported=true)
+//@WebServlet(urlPatterns = {"/async"} ,asyncSupported=true)//被动态配置的
 public class MyAsyncServlet extends HttpServlet {
-	 
-	protected void doGet(HttpServletRequest request,
-		HttpServletResponse response) throws ServletException, IOException {
-	
-		AsyncContext ctx=request.startAsync();//现在又报错了????
+ 
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		String myparam=config.getInitParameter("myparam");
+		System.out.println(myparam);
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, IOException
+	{
+		
+		AsyncContext ctx=request.startAsync();//走的Filter也要异步支持
 		ctx.addListener(new AsyncListener()
 			{
 					public void onComplete(AsyncEvent event) throws IOException 
 					{
-						System.out.println("onComplete DONE");
+						System.out.println("MyAsyncServlet onComplete  ");
 					}
 					public void onError(AsyncEvent event) throws IOException 
 					{
+						System.out.println("MyAsyncServlet onError ");
 					}
 					public void onStartAsync(AsyncEvent event) throws IOException
 					{
+						System.out.println("MyAsyncServlet onStartAsync");
 					}
 					public void onTimeout(AsyncEvent event) throws IOException 
 					{
+						System.out.println("MyAsyncServlet onTimeout");
 					}  
 			});
 		MyThread my=new MyThread(ctx);
 		my.start();
-		response.getWriter().println("TestServlet3");
+		response.getWriter().println(" Last Code in MyAsyncServlet");
 		
 	}
 

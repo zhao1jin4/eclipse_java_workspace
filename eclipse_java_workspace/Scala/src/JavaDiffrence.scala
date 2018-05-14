@@ -24,7 +24,7 @@ object MainJavaDifference  {
   
   //Scala类与Java类不同在于它们还继承自一个名为ScalaObject的特别的记号特质
   
-  
+  //scala没有受检查异常，你不需要声明异常
   
   } 
 }

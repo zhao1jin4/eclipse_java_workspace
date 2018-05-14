@@ -1,3 +1,0 @@
-keytool -genkey -alias username -keystore C:/temp/keystore  -dname "CN=username,OU=tcs,O=tata,L=Harbin,ST=HeiLongJian,C=CN" --storepass password -keypass password  
-keytool -export -alias username   -keystore C:/temp/keystore -file username.cer   -storepass password
-keytool -import -alias username   -keystore C:/temp/truststore -file username.cer   -storepass trustword -noprompt 

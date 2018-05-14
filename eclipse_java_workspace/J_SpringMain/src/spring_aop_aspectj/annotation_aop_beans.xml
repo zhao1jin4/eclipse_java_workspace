@@ -69,8 +69,10 @@
 	<context:component-scan base-package="spring_aop_aspectj" />
 	<aop:aspectj-autoproxy /> 
 	
-	 <!--
-  	<bean id="abcService" class="spring_aop_annotation.ABCService"></bean>
-	<bean id="myInterceter" class="spring_aop_annotation.MyIntercepter"></bean>
-	 -->
+	 <!--  -->
+	 
+  	<bean id="abcService" class="spring_aop_aspectj.ABCService"></bean>
+	<bean id="myInterceter" class="spring_aop_aspectj.MyIntercepter"></bean>
+	
+	  
 </beans>

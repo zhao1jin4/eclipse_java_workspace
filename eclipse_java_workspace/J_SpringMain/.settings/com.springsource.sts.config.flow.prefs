@@ -1,7 +1,10 @@
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/org/zhaojin/applicationContext.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring3_annotation_config/config_beans.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring3_el/el_beans.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_aop_aspectj/anno/annotation_aop_beans2.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_aop_aspectj/annotation_aop_beans.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_aop_aspectj/annotation_aop_beans2.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_aop_aspectj_anno/annotation_aop_beans2.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_aop_introduction/introduction_beans.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_aop_proxy/aop_proxy-beans.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_aop_proxy2/aop_proxy-beans2.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
@@ -15,6 +18,11 @@
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_batch/pattern/batch_pattern.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph>\r\n<element clazz\="JobModelElement" type\="job">\r\n<structure end\="5889" endstart\="5877" start\="5343" startend\="5382"/>\r\n<bounds height\="118" width\="194" x\="15" y\="17"/>\r\n</element>\r\n</graph>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_batch/xml/xml_batch.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph>\r\n<element clazz\="JobModelElement" type\="job">\r\n<structure end\="5710" endstart\="5698" start\="5342" startend\="5382"/>\r\n<bounds height\="118" width\="196" x\="15" y\="17"/>\r\n</element>\r\n</graph>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_cache/cache_anno.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_cache_ehcache/cache_anno.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_cache_ehcache/spring-ehcache.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_cache_guva/cache_anno.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_cache_guva/guava_cacha.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_cache_redis/cache_redis.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_config/applicationContext.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_config/child.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_config/parent.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
@@ -41,6 +49,7 @@
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_quartz/quartz_benas.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_quartz/timer_benas.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_rabbitmq/offical.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_rabbitmq/simple/spring_rabbitmq_client.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_rabbitmq/simple/spring_rabbitmq_server.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_rabbitmq/spring_rabbitmq.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_rabbitmq/spring_rabbitmq_client.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>

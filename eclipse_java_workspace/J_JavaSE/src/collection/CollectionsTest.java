@@ -64,7 +64,13 @@ public class CollectionsTest
     	
     	
     	TreeMap treeMap;
-    	ConcurrentHashMap conHashMap;
+    	ConcurrentHashMap conHashMap=new ConcurrentHashMap() ;
+    	conHashMap.put("key", "value");
+    	
+    	int hash= (123451337 ^ (123451337 >>> 16)) & 0x7fffffff;
+    	System.out.println(hash);
+    	
+    	return ;
 	}
 
 }

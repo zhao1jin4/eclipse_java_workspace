@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import alibaba.dubbo.server.DubboFacade;
+import alibaba.dubbo.server.DubboGroupVersionFacade;
 import alibaba.dubbo.server.QueryReq;
 import alibaba.dubbo.server.QueryRes;
 
@@ -16,9 +17,15 @@ import alibaba.dubbo.server.QueryRes;
 	<dependency>
 		<groupId>com.alibaba</groupId>
 		<artifactId>dubbo</artifactId>
-		<version>2.5.3</version>
+		<version>2.6.0</version>
 	</dependency>
-	
+	<dependency>
+	    <groupId>com.esotericsoftware</groupId>
+	    <artifactId>kryo</artifactId>
+	    <version>4.0.1</version>
+	</dependency> 
+	 
+
 	zkclient
 	javassist
 	netty 3.10
@@ -26,9 +33,7 @@ import alibaba.dubbo.server.QueryRes;
 	jdk 1.7
 	
  */
-
-
-//dubbo-admin-2.5.3.war 不能下载 ???
+ 
 
 //@RunWith(SpringJUnit4ClassRunner.class)
 //@ContextConfiguration( {
@@ -45,7 +50,9 @@ public class TestDubbo
 	@Test
 	public void testDubboClient()
 	{
-		org.jboss.netty.channel.ChannelFactory x;
+		com.esotericsoftware.kryo.io.Output kryo; 
+		
+		//org.jboss.netty.channel.ChannelFactory x;
 		System.setProperty("dubbo.properties.file", "alibaba/dubbo/client/dubbo.properties");
 		
 		
@@ -54,8 +61,24 @@ public class TestDubbo
 				
 		QueryReq req=new QueryReq();//要implements Serializable
 		req.setQueryId("1000010");;
-		
+		//这之前如服务端没有启也不会报错，原因配置了 check="false"
 		QueryRes res=dubboFacade.queryService(req);
 		System.out.println(res.getData());
 	}
+	
+	@Test
+	public void testDubboGroupClient() 
+	{
+		System.setProperty("dubbo.properties.file", "alibaba/dubbo/client/dubbo.properties");
+		ApplicationContext context=new ClassPathXmlApplicationContext("alibaba/dubbo/client/dubbo-client.xml");
+		DubboGroupVersionFacade dubboFacade=(DubboGroupVersionFacade)context.getBean("dubboGroupVersionFacade");
+				
+		QueryReq req=new QueryReq();//要implements Serializable
+		req.setQueryId("1000010");;
+		//这之前如服务端没有启也不会报错，原因配置了 check="false"
+		QueryRes res=dubboFacade.theGroupVersion(req);
+		System.out.println(res.getData());
+	}
+	
+	
 }

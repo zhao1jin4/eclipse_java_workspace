@@ -37,15 +37,28 @@ public class JSONTest
 		objArray[0]=ua;
 		
 		JSONObject jsonObject = JSONObject.fromObject(ua);
-		System.out.println("java Object to json : "+ jsonObject); 
+		String strJsonObj=jsonObject.toString();
+		System.out.println("java Object to json : "+ strJsonObj); 
 		
 		JSONArray jsonArrasy = JSONArray.fromObject(ua);
 		System.out.println("java Array to json : "+ jsonArrasy); 
 		
-		Map map=new HashMap();
+		//Map->String
+		Map<String,Object> map=new HashMap<>();
 		map.put("name", "lisi");
 		map.put("id", 123);
-		jsonObject = JSONObject.fromObject(ua);
-		System.out.println("Map Object to json : "+ jsonObject); 
+		JSONObject jsonMapObject = JSONObject.fromObject(map);
+		String strJsonMap=jsonMapObject.toString();
+		System.out.println("Map Object to json : "+ strJsonMap); 
+		
+		
+		//String->Object
+		UserModel userModel = (UserModel) JSONObject.toBean(JSONObject.fromObject(strJsonObj), UserModel.class);
+		System.out.println("userModel: "+ userModel); 
+		
+		//String->Map
+		Map userMap = (Map) JSONObject.toBean(JSONObject.fromObject(strJsonMap), Map.class);
+		System.out.println("userMap: "+ userMap); 
+		  
 	}
 }

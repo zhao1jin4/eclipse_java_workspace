@@ -72,12 +72,12 @@
 		</property>
 	</bean>		
 
-	<bean id="dataSourceRemote" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+	<bean id="dataSourceLocal" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="${driver}" />
-		<property name="jdbcUrl" value="${urlRemote}" />
-		<property name="user" value="${usernameRemote}" />
-		<property name="password" value="${passwordRemote}" />
+		<property name="jdbcUrl" value="${url}" />
+		<property name="user" value="${username}" />
+		<property name="password" value="${password}" />
                 <!-- 初始化连接池时连接数量为5个 -->
 		<property name="initialPoolSize" value="5" />
                 <!-- 允许最小连接数量为5个 -->
@@ -101,14 +101,26 @@
                 <!-- 获取新连接的超时时间为10000毫秒 -->
 		<property name="checkoutTimeout" value="10000" />
 	</bean>
-
-<bean id="dataSourceLocal" class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
-    <property name="driverClassName" ><value>${driver}</value></property>
-    <property name="url" value="${url}"></property>
-    <property name="username" value="${username}"></property>
-    <property name="password" value="${password}"></property>
-</bean>
-
+ 
+<bean id="dataSourceRemote" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"> 
+	 <property name="url" value="${urlRemote}" />
+	 <property name="username" value="${usernameRemote}" />
+	 <property name="password" value="${passwordRemote}" />
+	 <property name="filters"><value>stat</value></property>
+	 <property name="maxActive"><value>20</value></property>
+	 <property name="initialSize"><value>1</value></property>
+	 <property name="maxWait"><value>60000</value></property>
+	 <property name="minIdle"><value>1</value></property>
+	 <property name="timeBetweenEvictionRunsMillis"><value>60000</value></property>
+	 <property name="minEvictableIdleTimeMillis"><value>300000</value></property>
+	 <property name="validationQuery"><value>SELECT 'x'</value></property>
+	 <property name="testWhileIdle"><value>true</value></property>
+	 <property name="testOnBorrow"><value>false</value></property>
+	 <property name="testOnReturn"><value>false</value></property>
+	 <property name="poolPreparedStatements"><value>true</value></property>
+	 <property name="maxOpenPreparedStatements"><value>20</value></property>
+ </bean>
+ 
   <bean id="dynamicDataSource" class="mybatis_spring.DynamicDataSource">
         <property name="targetDataSources">
             <map key-type="java.lang.String">

@@ -9,8 +9,15 @@
 	http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
 	default-autowire="byName">
 	
-	<dubbo:service interface="alibaba.dubbo.server.DubboFacade" ref="dubboFacdeImpl"/>
+	<dubbo:service interface="alibaba.dubbo.server.DubboFacade" ref="dubboFacdeImpl" />
 	<bean id="dubboFacdeImpl"  class="alibaba.dubbo.server.DubboFacadeImpl" />
+ 	
+ 	<dubbo:service interface="alibaba.dubbo.server.DubboGroupVersionFacade" ref="dubboGroupVersionFacadeImpl"
+ 	 group="group1"  version="1.0"/>
+ 	 <!--  group="group1" 可 相同的接口多个不同的实现，用group区分
+	 version="1.0.0" 当一个接口的实现，出现不兼容升级时(即删改属性，加是兼容的)，可以用版本号过渡，版本号不同的服务相互间不引用
+	 -->
+	<bean id="dubboGroupVersionFacadeImpl"  class="alibaba.dubbo.server.DubboGroupVersionFacadeImpl" />
  	
  	<!--  
  	dubbo.protocol.name=dubbo

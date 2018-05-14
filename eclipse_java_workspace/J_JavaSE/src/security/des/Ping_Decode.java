@@ -6,14 +6,14 @@ import java.security.Provider;
 import java.security.Security;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.spec.RSAPrivateKeySpec;
+import java.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-
-import sun.misc.BASE64Decoder;
+ 
 
 public class Ping_Decode
 {
@@ -127,12 +127,15 @@ public class Ping_Decode
       RSAPrivateKeySpec localRSAPrivateKeySpec = new RSAPrivateKeySpec(modulus, privateExponent );
       RSAPrivateKey privateKey=  (RSAPrivateKey)localKeyFactory.generatePrivate(localRSAPrivateKeySpec);	
 	  //---
+       
       
+     
+      String paramString="theStringfromMobileWebParam";//公钥加密后的结果 
+      byte[] arrayOfByte1 = Base64.getDecoder().decode(paramString );//Base64解
       
-      
-      String paramString="theStringfromMobileWebParam";//公钥加密后的结果
-      BASE64Decoder localBASE64Decoder = new BASE64Decoder();
-      byte[] arrayOfByte1 = localBASE64Decoder.decodeBuffer(paramString);//Base64解
+//      sun.misc.BASE64Decoder localBASE64Decoder = new sun.misc.BASE64Decoder();
+//      byte[] arrayOfByte1 = localBASE64Decoder.decodeBuffer(paramString);//Base64解
+    
       
       int i = Integer.parseInt(new String(arrayOfByte1, 0, 8).trim());//8个字节  表示报文长度
       byte[] arrayOfByte2 = new byte[i - 12];//12 其它报文头长
@@ -155,9 +158,8 @@ public class Ping_Decode
       localCipher2.update(new byte[512]);
       byte[] arrayOfByte6 = localCipher2.doFinal(arrayOfByte3);
       String res= new String(arrayOfByte6);//转换后的结果
-      
+     
       
 	}
-	  
-	 
+	   
 }

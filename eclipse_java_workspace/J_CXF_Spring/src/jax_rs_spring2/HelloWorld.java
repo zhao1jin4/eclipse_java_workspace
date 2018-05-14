@@ -35,27 +35,22 @@ import org.apache.cxf.jaxrs.ext.multipart.Multipart;
      }
 
      
-     
-     
-     
-     
-     
-     
-     
+     //@GET
      //@POST  //使用firfox的poster
      @Produces(MediaType.APPLICATION_JSON ) //"application/json"
-    // @Consumes(MediaType.APPLICATION_JSON )
+     @Consumes(MediaType.APPLICATION_JSON )
      @Path("/jsonBean")
      public Response modifyJson() {// JsonBean in
     	 JsonBean input =new JsonBean();
     	 input.setParam(new HashMap<String, Object>());
             input.setCommand(222);
             input.getParam().put("content", "welcome to server!");
-           return Response.ok().entity(input).build();
+            Response resp= Response.ok().entity(input).build();
+           return resp;
      }
      
 
-	 //@POST  //使用firfox的poster
+	 //@POST  //使用firefox的poster
 	 @Produces(MediaType.APPLICATION_XML ) //"application/xml"
 	 //@Consumes(MediaType.APPLICATION_XML )
 	 @Path("/changeXMLResponse")

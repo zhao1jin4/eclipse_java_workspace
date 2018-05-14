@@ -6,6 +6,7 @@ public class OneTest {
   @Test
   public void method1() {
     System.out.println("in method1");
+    assertEquals("123","12"+3);
   }
   
   @Test

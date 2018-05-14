@@ -3,10 +3,10 @@ package quiz;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilderFactory;  // require  java.xml
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.w3c.dom.Document;
+import org.w3c.dom.Document;  // require  java.xml
 
 public class TestFinal {
 

@@ -21,19 +21,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-//@WebFilter(filterName = "myFilter", urlPatterns = { "/dynServ","/test1" })
+//@WebFilter(filterName = "myFilter", urlPatterns = { "/dynServ","/test1" },asyncSupported=true)
+//被动态配置的
 public class MyFilter3 implements Filter{
 	public void destroy() {
 		
 	}
 	public void doFilter(ServletRequest req, ServletResponse resp,
 			FilterChain chain) throws IOException, ServletException {
-		System.out.println("doFilter before");
+		System.out.println("MyFilter3 before");
 		chain.doFilter(req, resp);
-		System.out.println("doFilter after");
+		System.out.println("MyFilter3 after");
 	}
 	public void init(FilterConfig config) throws ServletException {
-		System.out.println("init");
+		System.out.println("MyFilter3 init");
 	}
 
 }

@@ -14,6 +14,12 @@ spring-jdbc-4.3.7.RELEASE.jar
 spring-web-4.0.6.RELEASE.jar
 spring-webmvc-4.0.6.RELEASE.jar
 spring-websocket-4.0.6.RELEASE.jar
+
+spring-test-4.3.9.RELEASE.jar
+mockito-core-2.16.0.jar
+	byte-buddy-1.7.9.jar
+	objenesis-2.6.jar
+	
 spring-hateoas-0.16.0.RELEASE.jar
 hessian-4.0.37.jar
 

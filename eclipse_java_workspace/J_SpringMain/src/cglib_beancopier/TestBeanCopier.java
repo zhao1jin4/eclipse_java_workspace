@@ -38,7 +38,7 @@ public class TestBeanCopier
   	        cache.putIfAbsent(key, copier);
         }
         copier.copy(sourceObj, target, null);//是调用的getter/setter方法
-       //性能不高，不能用在for中很多条记录
+      //网上查cglib 的BeanCopier 性能还不错 
         return target;
     }
 	

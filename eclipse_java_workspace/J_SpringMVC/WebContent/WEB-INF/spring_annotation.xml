@@ -206,7 +206,7 @@
      <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
             <property name="transactionManager" ref="transactionManager" />
             <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"></property>
-            <property name="isolationLevelName" value="ISOLATION_SERIALIZABLE"></property>
+            <property name="isolationLevelName" value="ISOLATION_SERIALIZABLE"></property> <!-- ISOLATION_DEFAULT -->
     </bean>
 </beans>
 

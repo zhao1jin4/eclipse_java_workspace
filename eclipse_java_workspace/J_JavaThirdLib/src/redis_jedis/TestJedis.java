@@ -19,7 +19,7 @@ import redis.clients.jedis.Transaction;
 public class TestJedis  {
 	
 	Jedis jedis;
-	String ip="192.168.227.128";
+	String ip="192.168.72.128";
 	int port=6379;
 	
 	@Before
@@ -47,7 +47,7 @@ public class TestJedis  {
 		JedisPoolConfig config=new JedisPoolConfig();
 //		config.setMaxIdle(maxIdle);
 //		config.setMaxWaitMillis(maxWaitMillis);
-		
+		config.setBlockWhenExhausted(false);//连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true
 		JedisPool pool = new JedisPool(config, ip,port,2000);//timeout,可加passworld参数
 		
 		Jedis jedis = pool.getResource();
@@ -58,8 +58,11 @@ public class TestJedis  {
 		jedis.zadd("sose", 0, "bike"); 
 		Set<String> sose = jedis.zrange("sose", 0, -1);//score 范围
 		System.out.println(sose);
-		pool.returnResource(jedis); //将资源归还个连接池
+		jedis.close();//一定要close
+		 
+		
 		pool.destroy();
+		
 	}
 	
 	@Test
@@ -128,22 +131,32 @@ public class TestJedis  {
 	@Test
 	public void testClusterPut()
 	{
-		String node0Ip="192.168.227.128"; int node0Port=7000;
-		String node1Ip="192.168.227.128"; int node1Port=7001;
-		String node2Ip="192.168.227.128"; int node2Port=7002;
-		String node3Ip="192.168.227.128"; int node3Port=7003;
-		String node4Ip="192.168.227.128"; int node4Port=7004;
-		String node5Ip="192.168.227.128"; int node5Port=7005;
+		// ./redis-trib.rb create --replicas 1 172.16.35.35:7000 172.16.35.35:7001 172.16.35.35:7002 172.16.35.35:7003 172.16.35.35:7004 172.16.35.35:7005
+		//redis-trib.rb外网IP，bind外网IP
+		String node0Ip="172.16.35.35"; int node0Port=7000;
+		String node1Ip="172.16.35.35"; int node1Port=7001;
+		String node2Ip="172.16.35.35"; int node2Port=7002;
+		String node3Ip="172.16.35.35"; int node3Port=7003;
+		String node4Ip="172.16.35.35"; int node4Port=7004;
+		String node5Ip="172.16.35.35"; int node5Port=7005;
 		
 		
 		//集群的redis,依赖于 commons/poopl2
 		Set<HostAndPort> jedisClusterNodes = new HashSet<HostAndPort>();
-		jedisClusterNodes.add(new HostAndPort(node2Ip, node2Port));//只一个master节点OK
+		jedisClusterNodes.add(new HostAndPort(node0Ip, node0Port));
+		jedisClusterNodes.add(new HostAndPort(node1Ip, node1Port));
+		jedisClusterNodes.add(new HostAndPort(node2Ip, node2Port));
+		jedisClusterNodes.add(new HostAndPort(node3Ip, node3Port));
+		jedisClusterNodes.add(new HostAndPort(node4Ip, node4Port));
+		jedisClusterNodes.add(new HostAndPort(node5Ip, node5Port)); 
+		
+		//只一个master节点,其它的slave没有数据 ,但命令查询时会自动跳转到指定节点,多个节点可防止一个挂了
 		JedisCluster jc = new JedisCluster(jedisClusterNodes);  
 		
 		//jc.auth("123456");
-		jc.set("foo3", "bar");  
-				 
+		//jc.set("jedisKey", "jeids集群");  
+		System.out.println(jc.get("jedisKey"));
+		System.out.println(jc.get("clusterKey"));
 		System.out.println(jc.get("foo"));
 	}
 }

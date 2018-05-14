@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.demo.dao.UserMapper"> 
-    <select id="selectAll" resultType="user" >
+<mapper namespace="mybatis.dao.UserMapper"> 
+    <select id="selectAll" resultType="mybatis.vo.User"> 
+    <!--    resultType="user"   不行
+    mybatis.type-aliases-package=mybatis.vo，别名无用？？？-->
         SELECT * FROM User 
     </select>
 </mapper>

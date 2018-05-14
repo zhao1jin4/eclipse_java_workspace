@@ -16,6 +16,8 @@ create table department
 	dep_name varchar(20)
 );
 insert into department (id ,dep_name) values (10,'development');
+insert into department (id ,dep_name) values (20,'test');
+
 
 create table employee 
 (
@@ -31,11 +33,24 @@ create table employee
 );
  
 insert into employee (id,username,password,birthday,age,department_id,employee_type,raise_salary,deduct_salary)
-values(101,'王','123', '1980-08-01',25,10,1,200,0);
+values(101,'王','123', '1980-08-01',24,10,1,200,0);
 
 insert into employee (id,username,password,birthday,age,department_id,employee_type,raise_salary,deduct_salary)
 values(102,'李','123', '1985-08-01',25,10,2,0,-50);
+
+insert into employee (id,username,password,birthday,age,department_id,employee_type,raise_salary,deduct_salary)
+values(103,'孙','124', '1986-08-01',26,10,2,0,-50);
+
  
+insert into employee (id,username,password,birthday,age,department_id,employee_type,raise_salary,deduct_salary)
+values(201,'王2','123', '1980-08-01',24,20,1,200,0);
+
+insert into employee (id,username,password,birthday,age,department_id,employee_type,raise_salary,deduct_salary)
+values(202,'李2','123', '1985-08-01',25,20,2,0,-50);
+
+insert into employee (id,username,password,birthday,age,department_id,employee_type,raise_salary,deduct_salary)
+values(203,'孙2','124', '1986-08-01',26,20,2,0,-50);
+
 commit;
 
 

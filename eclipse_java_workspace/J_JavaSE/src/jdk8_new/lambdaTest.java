@@ -24,7 +24,7 @@ interface MethodRefNoneStatic
 
 interface MethodConstructRef
 {
-	void processStr(char[] s) ;
+	String processStr(char[] s) ;
 }
 interface lambdaPrintInterface 
 {
@@ -103,7 +103,8 @@ public class lambdaTest
     	objectRef.processStr(System.out,"method noneStatic ref string");
     	
     	MethodConstructRef constructRef= String::new;//构造函数引用，接口方法与构造函数声明结构相同
-    	constructRef.processStr(new char[]{'中','国'});
+    	String res=constructRef.processStr(new char[]{'中','国'});
+    	System.out.println(res);
     	
     }
 }

@@ -13,8 +13,9 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
- 
+//import org.junit.Test; //junit 4 
+import org.junit.jupiter.api.Test; //junit 5
+import static org.junit.jupiter.api.Assertions.*;//junit 5
 
 public class TestSyncThread   
 {

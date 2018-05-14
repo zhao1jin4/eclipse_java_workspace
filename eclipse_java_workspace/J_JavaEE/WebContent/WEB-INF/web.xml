@@ -45,6 +45,7 @@
       <taglib-location>/WEB-INF/tlds/customTag.tld</taglib-location>
     </taglib>
   </jsp-config>
+  
   <filter>
     <filter-name>myFilter</filter-name>
     <filter-class>myservlet.MyFilter</filter-class>
@@ -55,10 +56,11 @@
   </filter>
   <filter-mapping>
     <filter-name>myFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/security/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>ERROR</dispatcher>
   </filter-mapping>
+  
   <error-page>
     <exception-type>java.lang.RuntimeException</exception-type>
     <location>/error.jsp</location>

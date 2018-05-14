@@ -20,6 +20,7 @@ public class CompilerAPITester
     private static String PACKAGE="jdknew";
     public static void main(String[] args) 
     {
+    	//1.6¹¦ÄÜ
     	JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
         
@@ -33,8 +34,8 @@ public class CompilerAPITester
             	Runtime.getRuntime().exec("cmd /c copy "+JAVA_CLASS_FILE+" bin/"+PACKAGE);
             else
             	Runtime.getRuntime().exec("cp -r "+JAVA_CLASS_FILE+" bin/"+PACKAGE);
-            //Class x=Thread.currentThread().getContextClassLoader().loadClass(PACKAGE+"."+JAVA_CLASS_NAME);
-            Class.forName(PACKAGE+"."+JAVA_CLASS_NAME).newInstance();
+//            Class x=Thread.currentThread().getContextClassLoader().loadClass(PACKAGE+"."+JAVA_CLASS_NAME);
+            Class.forName(PACKAGE+"."+JAVA_CLASS_NAME);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

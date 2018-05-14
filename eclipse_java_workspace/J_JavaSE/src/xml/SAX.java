@@ -21,14 +21,14 @@ public class SAX {
 		{
 			//xercesImp.jar/META-INF/services/java.xml.parsers.SAXParserFactory文件中记录实现类
 			
-			//SAX2
-			InputStream input=SAX.class.getResourceAsStream("/xml/rule.xml");
-			InputSource source=new InputSource(input);
-			XMLReader xmlReader=XMLReaderFactory.createXMLReader();//org.xml包
-			xmlReader.setFeature("http://xml.org/sax/features/validation", true);//打开DTD验证
-			xmlReader.setContentHandler(new MyContenttHandler());
-			xmlReader.setErrorHandler(new MyErrorHandler());
-			xmlReader.parse(source);
+			//SAX2  XMLReaderFactory jdk9过时 ，用SAXParserFactory
+//			InputStream input=SAX.class.getResourceAsStream("/xml/rule.xml");
+//			InputSource source=new InputSource(input);
+//			XMLReader xmlReader=XMLReaderFactory.createXMLReader();//org.xml包  
+//			xmlReader.setFeature("http://xml.org/sax/features/validation", true);//打开DTD验证
+//			xmlReader.setContentHandler(new MyContenttHandler());
+//			xmlReader.setErrorHandler(new MyErrorHandler());
+//			xmlReader.parse(source);
 			//input.close();//会自动close InputStream
 			
 			

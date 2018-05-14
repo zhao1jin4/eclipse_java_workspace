@@ -41,5 +41,7 @@ public class MyObject // for TestHashCode
 		}
 		return false;
 	}
-	 */
+	
+	*/
+	
 }

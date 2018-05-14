@@ -33,7 +33,8 @@ import org.springframework.scripting.support.ResourceScriptSource;
 public class SpringDataJedisTestMain {  
 
     public static void main(String[] args)
-    {  
+    {   
+    	
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:springdata_redis/spring_jedis.xml");
         RedisTemplate<String,Object>  redisTemplate = context.getBean("redisTemplate",RedisTemplate.class);  
         //其中key采取了StringRedisSerializer

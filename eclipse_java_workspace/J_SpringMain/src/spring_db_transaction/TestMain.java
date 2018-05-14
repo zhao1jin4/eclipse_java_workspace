@@ -39,7 +39,13 @@ public class TestMain
 		ApplicationContext context=new ClassPathXmlApplicationContext("spring_db_transaction/tag_transaction_beans.xml");
 		StudentDaoAnnotation dao=(StudentDaoAnnotation)context.getBean("studentDaoAnnotation");
 		try {
-			dao.updateStudentAge();
+			dao.updateStudentAge();//这个事务有效
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			//这个事务无效
+			//dao.updateStudentAgeSecond();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,8 +89,8 @@ public class TestMain
 	}
 	public static void main(String[] args)
 	{ 
-		catalog();
-		//studentAnnotation();
+		//catalog();
+		studentAnnotation();
 		//studentTag();
 		//programTransaction();
 	}

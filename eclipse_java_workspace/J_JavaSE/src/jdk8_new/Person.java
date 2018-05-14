@@ -37,21 +37,27 @@ import java.time.chrono.IsoChronology;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.time.Period;
-/* 
+ 
 public class Person {
   
     public enum Sex {
         MALE, FEMALE
     }
-  
-    String name; 
+   
+    String firstName; 
     LocalDate birthday;
     Sex gender;
     String emailAddress;
-  
-    Person(String nameArg, LocalDate birthdayArg,
+    public Person() {
+    	
+    }
+    public Person( String firstName) {
+    	this.firstName=firstName;
+    }
+   
+    Person(String firstName, LocalDate birthdayArg,
         Sex genderArg, String emailArg) {
-        name = nameArg;
+    	firstName = firstName;
         birthday = birthdayArg;
         gender = genderArg;
         emailAddress = emailArg;
@@ -63,17 +69,12 @@ public class Person {
             .getYears();
     }
 
-    public void printPerson() {
-      System.out.println(name + ", " + this.getAge());
-    }
+    
     
     public Sex getGender() {
         return gender;
     }
-    
-    public String getName() {
-        return name;
-    }
+     
     
     public String getEmailAddress() {
         return emailAddress;
@@ -115,6 +116,5 @@ public class Person {
         return roster;
     }
     
-}
-*/
+} 
 

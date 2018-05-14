@@ -1,6 +1,7 @@
 package thread;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 
 public class ThreadState {
 	public static void pringState(Thread a) {
@@ -21,7 +22,10 @@ public class ThreadState {
 	public static void main(String[] args) throws Exception {
 
 		CountDownLatch latch = new CountDownLatch(2);
-
+//		CyclicBarrier cyclic =new CyclicBarrier(3);
+//		cyclic.reset();
+//		cyclic.getNumberWaiting();
+		
 		MyThread t = new MyThread(latch,"t1");
 		pringState(t); //NEW
 		t.start();

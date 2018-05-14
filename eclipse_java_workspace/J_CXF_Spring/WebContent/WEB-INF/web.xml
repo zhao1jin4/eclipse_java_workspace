@@ -12,7 +12,7 @@
   
   
   
-
+   <!--
     <context-param>
 	    <param-name>contextConfigLocation</param-name>
 	    <param-value> WEB-INF/ws-server-beans.xml</param-value>
@@ -21,10 +21,10 @@
     <servlet-name>CXFServlet</servlet-name>
     <url-pattern>/ws/*</url-pattern>
   </servlet-mapping>
-    <!-- 
+  
    webservice 和 resetful 不能同时存在
 
-  
+     -->
    <context-param>
 	    <param-name>contextConfigLocation</param-name>
 	    <param-value> WEB-INF/rs-server-beans.xml</param-value>
@@ -34,5 +34,5 @@
     <url-pattern>/rs/*</url-pattern>
   </servlet-mapping>
   
-     -->
+  
 </web-app>

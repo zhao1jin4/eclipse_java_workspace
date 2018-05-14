@@ -1,0 +1,11 @@
+@namespace ("hadoop.avro.transfer")
+protocol DemoService
+{
+    import schema "Person.avsc";
+    import schema "QueryParameter.avsc";
+    string ping();
+    array<hadoop.avro.transfer.Person> getPersonList(hadoop.avro.transfer.QueryParameter queryParameter);
+}
+
+# convert a .avdl file into a .avpr file
+# java -jar avro-tools-1.8.2.jar idl DemoService.avdl DemoService.avpr

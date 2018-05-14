@@ -15,9 +15,8 @@ public class Junit3TestSuit{
     
     
     //use eclipse,junit 4 ,not need main method
-//    public static void main (String[] args) 
-//    {
-//    	//junit.textui.TestRunner.run (suite());
-//    	junit.swingui.TestRunner.run(Junit3TestSuit.class);//only junit3
-//    }
+    public static void main (String[] args) 
+    {
+    	junit.textui.TestRunner.run (suite()); 
+    }
 }

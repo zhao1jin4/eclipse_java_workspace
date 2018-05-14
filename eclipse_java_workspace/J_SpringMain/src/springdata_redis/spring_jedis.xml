@@ -71,11 +71,29 @@
        <property name="numTestsPerEvictionRun" value="3"></property>  
        <property name="timeBetweenEvictionRunsMillis" value="60000"></property>  
     </bean>
-    <!-- p:port="6379" -->
+    
+    
+    <!--   过时的方式 
   	<bean id="redisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-          p:hostName="192.168.227.128" p:port="6379" p:poolConfig-ref="jedisPoolConfig" p:usePool="true" p:timeout="5000" >
-         <!--  <property name="password" value="123456"></property>  -->
+          p:hostName="172.16.35.35" p:port="6379" p:poolConfig-ref="jedisPoolConfig" p:usePool="true" p:timeout="5000" >
+         <property name="password" value="123456"></property>  
     </bean>
+    -->
+    <bean id="redisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"  >
+    	<constructor-arg >
+    		<bean class="org.springframework.data.redis.connection.RedisStandaloneConfiguration">
+    			<property name="hostName" value="120.55.90.245"></property>
+    			<property name="port" value="6380"></property>
+    			<property name="password"  >
+    				<bean class="org.springframework.data.redis.connection.RedisPassword" factory-method="of" >
+    					<constructor-arg value="test2016"/>
+    				</bean>
+    			</property>
+    			<property name="database"  value="0"></property>
+    		</bean>
+    	</constructor-arg> 
+    </bean>
+    
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
           p:connectionFactory-ref="redisConnectionFactory">
       	<property name="keySerializer">  

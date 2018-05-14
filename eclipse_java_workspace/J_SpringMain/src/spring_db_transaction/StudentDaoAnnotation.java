@@ -16,7 +16,7 @@ public class StudentDaoAnnotation implements StudentDao //@Transactional在接口上
 	
 	 //spring的@Transactional不是javax的
 	@Transactional(rollbackFor=Exception.class,noRollbackFor=RuntimeException.class,
-			propagation=Propagation.REQUIRED,isolation=Isolation.REPEATABLE_READ) //做事务,isolation默认依赖于数据, propagation默认是Propagation.REQUIRED.
+			propagation=Propagation.REQUIRED,isolation=Isolation.REPEATABLE_READ) //做事务,isolation默认依赖于数据库, propagation默认是Propagation.REQUIRED.
 	public void updateStudentAge() throws Exception
 	{
 		template.update("update student set age=25  where name='lisi李'");
@@ -25,6 +25,10 @@ public class StudentDaoAnnotation implements StudentDao //@Transactional在接口上
 		//throw new RuntimeException("unchecked 业务异常");//unchecked(RuntimeException)异常默认会事务回滚
 	}
 	
+	public void updateStudentAgeSecond()throws Exception
+	{
+		updateStudentAge();//根据这里调用 事务不会起作用,即同一类中调用是不行的
+	}
 	@Transactional(propagation=Propagation.NOT_SUPPORTED,readOnly=true,timeout=20)//不需要事务,对类一级使用@Transactional
 	public Student getStudent()
 	{

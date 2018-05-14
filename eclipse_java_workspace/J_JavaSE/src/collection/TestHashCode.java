@@ -33,8 +33,9 @@ public class TestHashCode {
 		System.out.println( one ==key  ); //false
 		System.out.println( one.equals(key)  );//false
 		//必须同时重写 equals,hashCode
+				
+		System.out.println( hash.get(key ) );//如没有重写equals ,返回 null,如只重写equals没有得写hashCode返回null
 		
-		System.out.println( hash.get(key ) );//null,原因没有重写equals
 		System.out.println( hash.get(one ) );//lisi 's value
 		
 		

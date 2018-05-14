@@ -1,0 +1,23 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:cache="http://www.springframework.org/schema/cache"
+   xmlns:p="http://www.springframework.org/schema/p"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.springframework.org/schema/cache 
+    http://www.springframework.org/schema/cache/spring-cache.xsd"> 
+    
+  <cache:annotation-driven />
+  
+  <bean id="accountServiceBean" class="spring_cache_map.AccountService"/> 
+ 
+  <bean id="cacheManager" class="spring_cache_map.MyCacheManager">
+    <property name="caches"> 
+      <set> 
+        <bean  class="spring_cache_map.MyCache"
+          p:name="accountCache" /> 
+      </set> 
+    </property> 
+  </bean> 
+  
+</beans>

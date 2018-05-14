@@ -21,6 +21,8 @@ insert into category (name) values('fruiteË®¹û');
 
 
 ---MySQL
+GRANT all ON  mydb.*  TO user1@'*' IDENTIFIED BY 'user1';
+
 drop table if exists student;
 
 create table student

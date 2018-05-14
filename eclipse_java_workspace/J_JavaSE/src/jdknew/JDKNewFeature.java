@@ -38,7 +38,7 @@ public class JDKNewFeature
 		
 		int billion=1_000_000_000;//在数字中使用下划线
 		int binary=0b1001_1001;  //0b是二进制
-		
+		 
 		 switch("one")  //switch可用字串
 		 {  
 	         case "one":  

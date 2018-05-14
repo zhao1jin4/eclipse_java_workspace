@@ -3,7 +3,7 @@ class Rational(n: Int, d: Int) extends Ordered[Rational]  // Ordered  ,自动实
     def compare(that: Rational) = (this.numer * that.denom) - ( that.numer * this.denom)
   
   
-   require(d != 0)  //Predif 包中
+   require(d != 0)  //Predef 包中
    private val g = gcd(n.abs, d.abs) 
    val numer = n / g 
    val denom = d / g 

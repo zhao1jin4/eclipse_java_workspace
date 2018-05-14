@@ -2,6 +2,7 @@ import access.{_}  //同 import access._
 import java.{sql => S} //名称S引用了java.sql包
 import java.util.{Map => _, _} //引用了除Map之外的所有
 
+
 package outpkg {
   package inpkg { //像C# 格式
 

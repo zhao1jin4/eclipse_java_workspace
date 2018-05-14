@@ -7,6 +7,10 @@ import java.lang.instrument.UnmodifiableClassException;
 
 public class Premain 
 { 
+//	在 main 函数运行之前执行
+//	先找 	 public static void premain(String agentArgs, Instrumentation inst); 
+//	如无再找 public static void premain(String agentArgs); 
+	
     public static void premain(String agentArgs, Instrumentation inst)   { 
     	System.out.println("enter premain"); 
 //        inst.addTransformer(new MyClassFileTransformer()); 

@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+//import sun.misc.BASE64Decoder;
+//import sun.misc.BASE64Encoder;
 
 public class MainClass
 {
@@ -28,7 +28,7 @@ public class MainClass
 //		}
 		
 		
-		byte[] encoded_buffer=base64Encode(buffer);
+		byte[] encoded_buffer=JDKBase64Util.base64Encode(buffer);
 			
 		System.out.println("==========My= SUN==========");
 		System.out.println(new String(encoded_buffer));
@@ -50,20 +50,13 @@ public class MainClass
 			e.printStackTrace();
 		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		 
+		 
 		byte[] apaceEncoded=ApacheBase64Util.base64Encode("这是一个中文".getBytes());
 		System.out.println(new String(apaceEncoded));
 
-		byte[] sunEncoded=SunBase64Util.base64Encode("这是一个中文".getBytes());
-		System.out.println(new String(sunEncoded));
+//		byte[] sunEncoded=SunBase64Util.base64Encode("这是一个中文".getBytes());
+//		System.out.println(new String(sunEncoded));
 		
 		//JDK
 		byte[] encoded=Base64.getEncoder().encode("这是一个中文".getBytes());
@@ -75,34 +68,34 @@ public class MainClass
 		
 	}
 	
-	public static synchronized byte[] base64Decode(byte[] pkgBin_before)
-	{
-
-		byte[]pkgBin=null;
-		BASE64Decoder  decoder=new BASE64Decoder ();
-		try
-		{
-			pkgBin=decoder.decodeBuffer(new ByteArrayInputStream(pkgBin_before));
-		} catch (IOException e1)
-		{
-			e1.printStackTrace();
-		}
-		return pkgBin;
-	}
-	public static synchronized byte[] base64Encode(byte[] pkgBin_before)
-	{
-		BASE64Encoder  encoder=new BASE64Encoder ();
-		ByteArrayOutputStream output=new ByteArrayOutputStream();
-		try
-		{
-			encoder.encode(pkgBin_before,output);
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		return output.toByteArray(); 
-		//can not use output.toByteArray().length; or output.size();    can not output.write
-		
-	}
+//	public static synchronized byte[] base64Decode(byte[] pkgBin_before)
+//	{
+//
+//		byte[]pkgBin=null;
+//		BASE64Decoder  decoder=new BASE64Decoder ();
+//		try
+//		{
+//			pkgBin=decoder.decodeBuffer(new ByteArrayInputStream(pkgBin_before));
+//		} catch (IOException e1)
+//		{
+//			e1.printStackTrace();
+//		}
+//		return pkgBin;
+//	}
+//	public static synchronized byte[] base64Encode(byte[] pkgBin_before)
+//	{
+//		BASE64Encoder  encoder=new BASE64Encoder ();
+//		ByteArrayOutputStream output=new ByteArrayOutputStream();
+//		try
+//		{
+//			encoder.encode(pkgBin_before,output);
+//		} catch (IOException e)
+//		{
+//			e.printStackTrace();
+//		}
+//		return output.toByteArray(); 
+//		//can not use output.toByteArray().length; or output.size();    can not output.write
+//		
+//	}
 
 }

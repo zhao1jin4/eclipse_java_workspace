@@ -1,0 +1,50 @@
+{
+  "protocol" : "DemoService",
+  "namespace" : "hadoop.avro.transfer",
+  "types" : [ {
+    "type" : "record",
+    "name" : "Person",
+    "fields" : [ {
+      "name" : "age",
+      "type" : "int"
+    }, {
+      "name" : "name",
+      "type" : "string"
+    }, {
+      "name" : "sex",
+      "type" : "boolean"
+    }, {
+      "name" : "salary",
+      "type" : "double"
+    }, {
+      "name" : "childrenCount",
+      "type" : "int"
+    } ]
+  }, {
+    "type" : "record",
+    "name" : "QueryParameter",
+    "fields" : [ {
+      "name" : "ageStart",
+      "type" : "int"
+    }, {
+      "name" : "ageEnd",
+      "type" : "int"
+    } ]
+  } ],
+  "messages" : {
+    "ping" : {
+      "request" : [ ],
+      "response" : "string"
+    },
+    "getPersonList" : {
+      "request" : [ {
+        "name" : "queryParameter",
+        "type" : "QueryParameter"
+      } ],
+      "response" : {
+        "type" : "array",
+        "items" : "Person"
+      }
+    }
+  }
+}
