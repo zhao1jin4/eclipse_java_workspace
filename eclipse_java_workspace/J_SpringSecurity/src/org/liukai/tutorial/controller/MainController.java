@@ -1,11 +1,16 @@
 package org.liukai.tutorial.controller;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.net.InetAddress;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.liukai.tutorial.service.HelloService;
 import org.liukai.tutorial.service.HelloServiceImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -77,5 +82,25 @@ public class MainController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	@RequestMapping(value = "/session", method = RequestMethod.GET)
+	public void session(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			StringBuilder str=new StringBuilder();
+			Writer writer=response.getWriter();
+			
+			String securityUsername= SecurityContextHolder.getContext().getAuthentication().getName();
+			str.append("security username:"+securityUsername);
+			
+			String ipPort=InetAddress.getLocalHost().getHostAddress()+":"+request.getLocalPort();
+			str.append("  <br/> \r\n  receive server is :"+ipPort);
+			str.append("  <br/> \r\n  session id :"+request.getSession().getId());
+			
+			writer.write(str.toString());
+			System.out.println(str.toString());
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+ 
+ <!--  spring security  welcome-file-list 无效  -->
   <welcome-file-list>
     <welcome-file>/index.html</welcome-file>
   </welcome-file-list>
   
+   <error-page>
+  	<error-code>404</error-code>
+  	<location>/WEB-INF/jsp/error/notFound2.jsp</location>
+  </error-page>
+  <error-page>
+  	<exception-type>java.sql.SQLException</exception-type>
+  	<location>/WEB-INF/jsp/error/showDBError2.jsp</location>
+  </error-page>
+  
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>/WEB-INF/spring-security.xml /WEB-INF/applicationContext.xml</param-value>
+    <param-value>/WEB-INF/applicationContext.xml</param-value>
   </context-param>
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -27,6 +38,19 @@
   </servlet-mapping>
  
  
+ 
+ <!--  spring session 开关 ，如项目中有使用spring secruity 要放在    springSecurityFilterChain 前面 -->
+  <filter> 
+    <filter-name>springSessionRepositoryFilter</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>springSessionRepositoryFilter</filter-name>
+    <url-pattern>/*</url-pattern>     
+  </filter-mapping>
+  
+   
+    
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -36,13 +60,14 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   
+  
+  <session-config>
+	<session-timeout>2</session-timeout> <!-- 2分 -->
+  </session-config>
+  
   <listener>
     <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
   </listener>
-  <!-- <session-management>标签使用 -->
-
-	<session-config>
-		<session-timeout>2</session-timeout> <!-- 2分 -->
-	</session-config>
+  <!-- <session-management> 标签使用 -->
 
 </web-app>

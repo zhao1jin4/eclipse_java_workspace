@@ -15,14 +15,14 @@ import com.rabbitmq.client.ConnectionFactory;
 public class RabbitMQHeaderProducer {  
     private final static String EXCHANGE_NAME = "header-exchange";  
       
-  
+    private final static String mqHost = "127.0.0.1";  
+    private final static String mqUser = "zh";  
+    private final static String mqPass = "123";  
     public static void main(String[] args) throws Exception {  
-        // 创建连接和频道  
         ConnectionFactory factory = new ConnectionFactory();  
-        factory.setHost("172.16.35.35");  
-        // 指定用户 密码  
-        factory.setUsername("zh");  
-        factory.setPassword("123");  
+        factory.setHost(mqHost); 
+        factory.setUsername(mqUser);  
+        factory.setPassword(mqPass);  
         // 指定端口  
         factory.setPort(AMQP.PROTOCOL.PORT);  
         Connection connection = factory.newConnection();  

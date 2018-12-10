@@ -60,6 +60,7 @@
 	</select>
 	 
 	 <select id="dynSelectEmployee" parameterType="Employee" resultType="Employee" >  
+	  	<bind name="pattern" value="'%' + _parameter.getUsername() + '%'" /> <!-- _parameter 相当于内置变量 -->
 		select id as id ,username as username,password as password ,birthday as birthday 
 		from employee
 		<where>
@@ -67,11 +68,24 @@
 			<if test="username != null and username != '' ">username = #{username} </if>
 			<if test="department_id != null">AND department_id = #{department_id} </if>
 			 -->
+			 <if test="@mybatis_xml.MyOgnlUtil@isNotBlank(username)"> 
+			 	or username = '${@mybatis_xml.MyOgnlUtil@map.get("j")}' 
+			 </if>
+			  or  username  like #{pattern} 
+			 <!-- 
+			 like (mysql)1.   username LIKE CONCAT('%',#{username},'%' )
+			 like (common)2.  username  like #{pattern} 
+			  -->
+			 
+			 
+			 <!-- 
 			<choose>
 				<when test="username != null">username = #{username}</when>
 				<when test="department_id != null">department_id = #{department_id}</when>
 				<otherwise>department_id = 10</otherwise>
 			</choose>
+			 -->
+			 
 		</where>
 	</select>
 	 <!--

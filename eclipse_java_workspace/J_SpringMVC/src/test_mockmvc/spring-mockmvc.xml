@@ -174,21 +174,7 @@
 	    <property name="maxUploadSize" value="10000000"/> <!--单位是 bytes  可能会抛 org.springframework.web.multipart.MaxUploadSizeExceededException (是RuntimeException)-->
 	</bean> 
 	
-	
-	<!-- 全局错误页 定义
-	<bean  class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="defaultErrorView">
-			<value>failure</value>
-		</property>
-		<property name="exceptionMappings">
-			<props>
-				<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException" >showError</prop>
-				<prop key="java.sql.SQLException">showDBError</prop>
-				<prop key="java.lang.RuntimeException">showError</prop>
-			</props>
-		</property>
-	</bean>
-	 -->
+	 
 	 
 	 <!--  为easyUI sqlView.html -->
 	 <context:property-placeholder location="classpath:jdbc.properties"/>

@@ -22,12 +22,13 @@ public class TestSHA1
 		String hexStr=null;
 		 try
 		{
-			 fromFile=new FileInputStream(file);
-				
+
+			 //SHA-1,SHA-256,MD5
 			 MessageDigest digest=MessageDigest.getInstance("SHA-1");//SHA-1 在JDK9中要过时,因被google破解
 //			 MessageDigest.getInstance("sha-1");
 //			 MessageDigest.getInstance("Sha-1"); //是一样的。
-			
+			 
+			 fromFile=new FileInputStream(file);
 			byte[] buffer=new byte[1024];
 			int len=0;
 			while((len=fromFile.read(buffer))!=-1)

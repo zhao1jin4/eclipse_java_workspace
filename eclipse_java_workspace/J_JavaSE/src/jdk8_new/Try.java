@@ -2,10 +2,21 @@ package jdk8_new;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Try {
 	public static void main(String[] args)throws Exception
 	{
+		List<String> names=new ArrayList<>();
+		names.add("1");
+		names.add("2");
+		names.add("3");
+		System.out.println(String.join("-", names));
+
+		String[] arrStr=new String[]{"a","b","c"};
+
+		System.out.println(String.join("-", arrStr)); 
 		// JDK 8
 		FileInputStream resource1 = new FileInputStream("c:/tmp/input.txt");
 		FileInputStream resource2 = new FileInputStream("c:/tmp/input2.txt");

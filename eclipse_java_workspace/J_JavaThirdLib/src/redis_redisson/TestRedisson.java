@@ -1,48 +1,95 @@
 package redis_redisson;
 
+import java.net.URI;
+import java.util.Iterator;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 import org.junit.Test;
-import org.redisson.Config;
-import org.redisson.MasterSlaveServersConfig;
 import org.redisson.Redisson;
-import org.redisson.SingleServerConfig;
-import org.redisson.core.MessageListener;
-import org.redisson.core.RAtomicLong;
-import org.redisson.core.RBucket;
-import org.redisson.core.RCountDownLatch;
-import org.redisson.core.RList;
-import org.redisson.core.RLock;
-import org.redisson.core.RMap;
-import org.redisson.core.RQueue;
-import org.redisson.core.RSet;
-import org.redisson.core.RTopic;
+import org.redisson.api.RAtomicLong;
+import org.redisson.api.RBucket;
+import org.redisson.api.RCountDownLatch;
+import org.redisson.api.RExecutorService;
+import org.redisson.api.RKeys;
+import org.redisson.api.RList;
+import org.redisson.api.RLock;
+import org.redisson.api.RMap;
+import org.redisson.api.RQueue;
+import org.redisson.api.RSet;
+import org.redisson.api.RTopic;
+import org.redisson.api.RedissonClient;
+import org.redisson.api.listener.MessageListener;
+import org.redisson.api.listener.StatusListener;
+import org.redisson.config.Config;
+import org.redisson.config.MasterSlaveServersConfig;
+import org.redisson.config.SingleServerConfig;
+
+import io.netty.resolver.dns.DnsServerAddressStreamProvider; 
 
 public class TestRedisson 
 {
+	String ipPort="redis://127.0.0.1:6379";
+	String masterIPPort="redis://192.168.1.59:7001";
+	String slaveIPPort="redis://192.168.1.59:7004";
+	@Test
+	public void testShowAll() throws Exception
+	{
+		try 
+		{
+		 
+			com.fasterxml.jackson.dataformat.yaml.YAMLFactory a;
+			io.netty.resolver.dns.DnsServerAddressStreamProviders b;
+			//jboss-client.jar 的 io.netty有影响 
+			
+			//--单机 
+			Config config = new Config();
+			SingleServerConfig singConfig= config.useSingleServer();
+			singConfig.setDatabase(0);
+			singConfig.setAddress("redis://127.0.0.1:6379"); 
+			 //singConfig.setPassword("");
+			 RedissonClient redsson = Redisson.create(config);
+			 //二选一
+//			 RedissonClient redsson =Redisson.create();
+			 RKeys keys=redsson.getKeys();
+			 Iterable<String> iter=keys.getKeys();
+			 iter.forEach(new Consumer<String>()  //回调的要等才行
+			 {
+				@Override
+				public void accept(String key) {
+					System.out.println("key="+key);  
+					
+				}
+			});
+			 System.out.println("waiting...");
+			 Thread.sleep(60*60*5);
+			 redsson.shutdown();
+		 
+		 
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+	}
 	@Test
 	public void testPut() throws Exception
 	{
 		 //redisson 依赖于netty,fasterxml的jackson
 		com.fasterxml.jackson.databind.jsontype.TypeSerializer x;
-		
-		String ipPort="192.168.1.59:6379";
-		String masterIPPort="192.168.1.59:7001";
-		String slaveIPPort="192.168.1.59:7004";
-		
+				
 		Config config = new Config();
 		//--单机 
 		//SingleServerConfig singConfig= config.useSingleServer();
 		//singConfig.setAddress(ipPort);//ip:port
 		
 		//--cluster配置
-		MasterSlaveServersConfig  msConfig=config.useMasterSlaveConnection();
+		MasterSlaveServersConfig  msConfig=config.useMasterSlaveServers();
 		msConfig.setMasterAddress(masterIPPort);
 		msConfig.addSlaveAddress(slaveIPPort);//可传多个node
 		
-		//Redisson redisson = Redisson.create();//默认  127.0.0.1:6379
-	    Redisson redisson = Redisson.create(config);
+		//Redisson redisson = Redisson.create();//默认  redis://127.0.0.1:6379
+		RedissonClient redisson = Redisson.create(config);
 	    
 	    {
 	    	//---Distributed Object storage example
@@ -124,33 +171,38 @@ public class TestRedisson
 		    atomicLong.incrementAndGet();
 		    atomicLong.get();
 	    }
+	    
+	    RExecutorService executor =  redisson.getExecutorService("myExecutorService");
+	    
 	    //--Distributed CountDownLatch example
-//	    {
-//		    RCountDownLatch latch = redisson.getCountDownLatch("anyCountDownLatch");
-//		    latch.trySetCount(1);
-//		    latch.await();//会等...
-//	    }
-//	    {
-//		    // in other thread or other JVM
-//		    RCountDownLatch latch = redisson.getCountDownLatch("anyCountDownLatch");
-//		    latch.countDown();
-//	    }	    
-	    
-	    
+	    {
+		    RCountDownLatch latch = redisson.getCountDownLatch("anyCountDownLatch");
+		    latch.trySetCount(1);
+		    latch.await();//会等...
+	    }
+	    {
+		    // in other thread or other JVM
+		    RCountDownLatch latch = redisson.getCountDownLatch("anyCountDownLatch");
+		    latch.countDown();
+	    }	    
+	     
 	    
 	    //--Distributed Topic example
 	    {
-		    RTopic<SomeObject> topic = redisson.getTopic("anyTopic");
-		    topic.addListener(new MessageListener<SomeObject>() {
-		         public void onMessage(SomeObject message) {
-		           // ...
-		         }
-		    });
+		    RTopic  topic = redisson.getTopic("anyTopic");
+		    topic.addListener(new StatusListener() {
+				@Override
+				public void onUnsubscribe(String arg0) {
+				}
+				@Override
+				public void onSubscribe(String arg0) {
+				}
+			});
 	    }
 	    {
 	    	// in other thread or other JVM
 
-		    RTopic<SomeObject> topic = redisson.getTopic("anyTopic");
+		    RTopic topic = redisson.getTopic("anyTopic");
 		    long clientsReceivedMessage = topic.publish(new SomeObject());
 	    }
 	 

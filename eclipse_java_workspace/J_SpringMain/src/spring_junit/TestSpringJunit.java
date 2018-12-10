@@ -34,36 +34,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.MultiValueMap;
 
 
-class CustomTestExecutionListener implements TestExecutionListener
-{
-
-	public void beforeTestClass(TestContext testContext) throws Exception {
-		System.out.println("beforeTestClass");
-	}
-
-	@Override
-	public void prepareTestInstance(TestContext testContext) throws Exception {
-		System.out.println("prepareTestInstance");
-	}
-
-	@Override
-	public void beforeTestMethod(TestContext testContext) throws Exception {
-		System.out.println("beforeTestMethod");
-	}
-
-	@Override
-	public void afterTestMethod(TestContext testContext) throws Exception {
-		System.out.println("afterTestMethod");
-	}
-
-	@Override
-	public void afterTestClass(TestContext testContext) throws Exception {
-		System.out.println("afterTestClass");
-	}
-	
-}
-
-
 @RunWith(SpringJUnit4ClassRunner.class)
 //@ContextConfiguration(classes = {AppConfig.class, TestConfig.class})
 @ContextConfiguration("classpath:spring_junit/springJunitEasyMock.xml") 
@@ -168,4 +138,37 @@ public class TestSpringJunit
 	}
 	
 }
+
+
+
+
+class CustomTestExecutionListener implements TestExecutionListener
+{
+
+	public void beforeTestClass(TestContext testContext) throws Exception {
+		System.out.println("beforeTestClass");
+	}
+
+	@Override
+	public void prepareTestInstance(TestContext testContext) throws Exception {
+		System.out.println("prepareTestInstance");
+	}
+
+	@Override
+	public void beforeTestMethod(TestContext testContext) throws Exception {
+		System.out.println("beforeTestMethod");
+	}
+
+	@Override
+	public void afterTestMethod(TestContext testContext) throws Exception {
+		System.out.println("afterTestMethod");
+	}
+
+	@Override
+	public void afterTestClass(TestContext testContext) throws Exception {
+		System.out.println("afterTestClass");
+	}
+	
+}
+
 

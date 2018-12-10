@@ -83,6 +83,7 @@
             <value>DEFAULT_CACHE</value>
         </property>
     </bean>
-   
+ <!-- Ehcache 3.x is fully JSR-107 org.springframework.cache.jcache 
+   这里是Ehcache 2.x -->
 	  
 </beans>

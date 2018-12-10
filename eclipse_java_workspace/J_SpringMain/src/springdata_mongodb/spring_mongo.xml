@@ -63,31 +63,80 @@
                         http://www.springframework.org/schema/data/jpa
                         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
                         http://www.springframework.org/schema/batch
-                        http://www.springframework.org/schema/batch/spring-batch.xsd">
-
-	<!-- 新版本无　mongo-client　标签　
-	  <mongo:mongo-client  id="mongo" host="127.0.0.1" port="47017" credentials="user:password@database"  >
-	    <mongo:client-options write-concern="NORMAL" />
+                        http://www.springframework.org/schema/batch/spring-batch.xsd"> 
+ 
+ <!--
+	  <mongo:mongo-client  id="mongoClient" host="127.0.0.1" port="27017"  credentials="rootUser:rootPass@admin"  >
+	    <mongo:client-options connections-per-host="8"
+                   threads-allowed-to-block-for-connection-multiplier="4"
+                   connect-timeout="1000"
+                   max-wait-time="1500" 
+                   socket-keep-alive="true"
+                   socket-timeout="1500"    />
 	</mongo:mongo-client>
-	-->
-	<mongo:mongo  id="mongo" host="127.0.0.1" port="47017" write-concern="NORMAL" ></mongo:mongo>
-	
- <!--   二选一 
-    <bean id="mongo" class="org.springframework.data.mongodb.core.MongoFactoryBean">
+ 
+   二选一 --> 
+    <bean id="mongoClient" class="org.springframework.data.mongodb.core.MongoClientFactoryBean">
+        <property name="credentials"  >
+        	<list>
+        		<bean class="com.mongodb.MongoCredential" factory-method="createCredential">
+        			<constructor-arg name="userName" value="zh"></constructor-arg>
+        			<constructor-arg name="password" value="123"></constructor-arg>
+        			<constructor-arg name="database" value="reporting"></constructor-arg>
+        		</bean>
+        	</list>
+        </property>
+        <!-- 
         <property name="host" value="localhost" />
         <property name="port" value="27017" />
+        -->
+        <!--  为事务用 -->
+        <property name="replicaSetSeeds" > 
+        	<array>
+        		<bean class="com.mongodb.ServerAddress" >
+        			<constructor-arg index="0" value="127.0.0.1"/>
+        			<constructor-arg index="1" value="37017"/> 
+        		</bean>
+        		<bean class="com.mongodb.ServerAddress" >
+        			<constructor-arg index="0" value="127.0.0.1"/>
+        			<constructor-arg index="1" value="37018"/> 
+        		</bean>
+        		<bean class="com.mongodb.ServerAddress" >
+        			<constructor-arg index="0" value="127.0.0.1"/>
+        			<constructor-arg index="1" value="37019"/> 
+        		</bean>
+        	</array>
+        </property>
+           
     </bean>
- --> 
- 
+      
+    
+   <mongo:db-factory  id="mongoDbFactory" dbname="reporting" mongo-ref="mongoClient"/>
+   
+	<bean id="mongoMappingContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"> 
+	</bean>
+	
+	<bean id="defaultMongoTypeMapper" class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper"> 
+	</bean>
+	
+	<bean id="mappingConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+		 <constructor-arg name="mappingContext" ref="mongoMappingContext"/> 
+		 <property name="typeMapper" ref="defaultMongoTypeMapper" ></property>
+	</bean>
+	
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-        <constructor-arg name="mongo" ref="mongo" />
-        <constructor-arg name="databaseName" value="nature" />
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+        <constructor-arg name="mongoConverter" ref="mappingConverter"/>
     </bean>
      
+     <!-- 使用 方式一 -->
 	 <bean id="natureRepository"  class="springdata_mongodb.MyMongoRepositoryImpl">
         <property name="mongoTemplate" ref="mongoTemplate" />
     </bean>
     
-
-	 
+	<!-- 方式二  repository-impl-postfix="Impl" -->
+	<mongo:repositories base-package="springdata_mongodb.repo" ></mongo:repositories>
+	<mongo:mapping-converter base-package="springdata_mongodb.model" db-factory-ref="mongoDbFactory"></mongo:mapping-converter>
+			  
 </beans>

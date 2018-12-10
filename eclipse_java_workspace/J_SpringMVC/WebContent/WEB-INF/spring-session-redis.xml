@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:tool="http://www.springframework.org/schema/tool"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:lang="http://www.springframework.org/schema/lang"
+    xmlns:jms="http://www.springframework.org/schema/jms"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:cache="http://www.springframework.org/schema/cache"
+    xmlns:oxm="http://www.springframework.org/schema/oxm"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:websocket="http://www.springframework.org/schema/websocket"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:redis="http://www.springframework.org/schema/redis"
+    xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+    xmlns:hdp="http://www.springframework.org/schema/hadoop"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xmlns:ldap="http://www.springframework.org/schema/ldap"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:c="http://www.springframework.org/schema/c"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/util
+                        http://www.springframework.org/schema/util/spring-util.xsd
+                        http://www.springframework.org/schema/tool
+                        http://www.springframework.org/schema/tool/spring-tool.xsd
+                        http://www.springframework.org/schema/jee
+                        http://www.springframework.org/schema/jee/spring-jee.xsd
+                        http://www.springframework.org/schema/jms
+                        http://www.springframework.org/schema/jms/spring-jms.xsd
+                        http://www.springframework.org/schema/task
+                        http://www.springframework.org/schema/task/spring-task.xsd
+                        http://www.springframework.org/schema/cache
+                        http://www.springframework.org/schema/cache/spring-cache.xsd
+                        http://www.springframework.org/schema/lang
+                        http://www.springframework.org/schema/lang/spring-lang.xsd
+                        http://www.springframework.org/schema/jdbc
+                        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+                        http://www.springframework.org/schema/oxm
+                        http://www.springframework.org/schema/oxm/spring-oxm.xsd
+                        http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                        http://www.springframework.org/schema/websocket
+                        http://www.springframework.org/schema/websocket/spring-websocket.xsd
+                        http://www.springframework.org/schema/security
+                        http://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/redis
+                        http://www.springframework.org/schema/redis/spring-redis.xsd
+                        http://www.springframework.org/schema/data/mongo
+                        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd 
+                        http://www.springframework.org/schema/hadoop
+                        http://www.springframework.org/schema/hadoop/spring-hadoop.xsd
+                        http://www.springframework.org/schema/data/jpa
+                        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                        http://www.springframework.org/schema/batch
+                        http://www.springframework.org/schema/batch/spring-batch.xsd
+						http://www.springframework.org/schema/rabbit 
+                        http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
+						http://www.springframework.org/schema/ldap 
+						http://www.springframework.org/schema/ldap/spring-ldap.xsd">
+						
+	<import resource="spring_jstl.xml"/>
+	
+	<bean  id="redisStandaloneConfiguration" class="org.springframework.data.redis.connection.RedisStandaloneConfiguration">
+		<property name="hostName" value="127.0.0.1"></property>
+		<property name="port" value="6379"></property>
+		<property name="database"  value="0"></property>
+		<!-- 
+		<property name="password"  >
+			<bean class="org.springframework.data.redis.connection.RedisPassword" factory-method="of" >
+				<constructor-arg value="redisPass"/>
+			</bean>
+		</property>
+		 -->
+	</bean>
+	 
+	  <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"  >
+		<constructor-arg  ref="redisStandaloneConfiguration"> </constructor-arg> 
+	</bean>
+
+  <!--  二选一
+	<bean id="connectionFactory"  class="org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory">
+		<constructor-arg ref="redisStandaloneConfiguration">  </constructor-arg>
+	</bean>
+	 -->
+	 
+	<context:annotation-config/> <!-- 创建 springSessionRepositoryFilter , 即 RedisHttpSessionConfiguration 类的父类是带@Configuration中创建的--> 
+
+	<!-- <context:component-scan base-package="org.springframework.web.filter.DelegatingFilterProxy"/>
+	 解决  No bean named 'springSessionRepositoryFilter' is defined  或用  
+	<context:annotation-config/>
+	-->
+
+
+ <!-- spring session redis 设置  10分钟过期-->
+  <bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+      <property name="maxInactiveIntervalInSeconds" value="600"></property>
+  </bean>
+  
+
+  <!--   spring session 过滤器
+  <filter>
+    <filter-name>springSessionRepositoryFilter</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>springSessionRepositoryFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  -->
+</beans>

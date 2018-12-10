@@ -77,7 +77,7 @@ public class DOM {
 	        StringWriter stringWriter=new StringWriter();
 	        TransformerFactory   tFactory=TransformerFactory.newInstance();
 	        DOMSource   source=   new   DOMSource(element);
-	        StreamResult   stream   =   new   StreamResult(stringWriter);
+	        StreamResult   stream   =   new   StreamResult(stringWriter);//参数可以为OutputStream
 	        Transformer   transformer=tFactory.newTransformer();
 	        transformer.setOutputProperty( "encoding", "UTF-8");  
 	        transformer.setOutputProperty(OutputKeys.INDENT, "yes"); 

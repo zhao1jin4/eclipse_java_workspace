@@ -1,6 +1,7 @@
 package org.liukai.tutorial.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -37,11 +38,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 			// getAuthorities() will translate the access level to the correct
 			// role type
 
-			user = new User(dbUser.getUsername(), dbUser.getPassword().toLowerCase(), 
-					true, true, true, true, getAuthorities(dbUser.getAccess()));
+			user = new User(dbUser.getUsername(), dbUser.getPassword(), 
+					true, true, true, true, getAuthorities(dbUser.getAccess())); //自身系统验证
+			
+//			user = new User(dbUser.getUsername(),"noPassword" ,   //外部部系统验证的假密码
+//					true, true, true, true, Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));//外部系统验证
 
 		} catch (Exception e) {
-			logger.error("Error in retrieving user");
+			logger.error("Error in retrieving user",e);
 			throw new UsernameNotFoundException("Error in retrieving user");
 		}
 

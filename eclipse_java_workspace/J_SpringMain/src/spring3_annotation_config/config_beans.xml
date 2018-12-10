@@ -77,6 +77,16 @@
 	 -->
 	
 	<util:properties id="jdbcProperties" location="classpath:jdbc.properties"/>
+	<!-- util:properties 就是用 PropertiesFactoryBean
+	<bean id="jdbcProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:spring3_annotation_config/jdbc.properties</value>
+				<value>classpath:spring3_annotation_config/jdbcOver.properties</value>
+			</list>
+		</property>
+	</bean>
+	 -->
 	<!-- 
 	<bean id="userDAO" class="spring3_config.UserDAOImpl">
 	</bean>

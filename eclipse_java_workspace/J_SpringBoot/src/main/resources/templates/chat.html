@@ -1,0 +1,50 @@
+﻿
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+ <script type="text/javascript" th:src="@{sockjs.min.js}"></script>
+<script type="text/javascript" th:src="@{stomp.min.js}"></script>
+<script type="text/javascript" th:src="@{jquery.min.js}"></script>
+ 
+</head>
+<body>
+书上的，未测试呢？
+ <div>
+ 	聊天室
+ </div>
+   
+ <form id="myForm"  >
+ 	<textarea name="text"></textarea>
+   <input type="submit"  > 
+ </form>
+ <script th:inline="javascript"  >
+	$("#myForm").submit(function(e){
+		e.preventDefault();
+		var text=$("#myForm").find('textarea[name="text"]').val();
+		sendSpittle(text);
+	});
+	var socket=new SocketJS('/endpointChat');
+	var stomp =Stomp.over(socket);
+	stomp.connect('guest','guest',function (frame){
+		 
+		console.log("connected :"+frame);
+		stomp.subscribe('/user/queue/notifications',function (response){
+			$("#output").append('<b>received'+response+"</b><br/>");
+		})
+	});
+	function sendSpittle(text)
+	{
+		stomp.send("/chat",{},text);
+	}
+	
+	$("#stop").click(function ({
+		stomp.close();
+	}));
+ </script>
+ 
+ <div id="output"> 
+ </div>
+ 
+</body>
+</html>

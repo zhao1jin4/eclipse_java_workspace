@@ -20,7 +20,9 @@
 	在FreeMarker页中
 	<hr/>
 	国际化消息:<@spring.message "title"/> <BR/>
-	带默认值的国际化消息:<@spring.messageText "_title_", "这是默认值"/>
+	<#assign seq = ['王1', '张1']> 
+          带参数的国际化消息:<@spring.messageArgs "title", seq/> <BR/>
+	带默认值的国际化消息:<@spring.messageText "_title_", "这是默认值"/> <BR/>
 	<hr/>
 	
 <form method="POST" action="submitRegister.mvc">

@@ -45,10 +45,15 @@ public class MainTestCase extends TestCase
 //		dataSource.setUser("sa");
 //		dataSource.setPassword("");
 		
-		dataSource.setDriverClass("oracle.jdbc.driver.OracleDriver");
-		dataSource.setJdbcUrl("jdbc:oracle:thin:@localhost:1521:XE");
-		dataSource.setUser("myhr");
-		dataSource.setPassword("myhr");
+//		dataSource.setDriverClass("oracle.jdbc.driver.OracleDriver");
+//		dataSource.setJdbcUrl("jdbc:oracle:thin:@localhost:1521:XE");
+//		dataSource.setUser("myhr");
+//		dataSource.setPassword("myhr");
+		
+		dataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
+		dataSource.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/mydb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC");
+		dataSource.setUser("zh");
+		dataSource.setPassword("123");
 		
 		dataSource.setInitialPoolSize(5);
 		dataSource.setMinPoolSize(5);
@@ -165,7 +170,7 @@ public class MainTestCase extends TestCase
 		
 		Employee param=new Employee();
 		param.setId(105);
-		//param.setUsername("Java");
+		param.setUsername("Java");
 		param.setBirthday(Calendar.getInstance().getTime());
 		param.setPassword("123");
 		param.setDepartment_id(10);

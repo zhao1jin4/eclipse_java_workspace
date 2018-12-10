@@ -26,6 +26,10 @@ public class UserVO  implements Serializable
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
+	@Override
+	public String toString() {
+		return "UserVO [username=" + username + ", id=" + id + ", birthday=" + birthday + "]";
+	}
 	
 	
 }

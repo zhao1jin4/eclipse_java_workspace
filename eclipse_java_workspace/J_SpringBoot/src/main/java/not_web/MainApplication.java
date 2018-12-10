@@ -16,6 +16,7 @@ import org.springframework.web.WebApplicationInitializer;
 @SpringBootApplication  //等同用 @Configuration 和 , @EnableAutoConfiguration,@ComponentScan
 public class MainApplication {
     public static void main(String[] args) {
+    	//http://localhost:8081/J_SpringBoot/showConfig
     	SpringApplication.run(MainApplication.class, args);
     }
     

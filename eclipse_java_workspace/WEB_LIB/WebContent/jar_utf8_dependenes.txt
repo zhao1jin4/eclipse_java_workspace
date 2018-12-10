@@ -11,9 +11,18 @@ encoding/<project>=UTF-8
 encoding//src/mypacke/MyClass.java=UTF-8
 ----------
 
-----
-	freemarker-2.3.23.jar
-============Spring 4.3.7
+---- 
+	freemarker-2.3.28.jar
+	
+	thymeleaf-3.0.11.RELEASE.jar 
+		ognl-3.1.12.jar
+		javassist-3.20.0-GA.jar
+		attoparser-2.0.5.RELEASE.jar
+		unbescape-1.1.6.RELEASE.jar
+		
+	thymeleaf-spring5-3.0.11.RELEASE.jar
+	
+============Spring 5.1.0
 
  
 	commons-logging-1.1.1.jar
@@ -23,19 +32,20 @@ encoding//src/mypacke/MyClass.java=UTF-8
 	aspectjweaver.jar   1.8.13
 	cglib-nodep-2.1_3.jar
 	
-	spring-aop-4.3.7.RELEASE.jar
-	spring-beans-4.3.7.RELEASE.jar
-	spring-context-4.3.7.RELEASE.jar
-	spring-context-support-4.3.7.RELEASE.jar
-	spring-core-4.3.7.RELEASE.jar
-	spring-expression-4.3.7.RELEASE.jar
-	spring-test-4.3.7.RELEASE.jar
-	spring-tx-4.3.7.RELEASE.jar
-	spring-web-4.3.7.RELEASE.jar
-	spring-websocket-4.3.7.RELEASE.jar
-	spring-webmvc-4.3.7.RELEASE.jar
-	spring-jms-4.3.7.RELEASE.jar
-	
+	spring-aop-5.1.0.RELEASE.jar
+	spring-beans-5.1.0.RELEASE.jar
+	spring-context-5.1.0.RELEASE.jar
+	spring-context-support-5.1.0.RELEASE.jar
+	spring-core-5.1.0.RELEASE.jar
+	spring-expression-5.1.0.RELEASE.jar
+	spring-test-5.1.0.RELEASE.jar
+	spring-tx-5.1.0.RELEASE.jar
+	spring-web-5.1.0.RELEASE.jar
+	spring-websocket-5.1.0.RELEASE.jar
+	spring-webmvc-5.1.0.RELEASE.jar
+	spring-jms-5.1.0.RELEASE.jar
+
+----
 	spring-amqp-1.7.3.RELEASE.jar
 	spring-rabbit-1.7.3.RELEASE.jar
 	
@@ -45,49 +55,61 @@ encoding//src/mypacke/MyClass.java=UTF-8
 	   xmlpull_1_0_5.jar
 	   
 	
-	spring-data-redis-2.0.5.RELEASE.jar
+	spring-data-redis-2.0.7.RELEASE.jar
+		spring-data-commons-2.1.1.RELEASE.jar
 	
-	spring-data-mongodb-1.6.1.RELEASE.jar
+	spring-data-mongodb-2.1.1.RELEASE.jar
+		 spring-data-commons-2.1.1.RELEASE.jar
+		 
+	spring-data-neo4j-5.1.0.RELEASE.jar
 	
 	spring-hateoas-0.16.0.RELEASE.jar
 		objenesis-2.1.jar 
  
 ---
-	reactor-core-1.1.3.BUILD-SNAPSHOT.jar
-		disruptor-3.2.1.jar
-		jsr166e-1.0.jar										-------??? 等新版本删这个
-		gs-collections-api-5.0.0.jar
-
-	reactor-spring-context-1.1.3.BUILD-SNAPSHOT.jar
-	reactor-spring-core-1.1.3.BUILD-SNAPSHOT.jar
 	
-	--
+	reactor-core-3.1.7.RELEASE.jar
+		disruptor-3.4.2.jar	
+		jsr166e-1.0.jar
+		gs-collections-api-7.0.3.jar
+		gs-collections-api-7.0.3.jar
+		 
+	reactor-spring-context-2.0.7.RELEASE.jar
+	reactor-spring-core-2.0.7.RELEASE.jar	
+--
 	swagger-springmvc-1.0.2.jar
 	swagger-models-1.0.2.jar
 	swagger-annotations-1.3.11.jar
 	swagger-spring-mvc-ui-0.4.jar  不可自定义界面
 	
-	guava-24.1-jre.jar
-============Spring Security
-	spring-security-web-3.2.5.RELEASE.jar
-	spring-security-core-3.2.5.RELEASE.jar
-	spring-security-config-3.2.5.RELEASE.jar
-	spring-security-taglibs-3.2.5.RELEASE.jar
+	guava-27.0-jre.jar
+============Spring Security 5.0.5
+	spring-security-acl-5.0.5.RELEASE.jar
+	spring-security-config-5.0.5.RELEASE.jar
+	spring-security-core-5.0.5.RELEASE.jar
+	spring-security-crypto-5.0.5.RELEASE.jar
+	spring-security-rsa-1.0.3.RELEASE.jar
+	spring-security-taglibs-5.0.5.RELEASE.jar
+	spring-security-web-5.0.5.RELEASE.jar
+===========Sprig LDAP
+	spring-ldap-core-2.3.1.RELEASE.jar
 
-	
+---spring session
+spring-session-data-redis-2.0.4.RELEASE.jar
+spring-session-core-2.0.3.RELEASE.jar
+
 -------Spring MVC JSON
-	jackson-annotations-2.8.9.jar   fastxml的
-	jackson-core-2.8.9.jar
-	jackson-databind-2.8.9.jar
-	
+	jackson-annotations-2.9.6.jar   fastxml的
+	jackson-core-2.9.6.jar
+	jackson-databind-2.9.6.jar
+		classmate-1.3.0.jar
 --------MyBatis
 mybatis-3.3.0.jar
 mybatis-ehcache-1.0.0.jar
 mybatis-spring-1.2.0.jar
 
-mybatis-generator-core-1.3.2.jar
-
-	commons-collections-3.2.jar
+mybatis-generator-core-1.3.7.jar
+	commons-collections-3.2.2jar
 	commons-digester-1.8.jar  用于把XML->Bean
 	commons-logging-1.1.1.jar
 	commons-beanutils-1.8.3.jar
@@ -95,7 +117,8 @@ mybatis-generator-core-1.3.2.jar
 	commons-codec-1.7.jar
 	
 druid-1.1.7.jar
-
+c3p0-0.9.5.2.jar
+	mchange-commons-java-0.2.11.jar
 ============amqp-client-5.1.1.jar  rabbitMQ
 ============rocketMQ
 rocketmq-common-4.2.0.jar
@@ -116,53 +139,47 @@ rocketmq-remoting-4.2.0.jar
 	log4j-slf4j-impl-2.8.2.jar
 	log4j-nosql-2.8.2.jar
 	
-json-lib依赖 	 json-lib-2.1-jdk15.jar
+json-lib依赖 	 json-lib-2.4-jdk15.jar
 	 commons-beanutils.jar
-	 commons-collections.jar
+	 commons-collections-3.2.2.jar
 	 commons-lang.jar
 	 commons-logging.jar
 	 dom4j-1.6.1.jar
 	 ezmorph-1.0.6.jar
 	 
-CXF的依赖   cxf-core-3.0.2.jar 
-	cxf-rt-frontend-jaxws-3.0.2.jar
-	cxf-rt-frontend-simple-3.0.2.jar
-	cxf-rt-wsdl-3.0.2.jar
-	cxf-rt-databinding-aegis-3.0.2.jar
-	cxf-rt-bindings-soap-3.0.2.jar
-	cxf-rt-transports-http-3.0.2.jar
-	cxf-rt-databinding-jaxb-3.0.2.jar
+CXF的依赖 
+	cxf-rt-bindings-soap-3.2.5.jar
+	cxf-rt-bindings-xml-3.2.5.jar
+	cxf-rt-databinding-aegis-3.2.5.jar
+	cxf-rt-databinding-jaxb-3.2.5.jar
+	cxf-rt-frontend-jaxrs-3.2.5.jar
+	cxf-rt-frontend-jaxws-3.2.5.jar
+	cxf-rt-frontend-simple-3.2.5.jar
+	cxf-rt-rs-client-3.2.5.jar
+	cxf-rt-transports-http-3.2.5.jar
+	cxf-rt-transports-http-jetty-3.2.5.jar
+	cxf-rt-wsdl-3.2.5.jar
 	
-	------非web使用
-	cxf-rt-bindings-xml-3.0.2.jar
-	cxf-rt-transports-http-jetty-3.0.2.jar 
-	woodstox-core-asl-4.4.1.jar	
 	stax2-api-3.1.4.jar
-	
-	--rs相关
-		cxf-rt-rs-client-3.0.2.jar
-		javax.ws.rs-api-2.0.1.jar
-		cxf-rt-frontend-jaxrs-3.0.2.jar
-		
-	neethi-3.0.3.jar
-	geronimo-jaxws_2.2_spec-1.2.jar
-	xmlschema-core-2.1.0.jar
-	jaxb-api-2.2.11.jar
+	woodstox-core-5.0.3.jar
 	wsdl4j-1.6.3.jar
-	jetty-util-8.1.15.v20140411.jar    jetty嵌入式Servlet 容器
-	jetty-http-8.1.15.v20140411.jar
-	jetty-io-8.1.15.v20140411.jar
-	启动后还要
-	jetty-continuation-8.1.15.v20140411.jar
-	jetty-server-8.1.15.v20140411.jar
+	xmlschema-core-2.2.3.jar
+	     
 	
+	javax.ws.rs-api-2.1.jar
+	jetty-http-9.4.11.v20180605.jar
+	jetty-io-9.4.11.v20180605.jar
+	jetty-server-9.4.11.v20180605.jar
+	jetty-util-9.4.11.v20180605.jar
+		 
+		
 
 	
 HttpClient
-	httpclient-cache-4.1.3.jar
-	httpclient-4.1.3.jar
-	httpmime-4.1.3.jar
-	httpcore-4.1.4.jar
+	httpclient-cache-4.5.6.jar
+	httpclient-4.5.6.jar
+	httpmime-4.5.6.jar
+	httpcore-4.4.10.jar
 	  
 
 jfreechart-1.0.14.jar  的依赖
@@ -206,9 +223,9 @@ quartz-jobs-2.2.1.jar
 	validation-api-1.1.0.Final.jar
 	hibernate-validator-5.1.1.Final.jar
 	classmate-1.3.0.jar  		hibernate
+	jboss-logging-3.3.0.Final.jar
 
-
----JavaEE-7 
+---JavaEE-8
 	javax.management.j2ee-api.jar	ActiveMQ 有 geronimo-j2ee-management_1.1_spec-1.0.1.jar
 	javax.jms-api.jar   			ActiveMQ 有 geronimo-jms_1.1_spec-1.1.1.jar
 	javax.mail.jar
@@ -225,6 +242,9 @@ quartz-jobs-2.2.1.jar
 	javax.interceptor-api.jar
 	javax.batch-api.jar
 	javax.el.jar
+	
+	javax.annotation-api-1.3.2.jar
+	
 ----hadoop 为编译
 	hadoop-common-2.7.0.jar
 	hadoop-mapreduce-client-core-2.7.0.jar
@@ -244,10 +264,12 @@ quartz-jobs-2.2.1.jar
 		spark-catalyst_2.11-2.1.1.jar
 		scala-reflect-2.11.8.jar
 		
-
-	kafka-clients-0.11.0.0.jar
-	kafka-streams-0.11.0.0.jar
-	
+ 
+	kafka-streams-1.1.0.jar
+	kafka-clients-1.1.0.jar
+		rocksdbjni-5.7.3.jar
+		
+		
 	hbase-common-1.0.1.jar
 	hbase-client-1.0.1.jar
 	hbase-server-1.0.1.jar
@@ -267,16 +289,26 @@ dwr.jar
 js.jar
 
 commons-fileupload-1.2.2.jar
-
+	commons-io-2.4.jar
+	
 h2-1.3.166.jar
 mysql-connector-java-5.1.21-bin.jar
 ojdbc6.jar   Oracle12R1
 db2jcc.jar	 DB2
 
-mongodb-driver-3.4.0.jar
-mongodb-driver-async-3.4.0.jar
-	mongodb-driver-core-3.4.0.jar
-bson-3.4.0.jar
+mongodb-driver-3.8.2.jar
+mongodb-driver-async-3.8.2.jar
+	mongodb-driver-core-3.8.2.jar
+bson-3.8.2.jar
+
+neo4j-java-driver-1.6.3.jar
+
+neo4j-ogm-core-3.1.4.jar
+	neo4j-ogm-api-3.1.4.jar
+	fast-classpath-scanner-2.18.1.jar
+neo4j-ogm-bolt-driver-3.1.4.jar
+neo4j-ogm-http-driver-3.1.4.jar
+neo4j-ogm-embedded-driver-3.1.4.jar
 
 ----Third-lib 
 
@@ -287,9 +319,15 @@ commons-vfs2-2.0.jar 为第三方库smb,
 commons-net-3.2.jar  为 ftp,
 commons-compress-1.9.jar
 jsch-0.1.44.jar
-velocity-1.7.jar
-displaytag-1.2.jar
+ 
 
+displaytag-1.2.jar 
+	commons-lang-2.5.jar
+	commons-collections-3.2.1.jar
+	commons-logging-api-1.1.jar
+	standard.jar
+	commons-beanutils-1.9.3.jar
+	
 osgi.core-5.0.0.jar  只做编译用,运行使用apache Felix
 jcr-2.0.jar 只做编译用,运行使用apache Sling
 
@@ -320,10 +358,20 @@ hessian-4.0.37.jar  dubbo使用的
 jedis-2.4.2.jar
 	commons-pool2-2.2.jar
 
-redisson-1.1.7-SNAPSHOT.jar 依赖 fasterxml的jackson
+lettuce-core-5.0.4.RELEASE.jar
 	netty-all-4.1.8.Final.jar
-
+	reactor-core-3.1.7.RELEASE.jar
+	reactive-streams-1.0.2.jar
 	
+redisson-3.9.1.jar  (实现javax.cache)
+	jackson-dataformat-yaml-2.9.5.jar  依赖 fasterxml的jackson 
+	netty-all-4.1.27.Final.jar   
+--
+ehcache-3.6.1.jar (org.ehcache支持分布式  实现javax.cache )
+caffeine-2.6.2.jar (加 jcache-2.6.2.jar(无) 就实现javax.cache )
+
+cache-api-1.1.0.jar (javax)
+
 --easymock-3.2.jar
 	objenesis-2.1.jar 
 junit 在eclipse中自带的
@@ -333,7 +381,7 @@ junit 在eclipse中自带的
 	byte-buddy-1.7.9.jar
 	objenesis-2.6.jar
 	
-jboss-client.jar  	JBoss 7.1.1 client
+先不要  jboss-client.jar  (里面也有 io.netty 影响很多其它)	 wildfly 13  client 
 
 bcprov-ext-1.4.9.jar --java security provider
 --large file
@@ -353,6 +401,7 @@ JBPM 6 可先使用eclipse 插件 drools 使用Hibernate
 		 activiti-dmn-api-6.0.0.jar
 		 activiti-form-api-6.0.0.jar
 		 activiti-bpmn-model-6.0.0.jar
+		 activiti-bpmn-converter-6.0.0.jar
 	juel-impl-2.2.7.jar
 	joda-time-2.9.9.jar
 	
@@ -373,3 +422,18 @@ ApacheJMeter_java.jar   jmeter-4.0
 curator-client-4.0.1.jar
 curator-framework-4.0.1.jar
 curator-recipes-4.0.1.jar
+
+
+shiro-core-1.3.2.jar
+shiro-web-1.3.2.jar
+shiro-spring-1.3.2.jar
+	shiro-ehcache-1.3.2.jar
+		ehcache-2.9.0.jar (net.sf)
+		
+		
+
+
+jbcrypt-0.4.jar
+
+jasypt-1.9.2.jar
+jasypt-spring31-1.9.2.jar

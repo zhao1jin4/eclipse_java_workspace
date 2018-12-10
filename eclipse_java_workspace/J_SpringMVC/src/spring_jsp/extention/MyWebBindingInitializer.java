@@ -12,10 +12,11 @@ import org.springframework.web.context.request.WebRequest;
 public class MyWebBindingInitializer implements WebBindingInitializer 
 {
 	@Override
-	public void initBinder(WebDataBinder binder, WebRequest request) {
+	public void initBinder(WebDataBinder binder) {
 		System.out.println("调用 MyWebBindingInitializer ");
-		binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
+//		binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));//JSON格式无效
 //		binder.registerCustomEditor(Date.class,new  MyPropertyEditor());
 		binder.registerCustomEditor(DateRange.class,new  DateRangeEditor());//employee/employeeList
+		
 	}
 }

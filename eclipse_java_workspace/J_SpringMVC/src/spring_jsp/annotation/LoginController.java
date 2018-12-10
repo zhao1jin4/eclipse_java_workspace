@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;   
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;   
 import org.springframework.web.bind.annotation.RequestMapping;   
 import org.springframework.web.bind.annotation.RequestMethod;   
@@ -53,18 +54,32 @@ public class LoginController {
         return "company_annotation/login";   
     }
     
-    //@Valid 要打开  <mvc:annotation-driven/>  ,只认ValidationMessages.properties国际化文件
+    //@Valid 要打开  <mvc:annotation-driven/> 只可对表单提交式  JSON提交不行的,只认ValidationMessages.properties国际化文件
     @RequestMapping(value = "/submitLogin",method = RequestMethod.POST)   
-    public String login(@Valid @ModelAttribute("accountForm") Account account  ,BindingResult result,Model model )
+    public String login(@Valid @ModelAttribute("accountForm") Account account  ,BindingResult result,Model model,HttpServletRequest request )
     		//表单对应的Bean属性最好不要用char类型,用String代替
 //    		,RedirectAttributes redirectAttributes)//SpringMVC-3.1 only????
     {   
-    	model.addAttribute("allSkills",getSkills());
+    	model.addAttribute("allSkills",getSkills());//页面不能为空
     	model.addAttribute("emailSendForm", new EmailForm()); //对一个页面两个表单
-    	
     	if(result.hasErrors())
-    		 return "company_annotation/login";
+    	{
+    		for(ObjectError err:result.getAllErrors())
+    		{
+    			System.out.println(err.getObjectName()+"=="+err.getDefaultMessage());
+    		}
+    		
+    		//代码中的国际化，也可 @Autowired private MessageSource messageSource;
+//			ServletContext servletContext=request.getServletContext();
+//			WebApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);//web.xml中要必须有ContexLoaderListener注册过
+//			Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);  
+//		    String title = applicationContext.getMessage("title",new Object[] {"一","二"}, locale);  
+//		    System.out.println("代码  国际化  title为:"+title);
+		    
+    		return "company_annotation/login";
+    	}
     	
+    
     	Account acc = accountService.read(account.getUsername(), account.getPassword());   
         if (acc != null)
         {

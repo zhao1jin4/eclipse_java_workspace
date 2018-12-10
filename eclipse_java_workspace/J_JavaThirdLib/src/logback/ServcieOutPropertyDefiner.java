@@ -4,7 +4,8 @@ import ch.qos.logback.core.Context;
 import ch.qos.logback.core.spi.PropertyDefiner;
 import ch.qos.logback.core.status.Status;
 
-public class ServcieOutPropertyDefiner implements  PropertyDefiner {
+public class ServcieOutPropertyDefiner implements  PropertyDefiner
+{
 	private String logHome;
 	public void setLogHome(String logHome) {
 		this.logHome = logHome;

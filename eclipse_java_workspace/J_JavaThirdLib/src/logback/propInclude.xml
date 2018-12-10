@@ -15,7 +15,7 @@
 	<!-- 也可用于DEV,SIT,UTA 环境的切换  ,日志报要 Janino 库 janino-2.7.5.jar 依赖 commons-compiler-2.7.5.jar -->
 	<if condition='property("os.name").contains("Windows")'>  
 		<then>
-			<property file="C:/My/all_code_workspace/eclipse_java_workspace/J_JavaThirdLib/src/logback/windows.properties" />
+			<property file="D:/NEW_/eclipse_java_workspace/J_JavaThirdLib/src/logback/windows.properties" />
 		</then>
 		<else>
     		<property file="/eclipse_java_workspace/J_JavaThirdLib/src/logback/linux.properties" />

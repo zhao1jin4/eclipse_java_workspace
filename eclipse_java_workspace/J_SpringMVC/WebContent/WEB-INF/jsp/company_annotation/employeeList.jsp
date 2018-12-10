@@ -17,19 +17,19 @@
 <body>
  
  国际化<br/>
- <fmt:message key="title"/><br/>
- <spring:message code="title"/>
+ <fmt:message key="title"   /> <!-- spring MVC 中带参数var就不行了?? --><br/>
+ <spring:message code="title" arguments="王2,张2"   />  <br/>
 
-<%-- 
+<%--  spring MVC 中没用???  
 <fmt:setBundle basename="messages"/>
 <fmt:setLocale value="zh_CN"/>
-没用???
-  --%>
-<fmt:message key="employee_query"/>
-<br/>
+ --%>
+employee_query fmt:<fmt:message key="employee_query"  />  <br/>
+employee_query spring : <spring:message code="employee_query"  /> <br/>
+
 
 <form action="<%=request.getContextPath() %>/employee/submitQuery.mvc">
-	<spring:message code="employee_id"/> <br/>
+	<spring:message code="employee_id"/> :123 <br/>
 	
 	first_name ：<input type="text" name="first_name" value="王"/> <br/>
 	otherParam ：<input type="text" name="otherParam" value="other"/> <br/>

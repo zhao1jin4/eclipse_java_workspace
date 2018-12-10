@@ -2,7 +2,9 @@ package bean_validation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -11,6 +13,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+
+import util.ValidationUtil;
 
 
 public class MainBeanValidation {
@@ -25,11 +29,19 @@ public class MainBeanValidation {
 		 order.setStatus(""); 
 		 order.setIsPay("X");
 		 order.setPrice(9823.34f); //4523.534
+		 
 		 User user=new User();
 		 user.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse("2018-02-03"));
 		 user.setPassword("abc123");
 		 user.setRePassword("abc");
 		 order.setUser(user);
+		 
+		 List<Order> orders=new ArrayList<>();
+		 orders.add(order);
+// 		 user.setOrders(orders);
+		 String error= ValidationUtil.validate(user);
+		 if(error!=null)
+			 System.out.println("util validate=="+error);
 		 
 		 javax.el.ExpressionFactory dependsByValidation;
 		 ValidatorFactory factory = Validation.buildDefaultValidatorFactory(); 
@@ -45,7 +57,7 @@ public class MainBeanValidation {
 				buf.append( violation.getPropertyPath().toString()); 
 				buf.append(violation.getMessage() ) .append("<BR>\n");
 			 }
-			 System.out.println(buf);
+			 System.out.println("valdate res=="+buf);
 		 }
 	}
 

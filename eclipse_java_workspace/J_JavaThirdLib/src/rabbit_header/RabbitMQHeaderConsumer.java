@@ -17,15 +17,15 @@ import com.rabbitmq.client.Envelope;
 public class RabbitMQHeaderConsumer {  
     private final static String EXCHANGE_NAME = "header-exchange";  
     private final static String QUEUE_NAME = "header-queue";  
-      
+    
+    private final static String mqHost = "127.0.0.1";  
+    private final static String mqUser = "zh";  
+    private final static String mqPass = "123";  
     public static void main(String[] args) throws Exception {  
-        // 创建连接和频道  
         ConnectionFactory factory = new ConnectionFactory();  
-        factory.setHost("172.16.35.35"); 
-        // 指定用户 密码  
-        factory.setUsername("zh");  
-        factory.setPassword("123");  
-        // 指定端口  
+        factory.setHost(mqHost); 
+        factory.setUsername(mqUser);  
+        factory.setPassword(mqPass);  
         factory.setPort(AMQP.PROTOCOL.PORT);  
         Connection connection = factory.newConnection();  
         Channel channel = connection.createChannel();  
@@ -44,7 +44,7 @@ public class RabbitMQHeaderConsumer {
       
         
         // 为转发器指定队列，设置binding 绑定header键值对  
-        channel.queueBind(QUEUE_NAME, EXCHANGE_NAME,"", headers);  
+        channel.queueBind(QUEUE_NAME, EXCHANGE_NAME,"", headers);  //不用routeKey
         Consumer consumer = new DefaultConsumer(channel) {
 	    	  @Override
 	    	  public void handleDelivery(String consumerTag, Envelope envelope,

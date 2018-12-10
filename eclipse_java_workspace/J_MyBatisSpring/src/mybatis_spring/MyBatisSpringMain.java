@@ -10,7 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.poi.util.SystemOutLogger;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.batch.MyBatisBatchItemWriter;
 import org.mybatis.spring.batch.MyBatisPagingItemReader;
@@ -20,6 +23,9 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
+
+import mybatis_annotation.SQLLogPageTotal;
+
 import org.springframework.batch.item.ItemWriter;
 
 
@@ -33,9 +39,25 @@ public class MyBatisSpringMain
 //		testBatchUseSpringTransaction(ctx);// 用时4秒
 //		 testBatchUseSpringSession(ctx);// values (),()形式 用2秒
 //		 testBatchUseMybatisSession(ctx);//BATCH 用8秒
-		testWithSpringBatch(ctx); //看源码使用 BATCH ,超过2分,像是一条条的插入
-		testMySQLBatchInsert(ctx);
+//		testWithSpringBatch(ctx); //看源码使用 BATCH ,超过2分,像是一条条的插入
+//		testMySQLBatchInsert(ctx);
 		//testNull(ctx);
+		testSQLLogPage(ctx);
+	}
+	public  static void testSQLLogPage(ApplicationContext ctx)   throws SQLException
+	{
+		SqlSessionTemplate sqlSessionTemplate=ctx.getBean("sqlSessionTemplate",SqlSessionTemplate.class);
+//		SqlSessionFactory factory=sqlSessionTemplate.getSqlSessionFactory();
+		
+		SQLLogPageTotal page=new SQLLogPageTotal(sqlSessionTemplate); 
+		
+		Map<String,String> param=new HashMap<>();
+		param.put("idGt", "1");
+		RowBounds rowBounds=new RowBounds(2,10);//对于MySQL其实就是limit 对于查询中有 <collection> 是不准的
+		List<Employee> res=page.getList("EmployeeMapper.getAllByRowBound", param, rowBounds);
+		for(Employee emp :res)
+			System.out.println(emp.getUsername());
+		
 	}
 	public  static void testMySQLBatchInsert(ApplicationContext ctx) throws SQLException
 	{

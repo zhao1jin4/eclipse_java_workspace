@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:ldap="http://www.springframework.org/schema/ldap"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/ldap http://www.springframework.org/schema/ldap/spring-ldap.xsd">
+<!--   
+<bean id="ldapContextSource" class="org.springframework.ldap.core.support.LdapContextSource">
+	<property name="url" value=""/>
+	<property name="userDn" value=""/>
+	<property name="password" value=""/>
+	<property name="pooled" value=""/>
+</bean>
+
+ <bean id="ldapTemplate"  class="org.springframework.ldap.core.LdapTemplate">
+	<property name="contextSource" value="ldapContextSource"/> 
+	<property name="ignorePartialResultException" value="true"/> 
+</bean>
+-->
+   <ldap:context-source
+          url="ldap://localhost:389"
+          base="dc=example,dc=com"
+          username="cn=Manager"
+          password="secret" />
+
+   <ldap:ldap-template id="ldapTemplate" />
+
+   <bean id="personRepo" class="spring_ldap.PersonRepoImpl">
+      <property name="ldapTemplate" ref="ldapTemplate" />
+   </bean>
+</beans>
+

@@ -26,7 +26,8 @@ public class TestJDK9New {
 //			 requires java.xml.ws; 
 //			 requires java.xml.ws.annotation; //JDK 10 中 
 //		 }
-		javax.jws.WebService web;
+		
+//在JavaEE中的jar,还没有module  xx{ exports yy}
 		javax.annotation.PostConstruct x; 
 		javax.annotation.Resource y;
 		

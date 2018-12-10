@@ -25,8 +25,8 @@ public class Server {
 
     protected Server() throws Exception {
         System.out.println("Starting Server");
-       // HelloWorld implementor = new HelloWorldImpl();//OK
-        HelloWorldImpl implementor = new HelloWorldImpl();//OK
+        HelloWorld implementor = new HelloWorldImpl();//OK
+//        HelloWorldImpl implementor = new HelloWorldImpl();//OK
         String address = "http://localhost:9000/helloWorld";
         Endpoint.publish(address, implementor);
     }

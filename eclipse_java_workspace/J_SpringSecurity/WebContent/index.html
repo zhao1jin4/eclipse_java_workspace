@@ -5,12 +5,47 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="main/common.mvc">Common</a> <br/>
-	<a href="main/admin.mvc">admin</a> <br/>
-	<a href="main/test.mvc">test</a> <br/>
-	<a href="auth/login.mvc">login</a> <br/>
+
+	<a href="main/common.mvc">Common</a>   ROLE_USER可以<br/>
+	<a href="main/admin.mvc">admin</a> ROLE_ADMIN 可以<br/>
+	 <a href="main/test.mvc?method=getHello">getHello</a>  ROLE_USER可以 <br/>
+	 <a href="main/test.mvc?method=setHello">setHello</a> ROLE_ADMIN可以 <br/>
+	 <a href="main/test.mvc?method=initAdmin">initAdmin</a> ROLE_ADMIN可以 <br/>
+	 <a href="main/test.mvc?method=other">other</a> ROLE_ADMIN可以 ,无效???????<br/>
+	 
+	<a href="auth/login.mvc">login  spring session with security</a> <br/>
+	<p>外部系统回调URL  http://127.0.0.1:8080/J_SpringSecurity/auth/loginNotify.mvc   不能让spring认为已经登录了？？？？</p>
+	
+	<a href="main/session.mvc">spring session redis and security(use ngnix Round Robin)ROLE_USER可以 (没有使用外部系统登录) 测试成功</a> <br/>
+	
 	<a href="auth/denied.mvc">denied</a> <br/>
 	<a href="main/anony.mvc?method=init">init</a> isAnonymous可以 <br/>
 	<a href="main/anony.mvc?method=destroy">destroy</a> isAnonymous可以 <br/>
+	 
+	 
+<a href="other/dbError.mvc" > 全局错误测试  dbError 先于web.xml</a>  <br/>
+<a href="other/runtimeExcep.mvc" > 全局错误测试  runtimeExcep @ExceptionHandler更优先</a>  <br/>
+<a href="other/serverError.mvc" > 全局错误测试  serverError</a>  <br/>
+<a href="other/notFound.mvc" > 全局错误测试  notFound 无效？？？，只能用web.xml</a>  <br/> 
+   remeber me   datasource有时   报 一个用户只可登录一次     <br/>
+   
+	<hr>
+	要做的功能   <br/>
+	1.security默认首页   http://localhost:8080/J_SpringSecurity/ 报The request was rejected because the URL was not normalized.  <br/>
+	2.未登录点某个页，登录后继续刚刚的页  <br/>
+	3.oauth 2.0   <br/>
+	4.ldap  <br/>
+	5.cas  <br/>
+	
+	<hr/>
+	
+源码 
+SecurityContextHolder 中是把SecurityContext放 在ThreadLocal里 (也可以一个Global的静态变量中，但没用)
+SecurityContextPersistenceFilter 会把securityContext保存到session中   response.sendRedirect 会保存SecurityContext到session中
+ExceptionTranslationFilter 会处理  AuthenticationException 和 AccessDeniedException 
+
+	<br/>
+
+	
 </body>
 </html>

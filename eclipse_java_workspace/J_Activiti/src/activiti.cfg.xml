@@ -64,10 +64,11 @@
                         http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd"
 					 >
 
-	<!--   -->
+	<!-- com.mysql.jdbc.Driver
+	com.mysql.cj.jdbc.Driver  -->
 	 <bean id="processEngineConfiguration" class="org.activiti.engine.ProcessEngineConfiguration" factory-method="createStandaloneProcessEngineConfiguration">
-	 	<property name="jdbcDriver" value="com.mysql.jdbc.Driver"/>
-	 	<property name="jdbcUrl" value="jdbc:mysql://172.16.35.35:3306/activiti?useUnicode=true&amp;characterEncoding=UTF-8"/>
+	 	<property name="jdbcDriver" value="com.mysql.cj.jdbc.Driver"/>
+	 	<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/activiti?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC"/>
 	 	<property name="jdbcUsername" value="bpmn"/>
 	 	<property name="jdbcPassword" value="bpmn"/>
 	 </bean>

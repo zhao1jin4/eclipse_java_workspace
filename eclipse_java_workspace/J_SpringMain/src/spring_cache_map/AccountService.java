@@ -5,7 +5,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
 public class AccountService {
-	@Cacheable(value = "accountCache",condition="#userName.length() <= 4") // 使用了一个缓存名叫 accountCache
+	@Cacheable(value = "accountCache",key="#userName",condition="#userName.length() <= 4") // 使用了一个缓存名叫 accountCache
 	public Account getAccountByName(String userName) {
 		System.out.println("real query account." + userName);
 		 return new Account( userName); 

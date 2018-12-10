@@ -28,9 +28,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
+ 
 import org.w3c.dom.Document;
 
 

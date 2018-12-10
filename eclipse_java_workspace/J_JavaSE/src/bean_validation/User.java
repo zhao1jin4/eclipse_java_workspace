@@ -1,12 +1,15 @@
 package bean_validation;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Range;
 @EqualAttributes(message="{validation.passwordNotSame}",value={"password","rePassword"})//自定义验证
@@ -24,6 +27,16 @@ public class User {
 	private String password;
 	private String rePassword;
 	
+	@NotNull
+	@Size(min=1)
+	private List<Order> orders;
+	
+	public List<Order> getOrders() {
+		return orders;
+	}
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
 	public Date getBirthday() {
 		return birthday;
 	}

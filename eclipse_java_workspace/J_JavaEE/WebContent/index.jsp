@@ -7,16 +7,7 @@
 <meta http-equiv="expires" content="0">    
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="js/md5.js"></script>
-<script type="text/javascript">
-function   generateMd5()
-{
-	var txtPasswd=document.getElementById("password").value;
-	document.getElementById("md5Password").value=hex_md5(txtPasswd)  ;
-	return true
-}
-
-</script>
+ 
 </head>
 <body>
 
@@ -25,6 +16,10 @@ function   generateMd5()
 	<a href="async">Async Servlet 测试</a> <br/>
 	<a href="nowebxml">Servlet 3 no web.xml 测试,classpath 下 META-INF/services</a> <br/>
 	<a href="nowebxml2">Servlet 3 no web.xml 2  测试,classpath 下 META-INF/services</a> <br/>
+	<a href="newWebRoot">Servlet 3  webROOT可在 classpath 下 META-INF/resources</a> <br/>
+	<a href="servlet4Push">Servlet 4 Push   和  MD5</a> <br/>
+	<a href="path/servlet4">Servlet 4 path/* </a> <br/>
+	<a href="servlet4.ext">Servlet 4 *.ext </a> <br/>
 	<a href="cookieServ">Cookie 测试</a> <br/>
 	<a href="download">download 测试</a> <br/>
 	<a href="loginWithValidateCode.jsp">验证码 测试</a> <br/>
@@ -35,26 +30,8 @@ function   generateMd5()
 	<a href="crossContext.jsp"> Tomcat crossContext 测试</a> <br/>
 	<a href="webSocket.html">webSocket 测试   ,Tomcat 8 才支持  </a> <br/>
 	<a href="referer">测试盗链</a> <br/>
-	
-	<hr/> 第三方库  <br/>
-	
-	<a href="fileUpload.html">fileUpload  测试</a> <br/>
-	<a href="jQueryFileUpload/upload.html">jquery fileUpload  插件 测试</a> <br/>
-	<a href="jfreechart.jsp">jfreechart  测试</a> <br/>
-	<a href="freemaker">Freemaker 测试</a> <br/>
-	
-	<a href="tablePageServlet.ser?action=init">Display Tag</a> <br/>
-	
-	<a href="hessian/client">hession 二进制做webservice </a> <br/>
-	
+	<a href="servletFileUpload.html">Servlet fileUpload  测试</a> <br/>
 	<a href="sessionCluster.jsp">Tomcat Cluster Session 测试  </a> <br/>
-	
-	<form action="/J_JavaEE/md5Servlet" onsubmit="return generateMd5() " method="get">
-		password 	 <input type="text" name="password" id="password"   /> <br/>
-		MD5 password <input type="text" name="md5Password"		id="md5Password"/> <br/>
-		<input type="submit">
-	</form>
-	
-	
+	 
 </body>
 </html>

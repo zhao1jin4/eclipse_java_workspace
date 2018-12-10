@@ -34,7 +34,15 @@
 	</appender>
 	
  	<appender name="bizRolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${APP_BIZ_HOME}/biz.log</file>
+ 		<!-- 可记录DEBUG 不记录ERROR的方式 ,不好使???
+ 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+ 			<level>DEBUG</level>
+ 			<onMatch>ACCEPT</onMatch>
+ 			<onMisMatch>DENY</onMisMatch>
+ 		</filter>
+ 		  -->
+ 	
+ 		 <file>${APP_BIZ_HOME}/biz.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${APP_BIZ_HOME}/biz-%d{yyyy-MM-dd_HH}.%i.log</fileNamePattern> <!-- .zip 可有可无,压缩会节约20倍的空间-->
 			<maxHistory>30</maxHistory> <!-- 最多保留30个的文件 -->
@@ -79,7 +87,14 @@
 			<pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %msg%n </pattern>
 		</encoder>
 	</appender>
-  
+	<!-- 
+  	logback可以把日志推送给logstash 
+	<appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<destination>IP:port</destination>
+		<encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
+	</appender>
+	 
+	 -->
 	<logger name="${CONTEXT_NAME}.biz" level="INFO"  >
 		<appender-ref ref="bizRolling" />
 	</logger>

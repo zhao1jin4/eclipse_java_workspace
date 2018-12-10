@@ -93,6 +93,9 @@
 
 <util:properties id="quartzProperties" location="classpath:spring_quartz/quartz.properties"/>
 <bean  id="schedulerFactory"  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	<!-- can use sprint mybatis dataSource
+	<property name="dataSource" ref=""></property>
+	 -->
     <property name="quartzProperties" ref="quartzProperties"/> 
             <!--  如使用了Spring不会默认读 classpath下的quartz.properties , 要配置quartzProperties属性  -->
 	<property name="triggers">

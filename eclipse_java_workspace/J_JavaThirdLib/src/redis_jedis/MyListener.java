@@ -2,7 +2,9 @@ package redis_jedis;
 
 import redis.clients.jedis.JedisPubSub;
 
+
 class MyListener extends JedisPubSub {
+	
     public void onMessage(String channel, String message) {
     	System.out.println("onMessage:channel="+channel+" , msg="+message);
     }

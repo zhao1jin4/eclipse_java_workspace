@@ -35,18 +35,32 @@ public class SpringDataJedisTestMain {
     public static void main(String[] args)
     {   
     	
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:springdata_redis/spring_jedis.xml");
+    	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:springdata_redis/spring_jedis.xml");
         RedisTemplate<String,Object>  redisTemplate = context.getBean("redisTemplate",RedisTemplate.class);  
         //其中key采取了StringRedisSerializer
-        //其中value采取JdkSerializationRedisSerializer
+        //其中value采取 JdkSerializationRedisSerializer ,也可Jackson2JsonRedisSerializer
         ValueOperations<String, Object> valueOper = redisTemplate.opsForValue();  
         
         User u1 = new User("zhangsan",12);  
+        u1.setCreated(new Date());
         User u2 = new User("lisi",25);  
         valueOper.set("u:u1", u1);  
+        /*用 Jackson2JsonRedisSerializer的值是
+          {
+		    "@class": "springdata_redis.SpringDataJedisTestMain$User",
+		    "name": "zhangsan",
+		    "created": [
+		        "java.util.Date",
+		        1543892164982
+		    ],
+		    "age": 12
+		}*/
         valueOper.set("u:u2", u2);  
         System.out.println(((User)valueOper.get("u:u1")).getName());  
         System.out.println(((User)valueOper.get("u:u2")).getName());  
+       
+        valueOper.set("date", new Date());
+        System.out.println( valueOper.get("date") );//用JdkSerializationRedisSerializer 类型为Date可正常取存,但工具不能显示
         
         valueOper.set("key", 10);
 

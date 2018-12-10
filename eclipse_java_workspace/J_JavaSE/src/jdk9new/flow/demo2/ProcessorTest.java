@@ -10,10 +10,10 @@ public class ProcessorTest {
         // The publisher is closed when the try block exits
         try (SubmissionPublisher<Long> pub = new SubmissionPublisher<>()) {
             // Create a Subscriber
-            SimpleSubscriber sub = new SimpleSubscriber("S1", 10);
+            SimpleSubscriber sub = new SimpleSubscriber("S1", 10);//自己的类
             // Create a processor
             //filter的作用是收的消息后，再把偶数消息发回
-            FilterProcessor<Long> filter = new FilterProcessor<>(n -> n % 2 == 0);
+            FilterProcessor<Long> filter = new FilterProcessor<>(n -> n % 2 == 0);//自己的类
             // Subscribe the filter to the publisher and a subscriber to the filter
             pub.subscribe(filter);            
             filter.subscribe(sub);

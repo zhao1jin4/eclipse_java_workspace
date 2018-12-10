@@ -1,3 +1,4 @@
+<#import "/spring.ftl" as spring/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,5 +41,12 @@ welcom:${user} <br/>
 		,${item.username}<br/>
 	</#list>
 </#if>
+
+<BR/>
+国际化消息:<@spring.message "try"/> <BR/>
+<#assign seq = ['王', '2018']> 
+带参数的国际化消息:<@spring.messageArgs "welcome", seq/> <BR/> 
+
+
 </body>
 </html>

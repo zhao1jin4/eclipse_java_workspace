@@ -28,15 +28,15 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 public class BaseXMLClientParser 
 {
-	public Logger log = Logger.getLogger(this.getClass());
+	public   Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private SOAPMessage convertString2SOAP(String classPathFile) throws Exception 
 	{
@@ -154,9 +154,9 @@ public class BaseXMLClientParser
 	}
 	private void initLog4j()
 	{
-		System.setProperty("log_home","c:/log");
-		URL url=this.getClass().getResource("/client_parser/log4j.xml");
-		DOMConfigurator.configure(url);
+//		System.setProperty("log_home","c:/log");
+//		URL url=this.getClass().getResource("/client_parser/log4j.xml");
+//		DOMConfigurator.configure(url);
 	}
 	protected String generateOrderNO(String name)
 	{

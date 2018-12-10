@@ -35,7 +35,7 @@ public class SQLWorkBeanchController
 	
 	@Autowired
 	private DatabaseCommandDao databaseCommandDao;
-	@Autowired
+	//@Autowired
 	private  TransactionTemplate transactionTemplate;
 	
 //    @RequestMapping("/init")

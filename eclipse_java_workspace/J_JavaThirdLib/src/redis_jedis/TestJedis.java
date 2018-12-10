@@ -1,15 +1,22 @@
 package redis_jedis;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
+import redis.clients.jedis.JedisCommands;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Pipeline;
@@ -19,7 +26,7 @@ import redis.clients.jedis.Transaction;
 public class TestJedis  {
 	
 	Jedis jedis;
-	String ip="192.168.72.128";
+	String ip="127.0.0.1";
 	int port=6379;
 	
 	@Before
@@ -28,6 +35,131 @@ public class TestJedis  {
 		jedis=new Jedis(ip,port);//端口默认 6379  , 单机 或 cluster的master
 		//jedis.auth("123456");//对配置 masterauth ,requirepass 的值
 	}
+	@After
+	public void destroy()
+	{
+		System.out.println("junit after");
+		jedis.close();
+	}
+	
+	/*
+	private String parseByte(byte[] bytes)
+	{
+		ObjectInputStream oin=null;
+		try {
+			oin = new ObjectInputStream(new ByteArrayInputStream(bytes));//不行？？？？
+			Object obj=oin.readObject();
+			if(obj instanceof String)
+				return obj.toString();
+			String res=ToStringBuilder.reflectionToString(obj);
+			return res;
+		} catch ( Exception e) {
+			e.printStackTrace(); 
+		}finally {
+			IOUtils.closeQuietly(oin); 
+		}
+		return null;
+	}
+	@Test
+	public void testShowAllKeyValuesWithSpringSession() 
+	{
+		Set<String> keys=jedis.keys("*");
+		for(String key:keys)
+		{
+			
+			String type=jedis.type(key);//set,zset,list,hash
+			System.out.println("type:"+type+",key="+key);
+			if("zset".equals(type))
+			{
+				Set<byte[]> zsets=jedis.zrange(key.getBytes(), 0, -1); 
+				System.out.println("\t  value== \t ");
+				for(byte[] zset:zsets)
+					System.out.println(" \t value="+parseByte(zset)+",score="+ jedis.zcard(zset));
+			}else if ("set".equals(type))
+			{
+				Set<byte[]> values=jedis.smembers(key.getBytes()); 
+				System.out.println(" \t value== \t ");
+				for(byte[] value:values)
+					System.out.println(" \t value="+parseByte(value));
+			}else if("list".equals(type))
+			{
+				List<byte[]> values=jedis.lrange(key.getBytes(), 0, -1); 
+				System.out.println("\t value== \t ");
+				for(byte[] value:values)
+					System.out.println(" \t value="+parseByte(value));
+			}
+			else if("hash".equals(type))
+			{
+				Set<byte[] > hkeys=jedis.hkeys(key.getBytes()); 
+				System.out.println(" \t value== \t ");
+				for(byte[]  hkey:hkeys)
+					System.out.println(" \t \t "+hkey+"="+parseByte(jedis.hget(key.getBytes(), hkey)));
+			}else if("string".equals(type))
+			{
+				String value=jedis.get(key); 
+				System.out.println("\t value ="+value);
+			}else
+			{
+				System.out.println("\t value =...." );
+			}
+		}
+
+//		JedisCommands
+	}
+	*/
+	
+	@Test
+	public void testShowAllKeyValuesString() 
+	{
+		Set<String> keys=jedis.keys("*");
+		for(String key:keys)
+		{
+			
+			String type=jedis.type(key);//set,zset,list,hash
+			System.out.println("type:"+type+",key="+key);
+			if("zset".equals(type))
+			{
+				Set<String> zsets=jedis.zrange(key, 0, -1); 
+				System.out.println("\t  value== \t ");
+				for(String zset:zsets)
+					System.out.println(" \t value="+zset+",score="+ jedis.zcard(zset));
+			}else if ("set".equals(type))
+			{
+				Set<String> values=jedis.smembers(key ); 
+				System.out.println(" \t value== \t ");
+				for(String value:values)
+					System.out.println(" \t value="+value);
+			}else if("list".equals(type))
+			{
+				List<String> values=jedis.lrange(key , 0, -1); 
+				System.out.println("\t value== \t ");
+				for(String value:values)
+					System.out.println(" \t value="+value);
+			}
+			else if("hash".equals(type))
+			{
+				Set<String > hkeys=jedis.hkeys(key); 
+				System.out.println(" \t value== \t ");
+				for(String hkey:hkeys)
+					System.out.println(" \t \t "+hkey+"="+ jedis.hget(key , hkey) );
+			}else if("string".equals(type))
+			{
+				String value=jedis.get(key); 
+				System.out.println("\t value ="+value);
+			}else
+			{
+				System.out.println("\t value =...." );
+			}
+		}
+
+//		JedisCommands
+	}
+	@Test
+	public void testFlulshDB() 
+	{
+		jedis.flushDB();
+	}
+	
 	//(加了密码) 连了不正确的IP 报  redis.clients.jedis.exceptions.JedisMovedDataException: MOVED 5798 127.0.0.1:7001 ,原因可能是要使用cluster对应的client API
 	@Test
 	public void testPutSingleNode()//单节点测试OK
@@ -45,22 +177,33 @@ public class TestJedis  {
 	public void testPoolSingleNode()//单节点,测试OK
 	{
 		JedisPoolConfig config=new JedisPoolConfig();
-//		config.setMaxIdle(maxIdle);
-//		config.setMaxWaitMillis(maxWaitMillis);
+		config.setMaxIdle(20);
+		config.setMaxTotal(30);
+		config.setMaxWaitMillis(5*1000);
+		config.setTestOnBorrow(false);
 		config.setBlockWhenExhausted(false);//连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true
+		//逐出连接的最小空闲时间 默认
+		config.setMinEvictableIdleTimeMillis(20*60*1000);//20分
+		
+		
 		JedisPool pool = new JedisPool(config, ip,port,2000);//timeout,可加passworld参数
 		
 		Jedis jedis = pool.getResource();
-		jedis.set("foo", "bar");
+		jedis.set("foo", "bar");//string
 		String foobar = jedis.get("foo");
 		
+		//zset
 		jedis.zadd("sose", 0, "car");//0是score
 		jedis.zadd("sose", 0, "bike"); 
 		Set<String> sose = jedis.zrange("sose", 0, -1);//score 范围
 		System.out.println(sose);
-		jedis.close();//一定要close
-		 
 		
+		jedis.sadd("myset","mysetval");//set
+		jedis.lpush("mylist", "one");//list
+		jedis.lpush("mylist", "two");
+		jedis.hset("myhashStuScore", "zhang", "A");
+		jedis.hset("myhashStuScore", "lisi", "B");
+		jedis.close();//一定要close
 		pool.destroy();
 		
 	}

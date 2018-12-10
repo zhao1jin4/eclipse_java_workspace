@@ -45,7 +45,9 @@ public class MD5Servlet extends HttpServlet {
 			System.out.println("Server MD5 equls JS md5 is:"+md5Str.equals(md5JSPassword));
 			
 		}catch (Exception e) 
-		{e.printStackTrace(); }
+		{
+			e.printStackTrace(); 
+		}
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

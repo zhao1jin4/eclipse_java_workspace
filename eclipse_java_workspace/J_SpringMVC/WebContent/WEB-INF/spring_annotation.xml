@@ -65,13 +65,13 @@
                         http://www.springframework.org/schema/batch
                         http://www.springframework.org/schema/batch/spring-batch.xsd">
 						
-							 
+	 				 
 	<context:component-scan base-package="spring_jsp.annotation" />
 	<context:component-scan base-package="hateoas" />
 	<context:component-scan base-package="reset" />
-	<context:component-scan base-package="swagger" />
+	<context:component-scan base-package="swagger1x" />
 	
-	<!--基于UrlBasedViewResolver,就不用指定viewClass
+  <!--基于 InternalResourceViewResolver 就不用像 UrlBasedViewResolver 指定viewClass 
 	<bean  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix"  value=".jsp"/>
@@ -81,6 +81,7 @@
 	<!-- p:表示property标签  	-->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
 				p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
+				
 	<!--JSON ContentNegotiatingViewResolver 可选 的  
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
 		<property name="order" value="1" />
@@ -109,38 +110,41 @@
  -->
  
  
- <!-- 也可以这样配置
+ <!-- 也可以这样配置 　@Valid 是有效的，  但converter无效？？？
  <mvc:annotation-driven>
  	<mvc:message-converters>
- 		<ref bean="mappingJacksonHttpMessageConverter" />
+ 		<ref bean="mappingJackson2HttpMessageConverter" />
  	</mvc:message-converters>
  </mvc:annotation-driven>
  -->
-   <!-- RequestMappingHandlerAdapter  　 的配置影响　@Valid的有效性 ???  -->
+ <!-- RequestMappingHandlerAdapter  　 的配置影响　@Valid的有效性 ???   -->
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="messageConverters">
 			<list>
-				<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"> <!-- application/json -->
-				 <property name="objectMapper">
-			        <bean class="com.fasterxml.jackson.databind.ObjectMapper">
-			            <property name="dateFormat">
-			                <bean class="java.text.SimpleDateFormat">
-			                    <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/> <!-- JSON到SpringMVC日期格式-->
-			                </bean>
-			            </property>
-			        </bean>
-			    </property>
-				</bean>
-				<bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/> <!-- XML 为 @ResponseBody -->
-				<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>  <!--为 @ResponseBody 的 text/* --> 
-				<!-- <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>   application/x-www-form-urlencoded  --> 
+				<ref bean="mappingJackson2HttpMessageConverter" />
+				<bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/> 
+				<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>				 
 			</list>
 		</property>
 		<property name="cacheSeconds" value="0" />
-	    <property name="webBindingInitializer"> <!--  MyWebBindingInitializer -> @ControllerAdvice -> @Controller   InitBinder -->
+	    <property name="webBindingInitializer">  
 	        <bean class="spring_jsp.extention.MyWebBindingInitializer" />
 	    </property>
 	</bean>
+	 
+ 
+	<bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"> <!--  produces="application/json" -->
+		<property name="objectMapper">
+	       <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+	           <property name="dateFormat">
+	               <bean class="java.text.SimpleDateFormat">
+	                   <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/> <!-- JSON到SpringMVC日期格式-->
+	               </bean>
+	           </property>
+	       </bean>
+	   </property>
+	</bean>
+	<!--  对enum类型中有的自定义属性会忽略，只转换每一个分号前的值  -->
 	
 	
 	<mvc:view-controller path="home.mvc" view-name="redirect:employee.mvc"/><!-- 可以path="/" -->
@@ -150,7 +154,7 @@
 			<bean class="spring_jsp.extention.MyInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
-  
+  	
 	<!--  为@Valid  要加 hibernate-validator-.jar -->
 	<mvc:annotation-driven  validator="validator" />
 	
@@ -160,44 +164,33 @@
 	</bean> 
 
 
-	<!-- 国际化 -->
+	<!-- 国际化  基于JDK的实现  basename 包名格式 ,文件名要有 messages_en.properties 和 messages_zh.properties   -->
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basename" value="messages"/> 
+		<property name="basename" value="conf.messages"/> 
 	</bean>
 	
+	 
+	 <!-- Reloadable basename也可  WEB-INF/messages ，使用属性basenames可配置多个
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="cacheSeconds" value="600"></property>
+		<property name="useCodeAsDefaultMessage" value="true"></property>
+		<property name="basename" value="classpath:/conf/messages"/>  
+	</bean>
+	-->
 	<!-- 文件上传 必须是 id="multipartResolver"  --> 
 	<bean  id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
 	    <property name="defaultEncoding" value="UTF-8"></property><!-- 中文文件名 OK 加了CharacterEncodingFilter-->
 	    <property name="maxUploadSize" value="10000000"/> <!--单位是 bytes  可能会抛 org.springframework.web.multipart.MaxUploadSizeExceededException (是RuntimeException)-->
 	</bean> 
 	
-	
-	<!-- 全局错误页 定义
-	<bean  class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="defaultErrorView">
-			<value>failure</value>
-		</property>
-		<property name="exceptionMappings">
-			<props>
-				<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException" >showError</prop>
-				<prop key="java.sql.SQLException">showDBError</prop>
-				<prop key="java.lang.RuntimeException">showError</prop>
-			</props>
-		</property>
-	</bean>
+	<!-- 
+	<import resource="error-config.xml"/>
 	 -->
 	 
-	 <!--  为easyUI sqlView.html -->
-	 <context:property-placeholder location="classpath:jdbc.properties"/>
-	  <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <property name="driverClass" value="${jdbc.driver}"/>
-        <property name="jdbcUrl" value="${jdbc.url}"/>
-        <property name="user" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-        <property name="initialPoolSize" value="1"/>
-        <property name="maxIdleTime" value="600"/>
-    </bean>
-	 <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	 
+	 <!-- 为  easyUI sqlView.html   SQLWorkBeanchController
+	<import resource="datasource.xml"/>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <constructor-arg ref="dataSource"/>
     </bean>
     <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -206,7 +199,26 @@
      <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
             <property name="transactionManager" ref="transactionManager" />
             <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"></property>
-            <property name="isolationLevelName" value="ISOLATION_SERIALIZABLE"></property> <!-- ISOLATION_DEFAULT -->
+            <property name="isolationLevelName" value="ISOLATION_SERIALIZABLE"></property>
     </bean>
+	  ISOLATION_SERIALIZABLE ISOLATION_DEFAULT  
+	-->
+	
+	 <!-- 
+	 <context:property-placeholder location="classpath:jdbc.properties"/>
+	 
+	 <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialPoolSize" value="1"/>
+        <property name="maxIdleTime" value="600"/>
+    </bean>
+	 -->
+	
+	
+	
+	
 </beans>
 

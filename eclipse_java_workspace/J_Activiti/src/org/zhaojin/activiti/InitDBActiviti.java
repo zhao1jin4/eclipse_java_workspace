@@ -19,8 +19,9 @@ public class InitDBActiviti {
 		
 		
 		ProcessEngineConfiguration config =ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
-		config.setJdbcDriver("com.mysql.jdbc.Driver");
-		config.setJdbcUrl("jdbc:mysql://172.16.35.35:3306/activiti?useUnicode=true&amp;characterEncoding=UTF-8");
+//		config.setJdbcDriver("com.mysql.jdbc.Driver");
+		config.setJdbcDriver("com.mysql.cj.jdbc.Driver");//mysql 8
+		config.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/activiti?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC");
 		config.setJdbcUsername("bpmn");
 		config.setJdbcPassword("bpmn");
 		
@@ -30,8 +31,10 @@ public class InitDBActiviti {
 		config.setDatabaseSchemaUpdate(schemaType);
 //		mysql
 //		create database activiti default character set utf8;
-//		grant all on activiti.* to 'bpmn'@'%'  identified by 'bpmn';
-//		grant all on activiti.* to bpmn@localhost  identified by 'bpmn';
+//		CREATE USER bpmn@'%'  IDENTIFIED BY 'bpmn';
+//		CREATE USER bpmn@localhost  IDENTIFIED BY 'bpmn';
+//		grant all on activiti.* to 'bpmn'@'%'  ;
+//		grant all on activiti.* to bpmn@localhost  ;
 		
 		
 		//activiti-6.0.0\database\create  三个文件 
@@ -51,6 +54,12 @@ public class InitDBActiviti {
 		//wars\activiti-rest.war\WEB-INF\classes\activiti-custom-context.xml  有 spring
 		ProcessEngineConfiguration config =ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml");
 		ProcessEngine engine=config.buildProcessEngine();
+		engine.getRepositoryService();
+		engine.getRuntimeService();
+		engine.getTaskService();
+		engine.getHistoryService();
+		engine.getIdentityService();
+		engine.getFormService(); 
 		
 		//如需spring才要 activiti-spring-6.0.0.jar
 		// activiti-process-validation-6.0.0.jar

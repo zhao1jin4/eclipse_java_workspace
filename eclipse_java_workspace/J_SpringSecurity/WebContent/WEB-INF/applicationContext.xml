@@ -8,29 +8,31 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-						http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+						http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/context 
-						http://www.springframework.org/schema/context/spring-context-3.1.xsd
+						http://www.springframework.org/schema/context/spring-context.xsd
 						http://www.springframework.org/schema/aop
-						http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+						http://www.springframework.org/schema/aop/spring-aop.xsd
 						http://www.springframework.org/schema/util 
-						http://www.springframework.org/schema/util/spring-util-3.1.xsd
+						http://www.springframework.org/schema/util/spring-util.xsd
 						http://www.springframework.org/schema/mvc 
-						http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+						http://www.springframework.org/schema/mvc/spring-mvc.xsd
 						http://www.springframework.org/schema/security 
-						http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+						http://www.springframework.org/schema/security/spring-security.xsd">
 	
+	<import resource="spring-security.xml"/>
 	
-	<!-- 激活spring的注解. -->
-	<context:annotation-config />
-
+	<import resource="security-session-redis.xml"/>   <!-- 没什么特别的  -->
+	
 	<!-- 扫描注解组件并且自动的注入spring beans中. 
 	例如,他会扫描@Controller 和@Service下的文件.所以确保此base-package设置正确. -->
 	<context:component-scan base-package="org.liukai.tutorial" />
-
+	<!--  有 component-scan 可省
+	<context:annotation-config />
+-->
 	<!-- 配置注解驱动的Spring MVC Controller 的编程模型.注:次标签只在 Servlet MVC工作! -->
 	<mvc:annotation-driven />
-
+ 
 
 
 <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -38,43 +40,73 @@
 </bean>
 <!-- context:标签方式 -->
 <!-- <context:property-placeholder location="jdbc.properties"/>  -->
-
-<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-	<property name="driverClassName"><value>${jdbc.driverClass}</value></property>
-	<property name="url" value="${jdbc.url}"></property>
-	<property name="username" value="${jdbc.username}"></property>
-	<property name="password" value="${jdbc.password}"></property>
+ 
+<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	<property name="driverClass" value="${jdbc.driverClass}" />
+	<property name="jdbcUrl" value="${jdbc.url}" />
+	<property name="user" value="${jdbc.username}" />
+	<property name="password" value="${jdbc.password}" />
+               <!-- 初始化连接池时连接数量为5个 -->
+	<property name="initialPoolSize" value="5" />
+                <!-- 允许最小连接数量为5个 -->
+		<property name="minPoolSize" value="5" />
+                <!-- 允许最大连接数量为20个 -->
+		<property name="maxPoolSize" value="20" />
+                <!-- 允许连接池最大生成100个PreparedStatement对象 -->
+		<property name="maxStatements" value="100" />
+                <!-- 连接有效时间，连接超过3600秒未使用，则该连接丢弃 -->
+		<property name="maxIdleTime" value="3600" />
+                <!-- 连接用完时，一次产生的新连接步进值为2 -->
+		<property name="acquireIncrement" value="2" />
+                <!-- 获取连接失败后再尝试10次，再失败则返回DAOException异常 -->
+		<property name="acquireRetryAttempts" value="10" />
+                <!-- 获取下一次连接时最短间隔600毫秒，有助于提高性能 -->
+		<property name="acquireRetryDelay" value="600" />
+                <!-- 检查连接的有效性，此处小弟不是很懂什么意思 -->
+		<property name="testConnectionOnCheckin" value="true" />
+                <!-- 每个1200秒检查连接对象状态 -->
+		<property name="idleConnectionTestPeriod" value="1200" />
+                <!-- 获取新连接的超时时间为10000毫秒 -->
+		<property name="checkoutTimeout" value="10000" />
 </bean>
-
-<!--
-
-为 JDBC implementation of the UserDetailsService (JdbcDaoImpl) 或 <jdbc-user-service data-source-ref= >
-
-drop table users;
-create table users(
-      username varchar2(50) not null primary key,
-      password varchar2(50) not null,
-      enabled number(1) not null);
-
-drop table  authorities;
-create table authorities (
-    username varchar2(50) not null,
-    authority varchar2(50) not null,
-    constraint fk_authorities_users foreign key(username) references users(username));
-    create unique index ix_auth_username on authorities (username,authority);
-    
-   insert into users(username,password,enabled)values('user','ee11cbb19052e40b07aac0ca060c23ee',1);//密码是user的MD5
-   insert into users(username,password,enabled)values('admin','21232f297a57a5a743894a0e4a801fc3',1);
-   
-   insert into authorities(username,authority)values('user','ROLE_USER');
-   insert into authorities(username,authority)values('admin','ROLE_ADMIN');
-   insert into authorities(username,authority)values('admin','ROLE_USER');
- -->
+ 
 
 <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 	<property name="basename" value="message" />
 </bean>
-
+ 
 <bean id="hello" class="org.liukai.tutorial.service.HelloServiceImpl" />
+
+
+<!-- 全局错误页 定义 
+	也可
+ 	@ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+     -->
+	<bean  class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<!--   -->
+		<property name="defaultErrorView">
+			<value>error/failure</value>
+		</property>
+		
+		<property name="statusCodes"> <!-- 404 500 不好使？？？ 只能web.xml 和defaultErrorView -->
+			<props>
+				<prop key="error/serverError">500</prop>
+				<prop key="error/notFound">404</prop>
+			</props>
+		</property>
+		<property name="defaultStatusCode">
+			<value>500</value>
+		</property>
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException" >error/showError</prop>
+				<prop key="java.sql.SQLException">error/showDBError</prop> <!-- 优先于web.xml的配置 -->
+				<prop key="java.lang.RuntimeException">error/showError</prop>
+			</props>
+		</property>
+	</bean>
+  	<mvc:resources mapping="/error/**" location="/WEB-INF/jsp/error/" />
+	 
 
 </beans>

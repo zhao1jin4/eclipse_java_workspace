@@ -14,13 +14,8 @@ public class EqualAttributesValidator implements ConstraintValidator<EqualAttrib
 	@Override
 	public void initialize(final EqualAttributes constraintAnnotation)
 	{
-		Assert.notEmpty(constraintAnnotation.value());
-		Assert.isTrue(constraintAnnotation.value().length == 2);
 		firstAttribute = constraintAnnotation.value()[0];
-		secondAttribute = constraintAnnotation.value()[1];
-		Assert.hasText(firstAttribute);
-		Assert.hasText(secondAttribute);
-		Assert.isTrue(!firstAttribute.equals(secondAttribute));
+		secondAttribute = constraintAnnotation.value()[1]; 
 	}
 	@Override
 	public boolean isValid(final Object object, final ConstraintValidatorContext constraintContext)

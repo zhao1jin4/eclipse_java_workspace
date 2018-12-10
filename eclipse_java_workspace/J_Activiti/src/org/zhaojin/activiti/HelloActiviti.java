@@ -14,6 +14,8 @@ public class HelloActiviti {
 	@Test
 	public void deploy()
 	{
+		org.activiti.bpmn.constants.BpmnXMLConstants x;
+		
 		ProcessEngine processEngine=ProcessEngines.getDefaultProcessEngine();//源码中找classpaht:activiti.cfg.xml
 		
 //		RepositoryService repositoryService=processEngine.getRepositoryService();

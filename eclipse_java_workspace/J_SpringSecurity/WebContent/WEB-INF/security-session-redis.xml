@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop.xsd
+						http://www.springframework.org/schema/util 
+						http://www.springframework.org/schema/util/spring-util.xsd
+						http://www.springframework.org/schema/mvc 
+						http://www.springframework.org/schema/mvc/spring-mvc.xsd
+						http://www.springframework.org/schema/security 
+						http://www.springframework.org/schema/security/spring-security.xsd">
+ <!-- 
+<bean id="jedisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+	  p:connectionFactory-ref="connectionFactory">
+	<property name="keySerializer">  
+		<bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>  
+	</property>  
+	<property name="valueSerializer">  
+		<bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>  
+	</property>  
+ </bean>
+  -->
+
+	<bean  id="redisStandaloneConfiguration" class="org.springframework.data.redis.connection.RedisStandaloneConfiguration">
+		<property name="hostName" value="127.0.0.1"></property>
+		<property name="port" value="6379"></property>
+		<property name="database"  value="0"></property>
+		<!-- 
+		<property name="password"  >
+			<bean class="org.springframework.data.redis.connection.RedisPassword" factory-method="of" >
+				<constructor-arg value="redisPass"/>
+			</bean>
+		</property>
+		 -->
+	</bean>
+	 <!--
+	  <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"  >
+		<constructor-arg  ref="redisStandaloneConfiguration"> </constructor-arg> 
+	</bean>
+
+    二选一 -->
+	<bean id="connectionFactory" class="org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory">
+		<constructor-arg ref="redisStandaloneConfiguration">  </constructor-arg>
+	</bean>
+	 
+	 
+  <!-- spring session redis 设置  10分钟过期-->
+  <bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+      <property name="maxInactiveIntervalInSeconds" value="600"></property>
+  </bean>
+  
+  <context:annotation-config/> <!-- 创建 springSessionRepositoryFilter  -->
+ 
+ <!--  web.xml 要有
+ 
+  <filter>
+    <filter-name>springSessionRepositoryFilter</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>springSessionRepositoryFilter</filter-name>
+    <url-pattern>/*</url-pattern>     
+  </filter-mapping>
+  
+   -->
+ </beans>

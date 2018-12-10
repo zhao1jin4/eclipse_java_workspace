@@ -64,10 +64,10 @@
                         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
                         http://www.springframework.org/schema/batch
                         http://www.springframework.org/schema/batch/spring-batch.xsd">
-							<!-- company -->				
+	<!-- company -->				
 	<context:property-placeholder location="classpath:jdbc.properties"/> 
 	
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	<bean id="dataSourceC3p0" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="${jdbc.driver}" />
 		<property name="jdbcUrl" value="${jdbc.url}" />
 		<property name="user" value="${jdbc.username}" />
@@ -96,6 +96,53 @@
 		<property name="checkoutTimeout" value="10000" />
 	</bean>
 	 
+	 
+	 
+	 
+	<!-- druid -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"> 
+	 <property name="url" value="${jdbc.url}" />
+	 <property name="username" value="${jdbc.username}" />
+	 <property name="password" value="${jdbc.password}"/>
+	  <property name="driverClassName" value="${jdbc.driver}"/>
+	 
+	 <property name="maxActive"><value>20</value></property>
+	 <property name="initialSize"><value>1</value></property>
+	 <property name="maxWait"><value>60000</value></property>
+	 <property name="minIdle"><value>1</value></property>
+	 <property name="timeBetweenEvictionRunsMillis"><value>60000</value></property>
+	 <property name="minEvictableIdleTimeMillis"><value>300000</value></property>
+	 <property name="validationQuery"><value>SELECT 'x'</value></property>
+	 <property name="testWhileIdle"><value>true</value></property>
+	 <property name="testOnBorrow"><value>false</value></property>
+	 <property name="testOnReturn"><value>false</value></property>
+	 <property name="poolPreparedStatements"><value>true</value></property>
+	 <property name="maxOpenPreparedStatements"><value>20</value></property>
+ <!--
+ 	<property name="filters" value="stat" /> 
+	 value="stat"用于统计监控信息,stat别名映射配置信息保存在druid-xxx.jar!/META-INF/druid-filter.properties 可逗号配多个,也可使用proxyFilters引用bean,会合并 -->
+	
+	<!--
+	<property name="connectionProperties" value="druid.stat.mergeSql=true" />
+	<property name="connectionProperties" value="druid.stat.slowSqlMillis=5000" />
+   
+  	<property name="filters" value="log4j,mergeStat" /> 
+  		-->
+	<property name="proxyFilters">
+		<list>
+			<ref bean="stat-filter" />
+		</list>
+	</property>
+ </bean>
+
+ <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+	<property name="slowSqlMillis" value="10000" />
+	<property name="logSlowSql" value="true" />
+	<property name="mergeSql" value="true" /> 
+	<!--  当多个相同的SQL不能参数时，变为一个SQL ? 形式, 也可在DruidDataSource用 <property name="filters" value="mergeStat" /> -->
+</bean>
+	
+	
 	 
 </beans>
 

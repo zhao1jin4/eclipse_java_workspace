@@ -3,15 +3,41 @@ package net;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Enumeration;
 
 
 public class TCPMain 
 {
-	public static void main(String[] args) 
+	public static void main(String[] args) throws Exception 
 	{
+		
+		System.out.println(InetAddress.getLocalHost().getHostAddress());//windows OK ,linux 127.0.0.1
+		
+		Enumeration<NetworkInterface> allNetInterfaces = NetworkInterface.getNetworkInterfaces();
+		InetAddress ip = null;
+		while (allNetInterfaces.hasMoreElements())
+		{
+			NetworkInterface netInterface =  allNetInterfaces.nextElement();
+			if (netInterface.isLoopback() || netInterface.isVirtual() || !netInterface.isUp()) {
+                continue;
+            }
+			//System.out.println(netInterface.getName());
+			Enumeration<InetAddress> addresses = netInterface.getInetAddresses();
+			while (addresses.hasMoreElements())
+			{
+				ip =  addresses.nextElement();
+				if (ip != null && ip instanceof Inet4Address)
+				{
+					System.out.printf("本机 网卡%s 的 IP是 %s %n" ,netInterface.getName(), ip.getHostAddress());
+				}
+			}
+		}
+		
 		if(args.length>0)
 			server();
 		else 

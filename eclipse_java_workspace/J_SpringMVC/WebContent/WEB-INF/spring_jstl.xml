@@ -65,20 +65,19 @@
                         http://www.springframework.org/schema/batch
                         http://www.springframework.org/schema/batch/spring-batch.xsd">
 						
-	<!-- school -->	
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+		<property name="prefix" value="/WEB-INF/jsp/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	
 	<bean  class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings">
 			<value><!-- 使用 value,也可使用props-->
-				/helloWorld.mvc				=helloWorldCntroller
-				/login.mvc					=loginController <!-- 可以不用加/ -->
-				/register.mvc				=enterRegisterController <!-- UrlFilenameViewController,找register名字做为view -->
-				/queryStudentDetailById.mvc	=studentMultiActionController
-				queryStudentByClazz.mvc		=studentMultiActionController
-				showClazzDetailById.mvc		=clazzMultiActionController
-				/showAllClazz.mvc			=clazzMultiActionController
-				/showTeacherDetailById.mvc	=teacherMultiActionController
-				/showAllTeacher.mvc			=teacherMultiActionController
-				/delegateMulti/*			=delegateMulti 
+				/helloWorld.mvc	 =helloWorldCntroller
+				/login.mvc		 =loginController <!-- 可以不用加/ -->
+				/doLogin.mvc	 =doLoginController
+				/register.mvc	 =enterRegisterController <!-- UrlFilenameViewController,找register名字做为view -->
 			</value>
 		</property>
 	
@@ -88,52 +87,22 @@
 			</list>
 		</property>
 	</bean>
-	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
-		<property name="prefix" value="/WEB-INF/jsp/"></property>
-		<property name="suffix" value=".jsp"></property>
-	</bean>
+	
+	
 	<bean id="helloWorldCntroller" class="spring_jsp.HelloWorldController" />
+	
 	<bean  id="loginController"  class="org.springframework.web.servlet.mvc.ParameterizableViewController">
-	 	<property name="viewName" value="school/login"></property> <!-- 可不用自己建立的Controller,而直接进入login.jsp页面的方式 -->
+	 	<property name="viewName" value="login"></property> <!-- 可不用自己建立的Controller,而直接进入login.jsp页面的方式 -->
 	</bean>
+	<bean  id="doLoginController" class="spring_jsp.DoLoginController" />
 	
 	<bean  id="enterRegisterController"  class="org.springframework.web.servlet.mvc.UrlFilenameViewController">
 	</bean> <!-- 视图名  就是配置的URL的部分  -->
-	
-	<bean id="internalPathMethodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.InternalPathMethodNameResolver" />
-	<!-- 根据请求路径名对应方法名-->	
-	<bean id="studentMultiActionController" class="spring_jsp.StudentMultiActionController">
-		<property name="methodNameResolver" ref="internalPathMethodNameResolver"/>
-	</bean>
-	
-	<bean id="paramMethodNameResolver"   class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver" >
-		<property name="paramName" value="doMethod" /><!-- 根据doMethod参数 决定方法名-->
-	</bean>
-	<bean id="clazzMultiActionController" class="spring_jsp.ClazzMultiActionController">
-		<property name="methodNameResolver" ref="paramMethodNameResolver"/>
-	</bean>
-	
-	<!-- 只对特定的controller -->
-	<bean id="propertiesMethodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver" >
-		<property name="mappings">
-			<props> <!-- 使用props也可使用 value -->
-				<prop key="/showTeacherDetailById.mvc">queryTeacherDetailById</prop>
-				<prop key="/showAllTeacher.mvc">queryAllTeacher</prop> 
-			</props>
-		</property>
-	</bean>
-    <bean id="teacherMultiActionController" class="spring_jsp.TeacherMultiActionController">
-		<property name="methodNameResolver" ref="propertiesMethodNameResolver"/>
-	</bean>
-	
- <!-- 不用继承自MultiActionController,使用 delegate方式,默认是InternalPathMethodNameResolver-->
-  <bean id="delegateMulti" class="org.springframework.web.servlet.mvc.multiaction.MultiActionController">
- 	<property name="delegate">
- 		 <bean class="spring_jsp.MyDelegateMulti"></bean>
- 	</property>
- </bean>
+	 
 
-
-
+	   
+	<bean name="/helloWorldBeanName.mvc" class="spring_jsp.HelloWorldController" />
+	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+	<!--   以是 name="/helloWorldBeanName.mvc" , 是使用 BeanNameUrlHandlerMapping  -->
+	
 </beans>

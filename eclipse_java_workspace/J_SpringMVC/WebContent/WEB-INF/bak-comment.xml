@@ -1,0 +1,16 @@
+  <!-- RequestMappingHandlerAdapter  　 的配置影响　@Valid的有效性 ???  -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="mappingJacksonHttpMessageConverter" />
+				<bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/> <!-- XML 为 @ResponseBody  produces="application/xml" -->
+				<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>  <!--为 @ResponseBody 的 text/* --> 
+				<!-- <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>   application/x-www-form-urlencoded  --> 
+			</list>
+		</property>
+		<property name="cacheSeconds" value="0" />
+	    <property name="webBindingInitializer"> <!--  MyWebBindingInitializer -> @ControllerAdvice -> @Controller   InitBinder -->
+	        <bean class="spring_jsp.extention.MyWebBindingInitializer" />
+	    </property>
+	</bean>
+	

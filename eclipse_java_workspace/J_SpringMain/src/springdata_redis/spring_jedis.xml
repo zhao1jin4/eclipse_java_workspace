@@ -82,11 +82,11 @@
     <bean id="redisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"  >
     	<constructor-arg >
     		<bean class="org.springframework.data.redis.connection.RedisStandaloneConfiguration">
-    			<property name="hostName" value="120.55.90.245"></property>
-    			<property name="port" value="6380"></property>
+    			<property name="hostName" value="127.0.0.1"></property>
+    			<property name="port" value="6379"></property>
     			<property name="password"  >
     				<bean class="org.springframework.data.redis.connection.RedisPassword" factory-method="of" >
-    					<constructor-arg value="test2016"/>
+    					<constructor-arg value=""/>
     				</bean>
     			</property>
     			<property name="database"  value="0"></property>
@@ -94,13 +94,20 @@
     	</constructor-arg> 
     </bean>
     
+    <bean id="stringRedisSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>  
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
           p:connectionFactory-ref="redisConnectionFactory">
-      	<property name="keySerializer">  
-            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>  
-        </property>  
-        <property name="valueSerializer">  
-            <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>  
+      	<property name="keySerializer" ref="stringRedisSerializer"/>  
+        <property name="hashKeySerializer"  ref="stringRedisSerializer"/> 
+        <property name="valueSerializer"> 
+	         <!--   
+	          <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>   
+	          <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>  
+	          
+	          <bean class="org.springframework.data.redis.serializer.OxmSerializer"/> 不行的
+	          <ref bean="stringRedisSerializer"/>
+	          -->
+	           <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>  
         </property>  
      </bean>
      

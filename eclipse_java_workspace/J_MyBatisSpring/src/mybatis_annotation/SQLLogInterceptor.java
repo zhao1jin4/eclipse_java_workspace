@@ -67,7 +67,10 @@ System.out.println("sql:==>"+boundSql.getSql());
             Object parameterObject = boundSql.getParameterObject();
             MetaObject metaObject = configuration.newMetaObject(parameterObject);
             //--上 为 @ 配置
-            
+            if(parameterMappings.size()==0)
+            {
+            	return invocation.proceed();
+            }
             for (int i = 0; i < parameterMappings.size(); i++) 
             {
                 ParameterMapping parameterMapping = parameterMappings.get(i);

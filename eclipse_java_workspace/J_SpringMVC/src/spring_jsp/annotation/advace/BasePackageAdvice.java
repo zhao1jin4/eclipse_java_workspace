@@ -38,6 +38,6 @@ public class BasePackageAdvice
     @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
     public String processUnauthenticatedException(NativeWebRequest request, RuntimeException e) {
         System.out.println("===========应用到所有@RequestMapping注解的方法，在其抛出RuntimeException异常时执行:"+e.getMessage());
-        return "showError"; //返回一个逻辑视图名
+        return "error/showError2"; //返回一个逻辑视图名
     }
 }

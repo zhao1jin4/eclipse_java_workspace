@@ -2,11 +2,17 @@ package fasterxml_json;
 
 import java.math.BigDecimal;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class OrderJson {
+		
+
 	
-	 @JsonProperty("orderId")
+	@JsonProperty("orderId")
 	private String orderId;
 	 
 	 @JsonProperty("price")
@@ -48,6 +54,12 @@ public class OrderJson {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderJson [orderId=" + orderId + ", price=" + price + ", amount=" + amount + ", address=" + address
+				+ "]";
 	}
 	
 	 

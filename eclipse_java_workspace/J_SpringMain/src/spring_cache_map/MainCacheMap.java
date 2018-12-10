@@ -31,7 +31,7 @@ public class MainCacheMap {
 		    
 		    s.getAccount("lisi", "123", true);
 		    s.getAccount("lisi", "123", true);
-		    
+		    account1.setName("new");
 		    account1 = s.updateAccount2(account1); 
 		    s.getAccountByName(account1.getName());
 		    
@@ -62,7 +62,7 @@ public class MainCacheMap {
 		    
 		    s.getAccount("lisi", "123", true);
 		    s.getAccount("lisi", "123", true);
-		    
+		    account1.setName("new");
 		    account1 = s.updateAccount2(account1); 
 		    s.getAccountByName(account1.getName());
 		    

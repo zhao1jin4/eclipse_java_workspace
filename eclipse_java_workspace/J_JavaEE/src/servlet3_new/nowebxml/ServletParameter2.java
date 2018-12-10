@@ -11,6 +11,8 @@ public class ServletParameter2 implements WebParameter {
         ServletRegistration.Dynamic testServlet=servletContext.addServlet("test2","servlet3_new.nowebxml.TestServlet");    
         //testServlet.setLoadOnStartup(1);    
         testServlet.addMapping("/nowebxml2");    
+        
+         
     }    
     
 }

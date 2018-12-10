@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MyDao {
 	public long insertData(List<Product> data)
-	{
+	{ 
 		System.out.println("这是在Dao方法中");
 		return data.size();
 	}

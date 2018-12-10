@@ -104,7 +104,7 @@
 	
 	<!-- 国际化 -->
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basename" value="messages"/> 
+		<property name="basename" value="conf.messages"/> 
 	</bean>
 	
 </beans>

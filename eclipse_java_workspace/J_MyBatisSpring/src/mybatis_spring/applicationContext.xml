@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
@@ -20,53 +20,64 @@
     xmlns:mongo="http://www.springframework.org/schema/data/mongo"
     xmlns:hdp="http://www.springframework.org/schema/hadoop"
     xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xmlns:ldap="http://www.springframework.org/schema/ldap"
     xmlns:p="http://www.springframework.org/schema/p"
     xmlns:c="http://www.springframework.org/schema/c"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-                        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
                         http://www.springframework.org/schema/context
-                        http://www.springframework.org/schema/context/spring-context-4.2.xsd
+                        http://www.springframework.org/schema/context/spring-context.xsd
                         http://www.springframework.org/schema/aop
-                        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+                        http://www.springframework.org/schema/aop/spring-aop.xsd
                         http://www.springframework.org/schema/tx
-                        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
                         http://www.springframework.org/schema/util
-                        http://www.springframework.org/schema/util/spring-util-4.2.xsd
+                        http://www.springframework.org/schema/util/spring-util.xsd
                         http://www.springframework.org/schema/tool
-                        http://www.springframework.org/schema/tool/spring-tool-4.2.xsd
+                        http://www.springframework.org/schema/tool/spring-tool.xsd
                         http://www.springframework.org/schema/jee
-                        http://www.springframework.org/schema/jee/spring-jee-4.2.xsd
+                        http://www.springframework.org/schema/jee/spring-jee.xsd
                         http://www.springframework.org/schema/jms
-                        http://www.springframework.org/schema/jms/spring-jms-4.2.xsd
+                        http://www.springframework.org/schema/jms/spring-jms.xsd
                         http://www.springframework.org/schema/task
-                        http://www.springframework.org/schema/task/spring-task-4.2.xsd
+                        http://www.springframework.org/schema/task/spring-task.xsd
                         http://www.springframework.org/schema/cache
-                        http://www.springframework.org/schema/cache/spring-cache-4.2.xsd
+                        http://www.springframework.org/schema/cache/spring-cache.xsd
                         http://www.springframework.org/schema/lang
-                        http://www.springframework.org/schema/lang/spring-lang-4.2.xsd
+                        http://www.springframework.org/schema/lang/spring-lang.xsd
                         http://www.springframework.org/schema/jdbc
-                        http://www.springframework.org/schema/jdbc/spring-jdbc-4.2.xsd
+                        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
                         http://www.springframework.org/schema/oxm
-                        http://www.springframework.org/schema/oxm/spring-oxm-4.2.xsd
+                        http://www.springframework.org/schema/oxm/spring-oxm.xsd
                         http://www.springframework.org/schema/mvc
-                        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd
                         http://www.springframework.org/schema/websocket
-                        http://www.springframework.org/schema/websocket/spring-websocket-4.2.xsd
+                        http://www.springframework.org/schema/websocket/spring-websocket.xsd
                         http://www.springframework.org/schema/security
-                        http://www.springframework.org/schema/security/spring-security-4.0.xsd
+                        http://www.springframework.org/schema/security/spring-security.xsd
                         http://www.springframework.org/schema/redis
-                        http://www.springframework.org/schema/redis/spring-redis-1.0.xsd
+                        http://www.springframework.org/schema/redis/spring-redis.xsd
                         http://www.springframework.org/schema/data/mongo
-                        http://www.springframework.org/schema/data/mongo/spring-mongo-1.7.xsd 
+                        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd 
                         http://www.springframework.org/schema/hadoop
-                        http://www.springframework.org/schema/hadoop/spring-hadoop-2.1.xsd
+                        http://www.springframework.org/schema/hadoop/spring-hadoop.xsd
                         http://www.springframework.org/schema/data/jpa
-                        http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd"
+                        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                        http://www.springframework.org/schema/batch
+                        http://www.springframework.org/schema/batch/spring-batch.xsd
+						http://www.springframework.org/schema/rabbit 
+                        http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
+						http://www.springframework.org/schema/ldap 
+						http://www.springframework.org/schema/ldap/spring-ldap.xsd"
 						default-autowire="byName">
 
 	<!--  <util:properties id="myProperties"	location="classpath:mybatis_spring/jdbc.properties" />	  -->
 	<!-- <context:property-placeholder location="jdbc.properties"/>  -->
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	
+	<!-- 加密  -->
+	<bean class="mybatis_spring.MyPropertyPlaceholderConfigurer">
 		<property name="location">
 			<value>classpath:jdbc.properties</value>
 		</property>
@@ -102,10 +113,10 @@
 		<property name="checkoutTimeout" value="10000" />
 	</bean>
  
-<bean id="dataSourceRemote" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"> 
-	 <property name="url" value="${urlRemote}" />
-	 <property name="username" value="${usernameRemote}" />
-	 <property name="password" value="${passwordRemote}" />
+<bean id="dataSourceEnc" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"> 
+	 <property name="url" value="${urlEnc}" />
+	 <property name="username" value="${usernameEnc}" />
+	 <property name="password" value="${passwordEnc}" />
 	 <property name="filters"><value>stat</value></property>
 	 <property name="maxActive"><value>20</value></property>
 	 <property name="initialSize"><value>1</value></property>
@@ -121,14 +132,29 @@
 	 <property name="maxOpenPreparedStatements"><value>20</value></property>
  </bean>
  
-  <bean id="dynamicDataSource" class="mybatis_spring.DynamicDataSource">
+ <bean id="dataSourceDruid" class="com.alibaba.druid.pool.DruidDataSource"
+     init-method="init" destroy-method="close">
+     <property name="url" value="${urlDruid}" />
+     <property name="username" value="${usernameDruid}" />
+     <property name="password" value="${passwordDruid}" />
+     <property name="initialSize"><value>1</value></property>
+     <property name="maxActive"><value>20</value></property>
+     <property name="filters" value="config" />
+     <property name="connectionProperties" value="config.decrypt=true;config.decrypt.key=${publickeyDruid}" />
+     <!-- 
+     	配置也可选程 <property name="connectionProperties" value="config.file=http://127.0.0.1/druid-pool.properties" />
+      -->
+</bean>
+
+<bean id="dynamicDataSource" class="mybatis_spring.DynamicDataSource">
         <property name="targetDataSources">
             <map key-type="java.lang.String">
                 <entry value-ref="dataSourceLocal" key="dataSourceLocal" />
-                <entry value-ref="dataSourceRemote" key="dataSourceRemote" />
+                <entry value-ref="dataSourceEnc" key="dataSourceEnc" />
+                <entry value-ref="dataSourceDruid" key="dataSourceDruid" />
             </map>
         </property>
-        <property name="defaultTargetDataSource" ref="dataSourceLocal" />
+        <property name="defaultTargetDataSource" ref="dataSourceEnc" />
     </bean>
     
 	<!-- MyBatis -->

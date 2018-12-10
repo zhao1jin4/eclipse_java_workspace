@@ -14,16 +14,19 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDTrueTypeFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.text.PDFTextStripper;
 
 public class PdfBoxTest {
 	public static void read()  throws IOException
 	{
+		String pdfFile = "D:\\book\\云\\《疯狂Spring Cloud》电子书（一）.pdf";
+		
 		//依赖于commons-logging,fontbox
 		boolean sort = false;
 		String textFile = null;
-		String pdfFile = "D:/my/Spring_源码分析.pdf";
+		
 		PDDocument document = PDDocument.load(new File(pdfFile));
 		if (pdfFile.length() > 4) {
 			textFile = pdfFile.substring(0, pdfFile.length() - 4) + ".txt";
@@ -44,7 +47,8 @@ public class PdfBoxTest {
 	}
 	public static void read2()  throws IOException
 	{
-		String pdfFile = "D:/my/Spring_源码分析.pdf";
+		String pdfFile = "D:\\book\\云\\《疯狂Spring Cloud》电子书（一）.pdf";
+		
 		PDFParser parser = new PDFParser(new RandomAccessFile(new File(pdfFile),"rw"));  
 		parser.parse();  
 		PDDocument pdfdocument = parser.getPDDocument();  
@@ -59,10 +63,10 @@ public class PdfBoxTest {
 		document.addPage( page );
 
 		// Create a new font object selecting one of the PDF base fonts
-		PDFont font = PDType1Font.HELVETICA_BOLD;//中文不行
+		//PDFont font = PDType1Font.HELVETICA_BOLD;//中文不行
 		
 		// Create a new font object by loading a TrueType font into the document
-//		PDFont font = PDTrueTypeFont.loadTTF(document, "c:\\WINDOWS\\Fonts\\SIMHEI.TTF");//中文不正常
+		PDFont font = PDTrueTypeFont.loadTTF(document, new File("c:\\WINDOWS\\Fonts\\SIMHEI.TTF"));//中文不正常
 		
 		PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
@@ -77,11 +81,16 @@ public class PdfBoxTest {
 		
 		
 	}
-	
+	public static void genPdfBaseHTML( ) 
+	{
+		
+	}
 	public static void main(String[] args)  throws Exception
 	{
-		//read();
-		read2();
-	//	write();
+		//基于HTML生成
+	    genPdfBaseHTML();
+		//read();//error????
+		//read2();//error????
+		write();
 	}
 }

@@ -6,15 +6,15 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
 public class Order 
@@ -25,12 +25,12 @@ public class Order
 	@Length(min=2,max=20)//hiberante
 	private String customer;
 	
-	@NotBlank //hiberante
-	@Email //hiberante
+	@NotBlank 
+	@Email  
 	private String email;
 	
 	@NotNull(message="建立日期为null")
-	@NotEmpty(message="建立日期不能为空串") //hiberante
+	@NotEmpty(message="建立日期不能为空串") 
 	private String createDate;
 	
 	@Pattern(regexp="^[0-9]{13}$" ,message="手机号必须是13位数字")

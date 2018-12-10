@@ -9,14 +9,9 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  <servlet>
-    <servlet-name>DisplayChart</servlet-name>
-    <servlet-class>org.jfree.chart.servlet.DisplayChart</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>DisplayChart</servlet-name>
-    <url-pattern>/servlet/DisplayChart</url-pattern>
-  </servlet-mapping>
+  
+  
+  
   <context-param>
     <param-name>life-name</param-name>
     <param-value>LifeServler的值</param-value>

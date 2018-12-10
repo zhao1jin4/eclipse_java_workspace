@@ -2,22 +2,25 @@ package rabbitmq;
 
 import java.io.IOException;
 
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.MessageProperties;
 
 public class RabbitMQTransactionSend {  
+	 private final static String mqHost = "127.0.0.1";  
+	    private final static String mqUser = "zh";  
+	    private final static String mqPass = "123";  
     public static void main(String[] args) {  
+                 //≤‚ ‘OK
+    	ConnectionFactory factory = new ConnectionFactory();  
+        factory.setHost(mqHost); 
+        factory.setUsername(mqUser);  
+        factory.setPassword(mqPass);  
+        factory.setPort(AMQP.PROTOCOL.PORT);  
         
- 
-          //≤‚ ‘OK
-        ConnectionFactory factory = new ConnectionFactory(); 
-		factory.setUsername("zh"); 
-		factory.setPassword("123"); 
-		factory.setVirtualHost("/"); 
-		factory.setHost("172.16.35.35"); 
-		factory.setPort(5672); 
+        factory.setVirtualHost("/");  
 		
 		int count = 3;   
 		String EXCHANGE_NAME = "myExtchange";

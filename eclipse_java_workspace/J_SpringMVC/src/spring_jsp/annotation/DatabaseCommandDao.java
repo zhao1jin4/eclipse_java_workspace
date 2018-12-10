@@ -2,6 +2,7 @@ package spring_jsp.annotation;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,18 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
+import org.springframework.jdbc.core.StatementCallback;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
-
- 
-import java.sql.Statement;
-import org.springframework.jdbc.core.StatementCallback;
 
 @Repository("databaseCommandDao")
 public class DatabaseCommandDao 
 {
 	
-	@Autowired
+	//@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
 	public int execute(final String sql)

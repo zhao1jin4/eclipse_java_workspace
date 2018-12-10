@@ -1,0 +1,26 @@
+<configuration  debug="true" scan="true" scanPeriod="30 seconds">
+	
+	 <property name="LOG_HOME" value="C:/logs" />
+	<property name="CONTEXT_NAME" value="MyAppName" /> 
+	
+	<contextName>${CONTEXT_NAME}</contextName>
+ 
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<!-- <pattern> [%contextName] %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n </pattern>  -->
+			 <pattern> [%contextName] %d{HH:mm:ss.SSS} [%thread]%.-1level %logger{3} - %msg%n </pattern> 
+		</encoder>
+	</appender> 
+	
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender" >
+		<file>${LOG_HOME}/All.log</file>
+		<encoder>
+			<pattern>[%contextName] %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n </pattern>
+		</encoder>
+	</appender>
+	  
+	<root level="debug">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>

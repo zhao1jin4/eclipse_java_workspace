@@ -5,8 +5,9 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 public class DynamicDataSource extends AbstractRoutingDataSource 
 {
 
-    public static final String DBLOCAL="dataSourceLocal";
-    public static final String DBREMOTE="dataSourceRemote";
+    public static final String DB_LOCAL="dataSourceLocal";
+    public static final String DB_ENC="dataSourceEnc";
+    public static final String DB_DRUID="dataSourceDruid";
     
     private static final ThreadLocal<String> contextHolder = new ThreadLocal<String>();
 

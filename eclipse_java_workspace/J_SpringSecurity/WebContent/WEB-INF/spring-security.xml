@@ -1,70 +1,185 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:p="http://www.springframework.org/schema/p" 
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-						http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-						http://www.springframework.org/schema/context 
-						http://www.springframework.org/schema/context/spring-context-3.1.xsd
-						http://www.springframework.org/schema/aop
-						http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
-						http://www.springframework.org/schema/util 
-						http://www.springframework.org/schema/util/spring-util-3.1.xsd
-						http://www.springframework.org/schema/mvc 
-						http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
-						http://www.springframework.org/schema/security
-						http://www.springframework.org/schema/security/spring-security-3.1.xsd">
-	
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:tool="http://www.springframework.org/schema/tool"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:lang="http://www.springframework.org/schema/lang"
+    xmlns:jms="http://www.springframework.org/schema/jms"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:cache="http://www.springframework.org/schema/cache"
+    xmlns:oxm="http://www.springframework.org/schema/oxm"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:websocket="http://www.springframework.org/schema/websocket"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:redis="http://www.springframework.org/schema/redis"
+    xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+    xmlns:hdp="http://www.springframework.org/schema/hadoop"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xmlns:batch="http://www.springframework.org/schema/batch"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:c="http://www.springframework.org/schema/c"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/util
+                        http://www.springframework.org/schema/util/spring-util.xsd
+                        http://www.springframework.org/schema/tool
+                        http://www.springframework.org/schema/tool/spring-tool.xsd
+                        http://www.springframework.org/schema/jee
+                        http://www.springframework.org/schema/jee/spring-jee.xsd
+                        http://www.springframework.org/schema/jms
+                        http://www.springframework.org/schema/jms/spring-jms.xsd
+                        http://www.springframework.org/schema/task
+                        http://www.springframework.org/schema/task/spring-task.xsd
+                        http://www.springframework.org/schema/cache
+                        http://www.springframework.org/schema/cache/spring-cache.xsd
+                        http://www.springframework.org/schema/lang
+                        http://www.springframework.org/schema/lang/spring-lang.xsd
+                        http://www.springframework.org/schema/jdbc
+                        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+                        http://www.springframework.org/schema/oxm
+                        http://www.springframework.org/schema/oxm/spring-oxm.xsd
+                        http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                        http://www.springframework.org/schema/websocket
+                        http://www.springframework.org/schema/websocket/spring-websocket.xsd
+                        http://www.springframework.org/schema/security
+                        http://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/redis
+                        http://www.springframework.org/schema/redis/spring-redis.xsd
+                        http://www.springframework.org/schema/data/mongo
+                        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd 
+                        http://www.springframework.org/schema/hadoop
+                        http://www.springframework.org/schema/hadoop/spring-hadoop.xsd
+                        http://www.springframework.org/schema/data/jpa
+                        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                        http://www.springframework.org/schema/batch
+                        http://www.springframework.org/schema/batch/spring-batch.xsd">
+       
+
 <!-- use-expressions=true 表示开启表达式,看 http://www.family168.com/tutorial/springsecurity3/html/el-access.html -->
-<security:http auto-config="true" use-expressions="true" access-denied-page="/auth/denied.mvc" >
-	<security:intercept-url pattern="/auth/login.mvc" access="permitAll" requires-channel="http"  method="GET"/>  <!-- permitAll是 SecurityExpressionRoot类中的方法名字 ,有http,https,any-->
+
+<bean id="myAuthenticationEntryPoint" class="MyAuthenticationEntryPoint"></bean>
+<bean id="myAccessDeniedHandler" class="MyAccessDeniedHandler"></bean>
+<bean id="myPassWordEncoder" class="MyPassWordEncoder"></bean>
+<bean id="myAuthenticationSuccessHandler" class="MyAuthenticationSuccessHandler"></bean>
+
+<bean id="myAuthenticationProvider" class="MyAuthenticationProvider"></bean>
+
+<bean id="myLogoutSuccessHandler" class="MyLogoutSuccessHandler"></bean>
+<bean id="myRequestMatcher" class="MyRequestMatcher"></bean>
+<bean id="myAccessDecisionManager" class="MyAccessDecisionManager"></bean>
+<bean id="myFilter" class="MyFilter"></bean>
+
+ 
+<security:http pattern="/js/*" security="none"></security:http>
+<security:http pattern="/img/*" security="none"></security:http>
+<security:http pattern="/auth/loginNotify.mvc" security="none" ></security:http> 
+
+
+
+<bean id="tokenRepository" class="org.springframework.security.web.csrf.CookieCsrfTokenRepository"
+	p:cookieHttpOnly="false"/>
+
+<security:http auto-config="true" use-expressions="true"     >
+<!-- 	entry-point-ref="myAuthenticationEntryPoint"   登录页可以指向外部系统  修改 loadUserByUsername 方法-->
+ <!-- access-decision-manager-ref="myAccessDecisionManager" --><!-- 新版本无 access-denied-page="/auth/denied.mvc" -->
+
+	
+	<security:access-denied-handler  ref="myAccessDeniedHandler" /> 
+	<!--  error-page="/auth/denied.mvc" ref="myAccessDeniedHandler"  没用？？？？ -->
+	
+	<security:intercept-url  pattern="/auth/login.mvc" access="permitAll" requires-channel="http"  method="GET"/>  <!-- permitAll是 SecurityExpressionRoot类中的方法名字 ,有http,https,any-->
 	<security:intercept-url pattern="/main/anony*" access="permitAll"/>
+	<security:intercept-url pattern="/securityLogout" access="permitAll"/>
 	<security:intercept-url pattern="/main/test*"  access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 	<security:intercept-url pattern="/main/admin.mvc" access="hasRole('ROLE_ADMIN')"/>
-	<security:intercept-url pattern="/main/common.mvc" access="hasRole('ROLE_USER')"/>
+	<security:intercept-url  pattern="/main/common.mvc" access="hasRole('ROLE_USER')"/>
+	<security:intercept-url  pattern="/main/session.mvc" access="hasRole('ROLE_USER')"/>
+	
+	<!--   类似 pattern , 但不能匹配  ROLE
+	<security:intercept-url  request-matcher-ref="myRequestMatcher"  />
+	 -->
+	
 	
 	<!--方式一  ,使用浏览器弹出对框的方式输入用户,密码, <security:http-basic />  -->
-	<!-- 方式二,自定义页面 -->	
+	<!-- 方式二,自定义页面 	-->	
 	<security:form-login login-page="/auth/login.mvc"
-		 authentication-failure-url="/auth/login.mvc?error=true" 
-			     default-target-url="/main/common.mvc"/>
-	
-	<security:logout  invalidate-session="true" 
-					  logout-success-url="/auth/login.mvc" 
-							  logout-url="/auth/logout.mvc"/><!-- 对应页面中的退出的链接 -->
-	<security:session-management>		
-		<security:concurrency-control max-sessions="1" error-if-maximum-exceeded="true"/> <!-- 只可有一个会话用户在线, 要配<listener-class>HttpSessionEventPublisher -->
+				 authentication-failure-url="/auth/login.mvc?error=true" 
+			     default-target-url="/main/common1.mvc"
+			     username-parameter="j_username"
+			     password-parameter="j_password"
+			     login-processing-url="/j_spring_security_check"
+			     authentication-success-handler-ref="myAuthenticationSuccessHandler"
+		/>
+
 		<!-- 跳到  authentication-failure-url 指定面,使用 ${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}显示
-		国际化 ConcurrentSessionControlStrategy.exceededAllowed  -->
-	</security:session-management>
-</security:http>
+		国际化ConcurrentSessionControlAuthenticationStrategy.exceededAllowed -->
 	
+	
+	
+	<!--  logout-success-url="/auth/login.mvc"  
+	success-handler-ref="myLogoutSuccessHandler" 二选一
+		 -->
+	<security:logout 
+		success-handler-ref="myLogoutSuccessHandler"
+		invalidate-session="true"   
+		logout-url="/securityLogout"  /> <!-- 对应页面中的退出的链接不用.mvc , 无效的原因是LogoutFilter源码要求POST提交 -->
+
+	 <!-- max-sessions="1"   可防止一个用户登录多次， 要配<listener-class>HttpSessionEventPublisher 
+	 error-if-maximum-exceeded="true" 表示不可以第二次登录(false则是可以，前面登录的退出)，如有跳到form的 authentication-failure-url 
+	  如第二次登录是用remember-me 返回401或者定义session-authentication-error-url  
+ 	-->
+ 	<security:session-management invalid-session-url="/auth/invalidSession.mvc"  session-authentication-error-url="/auth/secondLogin.mvc">		 
+		  <security:concurrency-control max-sessions="1" error-if-maximum-exceeded="true" /> 
+	</security:session-management>
+  
+	<security:csrf token-repository-ref="tokenRepository"/> <!--  对应于 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> -->
+	
+	<security:remember-me remember-me-parameter="j_remember-me"  user-service-ref="myDBUserService" remember-me-cookie="my_remember-me-cookie" />
+			<!--  data-source-ref="dataSource"  remember-me-cookie 默认 "remember-me-cookie"  -->
+	
+	<security:custom-filter ref="myFilter" after="FIRST" /> <!-- Servlet Filter 可以使用before="FIRST" ,"ANONYMOUS_FILTER" ...-->
+</security:http>
+ 
+
 <!-- 用户,角色,密码的存储方式 -->
 <bean id="customUserDetailsService" class="org.liukai.tutorial.service.CustomUserDetailsService"/>	<!--  implements UserDetailsService -->
-<bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder"/>
+
  <bean id="myUserDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl"> 
 	<property name="dataSource" ref="dataSource"/>
 </bean>
-<security:authentication-manager>
-	<security:authentication-provider user-service-ref="customUserDetailsService" >
-		<!--方式一,自定义取用户密码方式,使用user-service-ref="customUserDetailsService" ,就不可有XML子节点
-			如 user-service-ref='myUserDetailsService' 同 <jdbc-user-service data-source-ref= > -->
-	
-		<!-- 方式二,存在DB中 
-		<security:jdbc-user-service data-source-ref="dataSource"/>
+<security:jdbc-user-service id="myDBUserService"  data-source-ref="dataSource"/>
+
+<security:authentication-manager id="authenticationManager">
+	<security:authentication-provider   user-service-ref="myDBUserService"  >  <!--    ref="myAuthenticationProvider"  -->
+		<!--方式一,自定义取用户密码方式,使用 user-service-ref="customUserDetailsService" 
+			就不可有XML子节点jdbc-user-service或jdbc-user-service
+			如 user-service-ref='myUserDetailsService' 同 <security:jdbc-user-service data-source-ref="dataSource"/>
 		-->
-		<!--方式三,写在配置文件中 
+	
+		<!-- 方式二,存在DB中
+		<security:jdbc-user-service   data-source-ref="dataSource"/>
+		 -->
+		  
+		<!--方式三,写在配置文件中
 		<security:user-service> 
 			<security:user name="user" authorities="ROLE_USER" password="ee11cbb19052e40b07aac0ca060c23ee"/>
 			<security:user name="admin" authorities="ROLE_USER,ROLE_ADMIN" password="21232f297a57a5a743894a0e4a801fc3"/>
 		</security:user-service>
-		-->	
-		<security:password-encoder hash="md5"/><!-- hash="sha" 或  ref="passwordEncoder" -->
+		  -->	
+		<security:password-encoder   hash="bcrypt" />  <!--  hash="bcrypt" 外部系统验证，不加密  ref="myPassWordEncoder"  -->
+ 
 	</security:authentication-provider>
 </security:authentication-manager>
 
@@ -78,13 +193,20 @@
 </security:global-method-security>
 
 
-<!--
+<!-- 
 <bean id="" class="org.springframework.security.web.FilterChainProxy">
-		<security:filter-chain-map path-type="ant">
+		<security:filter-chain-map  path-type="ant">
 		<security:filter-chain filters="" pattern="/**"/>
 	</security:filter-chain-map>
 </bean>
 -->
+
+
+
+<!--  Spring Security OAuth 2.0 -->
+
+
+
 
 </beans>
 

@@ -1,32 +1,32 @@
  
-============Spring 4.0.6
+============Spring 5.0.5
 aopalliance-1.0.jar
 
-spring-aop-4.0.6.RELEASE.jar
-spring-beans-4.0.6.RELEASE.jar
-spring-context-4.0.6.RELEASE.jar
-spring-context-support-4.0.6.RELEASE.jar
-spring-core-4.0.6.RELEASE.jar
-spring-expression-4.0.6.RELEASE.jar
-spring-test-4.0.6.RELEASE.jar
-spring-tx-4.0.6.RELEASE.jar
-spring-jdbc-4.3.7.RELEASE.jar
-spring-web-4.0.6.RELEASE.jar
-spring-webmvc-4.0.6.RELEASE.jar
-spring-websocket-4.0.6.RELEASE.jar
+spring-aop-5.0.5.RELEASE.jar
+spring-beans-5.0.5.RELEASE.jar
+spring-context-5.0.5.RELEASE.jar
+spring-context-support-5.0.5.RELEASE.jar
+spring-core-5.0.5.RELEASE.jar
+spring-expression-5.0.5.RELEASE.jar
+spring-test-5.0.5.RELEASE.jar
+spring-tx-5.0.5.RELEASE.jar
+spring-jdbc-5.0.5.RELEASE.jar
+spring-web-5.0.5.RELEASE.jar
+spring-webmvc-5.0.5.RELEASE.jar
+spring-websocket-5.0.5.RELEASE.jar
 
-spring-test-4.3.9.RELEASE.jar
+spring-test-5.0.5.RELEASE.jar
 mockito-core-2.16.0.jar
 	byte-buddy-1.7.9.jar
 	objenesis-2.6.jar
 	
 spring-hateoas-0.16.0.RELEASE.jar
 hessian-4.0.37.jar
-
+guava-24.1-jre.jar
 -------Spring MVC JSON
-	jackson-annotations-2.8.9.jar   fastxml的
-	jackson-core-2.8.9.jar
-	jackson-databind-2.8.9.jar
+	jackson-annotations-2.9.6.jar   fastxml的
+	jackson-core-2.9.6.jar
+	jackson-databind-2.9.6.jar
 
 	--
 	swagger-springmvc-1.0.2.jar
@@ -45,9 +45,8 @@ dom4j-1.6.1.jar
 jstl.jar
 standard.jar
 commons-io-2.0.1.jar
-
-freemarker-2.3.18.jar
-
+ 
+freemarker-2.3.28.jar
 ---JSR-349 - Bean Validation 1.1
 validation-api-1.1.0.Final.jar
 hibernate-validator-5.1.1.Final.jar
@@ -60,8 +59,28 @@ slf4j-log4j12-1.5.11.jar
 
 c3p0-0.9.5.2.jar
 mchange-commons-java-0.2.11.jar
+
+druid-1.1.7.jar
+mysql-connector-java-8.0.11.jar
+
+---spring session 
+	
+spring-session-data-redis-2.0.4.RELEASE.jar
+spring-session-core-2.0.3.RELEASE.jar
+
+jedis-2.9.0.jar
+	commons-pool2-2.2.jar
+spring-data-redis-2.0.7.RELEASE.jar
+spring-data-commons-2.0.7.RELEASE.jar
+
+lettuce-core-5.0.4.RELEASE.jar
+	netty-all-4.1.8.Final.jar
+	reactor-core-3.1.7.RELEASE.jar
+	reactive-streams-1.0.2.jar
+
+
 ---------------
-spring_freemarker.xml  ,spring_jstl.xml　,　spring_annotaion.xml，　spring_jstl_mapping.xml同时就一个配置上
+spring_freemarker.xml  ,spring_jstl.xml　,　spring_annotaion.xml 同时就一个配置上
 
 新的@Contoller和@RequestMapping注解支持类 
 处理器映射RequestMappingHandlerMapping 和 处理器适配器RequestMappingHandlerAdapter组合
@@ -74,11 +93,7 @@ Validtor 验证userid_password
 
 <spring:hasBindErrors />怎么用???
 不使用ContexLoaderListener Spring MVC 的代码国际化 ???
-
-
-MultiActionController 的Session不能得到???
-
-ControllerClassNameHandlerMapping 对 ParameterMethodNameResolver 不行的???????
+ 
  
 httpEntity ??
 

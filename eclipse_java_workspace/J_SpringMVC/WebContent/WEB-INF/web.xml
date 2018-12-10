@@ -9,27 +9,40 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-<!--   为代码中的国际化方法
- <context-param>
+
+    
+<!--   Hassian  使用   /WEB-INF/remoting-servlet.xml
+	/WEB-INF/spring_annotation.xml 为 WebApplicationContextUtils.getRequiredWebApplicationContext
+
+<context-param>
 	<param-name>contextConfigLocation</param-name>
 	<param-value>/WEB-INF/spring_annotation.xml</param-value>
 </context-param>
 <listener>
 	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 </listener>
-  
-    
- 为 Hassian  使用  -->  
-<context-param>
-	<param-name>contextConfigLocation</param-name>
-	<param-value> /WEB-INF/remoting-servlet.xml </param-value>
-</context-param>
-<listener>
-	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-</listener>
-
-  
-  
+--> 
+  <!-- Hessian server 要注册  ContextLoaderListener     找  /WEB-INF/remoting-servlet.xml  
+	<servlet>
+	    <servlet-name>remoting</servlet-name>
+	    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	    <load-on-startup>1</load-on-startup> 
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>remoting</servlet-name>
+	    <url-pattern>/remoting/*</url-pattern>
+	</servlet-mapping>
+	-->
+	<!--   server 方式2 ,basicHessianExporter 是 spring bean 的 id
+	<servlet>
+	    <servlet-name>basicHessianExporter</servlet-name> 
+	    <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>basicHessianExporter</servlet-name>
+	    <url-pattern>/remoting/hessianServer</url-pattern>
+	</servlet-mapping>
+	 -->
   <filter>
     <filter-name>encodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -55,12 +68,13 @@
         
         <!--
       /WEB-INF/spring_freemarker.xml
-      /WEB-INF/spring_jstl.xml
-      /WEB-INF/spring_jstl_mapping.xml
-      /WEB-INF/spring_annotation.xml
+      /WEB-INF/spring_jstl.xml 
       classpath:springweb_websocket/websocket_beans.xml
+      
+      /WEB-INF/spring-session-redis.xml    use jstl
+      /WEB-INF/spring_annotation.xml 为 WebApplicationContextUtils.getRequiredWebApplicationContext
        -->
-      <param-value>    /WEB-INF/spring_annotation.xml
+      <param-value> /WEB-INF/spring_annotation.xml
       </param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
@@ -68,34 +82,99 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>spring_mvc</servlet-name>
-    <url-pattern>*.mvc</url-pattern>  
-    <!-- <url-pattern>/</url-pattern>  fow swagger
-		<url-pattern>*.mvc</url-pattern> 
-		-->
+    <url-pattern>*.mvc</url-pattern>
   </servlet-mapping>
+  <!--   
+ <context-param>
+	<param-name>contextConfigLocation</param-name>
+	<param-value>/WEB-INF/spring_annotation.xml</param-value>
+</context-param>
+<listener>
+	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>
+-->  
   
   
+  <!--  spring session 开关
+  <filter>
+    <filter-name>springSessionRepositoryFilter</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>springSessionRepositoryFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+   -->
   
-  <!-- Hessian server 要注册  ContextLoaderListener-->
-	<servlet>
-	    <servlet-name>remoting</servlet-name>
-	    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-	    <load-on-startup>1</load-on-startup> <!-- 找  /WEB-INF/remoting-servlet.xml  -->
-	</servlet>
-	<servlet-mapping>
-	    <servlet-name>remoting</servlet-name>
-	    <url-pattern>/remoting/*</url-pattern>
-	</servlet-mapping>
-	
-	<!--   server 方式2 ,basicHessianExporter 是 spring bean 的 id -->
-	<servlet>
-	    <servlet-name>basicHessianExporter</servlet-name> 
-	    <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-	    <servlet-name>basicHessianExporter</servlet-name>
-	    <url-pattern>/remoting/hessianServer</url-pattern>
-	</servlet-mapping>
-	
 	 
+	 <!--    ============druid monitor============ 
+	 
+ 	http://127.0.0.1:8080/J_SpringMVC/druid  登录密码就是web.xml中配置的
+	 -->
+		 
+	<servlet>
+	  <servlet-name>DruidStatView</servlet-name>
+	  <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+	   <init-param>  
+		<!-- 允许清空统计数据 -->  
+		<param-name>resetEnable</param-name>  
+		<param-value>true</param-value>  
+	    </init-param>  
+	    <init-param>  
+		<!-- 用户名 -->  
+		<param-name>loginUsername</param-name>  
+		<param-value>UserDruid</param-value>  
+	    </init-param>  
+	    <init-param>  
+		<!-- 密码 -->  
+		<param-name>loginPassword</param-name>  
+		<param-value>PassDruid</param-value>  
+		</init-param>
+		<init-param>
+	  		<param-name>allow</param-name>
+	  		<param-value>127.0.0.1/24,128.242.128.1</param-value>
+	  	</init-param>
+	  	<init-param>
+	  		<param-name>deny</param-name>
+	  		<param-value>128.242.127.4</param-value>
+	  	</init-param>
+		<init-param>
+	  		<param-name>resetEnable</param-name>
+	  		<param-value>false</param-value>
+	  	</init-param>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>DruidStatView</servlet-name>
+	  <url-pattern>/druid/*</url-pattern> 
+	</servlet-mapping>
+	 
+	 
+	 <filter>
+	  	<filter-name>DruidWebStatFilter</filter-name>
+	  	<filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
+	  	<init-param>
+	  		<param-name>exclusions</param-name>
+	  		<param-value>*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*</param-value>
+	  	</init-param>
+		<init-param>
+			<param-name>profileEnable</param-name>  <!-- 配置profileEnable能够监控单个url调用的sql列表。 -->
+			<param-value>true</param-value>
+		</init-param>
+	
+	  </filter>
+	  <filter-mapping>
+	  	<filter-name>DruidWebStatFilter</filter-name>
+	  	<url-pattern>/*</url-pattern>   
+	  </filter-mapping>
+	   
+	   
+	  <error-page>
+	  	<error-code>404</error-code>
+	  	<location>/WEB-INF/jsp/error/notFound2.jsp</location>
+	  </error-page>
+	  <error-page>
+	  	<exception-type>java.sql.SQLException</exception-type>
+	  	<location>/WEB-INF/jsp/error/showDBError2.jsp</location>
+	  </error-page>
+	  
 </web-app>

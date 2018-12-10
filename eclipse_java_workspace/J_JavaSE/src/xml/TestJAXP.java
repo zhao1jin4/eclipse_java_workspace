@@ -120,7 +120,7 @@ public class TestJAXP
 		
 				
 		DOMSource   source=   new   DOMSource(doc);
-		StreamResult   stream   =   new   StreamResult(outFile);
+		StreamResult   stream   =   new   StreamResult(outFile);//参数可以为OutputStream
 		transformer.transform(source,stream);
 	}
 	public static void main(String[] args) throws Exception

@@ -7,18 +7,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+ 
 </head>
 <body>
 	<h1>Common Page</h1>
 	<p>每个人都能访问的页面.</p>
 	
 	welcome :<security:authentication property="name" /> <!--得到登录使用的用户名  --> <br/>
-	<security:authorize ifAllGranted="ROLE_ADMIN,ROLE_USER"><!-- ifAnyGranted=""  ifNotGranted="" -->
+	
+	loginNotify session_key: ${sessionScope.session_key} <br/>
+	<!-- access="hasPermission(#domain,'read') or hasPermission(#domain,'write')" -->
+	<security:authorize access="hasRole('ROLE_ADMIN')">    
+	
 		<a href="<%=request.getContextPath()%>/main/admin.mvc"> Go AdminPage </a><br />
 	</security:authorize>
 	
-	<a href="<%=request.getContextPath()%>/auth/logout.mvc">退出登录</a>
-	对应配置中logout logout-url="/auth/logout" 
+	
+	对应配置中 logout-url="" 不用.mvc,不用自己定义这个Controller,POST提交
+	<form method="post" action="<%=request.getContextPath()%>/securityLogout">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		<input type="submit" value="退出登录提交"/>
+	</form>
 	 
 	 <br>
 	 
@@ -29,6 +38,7 @@
 	 <a href="<%=request.getContextPath()%>/main/test.mvc?method=initAdmin">initAdmin</a> ROLE_ADMIN可以 <br/>
 	 <a href="<%=request.getContextPath()%>/main/test.mvc?method=other">other</a> ROLE_ADMIN可以 ,无效???????<br/>
 	 
-	  
+	  <a href="main/session.mvc">spring session redis and security(use ngnix Round Robin)ROLE_USER可以 (没有使用外部系统登录)  测试成功</a> <br/>
+	
 </body>
 </html>

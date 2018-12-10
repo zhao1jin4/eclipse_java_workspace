@@ -45,4 +45,10 @@
 	  LIMIT #{_skiprows}, #{_pagesize}
 	</select> <!--  MyBatisPagingItemReader的属性有_page , _pagesize , _skiprows -->
 
+	<select id="getAllByRowBound" resultType="Employee" parameterType="map">
+	  SELECT id, username  FROM employee
+	  where id > #{idGt} 
+	  ORDER BY id  
+	</select> 
+	
 </mapper>

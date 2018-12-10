@@ -16,9 +16,9 @@ public class LogBackTest
 {
 	public static void main(String[] args) throws Exception 
 	{
+		 
+		//依赖 slf4j-api-x.jar , logback-core-x.jar  ,logback-classic-x.jar  直接实现了SLF4J API
 		
-		// activemq-all-5.10.0.jar   中有 和  slf4j-log4j12-1.7.5.jar 一样的实现  要去除
-		//依赖 slf4j-api.jar slf4j-api-1.7.6.jar , logback-core-1.1.2.jar  ,logback-classic-1.1.2.jar  直接实现了SLF4J API
 		//如果用<if condition ,要 Janino 库 janino-2.7.5.jar 依赖 commons-compiler-2.7.5.jar
 		//替代 Spring 使用的 commons-logging 加 jcl-over-slf4j-1.7.6.jar
 		
@@ -29,7 +29,7 @@ public class LogBackTest
 		Logger logger = LoggerFactory .getLogger("MyAppName.biz");
 		Logger logger2 = LoggerFactory .getLogger("MyAppName.biz");
 		logger.info("logger==logger2 : {}", logger==logger2 );//相同的对象
-		
+		logger.error("ERROR-TEST" ); 
 		Object date = new java.util.Date(); 
 		logger.debug("today is: {} ", date);
 		logger.info("os.name = {}", System.getProperty("os.name")); //Windows 7

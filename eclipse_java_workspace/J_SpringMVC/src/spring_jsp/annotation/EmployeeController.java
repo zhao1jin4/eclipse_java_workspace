@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
@@ -42,6 +44,9 @@ import spring_jsp.extention.DateRangeEditor;
 @RequestMapping("/employee") //相当于一个目录
 public class EmployeeController {
 	
+	@Autowired
+	private MessageSource messageSource;
+	
 	@RequestMapping("/delete")
 	public String deleteEmployee(HttpServletRequest request)//也使用request
 	{
@@ -51,7 +56,7 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping("/list/{page}")//要使用employee/list/1
-	public ModelAndView listEmployee(@PathVariable("page")int pageNO )//不能使用@PathVariable int page,因如debug编译就不行
+	public ModelAndView listEmployee(@PathVariable("page")int pageNO,HttpServletRequest request )//不能使用@PathVariable int page,因如debug编译就不行
 	{
 	    
 		System.out.println("listEmployee 得到page ID为:"+pageNO);
@@ -66,6 +71,11 @@ public class EmployeeController {
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("/company_annotation/employeeList");
 		mv.getModel().put("allEmployee", allEmployee);
+		
+		Locale locale=request.getLocale();
+//		locale=Locale.CHINESE;
+		String i18nStr=messageSource.getMessage("title",new Object[] {"张","王"} , locale);
+		System.out.println("i18nStr="+i18nStr);
 		return mv;
 	}
 	
