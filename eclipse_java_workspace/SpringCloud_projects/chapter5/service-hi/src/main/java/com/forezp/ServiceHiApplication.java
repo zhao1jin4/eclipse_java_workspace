@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableEurekaClient  //相当于  dubbo provider 
 @RestController
 public class ServiceHiApplication {
-
+	//启动两个服务  http://localhost:8762/hi?name=lisi
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceHiApplication.class, args);
 	}

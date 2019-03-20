@@ -32,6 +32,9 @@
 	<a href="referer">测试盗链</a> <br/>
 	<a href="servletFileUpload.html">Servlet fileUpload  测试</a> <br/>
 	<a href="sessionCluster.jsp">Tomcat Cluster Session 测试  </a> <br/>
-	 
+	
+	<a href="ajaxAbortServletErrorLog.html">ajax abort()  servlet ErrorLog 测试  </a> <br/>
+	
+	
 </body>
 </html>

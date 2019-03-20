@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 //TestSuit 
 @RunWith(Suite.class)
-@SuiteClasses({OneTest.class})
+@SuiteClasses({OneTest.class})//可传多个测试类
 public class Test 
 {
 	

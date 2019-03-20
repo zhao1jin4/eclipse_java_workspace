@@ -65,141 +65,14 @@
                         http://www.springframework.org/schema/batch
                         http://www.springframework.org/schema/batch/spring-batch.xsd">
                         
-                        
-                        
 	<context:component-scan base-package="test_mockmvc"></context:component-scan>
-					 
-	<context:component-scan base-package="spring_jsp.annotation" />
-	
-	
-	
-	
-	<!--基于UrlBasedViewResolver,就不用指定viewClass
-	<bean  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/jsp/" />
-		<property name="suffix"  value=".jsp"/>
-	</bean>
-	-->
-	
-	<!-- p:表示property标签  	-->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
-				p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
-	<!--JSON ContentNegotiatingViewResolver 可选 的  
-	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-		<property name="order" value="1" />
-		<property name="defaultViews">
-			<list>
-				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
-					<property name="prefixJson" value="false" />
-				</bean>
-			</list>
-		</property>
-	</bean>
-	 -->
-<!-- XML 可选的
-	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" />
-	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-		<property name="favorPathExtension" value="true" />
-		<property name="favorParameter" value="false" />
-		<property name="ignoreAcceptHeader" value="true" />
-		<property name="mediaTypes">
-			<props>
-				<prop key="json">application/json</prop>
-				<prop key="xml">application/xml</prop>
-			</props>
-		</property>
-	</bean>
- -->
- 
- 
- <!-- 也可以这样配置
- <mvc:annotation-driven>
- 	<mvc:message-converters>
- 		<ref bean="mappingJacksonHttpMessageConverter" />
- 	</mvc:message-converters>
- </mvc:annotation-driven>
- -->
-   <!-- RequestMappingHandlerAdapter  　 的配置影响　@Valid的有效性 ???  -->
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-		<property name="messageConverters">
-			<list>
-				<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"> <!-- application/json -->
-				 <property name="objectMapper">
-			        <bean class="com.fasterxml.jackson.databind.ObjectMapper">
-			            <property name="dateFormat">
-			                <bean class="java.text.SimpleDateFormat">
-			                    <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/> <!-- JSON到SpringMVC日期格式-->
-			                </bean>
-			            </property>
-			        </bean>
-			    </property>
-				</bean>
-				<bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/> <!-- XML 为 @ResponseBody -->
-				<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>  <!--为 @ResponseBody 的 text/* --> 
-				<!-- <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>   application/x-www-form-urlencoded  --> 
-			</list>
-		</property>
-		<property name="cacheSeconds" value="0" />
-	    <property name="webBindingInitializer"> <!--  MyWebBindingInitializer -> @ControllerAdvice -> @Controller   InitBinder -->
-	        <bean class="spring_jsp.extention.MyWebBindingInitializer" />
-	    </property>
-	</bean>
-	
-	
-	<mvc:view-controller path="home.mvc" view-name="redirect:employee.mvc"/><!-- 可以path="/" -->
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/employee/*"/>
-			<bean class="spring_jsp.extention.MyInterceptor"/>
-		</mvc:interceptor>
-	</mvc:interceptors>
-  
-	<!--  为@Valid  要加 hibernate-validator-.jar -->
+	<context:component-scan base-package="spring_jsp.annotation" /> 
 	<mvc:annotation-driven  validator="validator" />
-	
 	<bean id="validator"  class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="providerClass"  value="org.hibernate.validator.HibernateValidator"/>
         <property name="validationMessageSource" ref="messageSource"/> <!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
 	</bean> 
-
-
-	<!-- 国际化 -->
-	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basename" value="messages"/> 
-	</bean>
-	
-	<!-- 文件上传 必须是 id="multipartResolver"  --> 
-	<bean  id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
-	    <property name="defaultEncoding" value="UTF-8"></property><!-- 中文文件名 OK 加了CharacterEncodingFilter-->
-	    <property name="maxUploadSize" value="10000000"/> <!--单位是 bytes  可能会抛 org.springframework.web.multipart.MaxUploadSizeExceededException (是RuntimeException)-->
-	</bean> 
-	
-	 
-	 
-	 <!--  为easyUI sqlView.html -->
-	 <context:property-placeholder location="classpath:jdbc.properties"/>
-	  <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <property name="driverClass" value="${jdbc.driver}"/>
-        <property name="jdbcUrl" value="${jdbc.url}"/>
-        <property name="user" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-        <property name="initialPoolSize" value="1"/>
-        <property name="maxIdleTime" value="600"/>
-    </bean>
-	 <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg ref="dataSource"/>
-    </bean>
-    <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-     <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
-            <property name="transactionManager" ref="transactionManager" />
-            <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"></property>
-            <property name="isolationLevelName" value="ISOLATION_SERIALIZABLE"></property> <!-- ISOLATION_DEFAULT -->
-    </bean>
-
-
-
+ 
 
 
 </beans>

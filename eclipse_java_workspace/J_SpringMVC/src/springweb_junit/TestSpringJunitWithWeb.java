@@ -11,10 +11,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-//  value="/WEB-INF/spring_annotation.xml"   ,  不能读/WEB-INF吗?????
-@WebAppConfiguration("file:WEB-INF/spring_annotation.xml")  //可以注入 WebApplicationContext 要和  @ContextConfiguration 一起使用
-@ContextConfiguration()
+@RunWith(SpringJUnit4ClassRunner.class) 
+@WebAppConfiguration("file:WebContent/")  //可以注入 WebApplicationContext 要和  @ContextConfiguration 一起使用
+@ContextConfiguration("file:WebContent/WEB-INF/spring_annotation.xml")
 public class TestSpringJunitWithWeb 
 {
 	@Autowired

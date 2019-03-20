@@ -3,7 +3,7 @@ package mongodb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.stereotype.Component;
-
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import com.mongodb.client.MongoDatabase;
 

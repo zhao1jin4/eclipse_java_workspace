@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-@Service
+//@Service
 public class MyServiceBean 
 {
 	@Autowired
@@ -16,10 +16,12 @@ public class MyServiceBean
 	
 	public long insertData(List<Product> data)
 	{
+		System.out.println("---insertData--");
 		return dao.insertData(data);
 	}
 	public List<Product> queryData( Product param)
 	{
+		System.out.println("---queryData--");
 		return dao.queryData(param);
 	}
 }

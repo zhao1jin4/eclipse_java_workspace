@@ -14,10 +14,11 @@
 <a href="helloWorldBeanName.mvc" >helloWorldBeanName.mvc</a> <br/>
 
 <a href="helloWorld.mvc" >helloWorld.mvc</a> <br/>
- 
+
 <a href="login.mvc" >登录</a> <br/>  
------Spring session  
-<a href="session.jsp" >spring session test (nginx) 测试OK</a> <br/>  
+-----Spring session   <br/>
+<a href="doLogin.mvc?username=lisi" >登录 DoLoginController.java</a> <br/>
+<a href="session.jsp" >  spring session test (nginx) 测试OK</a> <br/>  
 <hr/> 
 ----------Annotation Employee <br/>
 
@@ -33,6 +34,8 @@
 <a href="other/cookie_header.mvc" >读Cookie和http头</a><br/>
 <a href="other/returnVoid.mvc" >返回Void 的ViweName</a>默认根据请求路径来生成viewName <br/>
 <a href="other/redirect.mvc" >redirect: 的ViweName</a> <br/>
+<a href="other/forward.mvc" >forward: 的ViweName</a> <br/>
+<a href="other/forwardServlet.mvc" > SpringMVC中request.getRequestDispatcher("/xx.jsp").forward()后还是会执行后面的代码 </a> <br/>
 <a href="other/returnObject.mvc" >返回List,Object ,的ViweName</a>默认根据请求路径来生成viewName <br/>
 <a href="other/webRequest.mvc" > webRequest </a>  <br/>
 <a href="session.mvc?method=testParams1" >params 传方法名 初始化session </a><br/>
@@ -42,7 +45,10 @@
 
 <a href="other/deferredResult.mvc" >deferredResult  </a>  <br/>
 <a href="other/responseBody.mvc" >responseBody </a>  <br/>
+
+<a href="ajaxJson.html" >ajax post reqRespJSON </a>  <br/>
 <a href="other/responseBodyJSON.mvc" >responseBodyJSON </a>  <br/>
+
 <a href="other/responseBodyXML.mvc" >responseBodyXML </a>  <br/>
 <a href="resetController.mvc" >REST </a>  <br/>
 <a href="resetControllerText.mvc" >REST Text View  </a>  <br/>
@@ -59,16 +65,25 @@
 <a href="hateoas.mvc?name=World" >HATEOAS </a>  <br/>
  <a href="json.html" >spring mvc json  requst,response,global,part </a>  <br/>
 <a href="sqlView.html">easy UI 表格动态列</a> <br/>
-<a href="websocket.html"> spring websocket  (STOMP协议，直播)未成功？？？</a>  <br/>
+<a href="websocket.html"> spring websocket 未成功？？？(直播)</a>SockJS ,STOMP  见SpringBoot  <br/>
 <hr/>
+
+---------spring servlet <br/>
+
+<a href="servletWithSpring.ser" >servletWithSpring </a><br/>
+
 ----------Freemarker
 
 <a href="helloFreemarker.mvc" >helloFreemarker </a><br/>
 <a href="freemarkerRegister/initRegister.mvc" > Register with validator </a><br/>
 <a href="freemarkerQuery/initQuery.mvc" >queryFreemarker  </a><br/>
- 
+
 ---------spring 集成 hessian 用 remoting-servlet.xml <br/>
 <a href="/remoting/hessianClient" >Spring MVC hessian 二进制 调用 </a><br/>
+
+
+--error <br/>
+<a href="ajaxAbortServletErrorLog.html" >Spring MVC servletOuptStreamNoError </a><br/>
 
  
 </body>

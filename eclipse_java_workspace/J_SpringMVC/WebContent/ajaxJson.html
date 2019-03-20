@@ -1,0 +1,33 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function  sendAjax()
+{
+	var xmlHttp=new XMLHttpRequest(); 
+	xmlHttp.onreadystatechange=function()
+	{
+	  
+		if(xmlHttp.readyState==4 && xmlHttp.status==200)
+		{
+			console.log("success:"+xmlHttp.responseText);
+		}
+	}
+	xmlHttp.open("POST", "/J_SpringMVC/other/reqRespJSON.mvc", true);//是否异步,true 异步,false同步
+	xmlHttp.setRequestHeader("Content-Type","application/json;charset=UTF-8");//POST 请求是JSON   open方法后 调用
+	//xmlHttp.send('{"employee_id":123,"first_name":"李四","childIds":["10","20","30"]}');
+	//xmlHttp.send('{"employee_id":123,"first_name":"李四"}');//,"childIds":"10,20,30"  加Converter不好使???
+	xmlHttp.send('{"employee_id":a,"first_name":"李四"}');
+	//如js端字符转服务端数字报 HttpMessageNotReadableException
+	 
+}
+</script>
+</head>
+<body>
+ 
+	 <button type="button" onclick="sendAjax();">请求ajax响应前abort()</button>
+	 
+</body>
+</html>

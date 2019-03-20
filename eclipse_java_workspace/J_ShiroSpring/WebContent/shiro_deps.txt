@@ -24,3 +24,14 @@ shiro-spring-1.3.2.jar
 	shiro-ehcache-1.3.2.jar
 	ehcache-2.9.0.jar
 	
+---spring session
+	spring-session-data-redis-2.0.4.RELEASE.jar
+	spring-session-core-2.0.3.RELEASE.jar
+	jedis-2.9.0.jar
+	spring-data-redis-2.0.7.RELEASE.jar
+		spring-data-commons-2.1.1.RELEASE.jar
+	spring-tx-5.1.0.RELEASE.jar
+	commons-pool2-2.6.0.jar
+	
+	
+	

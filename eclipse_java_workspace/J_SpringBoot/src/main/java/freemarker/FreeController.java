@@ -32,7 +32,7 @@ public class FreeController {
 	private MessageSource messageSource;
 	
 	
-	@RequestMapping("/free")  // http://127.0.0.1:8081/J_SpringBoot/free
+	@RequestMapping("/free")  // http://127.0.0.1:8081/J_SpringBoot/free 测试OK
 	public ModelAndView sayFree(HttpServletRequest request) {
 		
 /*		

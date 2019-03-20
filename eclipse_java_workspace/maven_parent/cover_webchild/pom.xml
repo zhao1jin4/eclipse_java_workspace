@@ -1,0 +1,100 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.my</groupId>
+		<artifactId>cover_parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>cover_webchild</artifactId>
+	<packaging>war</packaging>
+	<name>coverWebChild</name> <!-- 一些工具会显示为项目名,如NetBeans -->
+	<url>http://maven.apache.org</url>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.3.3</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.my</groupId>
+			<artifactId>cover_web</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>war</type> <!-- 子项目war 继承父项目war 的方式 (父子项目都用maven-war-plugin) -->
+		</dependency>
+		<dependency>
+			<groupId>org.my</groupId>
+			<artifactId>cover_web</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<classifier>classes</classifier> <!-- 子项目war 继承父项目war 的方式 (父子项目都用maven-war-plugin) -->
+			<type>jar</type>
+		</dependency> 
+	</dependencies>
+	<build>
+		<finalName>cover_webchild</finalName>
+		<plugins>
+	 <!--     
+		 <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-antrun-plugin</artifactId>
+	        <version>1.8</version>
+	        <executions>
+	          <execution>
+	            <id>compile</id>
+	            <phase>compile</phase>
+	            <configuration>
+	              <target>
+	                <property name="compile_classpath" refid="maven.compile.classpath"/>
+	                <property name="runtime_classpath" refid="maven.runtime.classpath"/>
+	                <property name="test_classpath" refid="maven.test.classpath"/>
+	                <property name="plugin_classpath" refid="maven.plugin.classpath"/>
+	
+	                <ant antfile="${basedir}/build.xml">
+	                  <target name="antBuild"/>
+	                </ant>
+	              </target>
+	            </configuration>
+	            <goals>
+	              <goal>run</goal>
+	            </goals>
+	          </execution>
+	        </executions>
+	      </plugin>
+ -->
+		 	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.2.2</version>
+				<configuration>
+			<!--  
+			子项目中 先 dependency  <type>war</type> 
+					再依赖于<type>jar</type>
+   							<classifier>classes</classifier>
+				这个插件把依赖的war和这个war合并打包,会生成<项目>/overlays目录 存放依赖war的解压
+			-->
+				  <overlays>  
+					<overlay>  
+					  <groupId>org.my</groupId>
+					  <artifactId>cover_web</artifactId>
+					  <excludes>
+						<exclude>WEB-INF/classes/images/sampleimage-dependency.jpg</exclude>
+					  </excludes>
+					</overlay>
+				  </overlays>
+				</configuration>
+			  </plugin>
+	
+		</plugins>
+	</build>
+	 
+</project>

@@ -2,7 +2,9 @@ package myservlet.listener;
 
 import javax.servlet.ServletRequestAttributeEvent;
 import javax.servlet.ServletRequestAttributeListener;
+import javax.servlet.annotation.WebListener;
 
+//@WebListener
 public class MyServletRequestAttributeListener implements ServletRequestAttributeListener{
 	public void attributeAdded(ServletRequestAttributeEvent event) {
 		System.out.println("MyServletRequestAttributeListener___attributeAdded ");

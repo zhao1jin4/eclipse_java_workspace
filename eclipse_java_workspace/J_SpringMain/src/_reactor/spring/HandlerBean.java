@@ -11,8 +11,7 @@ import reactor.spring.context.annotation.ReplyTo;
 import reactor.spring.context.annotation.Selector;
 
 @Component
-public class HandlerBean {
-
+public class HandlerBean { 
 	@Autowired  
     @Qualifier("rootReactor")  
     private Reactor reactor;  

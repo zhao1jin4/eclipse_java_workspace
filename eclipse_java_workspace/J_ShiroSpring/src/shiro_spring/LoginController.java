@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
  
 
 @Controller
-
 public class LoginController  
 {
+	 
 	@RequestMapping(value = "/login" )
 	public String loginPage(HttpServletRequest request,ModelMap modelMap) 
 	{

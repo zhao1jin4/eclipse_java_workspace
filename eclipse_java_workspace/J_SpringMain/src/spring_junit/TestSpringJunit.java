@@ -36,7 +36,7 @@ import org.springframework.util.MultiValueMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 //@ContextConfiguration(classes = {AppConfig.class, TestConfig.class})
-@ContextConfiguration("classpath:spring_junit/springJunitEasyMock.xml") 
+@ContextConfiguration("classpath:spring_junit/springJunit.xml") 
 //@TestExecutionListeners({CustomTestExecutionListener.class}) //implements TestExecutionListener,加了就不能自动注入了
 //@ContextConfiguration //可注入 ApplicationContext;
 @ActiveProfiles("dev") //对应@Profile("dev")
@@ -87,54 +87,6 @@ public class TestSpringJunit
 	@Test
 	public void testSave() {
 		this.userDAO.save("李");
-	}
-	
-	@IfProfileValue(name="test-groups", values={"integration-tests"})
-	@Test
-	public void testMockDynamicChange()
-	{
-		
-		String beanName="userDao";
-//		UserDAO uDao=(UserDAO)ctx.getBean(beanName);
-//		String resName=uDao.queryNameById("li");
-//		String resultName=userDAO.queryNameById("li");
-		
-		DefaultListableBeanFactory  factory=(DefaultListableBeanFactory)ctx.getBeanFactory();//是DefaultListableBeanFactory
-		
-		{
-			/*
-			 Assert.assertEquals("newMock=defaultMockName", userDAO.getTest());//OK
-			 UserDAO mockObj=UserDAOMock.generateMockObject("li");
-			 Assert.assertEquals("newMock=li", mockObj.getTest());//OK
-			 
-			 factory.removeBeanDefinition(beanName);
-			 factory.registerSingleton(beanName, mockObj); //不会修改已经注入的
-			// Assert.assertEquals("newMock=li", userDAO.getTest());//Fail
-			 
-			 UserDAO springBean=(UserDAO)ctx.getBean(beanName);
-			 Assert.assertEquals("newMock=li", springBean.getTest());//OK
-			  
-			userService.setDao(mockObj);//这样修改已经注入的
-			//ReflectionTestUtils.setField(userService, "userDAO", mockObj, UserDAO.class);//用spring提供的方法注入aurowired的字段
-		*/
-			 //---
-			 //ctx.refresh();//GenericApplicationContext不支持
-		}
-		
-		//------------
-		{
-			UserDAO springBean=(UserDAO)ctx.getBean(beanName);
-			Assert.assertEquals("newMock=defaultMockName", springBean.getTest());//OK
-			UserDAOMock.resetMockObject(springBean, "wang");
-			Assert.assertEquals("newMock=wang", springBean.getTest());
-			Assert.assertEquals("newMock=wang",userService.getDao().getTest());//会修改Spring容器中的Bean,OK
-		 
-		}
-		 //
-		
-		 
-		
- 
 	}
 	
 }

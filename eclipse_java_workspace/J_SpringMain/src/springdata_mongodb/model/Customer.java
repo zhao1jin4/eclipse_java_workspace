@@ -1,5 +1,6 @@
 package springdata_mongodb.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
@@ -19,6 +20,8 @@ public class Customer {
 
     
     private Date createTime;
+    
+    private Timestamp sqlTime;
 
     
     public Customer() {}
@@ -28,13 +31,6 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
 
 	public String getId() {
 		return id;
@@ -58,6 +54,21 @@ public class Customer {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+    public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	public Timestamp getSqlTime() {
+		return sqlTime;
+	}
+
+	public void setSqlTime(Timestamp sqlTime) {
+		this.sqlTime = sqlTime;
 	}
 
 	@Override

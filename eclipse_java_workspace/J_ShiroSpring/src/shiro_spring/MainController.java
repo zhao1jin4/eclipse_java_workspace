@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
@@ -34,7 +35,7 @@ public class MainController
 	
 
 	@RequestMapping(value = "/main" )
-	public String loginPage( ) 
+	public String loginPage(HttpServletRequest request ) 
 	{
 		PrincipalCollection principals=SecurityUtils.getSubject().getPrincipals();
 		if(principals!=null)
@@ -67,6 +68,7 @@ public class MainController
 				System.out.println("has role "+Arrays.toString(role.value()));
 		}
 		
+		request.getSession().setAttribute("mySessionAttr", "MySesssionVal"); 
 		return "main";
 	}
 	@RequestMapping(value = "/clearCache" )

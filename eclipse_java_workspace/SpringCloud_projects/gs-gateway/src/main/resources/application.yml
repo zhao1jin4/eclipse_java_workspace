@@ -1,0 +1,143 @@
+server:
+  port: 9999
+
+logging:
+  file: /tmp/springBoot.log 
+#  path: /tmp/springLogDir
+  level:
+    root: DEBUG 
+    
+spring:
+  profiles:
+    active: after_route
+--- 
+#再建一个配置文件 , 语法是三个横线
+
+spring:
+  cloud:
+    gateway:
+      routes:
+#      - id: after_route
+#        uri: http://httpbin.org:80
+#        predicates:
+#        - After=2017-01-20T17:42:47.789+08:00[Asia/Shanghai]
+
+# After = org.springframework.cloud.gateway.handler.predicate.AfterRoutePredicateFactory
+# 日期格式是 java.time.ZonedDateTime.parse(str)可解析的
+# 当请求的时间在这个配置的时间之后，请求会被路由到 http://httpbin.org:80
+#测试 http://localhost:9999/get 跳到  http://httpbin.org:80/get
+
+  
+      - id: header_route
+        uri: http://httpbin.org
+        predicates:
+        - Header=X-Request-Id, \d+
+#当请求的Header中有X-Request-Id的header名，且header值为数字时，请求会被路由到配置的 uri. 
+#测试用  curl -H 'X-Request-Id:1' localhost:9999/get
+
+
+      - id: cookie_route
+        uri: http://httpbin.org
+        predicates:
+        - Cookie=chocolate, ch.p
+        
+#请求带有cookie名为 chocolate, cookie值为ch.p 的请求将都会转发到uri       
+#测试用 curl -H 'Cookie:chocolate=ch.p' localhost:9999/get 
+
+
+      - id: host_route
+        uri: http://httpbin.org
+        predicates:
+        - Host=**.somehost.org
+#请求头中含有Host为www.somehost.org 或 beta.somehost.org 的请求将会被路由转发转发到配置的uri
+#测试用     curl -H 'Host:www.somehost.org' localhost:9999/get  
+        
+#      - id: method_route
+#        uri: http://httpbin.org
+#        predicates:
+#        - Method=GET
+#所有的 GET 类型的请求都会路由转发到配置的uri     
+#测试用    curl localhost:9999/get 如 POST用   curl -XPOST localhost:9999/get
+
+      - id: host_route
+        uri: http://example.org
+        predicates:
+        - Path=/foo/{segment}
+#请求路径满足/foo/{segment}的请求将会匹配并被路由，比如/foo/1 、/foo/bar的请求
+#测试用  curl localhost:9999/foo/bar
+
+      - id: query_route
+        uri: http://example.org
+        predicates:
+         - Query=foo, ba.
+#请求中含有参数foo，并且foo的值匹配ba. 正则表达式
+#测试用  curl localhost:9999?foo=bar
+
+
+#----filters
+#      - id: add_request_header_route
+#        uri: http://httpbin.org
+#        predicates:
+#        - Before=2019-02-20T17:42:47.789+08:00[Asia/Shanghai]
+#        filters:
+#        - AddRequestHeader=X-Request-Foo, Bar
+#AddRequestHeader=org.springframework.cloud.gateway.filter.factory.AddRequestHeaderGatewayFilterFactory
+#会在请求头加上一对请求头，名称为X-Request-Foo，值为Bar
+#测试用  curl localhost:9999/get (使用 filters 一定要有 predicates)
+ 
+
+      - id: rewritepath_route
+        uri: https://blog.csdn.net
+        predicates:
+        - Path=/foo1/**
+        #- Path=/foo1/{segment}
+        filters:
+        - RewritePath=/foo1/(?<segment>.*),/$\{segment}
+# yaml 语法  $\ 转换为 $ 
+#请求 localhost:9999/foo1/forezp ，此时会将请求转发到 https://blog.csdn.net/forezp 的页面
+#不能有两个predicates 都符合  测试要关闭前的filter (add_request_header_route)
+
+      - id: mycustome_filter
+        uri: http://httpbin.org
+        predicates:
+         - Host=**.myCustHost.org
+        filters:
+        - RequestTime=true
+#自定义filterFactory，可配置使用
+#测试用     curl -H 'Host:www.myCustHost.org' localhost:9999/get   
+
+
+#spring.cloud.gateway.default-filters #GatewayFilter作用在所有路由上
+
+
+  
+      - id: limit_route
+        uri: http://httpbin.org:80
+        predicates:
+        - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+        filters:
+        - name: RequestRateLimiter
+          args:
+            key-resolver: '#{@hostAddrKeyResolver}'
+            redis-rate-limiter.replenishRate: 1
+            redis-rate-limiter.burstCapacity: 3
+#redis限流  未试？？？
+# burstCapacity，令牌桶总容量。
+# replenishRate，令牌桶每秒填充平均速率。
+# key-resolver, Bean 对象的名字,SpEL 表达式
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+
+
+
+
+
+
+
+
+
+
+
+

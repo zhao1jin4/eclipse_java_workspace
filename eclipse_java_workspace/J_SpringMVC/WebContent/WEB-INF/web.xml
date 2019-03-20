@@ -12,7 +12,8 @@
 
     
 <!--   Hassian  使用   /WEB-INF/remoting-servlet.xml
-	/WEB-INF/spring_annotation.xml 为 WebApplicationContextUtils.getRequiredWebApplicationContext
+	/WEB-INF/spring_annotation.xml 为  WebApplicationContextUtils.getRequiredWebApplicationContext
+	ServletWithSpring 类要打开ContextLoaderListener
 
 <context-param>
 	<param-name>contextConfigLocation</param-name>
@@ -21,7 +22,13 @@
 <listener>
 	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 </listener>
---> 
+-->
+<!--  @Autowired 不行？？？？ 
+<listener>
+	<listener-class>myservlet.spring.ListenerWithSpring</listener-class>
+</listener>
+ -->
+
   <!-- Hessian server 要注册  ContextLoaderListener     找  /WEB-INF/remoting-servlet.xml  
 	<servlet>
 	    <servlet-name>remoting</servlet-name>
@@ -65,7 +72,6 @@
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
       <param-name>contextConfigLocation</param-name>
-        
         <!--
       /WEB-INF/spring_freemarker.xml
       /WEB-INF/spring_jstl.xml 
@@ -74,7 +80,7 @@
       /WEB-INF/spring-session-redis.xml    use jstl
       /WEB-INF/spring_annotation.xml 为 WebApplicationContextUtils.getRequiredWebApplicationContext
        -->
-      <param-value> /WEB-INF/spring_annotation.xml
+      <param-value>/WEB-INF/spring_freemarker.xml
       </param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
@@ -84,18 +90,24 @@
     <servlet-name>spring_mvc</servlet-name>
     <url-pattern>*.mvc</url-pattern>
   </servlet-mapping>
-  <!--   
- <context-param>
-	<param-name>contextConfigLocation</param-name>
-	<param-value>/WEB-INF/spring_annotation.xml</param-value>
-</context-param>
-<listener>
-	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-</listener>
--->  
-  
-  
-  <!--  spring session 开关
+    
+    <!--  web socket 不知何用 -->
+   <absolute-ordering>
+       <name>spring_web</name>
+   </absolute-ordering>
+    
+  <!--Spring整合Servlet  和/WEB-INF/spring_annotation.xml 一起用
+   Filter类中就可以注入Spring容器中的类 WebApplicationContextUtils 不如这种方便 
+   <filter>
+    <filter-name>myFilterWithSpring</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>myFilterWithSpring</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  -->
+  <!--  spring session 开关    
   <filter>
     <filter-name>springSessionRepositoryFilter</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -104,7 +116,7 @@
     <filter-name>springSessionRepositoryFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-   -->
+ -->
   
 	 
 	 <!--    ============druid monitor============ 

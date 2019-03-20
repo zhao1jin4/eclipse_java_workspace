@@ -185,19 +185,20 @@ public class MainTestCase extends TestCase
 	{
 		
 		List<Employee>  emps =  session.selectList("org.zhaojin.mybatis.ns.selectAllEmloyeeWithDept");
-		for (Iterator iterator = emps.iterator(); iterator.hasNext();) {
-			Employee employee = (Employee) iterator.next();
-			System.out.println("association:"+employee.getUsername());
-		}
+		System.out.println("one to one:"+emps);
+//		for (Iterator iterator = emps.iterator(); iterator.hasNext();) {
+//			Employee employee = (Employee) iterator.next();
+//			System.out.println("one to one:"+employee);
+//		}
 		//---
 		Employee  emp =  session.selectOne("org.zhaojin.mybatis.ns.selectEmloyeeWithDept", 101);
-		System.out.println(emp.getUsername()+","+emp.getDepartment().getName());
+		System.out.println("association:"+emp);
 		
 		//=====
 		List<Department>  depts =  session.selectList("org.zhaojin.mybatis.ns.selectAllDepartmentWithEmps", 10);
 		for (Iterator iterator = depts.iterator(); iterator.hasNext();) {
 			Department dept = (Department) iterator.next();
-			System.out.println("Collection:"+dept.getName() +" have -----");
+			System.out.println("department:"+dept.getName() +" have  employees-----");
 			System.out.println(dept.getName());
 			List<Employee> emps2=dept.getEmps();
 			for (Iterator iterator2 = emps2.iterator(); iterator2.hasNext();) {
@@ -213,7 +214,14 @@ public class MainTestCase extends TestCase
 			Employee employee2 = (Employee) iterator.next();
 			System.out.println("Collection:"+employee2.getUsername());
 		}
-	 
+		
+		//每查一条记录，做一次子查询
+		List<Department>  deptWithEmp =  session.selectList("org.zhaojin.mybatis.ns.selectDepartmentWithSubEmps");
+		for(Department dept1:deptWithEmp) 
+		{
+			 System.out.println("subEmps dept:"+dept1.getName()+",has emps ="+dept1.getEmps());
+		}
+		
 		//===== discriminator
 		
 		List<Employee>  goodEmps =  session.selectList("org.zhaojin.mybatis.ns.selectGoodEmps");

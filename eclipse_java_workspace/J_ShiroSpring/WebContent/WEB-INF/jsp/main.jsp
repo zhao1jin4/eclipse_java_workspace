@@ -47,6 +47,8 @@
 	 	<a href="<%=request.getContextPath()%>/employee/create.mvc">add new employee , adminRole</a> <br/>
 	</shiro:hasRole>
 	
+	<hr/>
+	spring session : ${sessionScope.mySessionAttr}
  
 </body>
 </html>

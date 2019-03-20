@@ -97,8 +97,12 @@
 	</bean>
 	 -->
 	 
-	<context:annotation-config/> <!-- 创建 springSessionRepositoryFilter , 即 RedisHttpSessionConfiguration 类的父类是带@Configuration中创建的--> 
-
+	<context:annotation-config/> 
+	<!--  此配置可不用打开Spring ContextLoaderListener
+	 	创建 springSessionRepositoryFilter , 即 RedisHttpSessionConfiguration 类的父类是带@Configuration中创建的
+     	(@EnableRedisHttpSession 注解创建一个Bean名字为 springSessionRepositoryFilter 	)
+	    RedisHttpSessionConfiguration 类的父类是带@Configuration中有一个方法名叫 springSessionRepositoryFilter 创建的  
+	--> 
 	<!-- <context:component-scan base-package="org.springframework.web.filter.DelegatingFilterProxy"/>
 	 解决  No bean named 'springSessionRepositoryFilter' is defined  或用  
 	<context:annotation-config/>
@@ -108,9 +112,35 @@
  <!-- spring session redis 设置  10分钟过期-->
   <bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
       <property name="maxInactiveIntervalInSeconds" value="600"></property>
+  	  <property name="redisNamespace" value="MyProject"></property> <!--redis 的key前缀为 MyProject:session -->
   </bean>
   
-
+  	 <!-- 启用   HttpSessionAttributeListener  ？？-->
+  	 
+	<!-- 启用 HttpSessionListener   集成spring session会调用三次 sessionCreated ？？-->
+	<bean id="sessionEventHttpSessionListenerAdapter" class="org.springframework.session.web.http.SessionEventHttpSessionListenerAdapter">
+		<constructor-arg >
+			<list>
+				<bean class="myservlet.listener.MySessionListener"></bean>
+				<!--  只能是 HttpSessionListener ,不用在 servlet 中配置
+				<bean class="myservlet.listener.MySessionAttributeListener"></bean>
+				 -->
+			</list>
+		</constructor-arg>
+	</bean>
+  	<bean class="org.springframework.session.data.redis.RedisOperationsSessionRepository">
+  		<constructor-arg ref="jedisTemplate"></constructor-arg>
+  	</bean>
+	<bean id="stringRedisSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>  
+	<bean id="jedisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+		  p:connectionFactory-ref="connectionFactory">
+		<property name="keySerializer" ref="stringRedisSerializer"/>  
+	    <property name="hashKeySerializer"  ref="stringRedisSerializer"/> 
+	 	<property name="valueSerializer">
+		   <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>   
+		</property>   <!-- 配置成JSON spring session redis中值也是二进制 -->
+	 </bean>
+	 
   <!--   spring session 过滤器
   <filter>
     <filter-name>springSessionRepositoryFilter</filter-name>

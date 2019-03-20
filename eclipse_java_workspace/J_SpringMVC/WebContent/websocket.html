@@ -16,7 +16,8 @@ function sendWebsocket()
 	{
 	   alert("WebSocket is supported by your Browser!");
 	   
-	   var ws = new WebSocket("ws://localhost:8080/J_SpringMVC/myHandler");//tomcat 8 支持 标准
+	  var ws = new WebSocket("ws://localhost:8080/J_SpringMVC/myHandler");//tomcat 8 支持 标准
+	  // var ws = new WebSocket("ws://myHandler");//tomcat 8 支持 标准
 	   ws.onopen = function()
 	   {
 	      ws.send("JS 端 消息");
@@ -40,7 +41,33 @@ function sendWebsocket()
 </script>
 <button type="button" onclick="sendWebsocket()">测试websocket,未成功???</button>
 <hr/> 
+----------spring sockJS<br/>
+<script type="text/javascript" src="js/sockjs.js"></script>
+<script type="text/javascript">
+function sendSockJS()
+{ 
+	var sock = new SockJS('http://localhost:8080/J_SpringMVC/myHandler');//http协议
+	sock.onopen = function() {
+	    console.log('open');
+	    sock.send('test');
+	};
+
+	sock.onmessage = function(e) {
+	    console.log('message', e.data);
+	    sock.close();
+	};
+
+	sock.onclose = function() {
+	    console.log('close');
+	};
+}
+</script>
+<button type="button" onclick="sendSockJS()">测试SockJS未成功,浏览器和请求相同域名，不跨域，请求一个info???</button>
 
 
+
+
+
+<br/>----------spring STOMP<br/>
 </body>
 </html>

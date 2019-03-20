@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 
 @PropertySource(value = "classpath:test.properties") 
-@ConfigurationProperties(prefix = "my")
+@ConfigurationProperties(prefix = "my") //推荐增加 spring-boot-configuration-processor'
 @Component
 public class ConfigBean {
 

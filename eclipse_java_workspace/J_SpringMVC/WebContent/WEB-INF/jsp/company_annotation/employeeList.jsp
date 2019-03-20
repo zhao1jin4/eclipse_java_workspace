@@ -13,6 +13,18 @@
 <meta http-equiv="expires" content="0">    
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+
+function goEdit()
+{
+	var url='<spring:url value="/employee/update.mvc?id=1"/>'+"&name="+encodeURI("李");
+	document.location.href=url;
+	
+}
+
+
+
+</script>
 </head>
 <body>
  
@@ -52,6 +64,7 @@ employee_query spring : <spring:message code="employee_query"  /> <br/>
 			<td>${emp.employee_id}</td>
 			<td>${emp.first_name}</td>
 			<td><!-- 使用spring:url ,c:url /开头,会把项目名加上 -->
+				<button type="button" onclick="goEdit();">修改btn</button> &nbsp; 
 				<a href="<spring:url value="/employee/update.mvc?id=${emp.employee_id}"/>">修改</a> &nbsp; 
 				<a href="<c:url value="/employee/delete.mvc?id=${emp.employee_id}"/>">删除</a>
 			</td>

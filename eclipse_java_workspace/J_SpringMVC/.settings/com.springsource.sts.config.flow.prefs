@@ -2,10 +2,14 @@
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMVC/WebContent/WEB-INF/error-config.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMVC/WebContent/WEB-INF/remoting-servlet.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMVC/WebContent/WEB-INF/spring-session-redis.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
-//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMVC/WebContent/WEB-INF/spring_annotation.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
-//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMVC/WebContent/WEB-INF/spring_freemarker.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMVC/WebContent/WEB-INF/spring_annotation.xml=<?xml version\="1.0" encoding\="UTF-8"?>\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMVC/WebContent/WEB-INF/spring_freemarker.xml=<?xml version\="1.0" encoding\="UTF-8"?>\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMVC/WebContent/WEB-INF/spring_jstl.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMVC/WebContent/WEB-INF/spring_jstl_mapping.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMVC/WebContent/WEB-INF/spring_thymeleaf.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMVC/src/spring_jee/jndi_beans.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMVC/src/test_mockRequest/spring-test.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMVC/src/test_mockmvc/spring-mockmvc.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMVC/src/testng_springweb/springTestNG.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMVC/src/testng_springweb/springTestNGWeb.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 eclipse.preferences.version=1

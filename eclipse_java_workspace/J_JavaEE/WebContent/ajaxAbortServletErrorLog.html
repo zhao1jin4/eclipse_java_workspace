@@ -1,0 +1,47 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function  sendAjax()
+{
+	var xmlHttp=new XMLHttpRequest(); 
+	xmlHttp.onreadystatechange=function()
+	{
+		if(xmlHttp.readyState==2)//   2  
+		{
+			console.log(' readyState==2'); 
+			 
+		}else if(xmlHttp.readyState==3)//    3 	Receiving 	所有响应头部都已经接收到。响应体开始接收但未完成。
+		{
+			console.log(' readyState==3'); 
+			console.log('aborting');
+			xmlHttp.abort();//终止了还会进入  readyState==4,但xmlHttp.status不是200
+			console.log('aborted');
+			
+		}else if(xmlHttp.readyState==4)
+		{
+			console.log('readyState==4 Loaded ');
+		}
+		
+		
+		if(xmlHttp.readyState==4 && xmlHttp.status==200)
+		{
+			console.log("success:"+xmlHttp.responseText);
+		}
+	}
+	xmlHttp.open("POST", "/J_JavaEE/ajaxAbortServerErrorLog.ser", true);//是否异步,true 异步,false同步
+	xmlHttp.setRequestHeader("Content-Type","application/json;charset=UTF-8");//POST 请求是JSON 
+	xmlHttp.send('{"employee_id":123,"first_name":"李四"}');
+	//xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");//POST  open方法后 调用
+	//xmlHttp.send("username="+encodeURI(encodeURI('李')));	
+}
+</script>
+</head>
+<body>
+ 
+	 <button type="button" onclick="sendAjax();">请求ajax响应前abort()</button>
+	 
+</body>
+</html>

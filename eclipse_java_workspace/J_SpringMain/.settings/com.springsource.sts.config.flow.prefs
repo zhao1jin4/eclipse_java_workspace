@@ -43,6 +43,7 @@
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_jasypt/jasypt_spring.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_jmx/jmx_client_beans.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_jmx/jmx_server_beans.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_junit/springJunit.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_junit/springJunitEasyMock.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_kafka/spring_kafka.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_ldap/spring-ldap.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
@@ -63,6 +64,7 @@
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_rabbitmq/spring_rabbitmq_server_bak.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_rabbitmq/spring_rabbitmq_server_com_bak.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_redis_lettuce/spring_lettuce_client.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
+//com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/spring_testng/springTestNG.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/springdata_hadoop/hadoop-config.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/springdata_jpa/jpa.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>
 //com.springsource.sts.config.flow.coordinates\:http\://www.springframework.org/schema/batch\:/J_SpringMain/src/springdata_mongodb/bak/demo_mongo.xml=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<graph/>

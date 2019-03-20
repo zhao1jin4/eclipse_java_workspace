@@ -3,9 +3,13 @@ package jsp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @SpringBootApplication
 //@EnableAutoConfiguration
+
+@ServletComponentScan (basePackages= {"jsp"}) //就可以自动把@WebServlet,@WebListener,@WebFilter 等servlet自动注册 
+//在thymeleaf中也有配置
 public class JSPApplication {
 	//javax.el.ExpressionFactory x;
 	public static void main(String[] args) {

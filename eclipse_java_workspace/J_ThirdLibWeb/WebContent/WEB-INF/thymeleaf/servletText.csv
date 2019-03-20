@@ -1,0 +1,40 @@
+#https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#textual-template-modes
+
+name:[(${name})]
+name: [# th:utext="${name}" /] 
+[# th:if="${name}"]
+	 'have name attr'
+[/]
+
+beginTime: [(${currentUser.createTimeRange.beginTime})]
+userHobby: [(${currentUser.hobby})]
+
+  #name,value,selected
+[# th:each="item : ${hobbys}"]
+   [# th:utext="${item.name}" /] , [(${item.value})],[(${currentUser.hobby eq item.value})]
+[/]
+ 
+ 
+  #th_block_name,value,selected
+[#th:block th:each="item : ${hobbys}"]
+   [#th:block th:utext="${item.name}" /] , [#th:block th:utext="${item.value}" /], [#th:block th:utext="${currentUser.hobby eq item.value}" /]
+[/th:block]
+
+count(从1开始),index(从0开始),size,even布尔值 是否 偶数(从0开始),odd 是否 奇数,first,last,current,current.first_name,last name,salary,高薪吗
+[# th:each="row,rowStat : ${allEmps}"]
+   [(${rowStat.count})],  [(${rowStat.index})], [(${rowStat.size})],  [(${rowStat.even})],  [(${rowStat.odd})],  [(${rowStat.first})],  [(${rowStat.last})],  [(${rowStat.current})],  [(${rowStat.current.first_name})],   [(${row.last_name})],   [(${'$' + #numbers.formatDecimal(row.salary, 1, 2)})],  [(${row.salary gt 1000})],  
+[/]
+
+/*[- */
+	'this is comment code ,only for TEXT and javascript and css'
+/* -]*/
+
+ 
+/*[- this is comment code ,only for TEXT ,can multi line -]*/
+ 
+
+
+---no
+[# ${currentUser}]
+  [(*{first_name})]
+[/]

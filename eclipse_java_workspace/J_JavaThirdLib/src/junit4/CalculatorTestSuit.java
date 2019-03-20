@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({CalculatorTest.class})
+@SuiteClasses({CalculatorTest.class})//可传多个测试类
 public class CalculatorTestSuit
 {
 

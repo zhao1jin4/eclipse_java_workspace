@@ -12,7 +12,8 @@ public class MyHandler extends TextWebSocketHandler {
     public void handleTextMessage(WebSocketSession session, TextMessage message) {
     	try {
     		System.out.println("收到的消息"+message.toString());
-			session.sendMessage(new WebSocketMessage<String>() {
+    		//session.sendMessage( new TextMessage("Spring websocket 的消息"));
+    		session.sendMessage(new WebSocketMessage<String>() {
 				String str="Spring websocket 的消息";
 				@Override
 				public String getPayload() {

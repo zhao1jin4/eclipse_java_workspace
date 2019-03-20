@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
 public class DoLoginController implements Controller
-{
+{ 
 	protected final static Log LOG = LogFactory.getLog(DoLoginController.class);
 	
 	public static final String COOKIE_SESSION_NAME="SESSION";

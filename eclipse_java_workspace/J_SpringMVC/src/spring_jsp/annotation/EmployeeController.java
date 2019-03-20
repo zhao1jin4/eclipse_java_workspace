@@ -107,8 +107,11 @@ public class EmployeeController {
 		return "/company_annotation/employeeList";
 	}
 	@RequestMapping(value="/update",method=RequestMethod.GET) //可相当路径,Get,Post不同
-	public ModelAndView initUpdateEmployee(@RequestParam("id")int emp_id)
+	public ModelAndView initUpdateEmployee(HttpServletRequest request,@RequestParam("id")int emp_id)
 	{
+		String name=request.getParameter("name");//JS端做一次encodeURI(),服务端SpringMVC自动做decodeURI转换为中文
+		System.out.println("cn name =:"+name);
+		
 		System.out.println("initUpdateEmployee 得到page ID为:"+emp_id);
 		Employee emp=new Employee();
 		emp.setEmployee_id(emp_id);

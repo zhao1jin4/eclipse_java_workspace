@@ -69,7 +69,7 @@ public class MySpringRealm2 extends AuthorizingRealm
 		//查数据库
 		if("lisi".equals(username))
 		{
-			String password="123a";
+			String password="123";
 			UserInfo userInfo=new UserInfo();
 			userInfo.setUserAccount(username);
 			userInfo.setFullName("李四");

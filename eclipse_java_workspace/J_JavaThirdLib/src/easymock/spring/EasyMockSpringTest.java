@@ -43,10 +43,14 @@ public class EasyMockSpringTest // extends TestCase
 		
 		
 		IMocksControl mocksControl = EasyMock.createStrictControl();
+		
+		
 		MyDao mockDao=mocksControl.createMock(MyDao.class);//是class 要 objenesis.jar
 		EasyMock.expect(mockDao.insertData(dataSet)).andReturn((long)dataSet.size());
 		EasyMock.replay(mockDao);
 		ReflectionTestUtils.setField(bean, "dao", mockDao, MyDao.class);//用spring提供的方法注入aurowired的字段
+		
+		
 		Assert.assertEquals(dataSet.size(), bean.insertData(dataSet));
 		EasyMock.verify(mockDao);
 		

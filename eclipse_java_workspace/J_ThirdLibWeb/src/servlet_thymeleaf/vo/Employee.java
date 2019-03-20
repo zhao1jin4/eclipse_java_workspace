@@ -6,6 +6,15 @@ public class Employee {
 	private String last_name;
 	private double salary;
 	private DateRange createTimeRange;
+	
+	private String hobby;
+	
+	public String getHobby() {
+		return hobby;
+	}
+	public void setHobby(String hobby) {
+		this.hobby = hobby;
+	}
 	public int getEmployee_id() {
 		return employee_id;
 	}

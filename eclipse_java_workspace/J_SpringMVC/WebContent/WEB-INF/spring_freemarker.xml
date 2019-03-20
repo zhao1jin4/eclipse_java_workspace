@@ -75,7 +75,10 @@
 	</bean> 
 	
 	
-	<!--  Freemarker 不能在群集上面发布应用  -->					
+	<!--  Freemarker 不能在群集上面发布应用  
+	可以自己写个类继实现 ViewResolver接口,注册到Spring中,FreeMarkerViewResolver 和 InternalResourceViewResolver 不配置suffix 
+	返回视图就要加扩展名,如根据扩展名选择视图,就可以在项目使用同时使用.jsp和.ftl
+-->					
 	<bean  class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 		<property name="viewClass" 		value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
 		 <property name="suffix" 		value=".ftl" />

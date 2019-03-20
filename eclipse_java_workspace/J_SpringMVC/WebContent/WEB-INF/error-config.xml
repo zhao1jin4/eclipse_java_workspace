@@ -87,6 +87,10 @@
 				<prop key="java.lang.RuntimeException">error/showError</prop>
 			</props>
 		</property>
+		<!--commons logging 的  LogFactory.getLog(loggerName);
+		如不配置这个，Controller抛异常错误不会在日志中显示  -->   
+   		<property name="warnLogCategory" value="SpringExceptionResolver"></property> 
+   		  
 	</bean>
   	<mvc:resources mapping="/error/**" location="/WEB-INF/jsp/error/" />
 	 

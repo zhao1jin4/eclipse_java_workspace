@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.my</groupId>
+		<artifactId>cover_parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>cover_junit</artifactId>
+	<packaging>jar</packaging>
+	<name>cover Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+	  
+		 <!-- mvn package时 把所有依赖的jar解压放在一起,如果为.jar 指定 Main-Class: com.   ,如使用了spring,运行的机器又不能上网要加 AppendingTransformer  -->
+		<plugin> 
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-shade-plugin</artifactId>
+			<version>2.3</version>
+			<executions>
+				<execution>
+					<phase>package</phase>  <!-- 在哪个生命周期之后执行 -->
+					<goals>
+						<goal>shade</goal>  <!-- 目标名,插件提供的,看插件文档 -->
+					</goals>
+					<configuration> <!-- 里的所有配置都是对应插件的属性名,@parameter -->
+						<transformers>
+							<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+								<mainClass>com.MainApp</mainClass>
+							</transformer>
+							<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+								<resource>META-INF/spring.handlers</resource>
+							</transformer>
+							<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+								<resource>META-INF/spring.schemas</resource>
+							</transformer>
+						</transformers>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
+		
+		</plugins>
+	</build>
+</project>

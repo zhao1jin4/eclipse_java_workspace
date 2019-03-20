@@ -223,21 +223,31 @@ public class JDBCConnectionTest
 	public static void  metaDataTest()throws Exception
 	{
 		// create table student(id int,name varchar(4));
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://address=(protocol=tcp)(host=localhost)(port=3306)/test?useUnicode=true&amp;characterEncoding=UTF-8","user1","user1");
+		com.mysql.cj.jdbc.Driver d;
+		//Class.forName("com.mysql.jdbc.Driver");
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		//&useSSL=true
+		Connection conn=DriverManager.getConnection("jdbc:mysql://address=(protocol=tcp)(host=localhost)(port=3306)/mydb?useUnicode=true&characterEncoding=UTF-8","user1","user1");
 		DatabaseMetaData dbMetaData= conn.getMetaData();
-		ResultSet tablesRS=dbMetaData.getTables(null, null, null, new String[]{"TABLE"});
-		while(tablesRS.next())
+		ResultSet typeRS=dbMetaData.getTableTypes();//有TABLE，VIEW，SYSTEM TABLE ，SYSTEM VIEW
+		while(typeRS.next())
 		{
-			System.out.println(tablesRS.getString("TABLE_NAME"));
+			System.out.println(typeRS.getString(1));
 		}
+		//MySQL8报错
+		//ResultSet tablesRS=dbMetaData.getTables(null, null, null, new String[]{"TABLE"});
+//		ResultSet tablesRS=dbMetaData.getTables(null, null, null, null);
+//		while(tablesRS.next())
+//		{
+//			System.out.println(tablesRS.getString("TABLE_NAME"));
+//		}
 		
 		String dbName=dbMetaData.getDatabaseProductName();//Oracle   -----   MySQL
-		int dbMajor=dbMetaData.getDatabaseMajorVersion();//11       -------- 5
+		int dbMajor=dbMetaData.getDatabaseMajorVersion();//11       -------- 8
+		System.out.println("dbName="+dbName+",dbMajor="+dbMajor);//
 		
-		
-		PreparedStatement prepare= conn.prepareStatement("select * from student where id=?");
-		prepare.setInt(1, 1001);//索引以1开始
+		PreparedStatement prepare= conn.prepareStatement("select * from data_type  ");
+//		prepare.setInt(1, 1001);//索引以1开始
 		ResultSet rs=prepare.executeQuery();
 		while(rs.next())
 		{
@@ -253,7 +263,14 @@ public class JDBCConnectionTest
 		{
 			System.out.println(tableMetaData.getColumnName(i)+":类型"+tableMetaData.getColumnTypeName(i));//从1开始
 		}
-		//类型INT,类型VARCHAR
+		/*
+			my_bit:类型BIT
+			my_blob:类型BLOB
+			my_binary:类型BINARY
+			my_varbinary:类型VARBINARY
+			my_enum:类型CHAR
+			my_set:类型CHAR
+		 */
 		conn.close();
 	}
 	public static void main(String[] args) throws Exception
@@ -264,8 +281,8 @@ public class JDBCConnectionTest
 		//testConnectDB2();
 		//testOracleNvarchar2();
 		//testMySQLutf8mb4();
-		//metaDataTest();
-		testMySQLAutoIncrement();
+		metaDataTest();
+		//testMySQLAutoIncrement();
 	}
 
 }

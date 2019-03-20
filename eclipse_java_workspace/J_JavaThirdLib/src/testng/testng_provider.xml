@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="ProviderSuite">
+    <test name="providerTest">
+        <groups>
+            <run>
+                <include name="groupA" /> <!-- groupB(方法test2)不会被测试 -->
+            </run>
+        </groups>
+        <classes>
+            <class name="testng.ProviderXmlTest" />
+        </classes>
+    </test>
+</suite>

@@ -1,5 +1,5 @@
 package websocket.p2p_;
-
+ 
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -39,3 +39,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 
 }
+

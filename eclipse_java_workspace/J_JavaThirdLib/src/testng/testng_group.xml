@@ -1,0 +1,49 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="GroupSuite" verbose="1" > 
+  <test name="MyTest">
+    <classes>
+	    <class name="testng.SuiteConfig"/> 
+        <class name="testng.MyTestNG">
+           <parameter name="param1" value="value1" />
+       	   <parameter name="param2" value="22" />
+        	<methods>
+        		<!-- <include name=""></include>  -->	
+        		<exclude name="hbase"></exclude>
+        	</methods>
+        </class>
+    </classes>
+  </test>
+  <test name="GroupTest">
+    <classes>
+        <class name="testng.SuiteConfig"/>
+     	<class name="testng.Group1"/> 
+    </classes>
+  </test>
+  <!-- listener可以是 
+		  IAnnotationTransformer
+		  IAnnotationTransformer2
+		  IHookable
+		  IInvokedMethodListener
+		  IMethodInterceptor
+		  IReporter
+		  ISuiteListener
+		  ITestListener 
+   -->
+  <listeners>
+	<listener class-name="testng.listener.MyTransformer" />
+	<listener class-name="testng.listener.MyMethodInterceptor" />
+	<listener class-name="testng.listener.DotTestListener" />
+  </listeners>
+ 
+ 
+ <!--  见testng_provider
+   <test name="MyGroup">
+	   <groups>
+		   	<run>
+		   		<include name="group1"></include>
+		   		<exclude name="nosql,database"></exclude>
+		   	</run>
+	   </groups>
+   </test>
+   -->
+</suite>

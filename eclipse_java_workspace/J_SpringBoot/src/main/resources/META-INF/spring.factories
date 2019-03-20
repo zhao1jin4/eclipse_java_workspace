@@ -1,0 +1,2 @@
+# spring-boot-autoconfigure.jar 中有 META－INF/spring.factories,定义了很多
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=not_web.MyProps

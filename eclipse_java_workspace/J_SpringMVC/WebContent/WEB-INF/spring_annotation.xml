@@ -70,7 +70,11 @@
 	<context:component-scan base-package="hateoas" />
 	<context:component-scan base-package="reset" />
 	<context:component-scan base-package="swagger1x" />
-	
+	<context:component-scan base-package="myservlet.spring" />
+	<!-- 
+	<context:component-scan base-package="myservlet.filter" />
+	 -->
+	 
   <!--基于 InternalResourceViewResolver 就不用像 UrlBasedViewResolver 指定viewClass 
 	<bean  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/" />
@@ -134,17 +138,39 @@
 	 
  
 	<bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"> <!--  produces="application/json" -->
-		<property name="objectMapper">
-	       <bean class="com.fasterxml.jackson.databind.ObjectMapper">
-	           <property name="dateFormat">
-	               <bean class="java.text.SimpleDateFormat">
-	                   <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/> <!-- JSON到SpringMVC日期格式-->
-	               </bean>
-	           </property>
-	       </bean>
-	   </property>
+		<property name="objectMapper" ref="jacksonObjectMapper2"> </property>
 	</bean>
+	<bean id="jacksonObjectMapper"  class="com.fasterxml.jackson.databind.ObjectMapper">
+          <property name="dateFormat">
+              <bean class="java.text.SimpleDateFormat">
+                  <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/> 
+              </bean>
+          </property>
+     </bean>
 	<!--  对enum类型中有的自定义属性会忽略，只转换每一个分号前的值  -->
+	<bean id="jacksonObjectMapper2" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+            <bean class="com.fasterxml.jackson.databind.ObjectMapper"> 
+                 <property name="dateFormat">
+                    <bean class="java.text.SimpleDateFormat">
+                        <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />
+                    </bean>
+                </property>
+               <!-- 为null字段时不显示
+                <property name="serializationInclusion"> 
+                    <value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</value>
+                </property>
+                -->
+            </bean>
+        </property>
+        <property name="targetMethod" value="configure" />
+        <property name="arguments">
+            <list>
+                <value type="com.fasterxml.jackson.databind.DeserializationFeature">FAIL_ON_UNKNOWN_PROPERTIES</value>
+                <value>false</value><!--  反序列化遇到未知属性不报异常 -->
+            </list>
+        </property>
+    </bean>
 	
 	
 	<mvc:view-controller path="home.mvc" view-name="redirect:employee.mvc"/><!-- 可以path="/" -->
@@ -155,8 +181,23 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
   	
+  	
+  	
+  	<!--  Employee childIds的逗号分隔多个不好使？？？ ajaxJson.html
+  	<mvc:default-servlet-handler />
+    <bean id="conversionService"
+        class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="spring_jsp.extention.StringListConverter" />
+                <bean class="spring_jsp.extention.ListStringConverter" />
+            </set>
+        </property>
+    </bean>
+   <mvc:annotation-driven conversion-service="conversionService" />
+     -->
 	<!--  为@Valid  要加 hibernate-validator-.jar -->
-	<mvc:annotation-driven  validator="validator" />
+	<mvc:annotation-driven  validator="validator"   />
 	
 	<bean id="validator"  class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="providerClass"  value="org.hibernate.validator.HibernateValidator"/>
@@ -181,11 +222,11 @@
 	<bean  id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
 	    <property name="defaultEncoding" value="UTF-8"></property><!-- 中文文件名 OK 加了CharacterEncodingFilter-->
 	    <property name="maxUploadSize" value="10000000"/> <!--单位是 bytes  可能会抛 org.springframework.web.multipart.MaxUploadSizeExceededException (是RuntimeException)-->
-	</bean> 
+	</bean>
 	
-	<!-- 
+	<!--   -->
 	<import resource="error-config.xml"/>
-	 -->
+	
 	 
 	 
 	 <!-- 为  easyUI sqlView.html   SQLWorkBeanchController

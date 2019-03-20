@@ -14,11 +14,14 @@ public class CalculatorTest
 	private int expected;
 	private int para1;
 	private int para2;
+	
 	@Parameterized.Parameters
 	public static Collection<Integer[]> getParameters()//返回Collection
 	{
-		return Arrays.asList(new Integer[][] { { 3, 3, 2 }, // expected, para1, para2
-											   { 1, 1, 1 } });// expected, para1, para2
+		return Arrays.asList(new Integer[][] { 
+			{ 3, 3, 2 }, //构造函数的参数类型必须全一样 
+			{ 1, 1, 1 }  
+		});
 	}
 	public CalculatorTest(int expected, int para1, int para2)//构造函数的参数类型必须全一样 
 	{

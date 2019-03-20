@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration( {
@@ -63,6 +64,8 @@ public class EasyMockSpringPostProcessorTest // extends TestCase
 		System.out.println( "=========" );
 		MyDao dao=ctx.getBean("myDao",MyDao.class);//是同一个对象 可以reset,调用方法前设置想让它返回什么
 		DaoPostProcessor.resetQuerytReturnValue(dao, "生活");
+		
+		
 		 dataSet=dao.queryData(null);
 		for(Product product:dataSet)
 		{

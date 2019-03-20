@@ -8,6 +8,8 @@
 <title> </title>
 </head>
 <body>
-	Hello World page ,now is ${now}
+	Hello World page ,now is ${now} <br/>
+	
+	session login_user: ${sessionScope.login_user} <br/>
 </body>
 </html>

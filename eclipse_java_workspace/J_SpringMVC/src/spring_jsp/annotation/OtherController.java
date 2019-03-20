@@ -1,6 +1,9 @@
 package spring_jsp.annotation;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -9,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,7 +64,23 @@ public class OtherController
 	{
 		return "redirect:/other/returnVoid.mvc";//如返回  redirect:xx.mvc 表示是重定向
 	}
-	
+	@RequestMapping("/forward")
+	public String forward()
+	{
+		return "forward:/other/returnVoid.mvc"; 
+	}
+	@RequestMapping("/forwardServlet")
+	public String forwardServlet(HttpServletRequest request,HttpServletResponse response)
+	{
+		try {
+			request.getRequestDispatcher("/session.jsp").forward(request, response);
+			//注意后面的代码还是会被执行的,但最终显示的页是RequestDispatcher的不是返回的view
+			System.out.println(1/0); 
+		} catch ( Exception e) {  
+			e.printStackTrace();
+		}
+		return "forward:/other/returnVoid.mvc"; 
+	}
 	@RequestMapping("/returnObject")//默认根据请求路径来生成viewName
 	//public Employee returnObject()
 	//public List<Employee> returnObject()
@@ -108,14 +129,26 @@ public class OtherController
 	public String responseBody() {
 	    return "Hello World";
 	}
+	
+
+	//配置 MappingJackson2HttpMessageConverter
+	@RequestMapping(value="/reqRespJSON", produces="application/json")
+    @ResponseBody
+    public Employee reqRespJSON(@RequestBody Employee emp,HttpServletRequest request) {
+		System.out.println("req ="+emp);
+		emp.setFirst_name(emp.getFirst_name()+"_resp");
+        return emp; 
+    }
+	
 	//配置 MappingJackson2HttpMessageConverter
 	@RequestMapping(value="/responseBodyJSON", produces="application/json")
     @ResponseBody
-    public Map<String, Object> responseBodyJSON(HttpServletRequest request) {
+    public String responseBodyJSON(HttpServletRequest request) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("status", "1231231");
-        map.put("reason", "原因");
-        return map;
+        map.put("reason", "原因");//这样中文可以
+        //return map;
+        return "{status:'1231231',reason:'原因'}";//字符串中文支持
     }
 	
 	//配置 Jaxb2RootElementHttpMessageConverter
@@ -168,4 +201,37 @@ public class OtherController
 	    return new ResponseEntity<String>("Hello World", responseHeaders, HttpStatus.CREATED);
 	}
 	
+	
+	@RequestMapping(value = "/ajaxAbortServerErrorLog", method = RequestMethod.POST)
+	public void ajaxAbortServerErrorLog(HttpServletRequest request,HttpServletResponse response) throws  Exception  {
+		//jquery .abort()方法
+		
+		//SpringMVC OutputStream 在全部响应前，浏览器关闭不会出错
+		//jquery .abort()方法 
+	
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json;charset=UTF-8");
+		OutputStream output=response.getOutputStream();
+		output.write("{one:1,".getBytes());
+		output.write("two:2,".getBytes());
+		
+		output.flush();
+		response.flushBuffer();
+		try {
+			System.out.println("sleep 3");
+			Thread.sleep(3000);
+		} catch (InterruptedException e) { 
+			e.printStackTrace();
+		}
+		output.write("three:3}".getBytes());//ajax，调用了abort()这里并没有报错
+		System.out.println("done");
+  
+		
+		//SpringMVC Writer 在全部响应前，浏览器关闭不会出错
+//		Writer writer=response.getWriter();
+//		writer.write("one");
+//		writer.write("two");
+//		writer.write("three");  
+		
+	}
 }

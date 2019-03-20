@@ -1,0 +1,17 @@
+<project name="test">
+	<target name="antBuild">
+	  <echo message="compile classpath: ${compile_classpath}"/>
+	  <echo message="runtime classpath: ${runtime_classpath}"/>
+	  <echo message="test classpath:    ${test_classpath}"/>
+	  <echo message="plugin classpath:  ${plugin_classpath}"/>
+	  <property name="fromProject" value="baseProject"/>
+	  <property name="fromVersion" value="1.0.1"/>
+	  
+	  <copy  todir="${basedir}/target/classes"  overwrite="no" >  
+		<fileset dir="${basedir}/../${fromProject}/target/classes"/>
+	 </copy>
+	 <copy  todir="${basedir}/target/${ant.project.name}"  overwrite="no" >  
+		<fileset dir="${basedir}/../${fromProject}/target/${fromProject}-${fromVersion}"/>
+	 </copy>
+	</target>
+</project>

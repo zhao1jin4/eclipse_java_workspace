@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Thymeleaf3 + Servlet3 示例</title>
+  <script type="text/javascript" src="/J_ThirdLibWeb/thymeLeafJavaScriptServlet?time=new Date()"></script>
+ </head> 
+ <body>
+     <h1>Thymeleaf 3 + Servlet 3 示例</h1>
+     
+     
+     
+            标准方言 以th前缀开头的属性 , 模板是有缓存的<br/>
+     <p>
+         Hello <span th:text="${name}"></span>!
+     </p>
+     <div>
+     	beginTime: <span th:text="${currentUser.createTimeRange.beginTime}"></span>
+     </div>
+     <div th:object="${currentUser}"> 
+		first_name:  <span th:text="*{first_name}"> </span> *{ 是上面的th:object属性的${子级  ,像JS的 with(currentUser) 
+	 </div>
+	 
+	  context1:<span th:text="${#httpServletRequest.getContextPath()}"></span> <br/>
+      context2:<span th:text="${#servletContext.contextPath}"></span>  <br/> 
+      
+	 <a th:href="@{/jfreechart.jsp?id=1&name=中 }"> @{/ 带上下文路径  & 会被转议</a> <br/>
+	 <a th:href="@{~/contents/main}"> @{~ 没有上下文路径</a>  <br/>
+     <a th:href="@{//mycompany.com/res/initial}">@{// 协议 http,https 同浏览器 </a> <br/>
+     
+    ---- 定义代码片段  <br/>
+     <div th:fragment="advertArea">
+     		这里是广告区
+    </div>
+    
+	----引用代码片  <br/>
+	<div th:insert="common.html :: headerArea"></div>
+	<div th:insert="~{this :: advertArea}"></div>  ~{}是可选的,this是本页面 <br/>
+    <div th:include="~{:: advertArea}"></div> this是可选的, include 只包括子标签内容  <br/>
+    <span th:replace="common.html :: headerArea"></span>th:replace  表示 不要自己的主标签，保留th:fragment的主标签  <br/>
+	<span th:replace="common.html :: #myDiv"></span> #表示引用页面中id="myDiv"   <br/>
+ 
+ 	<ul>
+	 	<li th:each="hobby : ${hobbys}" th:text="${hobby.name}"></li>
+	 </ul>
+	 <br/>
+	 
+	 <span th:text="${currentUser.hobby}" ></span>  <br/>
+列表写死在页面, 篮球不显示,没用？ :
+	 <select   name="theHobby" th:switch="${currentUser.hobby}" >
+           <option >--请选择--</option>
+           <option th:case="football" th:selected="selected" value="football">足球</option>
+           <option th:case="basketball" th:selected="selected"  value="basketball">篮球</option> 
+      </select>  <br/>
+列表写死在页面, 篮球不显示,没用？  :
+	 <select   name="theHobby"  >
+           <option >--请选择--</option>
+           <option th:if="${currentUser.hobby eq 'football'}" th:selected="selected" value="football">足球</option>
+           <option th:if="${currentUser.hobby eq 'basketball'}"  th:selected="selected"  value="basketball">篮球</option> 
+      </select>  <br/>  
+ 列表写死在页面 	 
+ 	<select   name="theHobby"  >
+           <option >--请选择--</option>
+           <option  th:selected="${currentUser.hobby eq 'football'}" value="football">足球</option>
+           <option  th:selected="${currentUser.hobby eq 'basketball'}"  value="basketball">篮球</option> 
+      </select>    <br/>  
+  列表动态从服务取： 
+     <select   name="theHobby"  >
+           <option >--请选择--</option>
+           <option th:each="item:${hobbys}" th:selected="${currentUser.hobby eq item.value}" th:text="${item.name}" th:value="${item.value}">xx</option> 
+      </select>     <br/>  
+  
+form  th:action 属性 <br/>
+ <form th:action="@{/createOrder}" th:object="${currentUser}">
+ 	  <label for="first_name">first_name:</label>
+      <input type="text" th:field="*{first_name}" value="" /><br/>
+      <!-- th:field生成HTML id,name相同  -->
+       <label for="salary">salary:</label>
+      <input type="text" th:field="*{salary}" value="" /><br/>
+ </form>
+ <!--  
+	<input type="button" th:value="#{form.submit}" /> 
+ -->
+ 
+  <style type="text/css">
+	 .even
+	 {
+	 	background-color: gray
+	 }
+	 .odd{
+	 	background-color: pink
+	 }
+ </style>
+ <table border ="1">
+	<THEAD>
+		<tr>
+			<td>count(从1开始) 这只是注释没用的</td>
+			<td>index(从0开始)</td>
+    		<td>size:被迭代对象的大小</td>
+    		<td>even布尔值 是否 偶数(从0开始)</td>
+    		<td>odd 是否 奇数</td>
+    		<td>first是否是第一个</td>
+    		<td>last是否是最后一个</td>
+    		<td>current:当前迭代变量</td>
+    		<td>current:first_name</td>
+			<td>last name</td>
+			<td>salary</td>
+			<td>高薪吗 </td>
+		</tr>
+	</THEAD>
+	<tbody>
+		<tr th:each="row,rowStat : ${allEmps}" th:class="${rowStat.even}? 'even' : 'odd'"
+		>
+			<td th:text="${rowStat.count}">对象的index(从1开始计算) count ,这只是注释没用的</td>
+			<td th:text="${rowStat.index}">对象的index(从0开始计算)</td>
+    		<td th:text="${rowStat.size}"> size:被迭代对象的大小</td>
+    		<td th:text="${rowStat.even}">even/odd:布尔值，当前循环是否是偶数/奇数（从0开始计算）</td>
+    		<td th:text="${rowStat.odd}">  </td>
+    		<td th:text="${rowStat.first}">first是否是第一个</td>
+    		<td th:text="${rowStat.last}">last是否是最后一个</td>
+    		<td th:text="${rowStat.current}"> current:当前迭代变量</td>
+    		<td th:text="${rowStat.current.first_name}"> current:first_name</td>
+			<td th:text="${row.last_name}">last_name</td>
+			<td th:text="${ '$' + #numbers.formatDecimal(row.salary, 1, 2)}" >salary</td>
+			<td> <span th:if="${row.salary gt 1000}" style="color:red">高薪</span> </td>
+		</tr>
+	</tbody>
+</table>
+ 
+  <div th:if=" ${allEmps.size()} lt '3'">
+ 	lt 3
+ </div>
+ <div th:if=" ${allEmps.size()} gt '3'">
+ 	gt 3
+ </div>
+  	
+	<dl>
+		<dt>数字格式化:</dt>
+		<dd th:text="${ '$' + #numbers.formatDecimal(currentUser.salary, 1, 2)}">x</dd>
+		
+		<dt>时间格式化:</dt>
+		<dd th:text="${#dates.format(currentUser.createTimeRange.beginTime, 'yyyy-MM-dd')}">x</dd>
+	</dl>
+	utext表示没有 escape
+    <p th:utext="${serverHTML}"> </p> 
+	<p th:text="${serverHTML}"> </p>
+	
+ </body> 
+</html>

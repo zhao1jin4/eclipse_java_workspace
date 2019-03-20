@@ -15,8 +15,13 @@
 	<hr/> 第三方库    <br/>
 	<a href="freemaker">Freemaker 测试 ( SpringMVC 中有不少)</a> <br/> 
 	
-	<a href="firstThymeLeaf"> Thymeleaf Servlet </a> <br/> 
+	<a href="thymeLeafHtmlServlet"> Thymeleaf HTML Servlet </a> <br/>
+	<a href="thymeLeafTextServlet"> Thymeleaf Text Servlet  </a> <br/>
+	 
+	---- Thymeleaf Spring <br/>
+	<a href="thymeleafSpring/first.mvc"> Thymeleaf Spring  first</a> <br/> 
 	
+	----  <br/>
 	<a href="hessian/client">hession Web 二进制做webservice </a> <br/>
 	<a href="commonsFileUpload.html">commons FileUpload  测试</a> <br/>
  	

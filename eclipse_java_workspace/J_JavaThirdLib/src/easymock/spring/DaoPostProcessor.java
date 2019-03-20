@@ -97,7 +97,7 @@ public class DaoPostProcessor implements BeanPostProcessor
 			dataSet.add(product);
 		}
 		
-		EasyMock.reset(clientMock);
+		EasyMock.reset(clientMock);//不替换bean,直接 reset,BeanPostProcessor中已经是Mock的
 		clientMock.queryData(EasyMock.anyObject(Product.class));//可以传null
 		EasyMock.expectLastCall().andStubReturn(dataSet );
 		EasyMock.replay(clientMock);

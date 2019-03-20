@@ -1,10 +1,12 @@
 package myservlet.listener;
 
+import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+//@WebListener
 public class MySessionAttributeListener implements HttpSessionAttributeListener{
 	public void attributeAdded(HttpSessionBindingEvent event) {
 		System.out.println("MySessionAttributeListener___attributeAdded ");

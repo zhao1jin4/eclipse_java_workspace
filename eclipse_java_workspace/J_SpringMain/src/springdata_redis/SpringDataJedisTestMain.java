@@ -10,7 +10,10 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisNode;
+import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.StringRedisConnection;
+import org.springframework.data.redis.connection.jedis.JedisSentinelConnection;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.BoundListOperations;
 import org.springframework.data.redis.core.BoundSetOperations;
@@ -32,6 +35,8 @@ import org.springframework.scripting.support.ResourceScriptSource;
 
 public class SpringDataJedisTestMain {  
 
+	RedisSentinelConfiguration c;
+	RedisNode no;
     public static void main(String[] args)
     {   
     	
@@ -45,7 +50,7 @@ public class SpringDataJedisTestMain {
         u1.setCreated(new Date());
         User u2 = new User("lisi",25);  
         valueOper.set("u:u1", u1);  
-        /*用 Jackson2JsonRedisSerializer的值是
+        /*用  GenericJackson2JsonRedisSerializer 的值是
           {
 		    "@class": "springdata_redis.SpringDataJedisTestMain$User",
 		    "name": "zhangsan",

@@ -10,8 +10,12 @@ public class ConfigController {
     @Autowired
     ConfigBean configBean;
 
+    @Autowired
+    MyProps myProps;
+    
     @RequestMapping(value = "/showConfig") //server.context-path=/J_SpringBoot
     public String miya(){
+    	System.out.println(myProps.getListProp1());
         return  configBean.getName()+" >>>>"+ configBean.getAge();
     }
 }

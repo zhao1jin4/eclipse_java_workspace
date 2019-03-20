@@ -86,11 +86,11 @@
         		</bean>
         	</list>
         </property>
-        <!-- 
+        <!--  -->
         <property name="host" value="localhost" />
         <property name="port" value="27017" />
-        -->
-        <!--  为事务用 -->
+        
+        <!--  为事务用 
         <property name="replicaSetSeeds" > 
         	<array>
         		<bean class="com.mongodb.ServerAddress" >
@@ -107,16 +107,19 @@
         		</bean>
         	</array>
         </property>
-           
+        -->
     </bean>
       
     
-   <mongo:db-factory  id="mongoDbFactory" dbname="reporting" mongo-ref="mongoClient"/>
+   <mongo:db-factory  id="mongoDbFactory" dbname="reporting" mongo-ref="mongoClient"   />
    
 	<bean id="mongoMappingContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"> 
 	</bean>
 	
 	<bean id="defaultMongoTypeMapper" class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper"> 
+		<!-- 可选的A
+		<constructor-arg name="typeKey"><null/></constructor-arg>
+		 -->
 	</bean>
 	
 	<bean id="mappingConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
@@ -136,7 +139,15 @@
     </bean>
     
 	<!-- 方式二  repository-impl-postfix="Impl" -->
+	
 	<mongo:repositories base-package="springdata_mongodb.repo" ></mongo:repositories>
-	<mongo:mapping-converter base-package="springdata_mongodb.model" db-factory-ref="mongoDbFactory"></mongo:mapping-converter>
+	<mongo:mapping-converter base-package="springdata_mongodb.model" db-factory-ref="mongoDbFactory"
+			 > <!-- 可选的A  mapping-context-ref="mongoMappingContext"  type-mapper-ref="defaultMongoTypeMapper" -->
+		<mongo:custom-converters>
+			<mongo:converter>
+				<bean class="springdata_mongodb.Date2TimestampConverter"></bean>
+			</mongo:converter>
+		</mongo:custom-converters> 
+	</mongo:mapping-converter>
 			  
 </beans>

@@ -1,6 +1,6 @@
 <configuration  debug="true" scan="true" scanPeriod="30 seconds">
 	
-	 <property name="LOG_HOME" value="C:/jboss1/logs" />
+	 <property name="LOG_HOME" value="/tmp/logs" />
 	<property name="CONTEXT_NAME" value="MyAppName" />
 	<property name="APP_BIZ_HOME" value="${LOG_HOME}/${CONTEXT_NAME}/biz" />
 	

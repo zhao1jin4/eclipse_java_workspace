@@ -1,6 +1,8 @@
 package spring_jsp.annotation.form;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,6 +29,8 @@ public class Employee {
 	private double salary;
 	private DateRange createTimeRange;
 	
+	private  List<String> childIds;
+	
 	//JSON 类级别的单独日期格式化  方式一
 	@DateTimeFormat(pattern="yyyy-MM-dd") //是将String转换成Date，一般前台给后台传值时用
 	@JsonFormat(pattern="yyyy-MM-dd")//将Date转换成String 一般后台传值给前台时
@@ -42,6 +46,13 @@ public class Employee {
 		this.birthDay = birthDay;
 	}
 	
+	  
+	public List<String> getChildIds() {
+		return childIds;
+	}
+	public void setChildIds(List<String> childIds) {
+		this.childIds = childIds;
+	}
 	public DateRange getCreateTimeRange() {
 		return createTimeRange;
 	}
@@ -71,6 +82,12 @@ public class Employee {
 	}
 	public void setSalary(double salary) {
 		this.salary = salary;
+	}
+	@Override
+	public String toString() {
+		return "Employee [employee_id=" + employee_id + ", first_name=" + first_name + ", last_name=" + last_name
+				+ ", salary=" + salary + ", createTimeRange=" + createTimeRange + ", childIds=" + childIds
+				+ ", birthDay=" + birthDay + "]";
 	}
 	 
 

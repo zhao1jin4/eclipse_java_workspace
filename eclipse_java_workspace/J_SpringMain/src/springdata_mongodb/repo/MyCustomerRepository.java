@@ -12,8 +12,14 @@ import springdata_mongodb.model.Customer;
 public interface  MyCustomerRepository extends MongoRepository<Customer,String>//<Bean,ID>
 {
 	//JPA 命名规范   findBy (eclipse,idea都会提示)开头 关键字 And 相当于 where firstName= ? and lastName =?
+	//官方文档搜索 Table 7. Supported keywords for query methods
 	public  Customer  findByFirstNameAndLastName(String firstName,String lastName);
 
 	@Query("{'first_name' : ?0 , 'lastName' : ?1}") //?0表示第一个参数
 	public List<Customer> findCustomersByTwoParam(String first,String last);
+
+	 //delete返回
+	 List <Customer> deleteByLastName(String lastname);
+	 Long deletePersonByLastName(String lastname);
+	
 }

@@ -78,7 +78,6 @@ public class JSONController //OK
 		{
 			System.err.println("—È÷§ ß∞‹£∫"+res.toString());
 		}
-		
 		System.out.println(emp.getEmployee_id());
 		System.out.println(emp.getFirst_name());
 		System.out.println(emp.getBirthDay());

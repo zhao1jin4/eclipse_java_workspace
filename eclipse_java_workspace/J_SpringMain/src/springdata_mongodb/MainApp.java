@@ -1,5 +1,7 @@
 package springdata_mongodb;
-
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
@@ -29,11 +31,14 @@ import com.mongodb.client.result.UpdateResult;
 
 import springdata_mongodb.model.Customer;
 import springdata_mongodb.model.OperHistory;
+//import springdata_mongodb.repo.MyCustomerCrudRepository;
 import springdata_mongodb.repo.MyCustomerRepository;
+//import springdata_mongodb.repo.OperHisRepository;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 public class MainApp {
@@ -42,9 +47,11 @@ public class MainApp {
 	{
 		 ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
 	                "classpath:/springdata_mongodb/spring_mongo.xml");
+		 
+		//testSpringDataDSL(context);//DSL
+		
+		 
 		 MongoTemplate mongoTemplate =  context.getBean(MongoTemplate.class);
-			
-			
 		 MyMongoRepositoryImpl repository = context.getBean(MyMongoRepositoryImpl.class);
 		 
 	    repository.dropCollection();
@@ -55,39 +62,30 @@ public class MainApp {
 		}
 		mongoTemplate.createCollection(OperHistory.class);
 //		transactionSpring(context);//事务OK
-		transactionManual(context);//Testing
+		//transactionManual(context);//Testing
 
 		
 		
 		Customer c1 = new Customer("lisi", "李四");
+		c1.setCreateTime(new Date());
+		c1.setSqlTime(new Timestamp(new Date().getTime()));
 		repository.saveObject(c1);
 		List<Customer>  cList=repository.query(c1, "lisi", Customer.class);
 		
-		//方式二  extends MongoRepository<Customer,String> //<Bean,ID>
-		MyCustomerRepository customerRepository = context.getBean(MyCustomerRepository.class);
-		for(int i=0;i<20;i++)
-		{
-			Customer item = new Customer("lisi"+i, "李四"+i);
-			customerRepository.save(item);  
-		}
-		 Customer  cu=customerRepository.findByFirstNameAndLastName("lisi0" , "李四0");
-		System.out.println(cu);
+		 testRepository(context);
 		
-		List<Customer>  cus=customerRepository.findCustomersByTwoParam("lisi0" , "李四0");
-		System.out.println(cus);
+		
 		//--
 		Customer lisi = new Customer("li", "四");
 		lisi.setId("102");
 		repository.saveObject(lisi);
 		System.out.println("with id 102 " + repository.getObject("102"));
-
-		
-
-	 
+ 
 		//repository.updateObject("102", "五");
+		Update updateField=Update.update("lastName", "五").set("first_name", "wang");//更新多个字段加set
 		UpdateResult updateRes= mongoTemplate.updateFirst(
 					new Query(Criteria.where("id").is("102")),
-					Update.update("lastName", "五"), Customer.class);
+					updateField, Customer.class); 
 		 
 		System.out.println(repository.getAllObjects());
 
@@ -206,7 +204,49 @@ public class MainApp {
 //			    });
 				session.close(); 
 	}
-	
+	public static void testRepository(ApplicationContext context)
+	{
+		//方式二  extends MongoRepository<Customer,String> //<Bean,ID>
+		MyCustomerRepository customerRepository = context.getBean(MyCustomerRepository.class);
+		for(int i=0;i<20;i++)
+		{
+			Customer item = new Customer("lisi"+i, "李四"+i);
+			customerRepository.save(item);  
+		}
+		 Customer  cu=customerRepository.findByFirstNameAndLastName("lisi0" , "李四0");
+		System.out.println(cu);
+		
+		List<Customer>  cus=customerRepository.findCustomersByTwoParam("lisi0" , "李四0");
+		System.out.println(cus);
+		
+		List <Customer> deleted=customerRepository.deleteByLastName("李四0");
+		Long rows=customerRepository.deletePersonByLastName("李四1");
+		customerRepository.deleteAll();
+		/*
+		// extends   CrudRepository 没用？？？
+		MyCustomerCrudRepository customerCrudRepository = context.getBean(MyCustomerCrudRepository.class);
+		List<Customer> crudDel=customerCrudRepository.removeByLastName("李四2");
+		long effects=customerCrudRepository.deleteByLastName("李四3");
+		long count=customerCrudRepository.countByLastName("李四4");
+		System.out.println(count);
+		*/
+	}
+	/*
+	 <dependency>
+		<groupId>com.querydsl</groupId>
+		<artifactId>querydsl-core</artifactId>
+		<version>4.2.1</version>
+	</dependency>
+
+	public static void testSpringDataDSL(ApplicationContext context)
+	{
+		OperHisRepository operHisRepository = context.getBean(OperHisRepository.class);
+		OperHistory his=new OperHistory();
+		//Predicate predicate =  null;
+		//operHisRepository.findAll(predicate);
+		 
+	}
+	*/
 	
 	
 }

@@ -16,6 +16,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;   
 import org.springframework.web.bind.annotation.RequestMapping;   
 import org.springframework.web.bind.annotation.RequestMethod;   
