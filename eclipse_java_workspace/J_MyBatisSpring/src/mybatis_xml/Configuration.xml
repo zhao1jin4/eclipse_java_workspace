@@ -24,15 +24,15 @@
  <!--
     <typeHandlers>
         <typeHandler javaType="String" jdbcType="VARCHAR"
-            handler="org.zhaojin.mybatis.ExampleTypeHandler" />
+            handler="org.zh.mybatis.ExampleTypeHandler" />
     </typeHandlers>
     
-	<objectFactory type="org.zhaojin.mybatis.ExampleObjectFactory">
+	<objectFactory type="org.zh.mybatis.ExampleObjectFactory">
 		<property name="someProperty" value="100" />
 	</objectFactory>
 	
 	<plugins>
-		<plugin interceptor="org.zhaojin.mybatis.ExamplePlugin">
+		<plugin interceptor="org.zh.mybatis.ExamplePlugin">
 			<property name="someProperty" value="100" />
 		</plugin>
 	</plugins>

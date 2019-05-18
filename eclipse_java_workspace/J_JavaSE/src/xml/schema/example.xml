@@ -1,7 +1,7 @@
 <?xml version="1.0"  encoding="UTF-8"?>
-<shiporder  xmlns="http://zhaojin.org"
+<shiporder  xmlns="http://zh.org"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://zhaojin.org  example.xsd"><!-- {namespace} {location} -->
+	xsi:schemaLocation="http://zh.org  example.xsd"><!-- {namespace} {location} -->
 	<item>
 		<price></price>
 		<note></note>

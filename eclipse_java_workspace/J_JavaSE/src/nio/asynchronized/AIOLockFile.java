@@ -31,13 +31,13 @@ public class AIOLockFile {
 
 		ByteBuffer buffer = ByteBuffer.allocate(100);
 		String encoding = System.getProperty("file.encoding");
-		Path path = Paths.get("/Users/zhaojin/", "test.txt");
+		Path path = Paths.get("/Users/zh/", "test.txt");
 		 
  
 		// 异步文件写示例
 		ByteBuffer buffer1 = ByteBuffer.wrap("The win keeps Nadal at the top of the heap in men's".getBytes());
  
-		Path path1 = Paths.get("/Users/zhaojin/", "test.txt");
+		Path path1 = Paths.get("/Users/zh/", "test.txt");
 		try (AsynchronousFileChannel asynchronousFileChannel = AsynchronousFileChannel.open(path1,
 				StandardOpenOption.WRITE)) 
 		{

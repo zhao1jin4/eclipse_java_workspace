@@ -21,14 +21,14 @@
        <!-- 测试使用  http://localhost:8080/J_CXF_Spring/ws -->
        <!-- 方法1 
       <jaxws:endpoint  
-          implementor="org.zhaojin.cxf.spring.server.SpringHelloWorldImpl" address="/HelloWorld">  
+          implementor="org.zh.cxf.spring.server.SpringHelloWorldImpl" address="/HelloWorld">  
 			<jaxws:serviceFactory>  
 				<ref bean="jaxWsServiceFactoryBean"/>  
 			</jaxws:serviceFactory>  
        </jaxws:endpoint>  
        -->
       <!-- 方法2  引用id使用#  -->
-      <bean id="hello" class="org.zhaojin.cxf.spring.server.SpringHelloWorldImpl" />  
+      <bean id="hello" class="org.zh.cxf.spring.server.SpringHelloWorldImpl" />  
       <jaxws:endpoint  
          implementor="#hello" address="/HelloWorld">  
          <jaxws:serviceFactory>  
@@ -46,9 +46,9 @@
     <jaxws:endpoint id="calcPlusService" implementor="ws_provider.CalcPlusServiceProvider" address="/calcPlus" />
 		
 	<!--  只标准的 -->
-	<bean id="myServiceImpl" class="org.zhaojin.cxf.spring.MyWebServcieImpl">
+	<bean id="myServiceImpl" class="org.zh.cxf.spring.MyWebServcieImpl">
 	</bean>
-	<jaxws:server  serviceClass="org.zhaojin.cxf.spring.MyWebServcie" address="/myWebService">
+	<jaxws:server  serviceClass="org.zh.cxf.spring.MyWebServcie" address="/myWebService">
 	    <jaxws:features>
 	        <bean class="org.apache.cxf.feature.LoggingFeature"/>
 	    </jaxws:features>

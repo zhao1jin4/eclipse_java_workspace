@@ -53,7 +53,7 @@ public class SimpleSSLServer extends Thread
 	  String root="D:/program/eclipse_java_workspace/J_JavaSE/src/security/ssl_keytool";
 	  /*
 	   //-keyalg RSA 
-keytool -genkey -alias server -keystore C:/temp/serverKeystore  -dname "CN=lizhaojin,OU=tcs,O=tata,L=Harbin,ST=HeiLongJian,C=CN"  -keypass serverkeypass  --storepass serverkeystorepass
+keytool -genkey -alias server -keystore C:/temp/serverKeystore  -dname "CN=zh,OU=tcs,O=tata,L=Harbin,ST=HeiLongJian,C=CN"  -keypass serverkeypass  --storepass serverkeystorepass
 keytool -genkey -alias lisi  -keystore C:/temp/clientKeystore  -dname "CN=lisi,OU=tcs,O=tata,L=Harbin,ST=HeiLongJian,C=CN"  -keypass lisikeypass  --storepass clientkeystorepass
 keytool -genkey -alias zhangsan  -keystore C:/temp/clientKeystore  -dname "CN=zhangsan,OU=tcs,O=tata,L=Harbin,ST=HeiLongJian,C=CN"  -keypass zhangsankeypass  --storepass clientkeystorepass
 

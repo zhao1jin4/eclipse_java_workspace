@@ -4,9 +4,6 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
 /**
  * 为数据库连接配置信息加密处理
- * 
- * @author zhaojin
- *
  */
 public class MyPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
 	private String[] encryptPropNames = { "usernameEnc", "passwordEnc" };

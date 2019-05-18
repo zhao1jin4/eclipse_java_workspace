@@ -30,6 +30,7 @@ public class MainApp {
 	}
 	public static void main(String[] args) throws Exception 
 	{
+		Long l;
 			Class<MainApp> c=MainApp.class;
 			Method testMethod=c.getMethod("test",String.class);
 			if(testMethod.isAnnotationPresent(MyInerface.class))

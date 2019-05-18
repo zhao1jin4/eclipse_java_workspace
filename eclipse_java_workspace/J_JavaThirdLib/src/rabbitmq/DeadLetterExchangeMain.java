@@ -21,9 +21,9 @@ public class DeadLetterExchangeMain {
 	    
 	    
 	public static void main(String[] args) throws InterruptedException {
-	    sendTTLMessage();
+	    sendTTLMessage();//消息级别设置TTL
 	    TimeUnit.SECONDS.sleep(5);
-	    consumeTTLMessage();
+	    consumeTTLMessage();//队列级别设置TTL
 	}
 	
 	public static void sendTTLMessage(){
@@ -38,7 +38,7 @@ public class DeadLetterExchangeMain {
 	        Channel channel = connection.createChannel();
 	        //消息设置TTL
 	        AMQP.BasicProperties.Builder builder = new AMQP.BasicProperties.Builder();
-	        builder.deliveryMode(2);
+	        builder.deliveryMode(2);//持久化
 	        builder.expiration("6000");
 	        AMQP.BasicProperties  properties = builder.build();
 	       

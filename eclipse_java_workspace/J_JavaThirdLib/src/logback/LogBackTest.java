@@ -14,9 +14,9 @@ import ch.qos.logback.core.util.StatusPrinter;
 
 public class LogBackTest 
 {
+	//SizeAndTimeBasedFNATP is deprecated. Use SizeAndTimeBasedRollingPolicy instead
 	public static void main(String[] args) throws Exception 
 	{
-		 
 		//依赖 slf4j-api-x.jar , logback-core-x.jar  ,logback-classic-x.jar  直接实现了SLF4J API
 		
 		//如果用<if condition ,要 Janino 库 janino-2.7.5.jar 依赖 commons-compiler-2.7.5.jar
@@ -32,7 +32,7 @@ public class LogBackTest
 		logger.error("ERROR-TEST" ); 
 		Object date = new java.util.Date(); 
 		logger.debug("today is: {} ", date);
-		logger.info("os.name = {}", System.getProperty("os.name")); //Windows 7
+		logger.info("os.name 系统 = {}", System.getProperty("os.name")); //Windows 7
 		Logger daoLogger = LoggerFactory .getLogger("MyAppName.dao");
 		daoLogger.info("the SQL is: insert into myTable(id,name)values(?,?)");
 		
@@ -59,7 +59,8 @@ public class LogBackTest
 		statusManager.add(onConsoleListener);
 		//<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />或者加系统属性 logback.statusListenerClass=
 		
-		
+		Logger LOG =LoggerFactory.getLogger(LogBackTest.class);
+		LOG.info("测试INFO日志在LogBackTest类中");
 		springConsole();//Spring OK
 	}
 	public static void springConsole() throws Exception 

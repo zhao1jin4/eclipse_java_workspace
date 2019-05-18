@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+       xmlns:jaxws="http://cxf.apache.org/jaxws"  
+       xsi:schemaLocation=" http://www.springframework.org/schema/beans 
+							http://www.springframework.org/schema/beans/spring-beans-4.1.xsd    
+							http://cxf.apache.org/jaxws 
+							http://cxf.apache.org/schemas/jaxws.xsd">
+							
+	<bean id="aegisBean" class="org.apache.cxf.aegis.databinding.AegisDatabinding" />
+	<bean id="serviceFactoryBean" class="org.apache.cxf.jaxws.support.JaxWsServiceFactoryBean">
+		<property name="dataBinding" ref="aegisBean" />
+	</bean>
+	<bean id="clientFactory" class="org.apache.cxf.frontend.ClientProxyFactoryBean"> <!--  POJO 类型,为可以没用@  -->
+		<property name="serviceFactory" ref="serviceFactoryBean" />
+		<property name="serviceClass" value="org.zh.cxf.spring.SpringHelloWorld" />
+		<property name="address" value="http://localhost:8080/J_CXF_Spring/ws/HelloWorld" />
+	</bean>
+	
+	<bean id="client" class="org.zh.cxf.spring.SpringHelloWorld" factory-bean="clientFactory"
+		factory-method="create" />
+	
+	
+	<bean id="jaxMyServiceClient" class="org.zh.cxf.spring.MyWebServcie" factory-bean="jaxMyServiceClientFactory" factory-method="create"/>
+    <bean id="jaxMyServiceClientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+        <property name="serviceClass" value="org.zh.cxf.spring.MyWebServcie"/>
+        <property name="address" value="http://localhost:8080/J_CXF_Spring/ws/myWebService"/>
+    </bean>
+    
+	<!-- 以下未测试 成功  ,不能处理 对象 
+	<jaxws:client id="client2" serviceClass="org.zh.cxf.spring.SpringHelloWorld" 
+							address="http://localhost:8080/J_CXF_Spring/ws/HelloWorld" >
+		<jaxws:inInterceptors>
+     	 	<bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+    	</jaxws:inInterceptors>
+    	<jaxws:outInterceptors>
+	       <bean  class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+	    </jaxws:outInterceptors>
+	</jaxws:client>
+ 	-->
+	<!--  以下未测试 成功  ,不能处理 对象 
+	<bean id="myServiceFactory" class="org.apache.cxf.frontend.ClientProxyFactoryBean">
+		<property name="serviceFactory" ref="serviceFactoryBean" />
+		<property name="serviceClass" value="org.zh.cxf.spring.MyWebServcie" />
+		<property name="address" value="http://localhost:8080/J_CXF_Spring/ws/myWebService" />
+	</bean>
+	<bean id="myService" class="org.zh.cxf.spring.HelloWorld" factory-bean="myServiceFactory"
+		factory-method="create" />
+	-->
+	<!--  CXF的  对象要有@  以下未测试 成功  ,不能处理 对象  
+	<bean id="jaxClient" class="org.zh.cxf.spring.HelloWorld" factory-bean="jaxClientFactory" factory-method="create"/>
+    <bean id="jaxClientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+        <property name="serviceClass" value="org.zh.cxf.spring.SpringHelloWorld"/>
+        <property name="address" value="http://localhost:8080/J_CXF_Spring/ws/HelloWorld"/>
+    </bean>
+    -->
+	 
+ 
+</beans>  

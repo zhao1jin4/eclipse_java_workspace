@@ -1,6 +1,6 @@
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
 	<soap:Body>
-		<ns2:execPay xmlns:ns2="http://zhaojin.org/">
+		<ns2:execPay xmlns:ns2="http://zh.org/">
 			<arg0>
 				<extFeilds>{"DEV_IP":"127.0.0.1"}</extFeilds>
 				<paymentMode>8192</paymentMode>

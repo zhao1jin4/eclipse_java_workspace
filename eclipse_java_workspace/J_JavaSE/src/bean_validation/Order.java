@@ -54,7 +54,7 @@ public class Order
 	@AssertTrue(message="有效必须为true")  // @AssertFalse 
 	private boolean available;
 	
-	@Valid   // 嵌套验证
+	@Valid   // 嵌套验证 
 	private User user;
 	
 	 

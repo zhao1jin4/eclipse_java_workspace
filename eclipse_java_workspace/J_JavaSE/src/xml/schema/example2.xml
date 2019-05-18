@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 如xsd中有 elementFormDefault="qualified"  根就不用:-->
-<shiporder orderid="" xmlns="http://zhaojin.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://zhaojin.org example2.xsd ">
+<shiporder orderid="" xmlns="http://zh.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://zh.org example2.xsd ">
   <orderperson>orderperson</orderperson>
   <shipto>
     <name>name</name>

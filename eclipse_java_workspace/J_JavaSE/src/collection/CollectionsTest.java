@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -51,14 +52,29 @@ public class CollectionsTest
 		Vector<String> vector=new Vector<String>(); //如构造时不传扩容数,默认是一倍,实现是建新的数组,再复制过去
     	vector.add("first");
     	vector.add("second");
+    	vector.add("three");
     	Enumeration<String> enumer= vector.elements();
     	while(enumer.hasMoreElements())
     	{
-    		vector.remove("second");
-    		System.out.println(enumer.nextElement());//可以删
+    		vector.remove("second");//Enumeration vector 可以删
+    		System.out.println(enumer.nextElement());
+    		//Enumeration没 有remove方法
+    	}
+    
+    	Iterator<String> iterator=vector.iterator();
+    	while(iterator.hasNext())
+    	{
+    		String val=iterator.next();
+    		if(val.contentEquals("three"))
+    		{
+//        		vector.remove("three");//iterator vector 不可以删
+//    			vector.add("four");//iterator vector 不可以加
+    			iterator.remove();//iterator可以删
+    		}
+    		System.out.println(val);
     	}
     	
-    	vector.iterator();//不能加,删
+    	
     	
     	ArrayList list=new ArrayList();//扩容
     	

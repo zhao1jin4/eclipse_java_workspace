@@ -18,7 +18,7 @@ public class NRandomAccessFile {
 
 		ByteBuffer copy = ByteBuffer.allocate(12);
 
-	try (FileChannel fc = (FileChannel.open(Paths.get("/Users/zhaojin/test.txt") , StandardOpenOption.READ, StandardOpenOption.WRITE))) {
+	try (FileChannel fc = (FileChannel.open(Paths.get("/Users/zh/test.txt") , StandardOpenOption.READ, StandardOpenOption.WRITE))) {
 		    // Read the first 12
 		    // bytes of the file.
 		    int nread;

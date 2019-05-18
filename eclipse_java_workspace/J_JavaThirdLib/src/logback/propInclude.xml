@@ -18,7 +18,7 @@
 			<property file="D:/NEW_/eclipse_java_workspace/J_JavaThirdLib/src/logback/windows.properties" />
 		</then>
 		<else>
-    		<property file="/eclipse_java_workspace/J_JavaThirdLib/src/logback/linux.properties" />
+    		<property file="/mnt/ext4/Ext4_NEW/eclipse_java_workspace/J_JavaThirdLib/src/logback/linux.properties" />
     	</else>  
 	</if>
 

@@ -14,7 +14,8 @@ import java.util.logging.Logger;
 @SpringBootApplication
 @RestController
 public class ServiceMiyaApplication {
-
+	//http://localhost:8989/hi
+	
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceMiyaApplication.class, args);
 	}

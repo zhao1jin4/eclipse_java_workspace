@@ -1,7 +1,7 @@
 <?xml version="1.0"  encoding="UTF-8"?>
-<dataType xmlns="http://zhaojin.org/dataType" 
+<dataType xmlns="http://zh.org/dataType" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://zhaojin.org/dataType   dataType.xsd"><!-- {namespace} {location} -->
+	xsi:schemaLocation="http://zh.org/dataType   dataType.xsd"><!-- {namespace} {location} -->
 	<lastname>aa</lastname>
 	<families>5</families>
 	<dateborn>2012-02-20</dateborn>

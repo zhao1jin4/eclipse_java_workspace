@@ -174,7 +174,7 @@
 	          <prop key="jdbcTypeForNull">NULL</prop>
 	        </props>
 	    </property>
-		<property name="mapperLocations" value="classpath*:org/zhaojin/mybatis/vo/**/*.xml" />
+		<property name="mapperLocations" value="classpath*:org/zh/mybatis/vo/**/*.xml" />
 		 
 		<property name="plugins">
 			<list>

@@ -16,7 +16,7 @@
 		<Clause>
 			<SQL Type="FLD">r.C_OPERATOR_ID</SQL>
 			<SQL Type="OP"> = </SQL>
-			<SQL Type='Value' ST='V' RULE=''>zhaojin</SQL>
+			<SQL Type='Value' ST='V' RULE=''>zh</SQL>
 
 			<SQL Type="OP"> AND </SQL>
 
@@ -29,7 +29,7 @@
 
 <!--
 
-select r.*,u.I_USER_TYPE from eximtrx3.com_report_maintain r,eximuser3.SEC_USER_INFO u where r.C_OPERATOR_ID = 'zhaojin'  AND  r.C_OPERATOR_ID = u.C_USER_ID
+select r.*,u.I_USER_TYPE from eximtrx3.com_report_maintain r,eximuser3.SEC_USER_INFO u where r.C_OPERATOR_ID = 'zh'  AND  r.C_OPERATOR_ID = u.C_USER_ID
 -->
 
 </root>

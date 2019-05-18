@@ -24,6 +24,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class MainTestCase extends TestCase 
 {
+	String namespace="mybatis_xml.ns";
 	SqlSession session;
 	
 	protected void setUp() throws Exception 
@@ -93,7 +94,7 @@ public class MainTestCase extends TestCase
 			emp.setBirthday(Calendar.getInstance().getTime());
 			emp.setPassword(null);
 			emp.setDepartment_id(10);
-			session.insert("org.zhaojin.mybatis.ns.insertEmployee", emp);
+			session.insert(namespace+".insertEmployee", emp);
 			session.commit();
 			System.out.println("insert new Employee:java");
 		}
@@ -110,7 +111,7 @@ public class MainTestCase extends TestCase
 		ids.add(102);
 		param.put("employee_ids", ids);
 		
-		session.delete("org.zhaojin.mybatis.ns.deletePartEmployeeOfDept", param);
+		session.delete(namespace+".deletePartEmployeeOfDept", param);
 		session.commit();
 		
 	}
@@ -122,7 +123,7 @@ public class MainTestCase extends TestCase
 		emp.setBirthday(Calendar.getInstance().getTime());
 		emp.setPassword("145623");
 		emp.setDepartment_id(10);
-		session.update("org.zhaojin.mybatis.ns.updateEmployee", emp);
+		session.update(namespace+".updateEmployee", emp);
 		session.commit();
 		System.out.println("updateEmployee:java");
 	}
@@ -133,24 +134,24 @@ public class MainTestCase extends TestCase
 		int pageSize=5;
 		Map pageParam=new HashMap();
 		pageParam.put("username", "Java");
-		List<Employee>  employees =  session.selectList("org.zhaojin.mybatis.ns.queryAllEmployeeByPage",pageParam, new RowBounds( (current-1)*pageSize , pageSize));
+		List<Employee>  employees =  session.selectList(namespace+".queryAllEmployeeByPage",pageParam, new RowBounds( (current-1)*pageSize , pageSize));
 		System.out.println("employees size="+employees.size());
 		
 		//--test for ehcache
-		employees =  session.selectList("org.zhaojin.mybatis.ns.queryAllEmployee");
+		employees =  session.selectList(namespace+".queryAllEmployee");
 		System.out.println("employees size="+employees.size());
 		
-		employees =  session.selectList("org.zhaojin.mybatis.ns.queryAllEmployee");
+		employees =  session.selectList(namespace+".queryAllEmployee");
 		System.out.println("employees size="+employees.size());
 	
-		Employee employee = (Employee) session.selectOne("org.zhaojin.mybatis.ns.selectEmployee", 101);
+		Employee employee = (Employee) session.selectOne(namespace+".selectEmployee", 101);
 		System.out.println("username:="+employee.getUsername());
 		System.out.println("birthday:="+employee.getBirthday().toString());
 		
-		EmployeeDept userdept = (EmployeeDept) session.selectOne("org.zhaojin.mybatis.ns.selectEmpDept", 101);
+		EmployeeDept userdept = (EmployeeDept) session.selectOne(namespace+".selectEmpDept", 101);
 		System.out.println("userdept:="+userdept.getDepartment());
 		
-		HashMap usermap = (HashMap) session.selectOne("org.zhaojin.mybatis.ns.selectEmpDeptHashMap", 101);
+		HashMap usermap = (HashMap) session.selectOne(namespace+".selectEmpDeptHashMap", 101);
 		System.out.println("userdept hash:dept="+usermap.get("DEPT"));
 		Set<Map.Entry<String, Object>> set=usermap.entrySet();
 		Iterator<Map.Entry<String, Object>> i=set.iterator();
@@ -161,7 +162,7 @@ public class MainTestCase extends TestCase
 		}
 		
 		
-		List<Employee> emps =  session.selectList("org.zhaojin.mybatis.ns.selectEmployeeByDept", 10);
+		List<Employee> emps =  session.selectList(namespace+".selectEmployeeByDept", 10);
 		for (Iterator iterator = emps.iterator(); iterator.hasNext();) {
 			Employee employee2 = (Employee) iterator.next();
 			System.out.println("List:"+employee2.getUsername());
@@ -174,7 +175,7 @@ public class MainTestCase extends TestCase
 		param.setBirthday(Calendar.getInstance().getTime());
 		param.setPassword("123");
 		param.setDepartment_id(10);
-		List<Employee> emps2 =  session.selectList("org.zhaojin.mybatis.ns.dynSelectEmployee", param);
+		List<Employee> emps2 =  session.selectList(namespace+".dynSelectEmployee", param);
 		for (Iterator iterator = emps2.iterator(); iterator.hasNext();) {
 			Employee employee2 = (Employee) iterator.next();
 			System.out.println("Dyna:"+employee2.getUsername());
@@ -184,18 +185,18 @@ public class MainTestCase extends TestCase
 	public  void testObjectRelationShip() throws Exception
 	{
 		
-		List<Employee>  emps =  session.selectList("org.zhaojin.mybatis.ns.selectAllEmloyeeWithDept");
+		List<Employee>  emps =  session.selectList(namespace+".selectAllEmloyeeWithDept");
 		System.out.println("one to one:"+emps);
 //		for (Iterator iterator = emps.iterator(); iterator.hasNext();) {
 //			Employee employee = (Employee) iterator.next();
 //			System.out.println("one to one:"+employee);
 //		}
 		//---
-		Employee  emp =  session.selectOne("org.zhaojin.mybatis.ns.selectEmloyeeWithDept", 101);
+		Employee  emp =  session.selectOne(namespace+".selectEmloyeeWithDept", 101);
 		System.out.println("association:"+emp);
 		
 		//=====
-		List<Department>  depts =  session.selectList("org.zhaojin.mybatis.ns.selectAllDepartmentWithEmps", 10);
+		List<Department>  depts =  session.selectList(namespace+".selectAllDepartmentWithEmps", 10);
 		for (Iterator iterator = depts.iterator(); iterator.hasNext();) {
 			Department dept = (Department) iterator.next();
 			System.out.println("department:"+dept.getName() +" have  employees-----");
@@ -207,7 +208,7 @@ public class MainTestCase extends TestCase
 			}
 		}
 		//---
-		Department dept =  (Department)session.selectOne("org.zhaojin.mybatis.ns.selectDepartmentWithEmps", 10);
+		Department dept =  (Department)session.selectOne(namespace+".selectDepartmentWithEmps", 10);
 		System.out.println(dept.getName());
 		List<Employee> emps2=dept.getEmps();
 		for (Iterator iterator = emps2.iterator(); iterator.hasNext();) {
@@ -216,7 +217,7 @@ public class MainTestCase extends TestCase
 		}
 		
 		//每查一条记录，做一次子查询
-		List<Department>  deptWithEmp =  session.selectList("org.zhaojin.mybatis.ns.selectDepartmentWithSubEmps");
+		List<Department>  deptWithEmp =  session.selectList(namespace+".selectDepartmentWithSubEmps");
 		for(Department dept1:deptWithEmp) 
 		{
 			 System.out.println("subEmps dept:"+dept1.getName()+",has emps ="+dept1.getEmps());
@@ -224,12 +225,12 @@ public class MainTestCase extends TestCase
 		
 		//===== discriminator
 		
-		List<Employee>  goodEmps =  session.selectList("org.zhaojin.mybatis.ns.selectGoodEmps");
+		List<Employee>  goodEmps =  session.selectList(namespace+".selectGoodEmps");
 		for (Iterator iterator = goodEmps.iterator(); iterator.hasNext();) {
 			GoodEmployee employee = (GoodEmployee) iterator.next();
 			System.out.println("good:"+employee.getUsername()+","+employee.getRaiseSalary());
 		}
-		List<Employee>  badEmps =  session.selectList("org.zhaojin.mybatis.ns.selectBadEmps");
+		List<Employee>  badEmps =  session.selectList(namespace+".selectBadEmps");
 		for (Iterator iterator = badEmps.iterator(); iterator.hasNext();) {
 			BadEmployee employee = (BadEmployee) iterator.next();
 			System.out.println("bad:"+employee.getUsername()+","+employee.getDeductSalary());

@@ -27,6 +27,7 @@ public class ConsulMiyaApplication {
 	}
 
 	public static void main(String[] args) {
-		new SpringApplicationBuilder(ConsulMiyaApplication.class).web(true).run(args);
+//		new SpringApplicationBuilder(ConsulMiyaApplication.class).web(true).run(args);//web方法过时
+		new SpringApplicationBuilder(ConsulMiyaApplication.class).run(args);
 	}
 }

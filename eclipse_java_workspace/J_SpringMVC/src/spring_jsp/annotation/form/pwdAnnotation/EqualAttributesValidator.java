@@ -20,6 +20,10 @@ public class EqualAttributesValidator implements ConstraintValidator<EqualAttrib
 	@Override
 	public boolean isValid(final Object object, final ConstraintValidatorContext constraintContext)
 	{
+//		constraintContext.disableDefaultConstraintViolation();//禁用默认的message
+		//使用新的提示
+//		constraintContext.buildConstraintViolationWithTemplate("其中不能有空串").addConstraintViolation();
+		
 		if (object == null)
 			return true;
 		try

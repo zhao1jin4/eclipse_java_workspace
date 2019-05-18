@@ -6,7 +6,7 @@ http://download.java.net/jdk8/docs/technotes/guides/security/jsse/JSSERefGuide.h
 
 //密码各不相同
 
-//keytool -genkey -alias server   -keystore C:/temp/serverKeystore  -dname "CN=lizhaojin,OU=tcs,O=tata,L=Harbin,ST=HeiLongJian,C=CN" -keypass serverkeypass   --storepass serverkeystorepass
+//keytool -genkey -alias server   -keystore C:/temp/serverKeystore  -dname "CN=zh,OU=tcs,O=tata,L=Harbin,ST=HeiLongJian,C=CN" -keypass serverkeypass   --storepass serverkeystorepass
 keytool -genkey -alias lisi     -keystore C:/temp/clientKeystore  -dname "CN=lisi,OU=tcs,O=tata,L=Harbin,ST=HeiLongJian,C=CN"      -keypass lisikeypass     --storepass clientkeystorepass
 keytool -genkey -alias zhangsan -keystore C:/temp/clientKeystore  -dname "CN=zhangsan,OU=tcs,O=tata,L=Harbin,ST=HeiLongJian,C=CN"  -keypass zhangsankeypass --storepass clientkeystorepass
 
@@ -21,7 +21,7 @@ keytool -import -alias zhangsan -keystore C:/temp/serverTruststore -file zhangsa
 
 
 //密码全部一样 password
-keytool -genkey -alias server   -keystore C:/temp/serverKeystore  -dname "CN=lizhaojin,OU=tcs,O=tata,L=Harbin,ST=HeiLongJian,C=CN" -keypass password   --storepass password
+keytool -genkey -alias server   -keystore C:/temp/serverKeystore  -dname "CN=zh,OU=tcs,O=tata,L=Harbin,ST=HeiLongJian,C=CN" -keypass password   --storepass password
 keytool -genkey -alias lisi     -keystore C:/temp/clientKeystore  -dname "CN=lisi,OU=tcs,O=tata,L=Harbin,ST=HeiLongJian,C=CN"      -keypass password     --storepass password
 keytool -genkey -alias zhangsan -keystore C:/temp/clientKeystore  -dname "CN=zhangsan,OU=tcs,O=tata,L=Harbin,ST=HeiLongJian,C=CN"  -keypass password --storepass password
 

@@ -42,11 +42,12 @@ public class RabbitMQTransactionSend {
              
             for(int i = 0;i < count;i++)  
             {  
+            	 //开启事务  
+                channel.txSelect();  
+                
                 //第一个参数是exchangeName(默认情况下代理服务器端是存在一个""名字的exchange的,  
                 //因此如果不创建exchange的话我们可以直接将该参数设置成"",如果创建了exchange的话  
                 //我们需要将该参数设置成创建的exchange的名字),第二个参数是路由键  
-                //开启事务  
-                channel.txSelect();  
                 //(String exchange, String routingKey, AMQP.BasicProperties props, byte[] body)
                 channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY, true, MessageProperties.PERSISTENT_BASIC, ("第"+(i+1)+"条消息").getBytes("UTF-8"));
                 
@@ -61,7 +62,7 @@ public class RabbitMQTransactionSend {
             connection.close();
         } catch (Exception e) {  
             try {  
-                //回滚操作  
+                //catch中回滚操作  
                 channel.txRollback();  
             } catch (IOException e1) {  
                 e1.printStackTrace();  

@@ -47,6 +47,7 @@ public class MybatisSpringBoot {
 		spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 		 就不用下面了
 		 
+		 //#references doc 84.1 Configure a Custom DataSource
 	    @Bean(name = "dataSource")
 	    @Qualifier(value = "dataSource")
 	    @Primary

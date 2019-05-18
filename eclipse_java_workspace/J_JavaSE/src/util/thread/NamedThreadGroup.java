@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 简单线程工具类
- * @author zhaojin
  */
 public class NamedThreadGroup extends ThreadGroup
 {

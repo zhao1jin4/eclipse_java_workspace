@@ -27,7 +27,7 @@ public class SessionController
 	{
 		Employee e=new Employee();
 		e.setFirst_name("李11");
-		e.setLast_name("召进11");
+		e.setLast_name("四11");
 
 		Employee e2=new Employee();
 		e2.setFirst_name("张11");

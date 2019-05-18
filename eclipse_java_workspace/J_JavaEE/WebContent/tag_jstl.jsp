@@ -8,7 +8,7 @@
 <%@taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 
 <%@taglib  prefix="my" uri="/WEB-INF/tlds/customTag.tld" %>
-<%@taglib  prefix="you" uri="http://zhaojin.org/tags" %>
+<%@taglib  prefix="you" uri="http://zh.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>

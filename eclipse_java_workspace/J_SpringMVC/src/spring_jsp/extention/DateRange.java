@@ -4,8 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 对应于 UI中的daterange 的日期组件
- * Created by zhaojin on 7/12/2017.
+ * 对应于 UI中的daterange 的日期组件 
  */
 public class DateRange implements Serializable {
 	//是实现Serializable

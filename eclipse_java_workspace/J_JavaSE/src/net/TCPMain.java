@@ -86,7 +86,7 @@ public class TCPMain
 			
 			int len=input.read(byt);
 			System.out.println(new String(byt,0,len));
-			output.write("hello I am is zhaojin".getBytes());
+			output.write("hello I am is lisi".getBytes());
 			input.close();
 			output.close();
 			soc.close();

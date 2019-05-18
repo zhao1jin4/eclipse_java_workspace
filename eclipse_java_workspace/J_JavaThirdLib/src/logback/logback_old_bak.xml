@@ -1,0 +1,115 @@
+<configuration  debug="true" scan="true" scanPeriod="30 seconds">
+	
+	<!-- <include file="src/logback/includedConfig.xml" />  -->
+	<include resource="logback/propInclude.xml" />
+	
+	<contextName>${CONTEXT_NAME}</contextName>
+
+	<!-- 如有配置错误,不配置这个也会显示在控制台,配置有无都显示 -->
+	<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" /> 
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<!-- <pattern> [%contextName] %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n </pattern>  -->
+			 <pattern> [%contextName] %d{HH:mm:ss.SSS} [%thread]%.-1level %logger{3} - %msg%n </pattern> 
+		</encoder>
+	</appender>
+	<!-- 	
+	全包名(最后一个.前的内容)
+	类名(最后一个.后的内容)
+	%logger  显示全包名.类名
+	%logger{0} 只显示类名
+	%logger{5} 包名.类名 缩短的长度,(包名.前至少1个字符,类名全部)
+	
+	%.-1level  把INFO 变为  I
+ -->
+	
+	
+	
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender" >
+		<file>${LOG_HOME}/All.log</file>
+		<encoder>
+			<pattern>[%contextName] %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n </pattern>
+		</encoder>
+	</appender>
+	
+ 	<appender name="bizRolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+ 		<!-- 可记录DEBUG 不记录ERROR的方式 ,不好使???
+ 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+ 			<level>DEBUG</level>
+ 			<onMatch>ACCEPT</onMatch>
+ 			<onMisMatch>DENY</onMisMatch>
+ 		</filter>
+ 		  -->
+ 	
+ 		 <file>${APP_BIZ_HOME}/biz.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${APP_BIZ_HOME}/biz-%d{yyyy-MM-dd_HH}.%i.log</fileNamePattern> <!-- .zip 可有可无,压缩会节约20倍的空间-->
+			<maxHistory>30</maxHistory> <!-- 最多保留30个的文件 -->
+			<TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<MaxFileSize>200MB</MaxFileSize> <!-- 如.zip 是压缩前的大小 -->
+			</TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>[%contextName] %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- 变量值可再引用变量   :- 表示变量如未赋值使用后的面的默认值  -->
+	<appender name="daoRolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${APP_DAO_HOME:-${LOG_HOME}/${CONTEXT_NAME}/dao}/dao.log</file>  
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${APP_DAO_HOME:-${LOG_HOME}/${CONTEXT_NAME}/dao}/dao-%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<MaxFileSize>200MB</MaxFileSize>
+			</TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>[%contextName] %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<define name="APP_SERVICEOUT_HOME" class="logback.ServcieOutPropertyDefiner"> <!-- 变量值来自程序 -->
+		 <logHome>${LOG_HOME}</logHome>
+	</define>
+	<appender name="serviceOutRolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${APP_SERVICEOUT_HOME}/serviceout.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${APP_SERVICEOUT_HOME}/serviceout_%d{yyyyMMdd}.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<MaxFileSize>200MB</MaxFileSize>
+			</TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %msg%n </pattern>
+		</encoder>
+	</appender>
+	<!-- 
+  	logback可以把日志推送给logstash 
+	<appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<destination>IP:port</destination>
+		<encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
+	</appender>
+	 
+	 -->
+	<logger name="${CONTEXT_NAME}.biz" level="INFO"  >
+		<appender-ref ref="bizRolling" />
+	</logger>
+ 
+	<logger name="${CONTEXT_NAME}.dao" level="INFO" additivity="false" >  <!-- Dao层的日志只写文件,不写其它的地方 -->
+		<appender-ref ref="daoRolling" />
+	</logger>
+  
+  	
+  	<logger name="${CONTEXT_NAME}.serviceOut" level="INFO"  >  
+		<appender-ref ref="serviceOutRolling" />
+	</logger>
+	
+	<root level="debug">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>

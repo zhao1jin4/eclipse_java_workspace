@@ -78,8 +78,8 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<!--
 		      MapperFactoryBean,会自动找与类名相同的位置XmlEmployeeInterface.xml,如找不到会使用已经有配置
-		<property name="configLocation" value="classpath:org/zhaojin/mybatis/Configuration.xml"></property>
-	    <property name="mapperLocations" value="classpath*:org/zhaojin/mybatis/vo/**/*.xml" />
+		<property name="configLocation" value="classpath:org/zh/mybatis/Configuration.xml"></property>
+	    <property name="mapperLocations" value="classpath*:org/zh/mybatis/vo/**/*.xml" />
 	     -->
      
         <property name="dataSource" ref="dataSource" />

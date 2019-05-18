@@ -22,7 +22,6 @@ public class IteratorTest {
 //					i--;
 //			 }
 //		 }
-		 
 		 int i=0;
 		 for(Iterator<String> iter=list.iterator();iter.hasNext();)
 		 {

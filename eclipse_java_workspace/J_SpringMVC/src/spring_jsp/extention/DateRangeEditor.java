@@ -7,7 +7,6 @@ import java.util.Date;
 
 /**
  * 对应于 UI中的daterange 的日期组件
- * Created by zhaojin on 7/12/2017.
  */
 
 public class DateRangeEditor extends PropertyEditorSupport

@@ -5,7 +5,7 @@
 	<display-name>My Custom Tag</display-name>
 	<tlib-version>1.0</tlib-version>
 	<short-name>my</short-name>
-	<uri>http://zhaojin.org/tags</uri>
+	<uri>http://zh.org/tags</uri>
 	<tag>
 		<name>hello</name>
 		<tag-class>myservlet.tag.MyEmptyTag</tag-class>

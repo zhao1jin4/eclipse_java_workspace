@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.zhaojin.base.PageController;
+import org.zh.base.PageController;
 
 @Controller
 @RequestMapping("/freemarkerQuery")

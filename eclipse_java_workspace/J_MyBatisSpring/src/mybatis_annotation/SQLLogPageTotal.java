@@ -36,7 +36,7 @@ public class SQLLogPageTotal {
 
 //		Map<String,Object> param=new HashMap<>();
 //		param.put("username", "li");
-//		String mapperId="org.zhaojin.mybatis.ns.queryAllEmployeeByPage";
+//		String mapperId="org.zh.mybatis.ns.queryAllEmployeeByPage";
 //		RowBounds rowBounds=new RowBounds(offset,limit);//对于MySQL其实就是limit 对于查询中有 <collection> 是不准的
 		//-------------
 		Configuration  configuration=sessionFactory.getConfiguration();

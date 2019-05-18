@@ -38,14 +38,11 @@ public class MyRabbitMQProducerSend {
 
 		for(int i=0;i<2;i++)
 		{
-
 		 	//(String exchange, String routingKey, AMQP.BasicProperties props, byte[] body)
 		 	channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY,   props,
 		 			(message+i).getBytes());
 			System.out.println(" [x] Sent '" + message +i+ "'");
 		}
-	 
-		 
 		Thread.sleep(30*000);
 		channel.close(); 
 		conn.close();

@@ -38,8 +38,6 @@ import org.slf4j.LoggerFactory;
 
  /**
   * Soap 工具类
-  * @author zhaojin
-  *
   */
 public class SoapXmlUtil {
 

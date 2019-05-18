@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * @author zhaojin
  */
 public class ThreadUtil 
 {
