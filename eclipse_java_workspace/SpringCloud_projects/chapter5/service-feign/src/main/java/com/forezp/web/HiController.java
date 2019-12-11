@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Created by fangzhipeng on 2017/4/6.
- */
+ 
 @RestController
 public class HiController {
 
@@ -19,5 +17,9 @@ public class HiController {
     @RequestMapping(value = "/hi",method = RequestMethod.GET)
     public String sayHi(@RequestParam String name){
         return schedualServiceHi.sayHiFromClientOne(name);
+    }
+    @RequestMapping(value = "/feignMVC",method = RequestMethod.GET)
+    public String feignMVC(@RequestParam String owner){
+        return schedualServiceHi.feignMVC(owner);
     }
 }

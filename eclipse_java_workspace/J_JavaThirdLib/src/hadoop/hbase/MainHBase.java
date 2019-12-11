@@ -16,6 +16,7 @@ import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
+import org.apache.hadoop.hbase.client.TableDescriptorBuilder;
 import org.apache.hadoop.hbase.filter.ColumnPrefixFilter;
 import org.apache.hadoop.hbase.filter.ColumnRangeFilter;
 import org.apache.hadoop.hbase.filter.FilterList;
@@ -27,8 +28,8 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 public class MainHBase 
 { 
-	//javac MainHBase.java -d . -Djava.ext.dirs=/home/zhaojin/hbase-0.98.8-hadoop2/lib/
-	//java -Djava.ext.dirs=/home/zhaojin/hbase-0.98.8-hadoop2/lib/ hadoop.hbase.MainHBase
+	//javac -d . -Djava.ext.dirs=/opt/hbase-2.2.0/lib/  MainHBase.java 
+	//java -Djava.ext.dirs=/opt/hbase-2.2.0/lib/  hadoop.hbase.MainHBase
 	public static void main(String[] args) throws Exception
 	{
 		com.google.protobuf.GeneratedMessage y;
@@ -40,12 +41,13 @@ public class MainHBase
 		String tableName = "myTable";
 		 
 		Configuration config = HBaseConfiguration.create();
+		config.set("hbase.rootdir", "file:///opt/hbase-2.2.0/hdata");  
 		config.set("hbase.zookeeper.quorum", "localhost");
-		config.set("hbase.rootdir", "file:///home/zhaojin/hbase-0.98.8-hadoop2"); 
-		config.set("hbase.zookeeper.property.dataDir", "/home/zhaojin/hbase-0.98.8-hadoop2/data"); 
+		config.set("hbase.zookeeper.property.dataDir", "/opt/hbase-2.2.0/zkData"); 
 		config.set("zookeeper.znode.parent", "/hbase"); // Ä¬ÈÏÊÇ¡¡/hbase
 		 
     	HBaseAdmin admin = new HBaseAdmin(config);   
+    	
     	HTableDescriptor htd = new HTableDescriptor(TableName.valueOf(tableName));
     	HTable htable = new HTable(config,tableName);
     	

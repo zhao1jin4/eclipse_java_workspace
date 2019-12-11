@@ -54,7 +54,6 @@ import org.apache.lucene.search.highlight.SimpleSpanFragmenter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.NRTCachingDirectory;
-import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.BitDocIdSet;
 import org.apache.lucene.util.BytesRef;
 import org.apache.tika.Tika;

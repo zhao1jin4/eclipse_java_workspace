@@ -1,0 +1,31 @@
+<html>
+	<head> 
+	<!-- 
+	<script src="https://unpkg.com/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
+	 -->
+	<script src="swagger-ui-bundle.js"></script>
+	<!-- 用 unpkg上的js不行-->
+	
+	
+	
+	<script type="text/javascript">
+	//var SwaggerUIBundle = require('swagger-ui-dist').SwaggerUIBundle
+	
+	const ui = SwaggerUIBundle({
+	   // url: "https://petstore.swagger.io/v2/swagger.json",
+	   // url: "http://localhost:8080/J_ThirdLibWeb/my-swagger-ui/swagger.json",
+	    url: "swagger.json",
+	    dom_id: '#swagger-ui',
+	    presets: [
+	      SwaggerUIBundle.presets.apis,
+	      SwaggerUIBundle.SwaggerUIStandalonePreset
+	    ],
+	    layout: "StandaloneLayout"
+	  })
+	</script>
+</head>
+
+	<body>
+		<div id="myDomId"></div>
+	</body>
+</html>

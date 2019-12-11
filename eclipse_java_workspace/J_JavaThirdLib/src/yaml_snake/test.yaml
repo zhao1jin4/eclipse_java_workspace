@@ -1,0 +1,23 @@
+port: 8080
+spec:
+  privileged: false
+  volumes:
+    - configMap
+    - secret
+    - emptyDir
+    - hostPath
+  allowedHostPaths:
+    - pathPrefix: "/etc/cni/net.d"
+    - pathPrefix: "/etc/kube-flannel"
+    - pathPrefix: "/run/flannel"
+  testSubs:
+    - subOne:
+          first: li
+          last: si
+    - subTwo:
+          first: wang
+          last: wu
+  readOnlyRootFilesystem: false
+  
+  
+  

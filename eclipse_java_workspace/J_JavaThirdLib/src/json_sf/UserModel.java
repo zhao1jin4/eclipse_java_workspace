@@ -1,12 +1,20 @@
 package json_sf;
 
 import java.util.Date;
+import java.util.List;
 
 public class UserModel {
 	private int id;
 	private String name;
 	private Date birthday;
+	private List<Order> orders;
 	
+	public List<Order> getOrders() {
+		return orders;
+	}
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
 	public Date getBirthday() {
 		return birthday;
 	}

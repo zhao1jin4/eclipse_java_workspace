@@ -17,6 +17,10 @@ public class MyFilter extends ZuulFilter{
     @Override
     public String filterType() {
         return "pre";
+//    	pre：路由之前
+//    	routing：路由之时
+//    	post： 路由之后
+//    	error：发送错误调用
     }
 
     @Override

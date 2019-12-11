@@ -47,10 +47,8 @@ public class RPCMain {
 		//这样就能保证消费者在处理完某个任务，并发送确认信息后，RabbitMQ才会向它推送新的消息
 		//在此之间若是有新的消息话，将会被推送到其它消费者，若所有的消费者都在处理任务，那么就会等待。
 		int prefetchCount = 1;
-		channel.basicQos(prefetchCount);//放消费端
+		channel.basicQos(prefetchCount);//RPC 放消费端  允许限制通道上的消费者所保持最大的未确认消息数量，如某台机器反应慢，
 
-		
-		
 		String EXCHANGE_NAME = "myExtchange";
 		String ROUTING_KEY = "routingKey";
 		String QUEUE_NAME = "myQueueName";

@@ -72,7 +72,7 @@ public class MySpringRealm2 extends AuthorizingRealm
 			String password="123";
 			UserInfo userInfo=new UserInfo();
 			userInfo.setUserAccount(username);
-			userInfo.setFullName("李四");
+			userInfo.setFullName("李四2");//两个realm，页面显示第一个
 			userInfo.setMobilePhone("130111122222");
 			userInfo.setUserId("1001");
 			

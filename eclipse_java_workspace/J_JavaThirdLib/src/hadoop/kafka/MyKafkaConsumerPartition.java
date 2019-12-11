@@ -1,5 +1,6 @@
 package hadoop.kafka;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
@@ -22,7 +23,8 @@ public class MyKafkaConsumerPartition {
 	     KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 	     try {
 	         while(running) {
-	             ConsumerRecords<String, String> records = consumer.poll(Long.MAX_VALUE);
+	        	 ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(Long.MAX_VALUE)); 
+//	             ConsumerRecords<String, String> records = consumer.poll(Long.MAX_VALUE);
 	             for (TopicPartition partition : records.partitions()) { //∞¥partitionÃ·Ωªoffset
 	                 List<ConsumerRecord<String, String>> partitionRecords = records.records(partition);
 	                 for (ConsumerRecord<String, String> record : partitionRecords) {

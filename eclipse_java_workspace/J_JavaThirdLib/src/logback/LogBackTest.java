@@ -1,6 +1,8 @@
 package logback;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,8 @@ import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.status.OnConsoleStatusListener;
 import ch.qos.logback.core.status.StatusManager;
 import ch.qos.logback.core.util.StatusPrinter;
+import net.logstash.logback.argument.StructuredArgument;
+import net.logstash.logback.argument.StructuredArguments;
 
 public class LogBackTest 
 {
@@ -62,6 +66,21 @@ public class LogBackTest
 		Logger LOG =LoggerFactory.getLogger(LogBackTest.class);
 		LOG.info("测试INFO日志在LogBackTest类中");
 		springConsole();//Spring OK
+		
+		
+		//logstash 
+		Map<String,String> myMap=new HashMap<>(); 
+		myMap.put("name1", "value1");
+		myMap.put("name2", "value2---");
+		StructuredArgument structArg=StructuredArguments.entries(myMap);
+		System.out.println(structArg);//toString 就是正常的json对象
+		if(LOG.isInfoEnabled())
+		{
+			//logback.xml中要使用 LogstashEncoder或者 Composite Encoder加arguments参数
+			LOG.info("define",structArg);//这种没有{}，即无参数，只JSON输出, 不格式化消息
+			//调用后，Kibana日志就会有Map中的字段 
+		}
+		
 	}
 	public static void springConsole() throws Exception 
 	{

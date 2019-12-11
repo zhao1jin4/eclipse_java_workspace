@@ -22,7 +22,7 @@ public class UserJson {
     private String userName;
     
     @JsonProperty("joinDate")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")//对Timestamp类型要加 timezone="GMT+8"
     private Date joinDate;
 
     @JsonIgnore

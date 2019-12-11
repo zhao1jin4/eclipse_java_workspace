@@ -16,8 +16,18 @@ public class ConfigClientApplication {
 	@Value("${foo}")  //读服务端文件名格式  {application}-{profile}.properties 中的foo=x
 	String foo;
 	
+	@Value("${pass}")   
+	String pass;
+	
 	@RequestMapping(value = "/hi")
 	public String hi(){
 		return foo;
+	} 
+	 
+	
+	// http://127.0.0.1:8882/pass 
+	@RequestMapping(value = "/pass")
+	public String pass(){
+		 return pass; 
 	}
 }

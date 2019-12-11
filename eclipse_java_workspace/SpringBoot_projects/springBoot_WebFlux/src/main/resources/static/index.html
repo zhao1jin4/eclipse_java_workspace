@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Spring web flux </title>
+</head>
+<body>
+ IBM 教程 https://www.ibm.com/developerworks/cn/java/spring5-webflux-reactive/index.html
+<br/>
+
+<a href="http://127.0.0.1:8080/hello_world">hello world</a>  <br/>
+<pre>
+	POST  http://127.0.0.1:8080/user/create  
+	{
+		"id":1,
+		"username":"lisi"
+	}
+</pre>
+<a href="http://127.0.0.1:8080/user/1">查询user 1</a>  <br/>
+<a href="http://127.0.0.1:8080/user/1">查询user 2</a>  如没数据就返回指定错误码 <br/>
+
+服务器推测试  curl   http://localhost:8080/sse/randomNumbers  <br/>
+websocket测试 (spring boot webflux放static目录没用)<br/>
+
+
+</body>
+</html>

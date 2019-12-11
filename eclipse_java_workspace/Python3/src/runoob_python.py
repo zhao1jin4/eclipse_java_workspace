@@ -29,6 +29,7 @@ import sys; x = 'runoob'; sys.stdout.write(x + '\n') #同一行中使用多条语句，语句
 #print 默认输出是换行的，如果要实现不换行需要在变量末尾加上 end=":"
 print("one",  end=":")
 print( "two", end=":") 
+#输出one:two:
 
 #从某个模块中导入多个函数,格式为： from somemodule import firstfunc, secondfunc, thirdfunc
 #将某个模块中的全部函数导入，格式为： from somemodule import *
@@ -403,7 +404,8 @@ print("函数外取值: ", mylist)#[10, 20, 30]
 
 a = 10
 def test():
-    #a = a + 1  # 报a未定义,全局的不能被修改
+    #a = a + 1  #报错，a 全局的修改 不能 再使本变量a
+    a=20
     c = a + 1
     print(c)
 test()
@@ -412,7 +414,7 @@ test()
 
 x = 0
 def outer():
-    x = 1
+    x = 1  
     def inner():
         i = 2
         print(x) #1
@@ -448,7 +450,21 @@ matrix = [
 #以下实例将3X4的矩阵列表转换为4X3列表：
 transMatrix=[[row[i] for row in matrix] for i in range(4)]#前面加了[] ,后面的变成了外层
 print(transMatrix)  #[[1, 5, 9], [2, 6, 10], [3, 7, 11], [4, 8, 12]]
-
+#上效果同下
+transposed = []
+for i in range(4):
+    print([row[i] for row in matrix])
+    transposed.append([row[i] for row in matrix])
+print(transposed)
+#上效果同下
+transposed = []
+for i in range(4):
+    transposed_row = []
+    for row in matrix:
+        transposed_row.append(row[i])
+    transposed.append(transposed_row)
+print(transposed) 
+          
 #---modal
 import sys  #pyCharm使用的是自己路径中的
 #sys.path 自动查找所需模块的路径的列表,安装目录的Lib,DLLs,命令行下显示有一个空串,代表当前目录
@@ -481,24 +497,23 @@ import sys
 #就不会导入包 sound.effects 里的任何子模块。
 #他只是把包sound.effects和它里面定义的所有内容导入进来
 
-#__path__
+#__path__ 方式一
 #from sound.effects.echo  import echoFunc
 #echoFunc()
 
+#方式二
 #from sound.effects.echo  import *
 #echoFunc()
 
-from sound.effects  import *
-echo.echoFunc()  #要求effects包中的__init__.py中写  __all__ =["echo"]
-
-
+#方式三
 #from sound.effects  import *
-#echoFunc()           #如没有 __all__ =["echo"], 报错
+#echo.echoFunc()  #要求effects包中的__init__.py中写  __all__ =["echo"]
 #print(m_effect_echo)  #如有 __all__ =["echo"], 报错
 
-#import sound.effects.echo
-#echo.echoFunc() #报错??? 和__all__没关
-
+#方式四
+import sound.effects.echo 
+sound.effects.echo.echoFunc() #导入模块，开头没有 from 必须使用全名去访问
+ 
 #---------------
 s = 'Hello, Runoob'
 print(repr(s)) #带'' 解释器易读

@@ -80,7 +80,7 @@
       /WEB-INF/spring-session-redis.xml    use jstl
       /WEB-INF/spring_annotation.xml 为 WebApplicationContextUtils.getRequiredWebApplicationContext
        -->
-      <param-value>/WEB-INF/spring_freemarker.xml
+      <param-value>/WEB-INF/spring_annotation.xml
       </param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>

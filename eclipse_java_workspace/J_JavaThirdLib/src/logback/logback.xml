@@ -78,13 +78,53 @@
 	 
 	<!--  logback可以把日志推送给 logstash  -->
 	<appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-		<destination>127.0.0.1:4560</destination>
+		<writeBufferSize>16384</writeBufferSize> <!-- 默认缓存是8192 -->
+		<destination>127.0.0.1:4560</destination><!-- 可以配置多个destination标签，或一个标签多个值用,分隔-->
+		<keepAliveDuration>5 minutes</keepAliveDuration>
+		
+		 <!-- LogstashEncoder输出( kibana查看)信息有，@timestamp时间 ,host主机，level级别,message日志信息，thread_name线程，logger_name(有时不是类名)
+	 但没有类名，方法名，行号？？-->
+	 <!-- customFields表示输出的json多加一个字段 
 		<encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
+			<timestampPattern>yyyy-MM-dd'T'HH:mm:ss.SSS</timestampPattern>
+			<timeZone>UTC</timeZone>
 			<customFields>{"AppName":"myProject"}</customFields>
 		</encoder>
-		<keepAliveDuration>5 minutes</keepAliveDuration>
+		 -->
+		<!--
+		 <arguments ></arguments>为代码中使用StructuredArgument用的
+		  LoggingEventCompositeJsonEncoder  %使用logback的PatternLayout格式  
+		  "position": "%class.%method:%-3L",   // kibana显示？ %class{-20}也不行 不认？？
+		    官方上的"line_str": "%line", 也不行？？？
+		    
+		   -->
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+		  <providers>
+		    <timestamp/>
+		    <pattern>
+		      <pattern>
+		        {
+		        "AppName": "myProject",  
+		        "LO": "%logger",
+		        "LE": "%level",
+		        "TH": "%thread",
+		        
+		        "line_str": "%line",
+		        "position": "%class{-20} . %method : %-3L",
+		        
+		        "ME": "%message"
+		        }
+		      </pattern>
+		    </pattern>
+		    <arguments ></arguments>
+		  </providers>
+		</encoder>
+		  
 	</appender>
 	 
+	 
+	 
+
 	<logger name="${CONTEXT_NAME}.biz" level="INFO"  >
 		<appender-ref ref="bizRolling" /> 
 	</logger>

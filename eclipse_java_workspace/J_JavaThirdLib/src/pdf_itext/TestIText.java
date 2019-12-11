@@ -119,6 +119,10 @@ public class TestIText
 		String pdfFile = "D:\\book\\云\\《疯狂Spring Cloud》电子书（一）.pdf";
 	
 		PdfReader reader = new PdfReader(pdfFile);//读已经存在PDF
+		if(reader.isEncrypted())
+		{
+			System.out.println("pdf是加密的");
+		}
 		System.out.println(reader.getPdfVersion());
 		
 		//---读写

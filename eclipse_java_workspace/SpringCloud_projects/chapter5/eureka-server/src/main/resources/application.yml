@@ -2,12 +2,26 @@ server:
   port: 8761
 
 eureka:
+  server:
+     enable-self-preservation: false #关闭自保护,有自保护的原因有些注册的节点没有收到心跳正常应该是去除，因自保护原因，eureka没有去除，可能是eureka自身的原因导致没有必跳
+#     eviction-interval-timer-in-ms: 20 #默认60秒
+      
   instance:
+#    lease-renewal-interval-in-seconds: 30 #影响自保护
+#    lease-expiration-duration-in-seconds: 90  #影响自保护
     hostname: localhost
   client:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      #defaultZone: http://user:password@${eureka.instance.hostname}:${server.port}/eureka
+      #登录要密码 ，pom增加spring-boot-starter-security,yaml配置与上相同的用户密码 ,或者实现DiscoveryClientOptionalArgs 
+
+spring:
+  security: 
+    user:
+      name: user
+      password: password
       
       

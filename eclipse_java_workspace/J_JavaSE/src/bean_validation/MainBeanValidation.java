@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -39,11 +40,12 @@ public class MainBeanValidation {
 		 List<Order> orders=new ArrayList<>();
 		 orders.add(order);
 // 		 user.setOrders(orders);
-		 String error= ValidationUtil.validate(user);
-		 if(error!=null)
-			 System.out.println("util validate=="+error);
+		 Map<String,String> map= ValidationUtil.validate(user);
+		 if(!map.isEmpty())
+			 System.out.println("util validate=="+map.values());
 		 
 		 javax.el.ExpressionFactory dependsByValidation;
+		 javax.validation.Validation va;
 		 ValidatorFactory factory = Validation.buildDefaultValidatorFactory(); 
 		 Validator validator = factory.getValidator(); 
 		 Set<ConstraintViolation<Order>> violations = validator.validate(order); 

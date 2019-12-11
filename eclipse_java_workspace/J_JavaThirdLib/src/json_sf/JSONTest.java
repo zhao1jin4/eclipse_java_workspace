@@ -1,14 +1,17 @@
 package json_sf;
 
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.sf.ezmorph.Morpher;
 import net.sf.ezmorph.object.DateMorpher;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 import net.sf.json.util.JSONUtils;
 
 /* 
@@ -47,17 +50,21 @@ public class JSONTest
 		//---任何对象转JSON
 		UserModel[] objArray=new UserModel[2]; 
 		
-		UserModel ua=new UserModel();
-		ua.setId(11);
-		ua.setName("JSON传输 ");
-		ua.setBirthday(new Date());
-		objArray[0]=ua;
+		UserModel userObject=new UserModel();
+		userObject.setId(11);
+		userObject.setName("JSON传输 ");
+		userObject.setBirthday(new Date());
+		List<Order> orders=new ArrayList<>();
+		orders.add(new Order("111","order1"));
+		orders.add(new Order("222","order3")); 
+		userObject.setOrders(orders);
+		objArray[0]=userObject;
 		
-		JSONObject jsonObject = JSONObject.fromObject(ua);
+		JSONObject jsonObject = JSONObject.fromObject(userObject);
 		String strJsonObj=jsonObject.toString();
 		System.out.println("java Object to json : "+ strJsonObj); //日期还是long类型
 		
-		JSONArray jsonArrasy = JSONArray.fromObject(ua);
+		JSONArray jsonArrasy = JSONArray.fromObject(userObject);
 		System.out.println("java Array to json : "+ jsonArrasy); 
 		
 		//Map->String
@@ -70,7 +77,15 @@ public class JSONTest
 		
 		
 		//String->Object
-		UserModel userModel = (UserModel) JSONObject.toBean(JSONObject.fromObject(strJsonObj), UserModel.class);
+		//如对象里有一个List<Order>不能正确转换成集合中的对象,Order要有默认构造器  
+		Map<String, Class<Order>> classMap = new HashMap<>();
+		classMap.put("orders", Order.class);
+		UserModel userModel = (UserModel) JSONObject.toBean(JSONObject.fromObject(strJsonObj), UserModel.class,classMap);
+		//方式二
+		JsonConfig jsonConfig = new JsonConfig();  
+		jsonConfig.setRootClass(UserModel.class);  
+		jsonConfig.setClassMap(classMap);
+		userModel = (UserModel) JSONObject.toBean(JSONObject.fromObject(strJsonObj),jsonConfig);
 		System.out.println("userModel: "+ userModel); 
 		
 		//String->Map

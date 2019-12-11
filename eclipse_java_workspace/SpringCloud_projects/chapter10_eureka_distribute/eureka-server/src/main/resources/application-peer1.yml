@@ -9,3 +9,4 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://peer2:8769/eureka/
+#没有eureka.client.registerWithEureka:false和fetchRegistry:false

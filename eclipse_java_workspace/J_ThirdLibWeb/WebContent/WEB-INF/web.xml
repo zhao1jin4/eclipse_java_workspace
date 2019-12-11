@@ -63,6 +63,33 @@
 		-->
   </servlet-mapping>
   
-   
+  <!-- RestEasy Swagger2.0.8 -->
+  <servlet>
+    <servlet-name>Resteasy</servlet-name>
+    <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+    <init-param>
+      <param-name>javax.ws.rs.Application</param-name>
+      <param-value>swagger2_oas3_resteasy.MyApplication</param-value>
+    </init-param>  
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Resteasy</servlet-name>
+    <url-pattern>/sample/*</url-pattern>
+  </servlet-mapping>
+  
+    <!--如果servlet-mapping不是/*  就要加配置 */ -->
+  <context-param>
+    <param-name>resteasy.servlet.mapping.prefix</param-name>
+    <param-value>/sample</param-value>
+  </context-param>
+  <!-- swagger跨域用 -->
+  <filter>
+    <filter-name>ApiOriginFilter</filter-name>
+    <filter-class>swagger2_oas3_resteasy.ApiOriginFilter</filter-class>
+  </filter> 
+  <filter-mapping>
+    <filter-name>ApiOriginFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   
 </web-app>

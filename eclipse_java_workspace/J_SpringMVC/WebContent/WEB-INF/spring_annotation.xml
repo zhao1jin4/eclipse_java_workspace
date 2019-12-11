@@ -146,6 +146,11 @@
                   <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/> 
               </bean>
           </property>
+		<property name="timeZone">  <!-- 对Timestamp类型 -->
+			<bean class="java.util.TimeZone"  factory-method="getTimeZone" >
+				<constructor-arg value="GMT+8"/> 
+			</bean>
+		</property>
      </bean>
 	<!--  对enum类型中有的自定义属性会忽略，只转换每一个分号前的值  -->
 	<bean id="jacksonObjectMapper2" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
@@ -161,6 +166,15 @@
                     <value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</value>
                 </property>
                 -->
+                <!-- null值显示，自定义为显示空串，但对日期类型服务端可转换为null -->
+	           	<property name="serializerProvider">  
+	                <bean class="com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.Impl">  
+	                    <property name="nullValueSerializer">  
+	                        <bean class="spring_jsp.extention.JsonNullEmptySerializer"></bean>  
+	                    </property>  
+	                </bean>  
+	            </property>
+	             
             </bean>
         </property>
         <property name="targetMethod" value="configure" />

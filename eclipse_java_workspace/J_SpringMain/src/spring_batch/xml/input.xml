@@ -1,9 +1,0 @@
-<goods>
-    <isin>abc123</isin>
-    <quantity>22</quantity>
-    <price>32.4</price>
-    <customer>lisi</customer>
-    <!-- 
-    <buyDay>2015-10-22</buyDay>
-     -->
-</goods>

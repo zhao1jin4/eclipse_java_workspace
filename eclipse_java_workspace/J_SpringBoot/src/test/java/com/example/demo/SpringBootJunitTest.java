@@ -13,10 +13,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import config.MyProps;
 import mybatis.MybatisSpringBoot;
 import mybatis.dao.UserMapper;
 import mybatis.vo.User;
-import not_web.MyProps;
 
 //测试 OK
 @RunWith(SpringRunner.class)

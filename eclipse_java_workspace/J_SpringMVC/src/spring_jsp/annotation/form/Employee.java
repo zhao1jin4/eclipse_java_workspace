@@ -1,8 +1,10 @@
 package spring_jsp.annotation.form;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -35,6 +37,10 @@ public class Employee {
 	@DateTimeFormat(pattern="yyyy-MM-dd") //是将String转换成Date，一般前台给后台传值时用
 	@JsonFormat(pattern="yyyy-MM-dd")//将Date转换成String 一般后台传值给前台时
 	private Date birthDay;
+	 
+	@DateTimeFormat(pattern="yyyy-MM-dd") 
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")  //对Timestamp类型要加 timezone="GMT+8"
+	private Timestamp createTime;
 	
 	//JSON 类级别的单独日期格式化   方式二
    // @JsonSerialize(using = MyDateJsonSerializer.class)    
@@ -83,12 +89,25 @@ public class Employee {
 	public void setSalary(double salary) {
 		this.salary = salary;
 	}
+	
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
 	@Override
 	public String toString() {
 		return "Employee [employee_id=" + employee_id + ", first_name=" + first_name + ", last_name=" + last_name
 				+ ", salary=" + salary + ", createTimeRange=" + createTimeRange + ", childIds=" + childIds
 				+ ", birthDay=" + birthDay + "]";
 	}
-	 
+	 public static void main(String[] args) {
+		TimeZone gmt8=TimeZone.getTimeZone("GMT+8");
+		TimeZone gmtDef=TimeZone.getDefault();//主机的TimeZone
+		System.out.println(gmt8);
+		System.out.println(gmtDef);
+		
+	}
 
 }

@@ -14,8 +14,7 @@ import java.util.logging.Logger;
 @SpringBootApplication
 @RestController
 public class ServiceMiyaApplication {
-	//http://localhost:8989/hi
-	
+	//http://localhost:8989/hi 后 zipkin ( http://localhost:9411/ )Find Traces按钮有显示，
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceMiyaApplication.class, args);
 	}

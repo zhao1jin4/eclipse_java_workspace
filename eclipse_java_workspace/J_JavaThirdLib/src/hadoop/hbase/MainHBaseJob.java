@@ -31,14 +31,14 @@ public class MainHBaseJob {
 	public static void main(String[] args) throws Exception
 	{
 		//org.apache.hadoop.hbase.CompatibilityFactory x;
-		///home/zhaojin/hbase-0.98.3-hadoop2/lib/hbase-hadoop-compat-0.98.3-hadoop2.jar
+		///opt/hbase-2.2.0/lib/hbase-hadoop2-compat-2.2.0.jar
 		
 		//要在linux上运行
 		//hbase shell
 		//>create 'myTable','cf
 		//>put 'myTable', 'row1', 'cf:a', 'value1'
-		//javac MapReduce.java -d . -Djava.ext.dirs=/home/zhaojin/hbase-0.98.3-hadoop2/lib/
-		//java -Djava.ext.dirs=/home/zhaojin/hbase-0.98.3-hadoop2/lib/ hadoop.hbase.MainHBaseJob
+		//javac MapReduce.java -d . -Djava.ext.dirs=/opt/hbase-2.2.0/lib/
+		//java -Djava.ext.dirs=/opt/hbase-2.2.0/lib/ hadoop.hbase.MainHBaseJob
 		Configuration config = HBaseConfiguration.create();
 		
 		Job job =     Job.getInstance(config, "ExampleRead");

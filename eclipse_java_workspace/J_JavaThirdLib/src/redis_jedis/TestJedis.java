@@ -2,9 +2,11 @@ package redis_jedis;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
@@ -167,7 +169,7 @@ public class TestJedis  {
 		String keys = "name";  
 		if(jedis.exists(keys))
 			jedis.del(keys);  
-		jedis.set(keys, "Li召进");  
+		jedis.set(keys, "Li 四");  
 		System.out.println(jedis.get(keys));  
 		 
 	}
@@ -270,7 +272,28 @@ public class TestJedis  {
 	{
 		jedis.publish("foo", "消息");//如已经有 subscribe(psubscribe无效)进程,则subscribe的进程会调用JedisPubSub的onMessage方法
 	}
-	
+	 //分布式锁  ,redis事务没有隔离性
+	@Test
+	public void testRedisLuaDistributeLock()
+	{
+		//官方说lua脚本的原子性 Atomicity of scripts，如脚本正在执行，其它命令或脚本不能执行
+		//lua脚本实现分布式锁，可以保存证setnx,expire两个操作的原子性 
+		System.out.println("begin testRedisDistributeLock");
+		//InputStream input=TestJedis.class.getResourceAsStream("/redis_jedis/checkandset.lua");
+		InputStream input=TestJedis.class.getResourceAsStream("/redis_jedis/lock.lua");
+		
+		StringBuilder strBuilder=new StringBuilder();
+		 Scanner scanner =new Scanner(input);
+		 while(scanner.hasNextLine())
+		 {
+		 	String line=scanner.nextLine();
+		 	strBuilder.append(line).append("\n");
+		 }
+		//checkandset.lua 如值为10 lua 返回true,打印是1，如lua返回false打印null,见官方文档，类型匹配
+		//Object res=jedis.eval(strBuilder.toString(),1,"key","10","20"); 
+		Object res=jedis.eval(strBuilder.toString(),1,"lockExport","user1","30");//参数 键名,值，超时秒
+		System.out.println(res);
+	}
 	@Test
 	public void testClusterPut()
 	{

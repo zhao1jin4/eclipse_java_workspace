@@ -9,7 +9,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @EnableFeignClients  //负载均衡客户端
 public class ServiceFeignApplication {
-	//http://127.0.0.1:8765/hi?name=lisi
+	 //http://127.0.0.1:8765/hi?name=lisi
+	//http://127.0.0.1:8765/feignMVC?owner=lisi
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceFeignApplication.class, args);
 	}

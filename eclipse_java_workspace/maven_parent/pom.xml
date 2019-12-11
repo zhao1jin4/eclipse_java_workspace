@@ -13,8 +13,8 @@
 	<maven.compiler.source>1.8</maven.compiler.source>
 	<maven.compiler.target>1.8</maven.compiler.target>
 	
-	<spring.version>5.1.0.RELEASE</spring.version>
-	<spring-security.version>5.1.0.RELEASE</spring-security.version>
+	<spring.version>5.2.0.RELEASE</spring.version>
+	<spring-security.version>5.2.0.RELEASE</spring-security.version>
   </properties>
   
   <modules>
@@ -29,8 +29,8 @@
 	
   </dependencies>
   <dependencyManagement>
-  	<dependencies>
-	   	<dependency>
+     <dependencies> 
+	   <dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
 			<version>${spring.version}</version>
@@ -45,12 +45,6 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jms</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
@@ -60,16 +54,7 @@
 			<artifactId>spring-tx</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-oxm</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -85,6 +70,24 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		-->
 		
 		<!-- security -->
 		<dependency>
@@ -118,12 +121,7 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-redis</artifactId>
 			<version>2.0.5.RELEASE</version>
-		</dependency>
-		<dependency>
-		  <groupId>org.springframework.data</groupId>
-		  <artifactId>spring-data-solr</artifactId>
-		  <version>1.2.0.RELEASE</version>
-		</dependency>
+		</dependency> 
 		<dependency>
 	        <groupId>org.springframework.data</groupId>
 	        <artifactId>spring-data-rest-webmvc</artifactId>
@@ -138,15 +136,7 @@
 	        <groupId>org.springframework.hateoas</groupId>
 	        <artifactId>spring-hateoas</artifactId>
 	        <version>0.16.0.RELEASE</version>
-	    </dependency>
-	    
-	  
-	     <dependency>
-	         <groupId>org.springframework.batch</groupId>
-	         <artifactId>spring-batch-core</artifactId>
-	         <version>3.0.6.RELEASE</version>
-	     </dependency>
-	    
+	    </dependency> 
 	    <!-- mongodb -->
 	    <dependency>
 		    <groupId>org.mongodb</groupId>
@@ -218,17 +208,54 @@
 			<groupId>com.101tec</groupId>
 			<artifactId>zkclient</artifactId>
 			<version>0.8</version>
-		</dependency>
-		<dependency>
-			 <groupId>org.apache.activemq</groupId>
-			 <artifactId>activemq-core</artifactId>
-			 <version>5.7.0</version>
-		 </dependency>
+		</dependency> 
+<!--
 		 <dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
 			<version>2.6.0</version>
 		</dependency>
+-->
+		<dependency>
+		    <groupId>org.apache.dubbo</groupId>
+		    <artifactId>dubbo-config-spring</artifactId>
+		    <version>2.7.4.1</version>
+		</dependency>
+		 <dependency>
+		   <groupId>org.apache.dubbo</groupId>
+		   <artifactId>dubbo-registry-zookeeper</artifactId>
+		   <version>2.7.4.1</version>
+		</dependency>
+		
+		<dependency>
+		   <groupId>org.apache.dubbo</groupId>
+		   <artifactId>dubbo-rpc-dubbo</artifactId>
+		   <version>2.7.4.1</version>
+	  </dependency>
+	  
+	  <dependency>
+	   <groupId>org.apache.dubbo</groupId>
+	   <artifactId>dubbo-remoting-netty4</artifactId>
+	   <version>2.7.4.1</version>
+	  </dependency>
+	  
+	  <dependency>
+	   <groupId>org.apache.dubbo</groupId>
+	   <artifactId>dubbo-serialization-hessian2</artifactId>
+	   <version>2.7.4.1</version>
+	  </dependency>
+	  <dependency>
+      <groupId>org.apache.dubbo</groupId>
+      <artifactId>dubbo-configcenter-zookeeper</artifactId>
+      <version>2.7.4.1</version>
+	  </dependency>
+	  <dependency>
+	   <groupId>org.apache.dubbo</groupId>
+	   <artifactId>dubbo-serialization-hessian2</artifactId>
+	   <version>2.7.4.1</version>
+	  </dependency>
+  	
+  	
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
@@ -363,20 +390,37 @@
 	<dependency>
 	  <groupId>org.apache.flink</groupId>
 	  <artifactId>flink-java</artifactId>
-	  <version>1.7.1</version>
+	  <version>1.9.1</version>
 	</dependency>
 	<dependency>
 	  <groupId>org.apache.flink</groupId>
 	  <artifactId>flink-streaming-java_2.12</artifactId>
-	  <version>1.7.1</version>
+	  <version>1.9.1</version>
 	</dependency>
 	<dependency>
 	  <groupId>org.apache.flink</groupId>
 	  <artifactId>flink-clients_2.12</artifactId>
-	  <version>1.7.1</version>
+	  <version>1.9.1</version>
 	</dependency>
 	
+	<dependency>
+		<groupId>org.apache.flink</groupId>
+		<artifactId>flink-shaded-hadoop-2-uber</artifactId>
+		<version>2.8.3-7.0</version>
+	</dependency> 
 	
+	<dependency>
+	    <groupId>org.apache.flink</groupId>
+	    <artifactId>flink-connector-kafka_2.12</artifactId>
+	    <version>1.9.1</version>
+	</dependency>
+	
+	<dependency>
+	  <groupId>org.apache.flink</groupId>
+	  <artifactId>flink-table-planner-blink_2.12</artifactId>
+	  <version>1.9.1</version>
+	  <scope>provided</scope>
+	</dependency>
 	
 	
 	
@@ -426,21 +470,21 @@
 		<version>4.0.1</version>
 	</dependency>
 
-<dependency>
-    <groupId>org.webjars</groupId>
-    <artifactId>sockjs-client</artifactId>
-    <version>1.1.2</version>
-</dependency>
-<dependency>
-    <groupId>org.webjars</groupId>
-    <artifactId>stomp-websocket</artifactId>
-    <version>2.3.3</version>
-</dependency>
-<dependency>
-	<groupId>asia.stampy</groupId>
-	<artifactId>stampy-NETTY-client-server-RI</artifactId>
-    <version>1.0-RELEASE</version>
-</dependency>
+	<dependency>
+	    <groupId>org.webjars</groupId>
+	    <artifactId>sockjs-client</artifactId>
+	    <version>1.1.2</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.webjars</groupId>
+	    <artifactId>stomp-websocket</artifactId>
+	    <version>2.3.3</version>
+	</dependency>
+	<dependency>
+		<groupId>asia.stampy</groupId>
+		<artifactId>stampy-NETTY-client-server-RI</artifactId>
+	    <version>1.0-RELEASE</version>
+	</dependency>
 
 
 	<dependency>
@@ -501,6 +545,21 @@
 	    <version>1.1</version>
 	    <type>bundle</type>
 	 </dependency>
+		 
+	<dependency>
+	    <groupId>org.elasticsearch.client</groupId>
+	    <artifactId>elasticsearch-rest-client</artifactId>
+	    <version>7.4.2</version>
+	</dependency>
+	 
+	 
+	   
+  <dependency>
+    <groupId>org.apache.hbase</groupId>
+    <artifactId>hbase-client</artifactId>
+    <version>2.2.2</version>
+</dependency>
+
   	</dependencies>
   </dependencyManagement>
   <build>

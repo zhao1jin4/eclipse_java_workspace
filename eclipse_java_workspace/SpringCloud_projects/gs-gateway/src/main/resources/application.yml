@@ -102,7 +102,7 @@ spring:
         predicates:
          - Host=**.myCustHost.org
         filters:
-        - RequestTime=true
+        - RequestTime=true  #自己的类
 #自定义filterFactory，可配置使用
 #测试用     curl -H 'Host:www.myCustHost.org' localhost:9999/get   
 
@@ -118,7 +118,7 @@ spring:
         filters:
         - name: RequestRateLimiter
           args:
-            key-resolver: '#{@hostAddrKeyResolver}'
+            key-resolver: '#{@hostAddrKeyResolver}' #自己的类
             redis-rate-limiter.replenishRate: 1
             redis-rate-limiter.burstCapacity: 3
 #redis限流  未试？？？

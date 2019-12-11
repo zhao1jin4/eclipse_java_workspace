@@ -73,7 +73,7 @@ public class Application {
                 		//r.path("/customer/**") //相当于 predicates 测试用 curl localhost:9999/customer/123  会请求到http://httpbin.org/customer/123肯定不存在，但日志有了
                         .filters(f -> f.filter(new RequestTimeFilter())//自己的filter
                                 .addResponseHeader("X-Response-Default-Foo", "Default-Bar"))
-                        .uri("http://httpbin.org:80")
+                        .uri("http://httpbin.org:80")//可以用lb://
                         .order(0)
                         .id("customer_filter_router")
                 )

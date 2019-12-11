@@ -14,6 +14,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class AuthenticationExample {
+	
   private static AuthenticationManager am = new SampleAuthenticationManager();
 
   public static void main(String[] args) throws Exception {

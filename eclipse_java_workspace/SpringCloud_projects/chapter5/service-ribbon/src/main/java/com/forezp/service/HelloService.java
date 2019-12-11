@@ -1,15 +1,15 @@
 package com.forezp.service;
 
 
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
-/**
- * Created by fangzhipeng on 2017/4/6.
- */
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+ 
 @Service
 public class HelloService {
 
@@ -22,8 +22,14 @@ public class HelloService {
     	return restTemplate.getForObject("http://SERVICE-HI/hi?name="+name,String.class);
         //这里直接SERVICE-HI用名字来连,不区分大小写, 用在方法级别 
     }
-
-    public String hiError(String name) {
+    public List<User> queryUsers(@RequestParam String name) {
+    	return restTemplate.getForObject("http://SERVICE-HI/queryUsers?name="+name,List.class);
+    }
+    public String sidecar( ) { 
+    		//service-sidecar可小写
+    	return restTemplate.getForObject("http://service-sidecar/",String.class);
+    }
+    public String hiError(String name) {//函数声明要和原函数相同
         return "hi,"+name+",sorry,error!";
     }
 }

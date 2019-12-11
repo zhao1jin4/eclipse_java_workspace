@@ -1,0 +1,22 @@
+server:
+  port: 8882
+
+spring:
+  application:
+    name: config-client
+
+ #这部分配置要在bootrap.yml中有效，如application.yml中无效
+  cloud:
+    config:
+      label: master
+      profile: dev
+      #uri: http://localhost:8888/  
+      uri: http://user:password@localhost:8888/   #如config服务端要密码
+      username: user #会覆盖uri中有用户名
+      password: password
+      #读文件格式 {application}-{profile}.properties/yml  对单仓库配置多个微服务 
+ #多仓库
+
+
+ 
+ 

@@ -42,9 +42,9 @@ public class BasicWebSocket {
         System.out.println("收到消息:"+message);
         
     	for (Session otherSession : peers) {
-            if (!otherSession.equals(client)) {
+            //if (!otherSession.equals(client)) {
                 otherSession.getBasicRemote().sendText("Server端消息");
-            }
+             //}
         }
     }
 }

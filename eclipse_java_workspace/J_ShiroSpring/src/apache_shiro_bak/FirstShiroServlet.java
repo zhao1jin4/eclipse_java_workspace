@@ -21,6 +21,7 @@ public class FirstShiroServlet extends HttpServlet{
 		
 		Session session = currentUser.getSession();
 		session.setAttribute( "someKey", "aValue" );
+		
 	}
  
 

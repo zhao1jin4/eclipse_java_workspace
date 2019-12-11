@@ -11,5 +11,11 @@ spring:
 feign:
   hystrix:
     enabled: true
-#feign.hystrix.enabled=true
-   
+#  httpclient:
+#    enabled: true
+#  okhttp:
+#    enabled: false 
+
+#对第一次请求就是失败，原因第一次请求返回时间过长
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 5000
+ 

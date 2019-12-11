@@ -5,16 +5,20 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.Vector;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CollectionsTest
 {
 	public static void main(String[] args)
 	{
+		ArrayBlockingQueue block;
 		
 		java.util.Hashtable<String,String>  t =new java.util.Hashtable<String,String> ();
 //		t.put("key",null);   //key ,value 都不能为null
@@ -76,9 +80,12 @@ public class CollectionsTest
     	
     	
     	
-    	ArrayList list=new ArrayList();//扩容
-    	
-    	
+    	ArrayList<String> list=new ArrayList<>();//扩容
+    	list.add("");//构造器没指容量时是空的，add时默认是10个大小
+    	Object o=new Object();//默认hashCode是native 实现的
+    	HashMap  hashMap=new HashMap();
+    	hashMap.put("a","b");//put时默认容量是16(数组),
+    	 new HashMap(30);
     	TreeMap treeMap;
     	ConcurrentHashMap conHashMap=new ConcurrentHashMap() ;
     	conHashMap.put("key", "value");

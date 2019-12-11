@@ -58,8 +58,8 @@ function jQueryJSONRequest() //OK
 		//url:root+'/json/queryEmployeeVO2.mvc' ,
 		data:JSON.stringify({
 						employee_id:'123',first_name:'李四',
-						birthDay:'2010-03-15 18:10:20',
-						//birthDay:'', //服务端为null(只用全局配置和只用类级配置)
+						//birthDay:'2010-03-15 18:10:20',
+						birthDay:'', //服务端为null(只用全局配置和只用类级配置)
 						other:'',//多的字段不会报错,配置了
 						}), 
 		//data:'{"employee_id":123,"first_name":"李四"}',//OK,内部Key必须是"
@@ -102,6 +102,8 @@ function jQueryJSONListRequest()
 		{
 			//alert("success:"+response.allClothes[1]);
 			alert("success:"+response.underEmp[0].birthDay); 
+			console.log("timestamp:"+response.underEmp[0].createTime); 
+			
 		},
 		error:function(  jqXHR,  textStatus,  errorThrown )
 		{ 

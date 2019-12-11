@@ -1,0 +1,2 @@
+org.springframework.cloud.bootstrap.BootstrapConfiguration=\
+my.config_server.CustomCuratorFrameworkConfig,my.config_server.DefaultCuratorFrameworkConfig

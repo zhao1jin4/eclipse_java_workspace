@@ -134,8 +134,8 @@ public class NIOServer {
         while (iter.hasNext()) 
         {
           SelectionKey key = iter.next();//SelectionKey是线程安全的
-          iter.remove(); 
-          handleKey(key); 
+          iter.remove(); //每次要删除才行，防止重复处理
+          handleKey(key); //可以使用线程池来读写
         }
     }
     } catch (IOException e) {
@@ -162,7 +162,7 @@ System.out.println("读信息");
         clientBuffer.flip();
         CharBuffer charBuffer = decoder.decode(clientBuffer);
         System.out.println("Client >>" + charBuffer.toString());
-        SelectionKey wKey = channel.register(selector, SelectionKey.OP_WRITE);
+        SelectionKey wKey = channel.register(selector, SelectionKey.OP_WRITE);//也可第三个参数做附件
         wKey.attach(new HandleClient());//可传对象附件,可为 本  端的其它步(read,write)使用
       } else
         channel.close();

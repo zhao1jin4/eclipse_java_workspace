@@ -89,7 +89,9 @@ lettuce-core-5.0.4.RELEASE.jar
 	reactor-core-3.1.7.RELEASE.jar
 	reactive-streams-1.0.2.jar
 
-			
+
+
+jaxb-api-2.3.1.jar  (JavaSE ,JavaEE)
 ---------------
 spring_freemarker.xml  ,spring_jstl.xml　,　spring_annotaion.xml 同时就一个配置上
 

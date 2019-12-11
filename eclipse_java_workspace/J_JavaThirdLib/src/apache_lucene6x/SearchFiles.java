@@ -54,6 +54,7 @@ import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.TotalHits;
 import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
@@ -249,7 +250,8 @@ public class SearchFiles {
     TopDocs results = searcher.search(query, 5 * hitsPerPage);//最多显示少个结果
     ScoreDoc[] hits = results.scoreDocs;
     
-    int numTotalHits = results.totalHits;//如果实际结果大于最多显示,totalHits存实际结果
+    TotalHits totalHits = results.totalHits;//如果实际结果大于最多显示,totalHits存实际结果
+    int numTotalHits=(int)totalHits.value;
     System.out.println(numTotalHits + " total matching documents");
 
     int start = 0;
@@ -264,7 +266,7 @@ public class SearchFiles {
           break;
         }
 
-        hits = searcher.search(query, numTotalHits).scoreDocs;
+        hits = searcher.search(query, (int)numTotalHits).scoreDocs;
       }
       
       end = Math.min(hits.length, start + hitsPerPage);

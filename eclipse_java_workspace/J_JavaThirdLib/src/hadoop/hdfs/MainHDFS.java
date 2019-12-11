@@ -10,7 +10,10 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hdfs.DistributedFileSystem;
 import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
-
+/**
+ 打成.jar 带 Main-Class: 
+(启动yarn)bin/hadoop jar  xx.jar 	执行后就会建立目录(bin/hdfs dfs -ls / 查看),如jar包中没有Main-Class: ,要在xx.jar后加全类名
+ */
 public class MainHDFS
 {
 	public static void creatFile() throws IOException 
@@ -36,7 +39,6 @@ public class MainHDFS
 	}
 	public static void printNodeInfo() throws IOException 
 	{
-
 		Configuration conf=new Configuration();
 		FileSystem fs=  FileSystem.get(conf);
 		DistributedFileSystem dfs =(DistributedFileSystem)fs;//要使用hadoop jar 运行才可

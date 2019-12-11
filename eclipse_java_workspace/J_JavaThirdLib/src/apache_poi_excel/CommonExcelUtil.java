@@ -14,12 +14,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -32,72 +35,96 @@ public class CommonExcelUtil
 	/**
 	 * 导出excel
 	 * @param list 要使用的数据
-	 * @param workbookOutputstream 输出的excel数据流，外部负责打开关闭
+	 * @param workbookOutputstream 输出的excel数据流，外部负责打开关闭(为web ServletOutputStream)
 	 * @param titles 标题
-	 * @param fiels 对象属性 和标题对应顺序
+	 * @param fields 对象属性 和标题对应顺序
 	 * @throws Exception
 	 */
-	public static void exportObject2Excel(List<? extends Object> list,OutputStream workbookOutputstream,String [] titles,String [] fiels)throws Exception 
+	public static void exportObject2Excel(List<? extends Object> list,OutputStream workbookOutputstream,String [] titles,String [] fields)throws Exception 
 	{
-		if(titles==null|| titles.length==0 || fiels==null || fiels.length==0|| fiels.length!=titles.length)
+		if(titles==null|| titles.length==0 || fields==null || fields.length==0|| fields.length!=titles.length)
 			throw new Exception("参数错误，fields和titles必须非空的并大小相同");
 		Workbook workbook=new XSSFWorkbook(); 
 		Sheet sheet = workbook.createSheet();
-		workbook.setSheetName(0, "第一页");
+		workbook.setSheetName(0, "第一页"); 
 		
+		//基本样式
+		CellStyle titleStyle=workbook.createCellStyle(); 
+		titleStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+		titleStyle.setAlignment(HorizontalAlignment.CENTER);
+		titleStyle.setBorderTop(BorderStyle.THIN);
+		titleStyle.setBorderBottom(BorderStyle.THIN);
+		titleStyle.setBorderLeft(BorderStyle.THIN);
+		titleStyle.setBorderRight(BorderStyle.THIN); 
+
+		Font font=workbook.createFont();
+		//font.setColor(Font.COLOR_RED );
+		font.setColor( IndexedColors.BLACK.getIndex());//文字颜色 (short)0xc 
+		//font.getBold();
+		titleStyle.setFont(font);
+		titleStyle.setWrapText(true);//换行 ,如数据要换行写入\n即可
+		//数据样式
+		CellStyle dataCellStyle=workbook.createCellStyle(); 
+		dataCellStyle.cloneStyleFrom(titleStyle);
+		dataCellStyle.setWrapText(false);
+
+		//日期样式
 		CellStyle dateCellStyle=workbook.createCellStyle(); 
+		dateCellStyle.cloneStyleFrom(dataCellStyle);
 		short shortDateFormat=workbook.createDataFormat().getFormat("yyyy-mm-dd"); 
 		dateCellStyle.setDataFormat(shortDateFormat);
+		//颜色样式
+		CellStyle yellowStyle=workbook.createCellStyle(); 
+		yellowStyle.cloneStyleFrom(dataCellStyle);
+		yellowStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+		yellowStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND); 
+		//小数样式
+		CellStyle numCellStyle = workbook.createCellStyle();
+		numCellStyle.cloneStyleFrom(dataCellStyle);
+		DataFormat df = workbook.createDataFormat();  
+		numCellStyle.setDataFormat(df.getFormat("#,#0.00")); //小数点后保留两位 
 		
-		CellStyle centerStyle=workbook.createCellStyle(); 
-		centerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-		centerStyle.setAlignment(HorizontalAlignment.CENTER);
-//		centerStyle.setBorderBottom(BorderStyle.MEDIUM);
+		Row titleRow = sheet.createRow(0);
+		sheet.createFreezePane(0, 1);//标题行冻结
 		
-		for(int i=0;i<titles.length;i++)//列宽
+		for(int i=0;i<titles.length;i++) 
 		{
+			//写标题
+			Cell cell0 = titleRow.createCell(i);
+			cell0.setCellValue(titles[i] );
+			cell0.setCellStyle(titleStyle);
+			
+			//列宽
 //			sheet.autoSizeColumn(i,true);//无效
 			int default_width=sheet.getColumnWidth(i);//default_width=2048
 			sheet.setColumnWidth(i, default_width*2);
-		}
-		Row titleRow = sheet.createRow(0);
-		for(int i=0;i<titles.length;i++)//写标题
-		{
-			Cell cell0 = titleRow.createCell(i);
-			cell0.setCellValue(titles[i] );
-			cell0.setCellStyle(centerStyle);
+			//sheet.setColumnWidth(i, 0);//隐藏列
 		}
 		int colNum=1;//跳过标题
 		for(Object stu:list)
 		{
 			Row row = sheet.createRow(colNum++);
-			for(int f=0;f<fiels.length;f++)
+			for(int f=0;f<fields.length;f++)
 			{
-				Object obj=getObjectField(stu,fiels[f] );//反射
+				Cell cell=row.createCell(f);
+				cell.setCellStyle(dataCellStyle);
+				
+				Object obj=getObjectField(stu,fields[f] );//反射
+				if(obj==null)
+					continue;
 				if(obj instanceof Integer || obj instanceof Long)
 				{
-					row.createCell(f,CellType.NUMERIC).setCellValue(Long.parseLong(obj.toString()));
+					cell.setCellType(CellType.NUMERIC);
+					cell.setCellValue(Long.parseLong(obj.toString()));
+					cell.setCellStyle(yellowStyle);
 				}else if(obj instanceof Float ||obj instanceof Double )
 				{
-					Cell cell = row.createCell(f,CellType.NUMERIC);
-					cell.setCellValue(Double.parseDouble(obj.toString()));
-					CellStyle cellStyle = workbook.createCellStyle();
-					DataFormat df = workbook.createDataFormat();  
-					cellStyle.setDataFormat(df.getFormat("#,#0.00")); //小数点后保留两位 
-				
-					Font font=workbook.createFont();
-					//font.setColor(Font.COLOR_RED );
-					font.setColor( (short)0xc );
-					font.getBold();
-					cellStyle.setFont(font);
-					cellStyle.setWrapText(true);//换行
-					
-					cell.setCellStyle(cellStyle);
+					cell.setCellType(CellType.NUMERIC);
+					cell.setCellValue(Double.parseDouble(obj.toString())); 
+					cell.setCellStyle(numCellStyle);
 				}
 				else if(obj instanceof Date)
-				{
-					Cell cell = row.createCell(f);
-					
+				{  
 //					String strDate=new SimpleDateFormat("yyyy-MM-dd").format((Date)obj);//yyyy-MM-dd HH:mm:ss
 //					cell.setCellValue(strDate);
 					//保存为日期格式 
@@ -105,7 +132,13 @@ public class CommonExcelUtil
 					cell.setCellStyle(dateCellStyle);
 					cell.setCellValue((Date)obj);
 				}else if(obj instanceof String)
-					row.createCell(f).setCellValue((String)obj);
+				{
+					//cell.setCellType(CellType.STRING);
+					cell.setCellValue((String)obj);
+				}
+				else //char  
+					cell.setCellValue(obj.toString());
+				 
 //				XSSFRichTextString rich=new XSSFRichTextString("中华人民共和国");
 //				rich.applyFont(font);
 			}
@@ -129,7 +162,7 @@ public class CommonExcelUtil
 //      Iterator<Row> i=sheet.rowIterator();
 //      while(i.hasNext())
 //        	Row row=i.next(); 
-        for(int i=1;i<total;i++)//跳过标题
+  OUT:  for(int i=1;i<=total;i++)//跳过标题
         {
         	Row row = sheet.getRow(i);
         	//Object obj=new Student ();//通用化
@@ -139,6 +172,8 @@ public class CommonExcelUtil
         		Cell cell = row.getCell(f);  
         		if(cell!=null)
         		{
+        			if(cell.getCellStyle().getBorderBottom()==BorderStyle.NONE)//防止用户多输入了一行空白
+        				break OUT;
         			Object value= readCellValue(cell);
     				setObjectField(obj,fiels[f],value );//反射
         		}
@@ -147,20 +182,14 @@ public class CommonExcelUtil
         }
 		return res;
 	}
-	public  static Object readCellValue(Cell cell)
+	public  static Object readCellValue(Cell cell)//private
 	{
 		CellType type=cell.getCellType(); 
 		Object res=null;
 		 
 		switch (type)
     	{
-    		case NUMERIC :
-    			/*
-    			 	CellStyle dateCellStyle=workbook.createCellStyle(); 
-    				short shortDateFormat=workbook.createDataFormat().getFormat("yyyy-mm-dd"); 
-    				dateCellStyle.setDataFormat(shortDateFormat); 
-    				cell.setCellStyle(dateCellStyle);
-    			 */
+    		case NUMERIC : 
     			if (HSSFDateUtil.isCellDateFormatted(cell)) {//读日期格式
     				res=cell.getDateCellValue(); 
     				break; 
@@ -215,32 +244,150 @@ public class CommonExcelUtil
 		Field  field=obj.getClass().getDeclaredField(strField);
 		if(!field.isAccessible())//JDK9 canAccess,JDK8 isAccessible()
 			field.setAccessible(true);
-		if(field.getType() == Timestamp.class &&   value instanceof Date)
+		
+		if(value instanceof String  )
 		{
-			value=new Timestamp(((Date)value).getTime());
-		}
-		if(field.getType() == Long.class &&  value instanceof Integer)
+			if(field.getType() == Timestamp.class || field.getType() ==Date.class) 
+				value=null;
+			else if(field.getType() == Boolean.class || field.getType() ==boolean.class) 
+				value=false;
+			else if(field.getType() == long.class || field.getType() == Long.class)
+			{
+				if("".equals(value))//什么都没写
+					value=0L;
+				else
+				{
+					try{
+						value=Long.parseLong(value.toString());
+					}catch(Exception e)
+					{
+						e.printStackTrace();
+						throw new NumberFormatException(value+"值不正确，请输入正确的数值，不要超长"); //最好自定义异常
+					}
+				}
+			}
+			else if(field.getType() == Integer.class || field.getType() ==int.class )
+			{
+				if("".equals(value))//什么都没写
+					value=0;
+				else
+				{
+					try{
+						value=Integer.parseInt(value.toString());
+					}catch(Exception e)
+					{
+						e.printStackTrace();
+						throw new NumberFormatException(value+"值不正确，请输入正确的数值，不要超长"); //最好自定义异常
+					}
+					
+				}
+			}
+			else if(field.getType() == double.class || field.getType() ==Double.class)
+			{
+				if("".equals(value))//什么都没写
+					value=0d;
+				else
+				{
+					try{
+						value=Double.parseDouble(value.toString());
+					}catch(Exception e)
+					{
+						e.printStackTrace();
+						throw new NumberFormatException(value+"值不正确，请输入正确的数值，不要超长"); //最好自定义异常
+					}
+				}
+				
+			}
+			else if(field.getType() == float.class || field.getType() ==Float.class)
+			{
+				if("".equals(value))//什么都没写
+					value=0f;
+				else
+				{
+					try{
+						value=Float.parseFloat(value.toString());
+					}catch(Exception e)
+					{
+						e.printStackTrace();
+						throw new NumberFormatException(value+"值不正确，请输入正确的数值，不要超长"); //最好自定义异常
+					} 
+				}
+			}
+			else //if( value.getClass()!=  String.class)
+				//Java是String但在excel中的字串1右对齐显示为数字	
+			{
+				value=value.toString();
+			} 
+			
+		}else
+		{//value非String
+			if(field.getType() == Timestamp.class &&   value instanceof Date)
+			{
+				value=new Timestamp(((Date)value).getTime());
+			} 
+			else if  (field.getType()  == Long.class || field.getType()  == long.class )
+			{
+				if( value instanceof Integer)
+				{
+					try{
+						value=Long.parseLong(value.toString());
+					}catch(Exception e)
+					{
+						e.printStackTrace();
+						throw new NumberFormatException(value+"值不正确，请输入正确的数值，不要超长"); //最好自定义异常
+					}
+				}else  if( value instanceof Double)//长整数在excel中显示为科学计数法变Double
+				{
+					String longStr=new DecimalFormat("#").format((Double)value); 
+					try{
+						value=Long.parseLong(longStr);
+					}catch(Exception e)
+					{
+						e.printStackTrace();
+						throw new NumberFormatException(value+"值不正确，请输入正确的数值，不要超长"); //最好自定义异常
+					}
+				} 
+			}else if  //java 是Double 但excel没写小数点是整数
+			(
+				(field.getType()  == Double.class 
+				 || field.getType()  == double.class
+				)	
+				&&  value.getClass()!=  Double.class 
+				&& value.getClass()!=  double.class
+			)	 
+			{
+				try{
+					value=Double.parseDouble(value.toString());
+				}catch(Exception e)
+				{
+					e.printStackTrace();
+					throw new NumberFormatException(value+"值不正确，请输入正确的数值，不要超长"); //最好自定义异常
+				}
+			} 
+		}//value非string
+		
+		//为数值类型超长报错,类型不匹配错
+		if(field.getType() == Long.class || field.getType() == long.class 
+			|| field.getType() == Integer.class || field.getType() == int.class 
+			|| field.getType() == Double.class || field.getType() == double.class
+			|| field.getType() == Float.class || field.getType() == float.class 
+		)
 		{
-			value=Long.parseLong(value.toString());
-		}
-		if( (field.getType()  == Long.class || field.getType()  == long.class )
-			&&  value instanceof Double)//长整数在excel中显示为科学计数法变Double
-		{
-			String longStr=new DecimalFormat("#").format((Double)value);
-			value=Long.parseLong(longStr);
-		}
-		if(field.getType()  == String.class && value!=null && value.getClass()!=  String.class)
-			//Java是String但在excel中的字串1右对齐显示为数字
-		{
-			value=value.toString();
-		}
-	
-//		if(field.getType() == Date.class)
+			try{
+				field.set(obj,value); 
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+				throw new NumberFormatException(value+"值不正确，请输入正确的数值，不要超长"); //最好自定义异常
+			}
+		} 
+//		else if(field.getType() == Date.class)
 //		{
 //			SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");//"yyyy-MM-dd HH:mm:ss"
 //			Date date=format.parse(value.toString());
 //			field.set(obj,date); 
-//		}else
+//		}
+		else
 			field.set(obj,value); 
 	}
 	
@@ -275,23 +422,29 @@ public class CommonExcelUtil
 		return list;
 	}
 	
+	
 	public static void main(String[] args) throws Exception 
 	{
 //		List<Student> list=queryDBData();
 		List<Map<String,Object>> list=queryMapDBData();
 //		
-		OutputStream workbookOutput=new FileOutputStream("/tmp/workbook.xlsx");//ServletOutputStream
 		String [] titles=new String[] {"编号","姓名","体重","出生日期"};
 		String [] fields=new String[] {"id","name","weight","birthday"};//顺序
+		
+		/*
+		OutputStream workbookOutput=new FileOutputStream("/tmp/workbook.xlsx");//ServletOutputStream
 		exportObject2Excel(list,workbookOutput,titles,fields);
 		workbookOutput.close();
 		System.out.println("导出完成");
-		
+		*/
 		InputStream workbookInputStream=new FileInputStream("/tmp/workbook.xlsx"); 
 		List<Student> bookList=importExcel2Object(workbookInputStream,Student.class,fields);
 		workbookInputStream.close();
 		System.out.println("导入完成");
 		System.out.println(bookList);
+		
+//		long x=91111111111111112222L;  
+//		Long n=Long.parseLong("91111111111111112222");//Spring MVC ，JSON接入Long类型，按int操作的，要研究下
 		
 	}
 }

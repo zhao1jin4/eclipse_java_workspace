@@ -16,6 +16,10 @@ public class MyKafkaProducerTrans {
 		 Properties props = new Properties();
 		 props.put("bootstrap.servers", "localhost:9092");
 		 props.put("transactional.id", "my-transactional-id");
+		 //事务是对发送者发到topic多个分区中,可能在写一个分区时生产者挂了
+		 //事务ID应该下次启动能恢复 (事务ID写死有没有影响？？，提交事务后，再次执行使用以前事务ID是否可以？？？？)
+		 //事务ID和会话ID 保存到broker中 如生产者挂了再启进根据事务ID在broker中找到会话ID，就可以实现幂等
+		  
 		 Producer<String, String> producer = new KafkaProducer<>(props, new StringSerializer(), new StringSerializer());
 		 producer.initTransactions();
 

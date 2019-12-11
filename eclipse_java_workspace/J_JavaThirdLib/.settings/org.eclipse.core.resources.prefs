@@ -1,7 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/apache_httpclient4/TestHttpClient4.java=UTF-8
-encoding//src/apache_velocity/mytemplate.vm=UTF-8
-encoding//src/apache_velocity/mytemplate02.vm=UTF-8
+encoding//src/apache_poi_excel/ExcelUtil.java=UTF-8
 encoding//src/hadoop/hbase/MainHBase.java=GBK
 encoding//src/nosql_mongodb/MongoTest.java=UTF-8
 encoding/<project>=GBK

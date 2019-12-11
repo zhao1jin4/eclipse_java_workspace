@@ -1,0 +1,21 @@
+server: 
+   port: 8083
+   
+spring:
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+      discovery:
+        enabled: true
+      
+feign:
+  hystrix: #hystrix 不维护  推荐 Resilience4j
+    enabled: true
+
+#测试成功
+spring.cloud.loadbalancer.ribbon.enabled: false
+spring.cloud.circuitbreaker.resilience4j.enabled: true
+
+
+
+      

@@ -1,0 +1,33 @@
+
+#一定要写在bootstrap.yml中
+#encrypt:
+#  key: foo
+  
+#加密 （ 下载JDK8JCE） 默认有jdk1.8.0_161\jre\lib\security\policy\unlimited复制到上级目录下 
+#curl localhost:8888/encrypt -d mysecret
+#curl localhost:8888/decrypt -d xxxxxxxxxxxxxxxxx
+
+#  datasource: 
+#    password: '{cipher}xxxxxxxxxxxxx' #yml文件要加''.properties文件不能加''
+
+
+#----如非对称加密
+#keytool -genkeypair -alias mytestkey -keyalg RSA     -dname "CN=Web Server,OU=Unit,O=Organization,L=City,S=State,C=US"   -keypass changeme -keystore server.jks -storepass letmein
+#提示使用PKCS12
+#keytool -importkeystore -srckeystore server.jks -destkeystore server.jks -deststoretype pkcs12
+  
+encrypt:
+  keyStore:
+    location: classpath:/server.jks
+    password: letmein
+    alias: mytestkey
+    secret: changeme
+#curl localhost:8888/encrypt -d mysecret 返回东西变的很多
+
+
+
+
+
+
+
+     

@@ -3,12 +3,6 @@
 jfreechart-1.0.14.jar
 jcommon-1.0.17.jar
 
---- displaytag-1.2.jar
-commons-lang-2.5.jar
-commons-collections-3.2.1.jar
-	commons-logging-api-1.1.jar
-	standard.jar
-	commons-beanutils-1.9.3.jar
 	
 -----hessian
 	hessian-4.0.37.jar
@@ -73,9 +67,62 @@ portlet 下载,如何设置文件名???
 
  
 
-------
+------swagger 2.0.8  OAS-3.0 deps   可以和 swagger1 一起用
+jboss-logging-3.3.0.Final.jar
+commons-lang3-3.5.jar
+jackson-dataformat-yaml-2.9.5.jar 
+
+jaxrs-api-3.0.12.Final.jar
+swagger-jaxrs2-2.0.8.jar
+swagger-jaxrs2-servlet-initializer-2.0.8.jar
+swagger-annotations-2.0.8.jar
+swagger-integration-2.0.8.jar
+swagger-core-2.0.8.jar
+swagger-models-2.0.8.jar
+ 
+classgraph-4.8.43.jar (io.github)
+snakeyaml-1.24.jar
+
+--resteasy  3.1.4版本
+#示例版本
+resteasy-jaxrs-3.1.4.Final.jar
+
+#Could not find MessageBodyWriter for response object of type:
+resteasy-jettison-provider-3.1.4.Final.jar
+resteasy-jaxb-provider-3.1.4.Final.jar
+jettison-1.3.3.jar (org/codehaus/jettison/jettison/1.3.3)
 
 
- 
- 
+#新版本测试也可  4.1.1版本 不能和3.1.4版本   一起放jar包
+resteasy-core-4.1.1.Final.jar 
+resteasy-core-spi-4.1.1.Final.jar
+microprofile-config-api-1.3.jar
+smallrye-config-1.3.6.jar
+
+jboss-jaxrs-api_2.1_spec-1.0.3.Final.jar
+(
+ <dependency>
+    <groupId>org.jboss.resteasy</groupId>
+    <artifactId>resteasy-jaxrs</artifactId>
+    <version>3.8.1.Final</version>
+</dependency>
+
+ 		<dependency>
+            <groupId>org.jboss.spec.javax.ws.rs</groupId>
+            <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
+        </dependency>
+        
+)
+
+reactive-streams-1.0.2.jar 
+
+#Could not find MessageBodyWriter for response object of type
+resteasy-jackson2-provider-4.1.1.Final.jar
+resteasy-jaxb-provider-4.1.1.Final.jar
+jackson-jaxrs-json-provider-2.9.9.jar
+jackson-jaxrs-base-2.9.9.jar
+json-patch-1.9.jar
+jackson-module-jaxb-annotations-2.9.9.jar
+
+
  

@@ -6,7 +6,7 @@ import zipkin.server.EnableZipkinServer;
 
 @SpringBootApplication
 @EnableZipkinServer//为Dalston版本,Finchley过时了
-//java -jar zipkin-server-2.11.12-exec.jar  后就可 http://127.0.0.1:9411/zipkin/  或
+//java -jar zipkin-server-2.12.9-exec.jar  后就可 http://127.0.0.1:9411/zipkin/  或
 //docker run -d -p 9411:9411 openzipkin/zipkin
 
 public class ServerZipkinApplication {

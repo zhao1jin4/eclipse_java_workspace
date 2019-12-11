@@ -15,7 +15,9 @@ public class StreamAPI {
 		  
 	        List<Integer> r = l.stream() //Stream<Integer> ,中间方法永远返回的是Stream
 	                .map(e -> Integer.parseInt(e))//要求Function接口(是被 @FunctionalInterface),-> 是apply方法
+	                //.parallel()//并行  内部使用ForkJoinPool,默认线程数是处理器数
 	                .filter(e -> e > 2)
+	                //.sequential()//串行
 	                .distinct()
 	                .collect(Collectors.toList());
 	        System.out.println("testInt result is: " + r);

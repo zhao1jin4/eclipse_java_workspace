@@ -24,7 +24,7 @@ public class RPCServer {
             channel.queueDeclare(RPC_QUEUE_NAME, false, false, false, null);
             channel.queuePurge(RPC_QUEUE_NAME);
 
-            channel.basicQos(1);//同步设置为1
+            channel.basicQos(1);//RPC 放消费端       允许限制通道上的消费者所保持最大的未确认消息数量，如某台机器反应慢，
 
             System.out.println(" [x] Awaiting RPC requests");
 

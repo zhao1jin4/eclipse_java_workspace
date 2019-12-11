@@ -11,11 +11,10 @@
 
 	<name>J_SpringBoot</name>
 	<description>my project for Spring Boot</description>
-
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.4.RELEASE</version> <!--2.0.2.RELEASE  2.0.7.RELEASE 2.1.1.RELEASE -->
+		<version>2.2.1.RELEASE</version>  
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -81,7 +80,7 @@
 		    <artifactId>spring-boot-starter-jetty</artifactId>
 		  </dependency>
 		  -->
-		  <!--    	-->
+		  <!--     
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -97,7 +96,7 @@
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>1.2.1</version>
 		</dependency> 
-		 
+		 -->
 	 	<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
@@ -140,10 +139,12 @@
 			<groupId>org.springframework.boot</groupId>  
 			<artifactId>spring-boot-starter-amqp</artifactId>  
 		</dependency>
-		 <dependency>  
+		<!-- 
+		<dependency>  
             <groupId>org.springframework.boot</groupId>  
             <artifactId>spring-boot-starter-activemq</artifactId>  
-        </dependency>  
+        </dependency>
+         -->  
        <dependency>
 	        <groupId>org.springframework.kafka</groupId>
 	        <artifactId>spring-kafka</artifactId>
@@ -367,6 +368,11 @@
 	   <version>3.3.0</version>
 	</dependency>
   
+  
+  
+  
+  
+   
  	
 	</dependencies>
 	<dependencyManagement>

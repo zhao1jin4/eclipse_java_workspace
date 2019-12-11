@@ -1,0 +1,29 @@
+server:
+#   port: 8081
+   port: 8082
+
+#endpoints:
+#  restart:
+#    enabled: true
+#  shutdown:
+#    enabled: true
+#  health:
+#    sensitive: false
+
+logging.level:
+  org.apache.zookeeper.ClientCnxn: ERROR
+
+spring:
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+      discovery:
+        enabled: true
+        
+        
+#management:
+#  security:
+#    enabled: false
+
+#spring.cloud.zookeeper.dependencies:
+#  - testZookeeperApp: ~

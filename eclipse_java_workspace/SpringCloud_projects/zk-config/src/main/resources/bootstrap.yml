@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: testZookeeperApp
+  profiles:
+    active: dev
+ 
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+      discovery:
+        enabled: false
+      config:
+        enabled: true 
+        #root: configuration # 默认值为 config
+        defaultContext: apps  
+        #profileSeparator: '::' # 默认值为,
+        watcher:
+          enabled: false  
+        
+ 

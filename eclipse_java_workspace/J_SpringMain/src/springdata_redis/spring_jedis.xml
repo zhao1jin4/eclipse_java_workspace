@@ -113,13 +113,14 @@
 		<property name="database"  value="0"></property>
 	</bean>
     <bean id="redisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"  >
-    	<!--
+    	
     	<constructor-arg name="standaloneConfig" ref="redisStandaloneConfiguration" />
-    	   stand 或 sentinel 二选一 
-    	-->
+    	<!--   stand 或 sentinel 二选一 
     	<constructor-arg name="sentinelConfig"  ref="redisSentinelConfiguration"/>
+    	-->
+    	<!-- poolConfig只对sentinelConfig和clusterConfig用
     	<constructor-arg name="poolConfig" ref="jedisPoolConfig" />  
-    	<!-- poolConfig只对sentinelConfig和clusterConfig用 --> 
+    	  --> 
     </bean>
     
     <bean id="stringRedisSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>  

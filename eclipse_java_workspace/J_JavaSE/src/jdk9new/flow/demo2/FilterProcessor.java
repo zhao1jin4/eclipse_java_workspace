@@ -5,7 +5,7 @@ import java.util.concurrent.Flow.Processor;
 import java.util.concurrent.SubmissionPublisher;
 import java.util.function.Predicate;
 
-// Processor 即是 Publisher 又是   Subscriber,可以中作为转换器
+// Processor 即是 Publisher 又是   Subscriber,可以作为中转换器
 public class FilterProcessor<T> extends SubmissionPublisher<T> implements Processor<T,T>{
     private Predicate<? super T> filter;
     public FilterProcessor(Predicate<? super T> filter) {

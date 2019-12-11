@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableHystrixDashboard
 public class ServiceHiApplication {
 
+    /**
+     * 访问地址 http://localhost:8762/actuator/hystrix.stream
+     * @param args
+     */
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceHiApplication.class, args);
 	}

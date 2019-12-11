@@ -4,12 +4,13 @@ apply plugin: 'application'
 mainClassName = 'hello.HelloWorld'  //可以使用  ./gradlew run 来运行
 
 repositories {
-    mavenCentral()
+   	maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+   // mavenCentral()
 }
 
 
 dependencies {
-    compile 'org.springframework:spring-context:4.3.4.RELEASE'
+    compile 'org.springframework:spring-context:5.2.1.RELEASE'
     testCompile "junit:junit:4.12"
 	//providedCompile
 	

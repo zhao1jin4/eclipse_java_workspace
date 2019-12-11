@@ -28,12 +28,16 @@ public class IteratorTest {
 			 String str=iter.next();
 			 i++;
 			 if(str.equals("str3"))
-				 {
-					//list.remove(i);//iterator时不能删,报错
-				   //list.add("new_node");//也不能增加元素
-				 
-				 	//iter.remove();//会删数组中的内容
-				 }
+			 {
+			 	//list.remove(i);//iterator时不能删,报错
+			   //list.add("new_node");//也不能增加元素
+			 
+			 iter.remove();//会删数组中的内容
+			 }
+			 if(str.equals("str5"))
+			 {
+				 iter.remove();
+			 }
 		 }
 		 System.out.println(list);
 	}

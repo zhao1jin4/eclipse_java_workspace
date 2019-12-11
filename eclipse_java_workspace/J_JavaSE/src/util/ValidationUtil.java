@@ -1,6 +1,8 @@
 package util;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -12,8 +14,9 @@ import javax.validation.ValidatorFactory;
 
 public class ValidationUtil {
 	
-	public static <T> String  validate(T ojb )
+	public static <T> Map<String,String>  validate(T ojb )
 	{ 
+		Map<String,String>  map=new HashMap<>();
 		 javax.el.ExpressionFactory dependsByValidation;
 		 
 		 ValidatorFactory factory = Validation.buildDefaultValidatorFactory(); 
@@ -29,11 +32,16 @@ public class ValidationUtil {
 				buf.append(violation.getPropertyPath().toString()); 
 				buf.append(":");
 				buf.append(violation.getMessage() ) .append("<BR>\n");
+				String key=violation.getPropertyPath().toString();
+				
+				if(map.get(key)!=null)
+					map.put(violation.getPropertyPath().toString(),map.get(key)+ "<BR>\n"+ violation.getMessage()+ "<BR>\n");
+				else
+					map.put(violation.getPropertyPath().toString(), violation.getMessage()+ "<BR>\n");
 			 }
 			 System.out.println(buf);
-			 return buf.toString();
 		 }
-		 return null;
+		 return map;
 	}
 
 }

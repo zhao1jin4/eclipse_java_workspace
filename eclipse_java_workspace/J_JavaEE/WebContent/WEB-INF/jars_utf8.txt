@@ -1,13 +1,7 @@
-javax.resource-api.jar  JavaEE-7 JCA 
-
-javax.security.auth.message-api.jar
 
 javax.json.jar   
 javax.ws.rs-api.jar
 
-javax.enterprise.concurrent-api.jar
-javax.transaction-api.jar
- 
 ---------JSTL
 jstl.jar
 standard.jar

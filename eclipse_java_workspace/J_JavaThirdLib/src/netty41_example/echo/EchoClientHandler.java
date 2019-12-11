@@ -25,8 +25,9 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  * traffic between the echo client and server by sending the first message to
  * the server.
  */
+//extends SimpleChannelInboundHandler
 public class EchoClientHandler extends ChannelInboundHandlerAdapter {
-
+	//In是读，对应的有ChannelOutboundHandlerAdapter
     private final ByteBuf firstMessage;
 
     /**
@@ -38,7 +39,7 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter {
             firstMessage.writeByte((byte) i);
         }
     }
-
+	//一般要重写这几个方法
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
         ctx.writeAndFlush(firstMessage);

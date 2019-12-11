@@ -1,5 +1,6 @@
 package spring_jsp.annotation;
-
+ 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -131,11 +132,13 @@ public class JSONController //OK
 		lisi.setFirst_name("li");
 		lisi.setLast_name("si");
 		lisi.setBirthDay(new Date());//
+		lisi.setCreateTime(new Timestamp(new Date().getTime()));//
 		
 		Employee wang=new Employee();
 		wang.setFirst_name("Íõ");
 		wang.setLast_name("Îå");
-		lisi.setBirthDay(new Date());//
+		wang.setBirthDay(new Date());//
+		wang.setCreateTime(new Timestamp(new Date().getTime()));//
 		
 		
 		underEmp.add(lisi);

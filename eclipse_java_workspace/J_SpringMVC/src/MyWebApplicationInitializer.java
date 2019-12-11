@@ -3,11 +3,11 @@ import javax.servlet.ServletException;
  
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 
 public class MyWebApplicationInitializer implements WebApplicationInitializer 
 { 
- com.fasterxml.classmate.TypeResolver x;
 	@Override
 	public void onStartup(ServletContext context) throws ServletException {
 	 

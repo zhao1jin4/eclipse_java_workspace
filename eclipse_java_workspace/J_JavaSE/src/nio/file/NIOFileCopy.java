@@ -45,8 +45,8 @@ public class NIOFileCopy {
         FileOutputStream fout = new FileOutputStream(outfile);  
         FileChannel fileChannelIn = fin.getChannel();  //FileChannel 线程安全的
         FileChannel fileChannelOut = fout.getChannel();  
-        fileChannelIn.transferTo(0, fileChannelIn.size(), fileChannelOut);
-	        
+        fileChannelIn.transferTo(0, fileChannelIn.size(), fileChannelOut);//对应的也有transferFrom
+//        fileChannelOut.transferFrom(fileChannelIn, 0, fileChannelIn.size());
         fileChannelIn.close();
         fileChannelOut.close();
 	 }

@@ -30,7 +30,7 @@ import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
-import not_web.MainApplication;
+import config.MainApplication;
 import sockjs_stomp.Greeting;
 import sockjs_stomp.HelloMessage;
 import sockjs_stomp.SockjsStompApp;

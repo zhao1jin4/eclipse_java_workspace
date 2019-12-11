@@ -143,12 +143,13 @@ public class OtherController
 	//配置 MappingJackson2HttpMessageConverter
 	@RequestMapping(value="/responseBodyJSON", produces="application/json")
     @ResponseBody
-    public String responseBodyJSON(HttpServletRequest request) {
+    public  Map<String, Object> responseBodyJSON(HttpServletRequest request) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("status", "1231231");
+        map.put("nullObj",null);//null值可不显示，也可显示为空串，对日期类型传给到服务端为null
         map.put("reason", "原因");//这样中文可以
-        //return map;
-        return "{status:'1231231',reason:'原因'}";//字符串中文支持
+        return map;
+        //return "{status:'1231231',reason:'原因'}";//字符串中文支持
     }
 	
 	//配置 Jaxb2RootElementHttpMessageConverter

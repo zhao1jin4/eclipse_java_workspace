@@ -12,6 +12,7 @@ import java.nio.channels.spi.SelectorProvider;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -82,12 +83,17 @@ public class NIOClient {
 
   public static void main(String[] args) throws IOException {
 	  
+
+//	    Scanner scanner =new Scanner(System.in);
+//	    while(scanner.hasNextLine())
+//	    {
+//	    	String line=scanner.nextLine();
+//	    }
     ExecutorService exec = Executors.newFixedThreadPool(SIZE);
     for (int index = 0; index < SIZE; index++) {
       exec.execute(new Download(index));
     }
     exec.shutdown();
-    
     
   }
 }
