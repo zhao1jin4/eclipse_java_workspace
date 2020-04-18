@@ -2,16 +2,7 @@ spring:
   profiles:
     active: usage_message
 #used for rabbitmq
-
-#  redis:  
-#    cluster:  
-#      nodes:
-#        - 172.16.35.35:7000
-#        - 172.16.35.35:7001
-#        - 172.16.35.35:7002
-#        - 172.16.35.35:7003
-#        - 172.16.35.35:7004
-#        - 172.16.35.35:7005
+ 
 logging:
   level:
     org: info

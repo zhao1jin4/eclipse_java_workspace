@@ -7,7 +7,6 @@ import org.apache.lucene.analysis.cn.smart.HMMChineseTokenizer;
 /**
  * 自定义 中文 Analyzer，参考SmartChineseAnalyzer
  * 可以使用同义词搜索
- * @author zhaojin
  *
  */
 public class MySameAnalyzer extends Analyzer{

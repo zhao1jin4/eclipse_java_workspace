@@ -6,7 +6,6 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 public class MyWebSocketClient {
-
 	public static void main(String[] args) throws Exception
 	{
 		//websocket 做客户端

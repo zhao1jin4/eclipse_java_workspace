@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.zhojin</groupId>
+	<artifactId>springboot_neo4j</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging> <!-- jar, war for jsp and tomcat-->
+	
+
+	<name>springboot_neo4j</name>
+	<description>my project for Spring Boot</description>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.1.RELEASE</version>  
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!--
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	
+		<java.version>1.8</java.version>
+			-->
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+		<java.version>11</java.version>
+   </properties>
+
+	<dependencies>
+		  
+	   
+	   
+		 <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+	 	<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		  
+  	
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-neo4j</artifactId>
+		</dependency>
+	 
+	 
+	 
+		<dependency>
+		   <groupId> org.springframework.data </groupId>
+		   <artifactId> spring-data-neo4j </artifactId>
+		   <version>5.1.0.RELEASE</version>
+		</dependency>
+		 
+		<dependency>
+		    <groupId>org.neo4j</groupId>
+		    <artifactId>neo4j-ogm-core</artifactId>
+		    <version>3.1.4</version>
+		</dependency> 
+		
+		<dependency>  
+		    <groupId>org.neo4j</groupId>
+		    <artifactId>neo4j-ogm-bolt-driver</artifactId>
+		    <version>3.1.4</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.neo4j</groupId>
+		    <artifactId>neo4j-ogm-embedded-driver</artifactId>
+		    <version>3.1.4</version> 
+		</dependency>
+		 <!-- 运行依赖于 org.neo4j.graphdb.GraphDatabaseService  -->
+		 <dependency>
+		  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpclient</artifactId>
+		  <version>4.5.6</version>
+		</dependency>
+		
+		<dependency>  
+		    <groupId>org.neo4j</groupId>
+		    <artifactId>neo4j-ogm-http-driver</artifactId>
+		    <version>3.1.4</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpcore</artifactId>
+		    <version>4.4.10</version>
+		</dependency>
+	
+		  
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		  
+		  
+	</dependencies>
+	<dependencyManagement>
+	  
+	</dependencyManagement>
+	<build>
+		<plugins>
+      
+		</plugins>
+	</build>
+
+</project>

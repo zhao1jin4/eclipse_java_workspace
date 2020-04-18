@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
@@ -59,7 +60,7 @@ public class AnnotationTest
 		SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader);//Properties,Enviroment
 		sessionFactory.getConfiguration().addMapper(UserDao.class);//加带Annotation的类
 		sessionFactory.getConfiguration().addMapper(JobDao.class);
-		//sessionFactory.getConfiguration().addMapper(JoinData.class);
+		sessionFactory.getConfiguration().addMapper(JoinData.class);
 		//sessionFactory.getConfiguration().addResultMap(rm);
  
 		
@@ -284,34 +285,41 @@ select sql_id, child_number, sql_text from v$sql where  sql_text like '%关键�
 //		List<Job> jobs = jobDao.getJobsByPK(2);
 //		System.out.println(jobs);
 	}
-	
 	@Test
-	public void aliseTest() 
+	public void resultMapTest() 
 	{
-		//@Alias("joinData")未成功???
 		UserDao userDao = session.getMapper(UserDao.class);
-		JoinData data=userDao.getWorks("lisi");
-		System.out.println(data.getUsername()+":"+data.getWorks());
+		JoinData data2=userDao.getWorksResultMap("lisi");
+		System.out.println(data2.getUsername()+":"+data2.getWorks());
 	}
 	
-	//-----------测试中
 	
-	@Test
+	@Test //@Many
 	public void collectionManyTest() 
 	{
 		UserDao userDao = session.getMapper(UserDao.class);
 		User u1=userDao.getUserCollectionJobs();
 		System.out.println(u1.getJobs());
 	}
-	@Test
+	@Test // @One 
 	public void associationOneTest() 
 	{
 		JobDao jobDao = session.getMapper(JobDao.class);
 		Job j1=jobDao.getJobAssociationUser();
 		System.out.println(j1.getUser());
 	}
+	
 	//-----------测试中
-	//@Alias("joinData")未成功???
-	//@ResultMap
-	 // @one,@Many
+	@Test
+	public void aliseTest() 
+	{
+		//@Alias("joinData")//何用？？？
+		UserDao userDao = session.getMapper(UserDao.class);
+		JoinData data=userDao.getWorks("lisi");
+		System.out.println(data.getUsername()+":"+data.getWorks());
+	}
+
+	
+	//-----------测试中 
+	 
 }

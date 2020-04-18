@@ -15,6 +15,7 @@
 		<setting name="useGeneratedKeys" value="false" />
 		<setting name="defaultExecutorType" value="SIMPLE" />
 		<setting name="defaultStatementTimeout" value="25000" />
+		<!--  <setting name="logImpl" value="STDOUT_LOGGING" /> 会显示数据库执行SQL日志-->
 	</settings>
 	
 	<typeAliases>
@@ -55,5 +56,4 @@
 	<mappers>
 		<mapper resource="mybatis_xml/EmployeeMapper.xml" />
 	</mappers>
-	
 </configuration>

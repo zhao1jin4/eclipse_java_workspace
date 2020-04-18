@@ -28,8 +28,8 @@ public class TestJDK9New {
 //		 }
 		
 //在JavaEE中的jar,还没有module  xx{ exports yy}
-		javax.annotation.PostConstruct x; 
-		javax.annotation.Resource y;
+//		javax.annotation.PostConstruct x; 
+//		javax.annotation.Resource y;
 		
 		FileInputStream resource1 = new FileInputStream("c:/tmp/input.txt"); 
 		FileInputStream resource2 = new FileInputStream("c:/tmp/input2.txt"); 

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.boot.system.JavaVersion;
 import org.springframework.cache.CacheManager;
 
-import mybatis.dao.UserMapper;
 
 //Unit Test use
 /*

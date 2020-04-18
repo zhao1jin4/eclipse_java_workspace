@@ -9,13 +9,13 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>springBoot_WebFlux</artifactId>
+	<artifactId>springboot_webFlux</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>springBoot_WebFlux</name>
+	<name>springboot_webFlux</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		 <maven.compiler.source>1.8</maven.compiler.source>
 	</properties>
 
 	<dependencies>

@@ -62,7 +62,10 @@ public class Person {
         gender = genderArg;
         emailAddress = emailArg;
     }  
-
+    public String getName()
+    {
+    	return this.firstName;
+    }
     public int getAge() {
         return birthday
             .until(IsoChronology.INSTANCE.dateNow()) //·µ»Ø  Period

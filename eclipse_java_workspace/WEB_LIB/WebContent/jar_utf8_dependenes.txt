@@ -57,8 +57,8 @@ encoding//src/mypacke/MyClass.java=UTF-8
 	spring-data-redis-2.0.7.RELEASE.jar
 		spring-data-commons-2.1.1.RELEASE.jar
 	
-	spring-data-mongodb-2.1.1.RELEASE.jar
-		 spring-data-commons-2.1.1.RELEASE.jar
+	spring-data-mongodb-2.2.6.RELEASE.jar
+		 spring-data-commons-2.2.6.RELEASE.jar
 		 	--可选的querydsl-core-4.2.1.jar  
 		 	 			mysema-commons-lang-0.2.4.jar
 		 	 			
@@ -112,11 +112,12 @@ spring-data-redis-2.0.7.RELEASE.jar
 	jackson-databind-2.9.6.jar
 		classmate-1.3.0.jar
 --------MyBatis
-mybatis-3.3.0.jar
-mybatis-ehcache-1.0.0.jar
-mybatis-spring-1.2.0.jar
+mybatis-3.5.4.jar
+mybatis-dynamic-sql-1.1.4.jar
 
-mybatis-generator-core-1.3.7.jar
+mybatis-ehcache-1.0.0.jar 
+mybatis-spring-2.0.4.jar
+mybatis-generator-core-1.4.0.jar
 	commons-collections-3.2.2jar
 	commons-digester-1.8.jar  用于把XML->Bean
 	commons-logging-1.1.1.jar
@@ -127,7 +128,7 @@ mybatis-generator-core-1.3.7.jar
 druid-1.1.7.jar
 c3p0-0.9.5.2.jar
 	mchange-commons-java-0.2.11.jar
-HikariCP-3.3.1.jar
+HikariCP-3.4.1.jar
 ============amqp-client-5.1.1.jar  rabbitMQ
 ============rocketMQ
 rocketmq-common-4.2.0.jar
@@ -271,9 +272,13 @@ quartz-jobs-2.2.1.jar
 	flink-table-api-java-1.9.1.jar
 	flink-table-api-java-bridge_2.12-1.9.1.jar
 	 
-	kafka-streams-1.1.0.jar
-	kafka-clients-1.1.0.jar
-		rocksdbjni-5.7.3.jar
+	kafka-streams-2.4.1.jar
+	kafka-clients-2.4.1.jar
+		#connect-json
+		  #connect-api
+		  
+	spring-kafka-2.4.5.RELEASE.jar
+		spring-messaging-5.2.5.RELEASE.jar
 		
 	hbase-client-2.2.0.jar 
 	hbase-common-2.2.0.jar 
@@ -308,10 +313,13 @@ mysql-connector-java-8.0.15-bin.jar
 	protobuf-java-3.6.1.jar
 	
 
-mongodb-driver-3.8.2.jar
-mongodb-driver-async-3.8.2.jar
-	mongodb-driver-core-3.8.2.jar
-bson-3.8.2.jar
+mongodb-driver-3.12.2.jar
+mongodb-driver-async-3.12.2.jar
+	mongodb-driver-core-3.12.2.jar
+bson-3.12.2.jar
+
+
+
 
 neo4j-java-driver-1.6.3.jar
 

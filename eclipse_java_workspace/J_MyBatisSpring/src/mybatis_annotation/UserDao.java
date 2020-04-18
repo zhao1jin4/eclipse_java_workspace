@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Options.FlushCachePolicy;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
@@ -48,7 +49,7 @@ public interface UserDao {
     @Results(value = {
 		@Result(property="userName", column="user_Name")//对使用select *的方式,只配置不相同
    })
-    @Options(useCache = false,flushCache = true)//默认是有cache的(只配置 useCache = false无用的),与配置cacheEnabled无关
+    @Options(useCache = false,flushCache = FlushCachePolicy.FALSE)//默认是有cache的(只配置 useCache = false无用的),与配置cacheEnabled无关
     public List<User> selectAll();
     
     
@@ -64,12 +65,12 @@ public interface UserDao {
     
 //-------provider
     @SelectProvider(type = SqlProvider.class, method = "getCount")
-    @Options(useCache = true, flushCache = false, timeout = 10000)//flushCache = false表示下次查询时不刷新缓存
+    @Options(useCache = true, flushCache = FlushCachePolicy.FALSE, timeout = 10000)//flushCache = false表示下次查询时不刷新缓存
     public int providerGetCount();
    
     
     @SelectProvider(type = SqlProvider.class, method = "getByUserName")  
-    @Options(useCache = true, flushCache = false, timeout = 10000)
+    @Options(useCache = true, flushCache = FlushCachePolicy.FALSE, timeout = 10000)
     @Results(value = {
   		@Result(property="userName", column="user_Name")
     })
@@ -105,16 +106,40 @@ public interface UserDao {
        })
     public  List<User>  queryByPage(Map<String,Object> params);
     
-  
-
+    
     @Select("select u.user_name ,count(*) as works from  user u left join job_history j on u.userId=j.user_id group by u.user_name  having u.user_name=#{_username}")
+    @ResultMap(value = "joinData") //引用其它方法上  @Results(id="joinData"
+    public  JoinData getWorksResultMap(@Param("_username") String username);
+    
+    
+
+    //示例@Many
+    @Select("select userId,user_Name,password,comment from user where user_Name='lisi'")
+	@Results({
+			 @Result(property="userId",     column="userId"),
+			 @Result(property="userName",     column="user_Name"),
+			 @Result(property="jobs", column="userId",  javaType=List.class, //@Many时column 为(父表的)主键,javaType=List.class
+			 			many=@Many(select = "mybatis_annotation.JobDao.getJobsByUserId"))
+			 })
+    public User getUserCollectionJobs();
+
+    
+    @Select("select * from user where userId=#{value}")
     @Results(value = {
+		@Result(property="userName", column="user_Name") 
+    })
+    public  User getUserById(int user_Id);
+    
+    
+    
+    
+  //@Alias("joinData")何用？？？
+    @Select("select u.user_name ,count(*) as works from  user u left join job_history j on u.userId=j.user_id group by u.user_name  having u.user_name=#{_username}")
+    @Results(id="joinData",value = {
     		@Result(property="username", column="user_name"),
     		@Result(property="works", column="works")
        })
-   // @ResultMap(value = "joinData")
-    public  JoinData getWorks(@Param("_username") String username);//@Alias("joinData")未成功???
-  
+    public  JoinData getWorks(@Param("_username") String username);
     
     //----以下没测试过
 //    String INSERT_CANDIDATE = "INSERT INTO candidate (" +
@@ -141,23 +166,8 @@ public interface UserDao {
     
 //     "INSERT into address (building,street,location,town,postCode,countyId,countryId,notes,createdOn,createdBy,active) VALUES (#{building},#{street},#{location},#{town},#{postCode},#{countyId},#{countryId},#{notes},sysdate(),#{createdBy},1)";
 //    
-    @Select("select userId,user_Name,password,comment from user where user_Name='lisi'")
-	@Results({
-			 @Result(property="user_Name",     column="userName"),
-			 @Result(property="jobs", column="userId",  javaType=List.class, //--@Many时column 主键
-			 			many=@Many(select = "mybatis_annotation.JobDao.getJobsByUser"))
-			 })
-    public User getUserCollectionJobs();
-    
-    
-    @Select("select * from user where userId=#{user_Id}")
-    @Results(value = {
-		@Result(property="userName", column="user_Name") 
-   })
-    public  User getUserById(int user_Id);//@Param("user_Id")
     
 	//----以下没用过
-	//@ResultMap(value = "myMap")
     //@Alias("joinData")
 	//---
 }

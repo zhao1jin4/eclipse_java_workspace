@@ -4,7 +4,8 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class BCryptDemo {
 	public static void main(String[] args) {
-		 
+		 //Bcrypt Java 实现 jBCrypt,Spring Security 使用bcrypt
+		
 		// Hash a password for the first time
 		String password = "testpassword";
 		String hashed = BCrypt.hashpw(password, BCrypt.gensalt());

@@ -7,6 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.core.DbCallback;
@@ -19,6 +20,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
+
 
 import com.mongodb.ClientSessionOptions;
 import com.mongodb.MongoClient;
@@ -34,11 +36,14 @@ import springdata_mongodb.model.OperHistory;
 //import springdata_mongodb.repo.MyCustomerCrudRepository;
 import springdata_mongodb.repo.MyCustomerRepository;
 //import springdata_mongodb.repo.OperHisRepository;
-
 import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Update.update;
 import static org.springframework.data.mongodb.core.query.Query.query;
+ 
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 public class MainApp {
@@ -54,6 +59,7 @@ public class MainApp {
 		 MongoTemplate mongoTemplate =  context.getBean(MongoTemplate.class);
 		 MyMongoRepositoryImpl repository = context.getBean(MyMongoRepositoryImpl.class);
 		 
+		 /*
 	    repository.dropCollection();
 		repository.createCollection();
 		
@@ -61,15 +67,20 @@ public class MainApp {
 			mongoTemplate.dropCollection(OperHistory.class);
 		}
 		mongoTemplate.createCollection(OperHistory.class);
+		 */
+		
+		
 //		transactionSpring(context);//事务OK
 		//transactionManual(context);//Testing
 
 		
 		
 		Customer c1 = new Customer("lisi", "李四");
+		c1.setDbUserId(10001L);
 		c1.setCreateTime(new Date());
 		c1.setSqlTime(new Timestamp(new Date().getTime()));
-		repository.saveObject(c1);
+		repository.saveObject(c1);//mongoTemplate.insert() 如集合不存会自动创建,并建立索引,即使用集合已经存在并无索引,也会自动建立索引
+		//如使用mongoTemplate.createCollection(XX.class)不会建立索引 ???
 		List<Customer>  cList=repository.query(c1, "lisi", Customer.class);
 		
 		 testRepository(context);
@@ -78,6 +89,8 @@ public class MainApp {
 		//--
 		Customer lisi = new Customer("li", "四");
 		lisi.setId("102");
+		lisi.setAge(20);
+		lisi.setHobby(Arrays.asList("football","basketball"));
 		repository.saveObject(lisi);
 		System.out.println("with id 102 " + repository.getObject("102"));
  
@@ -86,7 +99,13 @@ public class MainApp {
 		UpdateResult updateRes= mongoTemplate.updateFirst(
 					new Query(Criteria.where("id").is("102")),
 					updateField, Customer.class); 
-		 
+
+		mongoTemplate.updateFirst(query(where("age").is(20)), update("first_name", "li"), Customer.class);
+		
+		Update appendUpdate=new Update();
+		appendUpdate.push("hobby","badminton");//push 在原有值的基础上增加数据元素,原类型必须是数组
+		mongoTemplate.updateFirst(query(where("age").is(20)),appendUpdate, Customer.class);
+		
 		System.out.println(repository.getAllObjects());
 
 		//repository.deleteObject("2");
@@ -100,7 +119,12 @@ public class MainApp {
 		
 		query.skip(2);
 		query.limit(10);//分页
-		Sort sort=new Sort(Sort.Direction.ASC,"createTime");
+		
+		//Sort sort=new Sort(Sort.Direction.ASC,"createTime");//老版本
+		List<Order> orders=new ArrayList<>();
+		orders.add(new Order(Sort.Direction.ASC,"createTime"));
+		Sort sort=Sort.by(orders);
+		
 		query.with(sort);
 		
 		List<Customer> list=mongoTemplate.find(query, Customer.class);
@@ -221,6 +245,8 @@ public class MainApp {
 		
 		List <Customer> deleted=customerRepository.deleteByLastName("李四0");
 		Long rows=customerRepository.deletePersonByLastName("李四1");
+		rows=customerRepository.removeDataByLastName("李四2");
+		
 		customerRepository.deleteAll();
 		/*
 		// extends   CrudRepository 没用？？？

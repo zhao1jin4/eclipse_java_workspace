@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
+import org.springframework.data.mongodb.core.CollectionOptions;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -51,7 +53,11 @@ public class MyMongoRepositoryImpl
 		Query  query =new   Query(c);
 		query.skip(0);
 		query.limit(10); 
-		Sort sort=new Sort(Sort.Direction.ASC,"createTime");
+		//Sort sort=new Sort(Sort.Direction.ASC,"createTime");//�ϰ汾
+		List<Order> orders=new ArrayList<>();
+		orders.add(new Order(Sort.Direction.ASC,"createTime"));
+		Sort sort=Sort.by(orders);
+		
 		query.with(sort);
 		List<T> res=mongoTemplate.find(query, objClass);
 		long count=mongoTemplate.count(query, objClass);

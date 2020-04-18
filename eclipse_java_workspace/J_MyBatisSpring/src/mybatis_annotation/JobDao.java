@@ -13,14 +13,25 @@ import org.apache.ibatis.type.JdbcType;
 //@CacheNamespace(size = 512)
 public interface JobDao {
 	//有时要 Job implements Serializable
-	@Select("select * from job_history where user_Id=#{_id}")
+	@Select("select * from job_history where user_Id=#{value}")//如参数是int要使用#{value}
 	@Results(value = {
+			@Result(property="id", column="job_id" ),
 			@Result(property="requirement", column="job_requirement",
 					javaType=java.util.List.class,jdbcType=JdbcType.VARCHAR,typeHandler=MyXMLTypeHandler.class),
 			@Result(property="jobTitle", column="job_title" )
 	   })
-	public List<Job> getJobsByUserId(@Param("_id") int userid);
+	public List<Job> getJobsByUserId( int userid); 
+ 
 	
+	//示例@One
+	@Select("select job_id,job_title,user_Id from job_history where job_title like 'java%'")
+    @Results({
+		 @Result(property="id",     column="job_id"),
+		 @Result(property="jobTitle",     column="job_title"),
+		 @Result(property="user", column="user_Id",  javaType=User.class, //@One 时column 是子表的外键
+		 			one=@One(select="mybatis_annotation.UserDao.getUserById"))
+		 })
+    public Job getJobAssociationUser();
 	
 	@Select("select * from job_history where job_id=#{_id}")
 	@Results(value = {
@@ -47,27 +58,8 @@ public interface JobDao {
 	@Insert("insert into job_history(job_requirement,job_title,user_id) values(#{requirement,javaType=java.util.List,jdbcType=VARCHAR,typeHandler=mybatis_annotation.MyXMLTypeHandler},#{jobTitle},1)")
 	public void saveJob(Job job);
    
-	
+		
     //----以下没测试过
-    @Select("select job_id,job_title,user_Id from job_history where job_title like 'java%'")
-    @Results({
-		 @Result(property="id",     column="job_id"),
-		 @Result(property="jobTitle",     column="job_title"),
-		 @Result(property="user", column="user_Id",  javaType=User.class, // @One 时column 是外键
-		 			one=@One(select="mybatis_annotation.UserDao.getUserById"))
-		 })
-    public Job getJobAssociationUser();
-	  
-    
-	@Select("select * from job_history where user_Id=#{userId}")
-	@Results(value = {
-			@Result(property="requirement", column="job_requirement",
-					javaType=java.util.List.class,jdbcType=JdbcType.VARCHAR,typeHandler=MyXMLTypeHandler.class),
-			@Result(property="jobTitle", column="job_title" )
-	   })
-	public List<Job> getJobsByUser(int userId);//@Param("userId") 
-	
-  //------ 测试中
 	
 	/*
    public void deleteJobsByUsername(String username);

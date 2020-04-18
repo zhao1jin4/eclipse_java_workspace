@@ -1,13 +1,22 @@
 package hadoop.spark;
  
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+
 import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.storage.StorageLevel;
+
+import scala.Tuple2;
 
 public class SimpleApp {
   public static void main(String[] args) {
     
-	String logFile = "/home/dell/spark-1.0.0-bin-hadoop2/README.md";
+	//String logFile = "/home/dell/spark-1.0.0-bin-hadoop2/README.md";
+	 String logFile = "H:\\java_program\\spark-2.4.3-bin-hadoop2.7\\spark-2.4.3-bin-hadoop2.7/README.md";
 	  //文件可是hdfs://,URI,     支持通配符,压缩 如/my/directory/*.gz"
 	SparkConf conf = new SparkConf().setAppName("Simple Application").setMaster("local[4]");
 	
@@ -24,7 +33,7 @@ public class SimpleApp {
     System.out.println("Lines with a: " + numAs + ", lines with b: " + numBs);
     
    //---以下未测试 
-    /*
+   
     JavaPairRDD<String,String> dirData=sc.wholeTextFiles("dir"); //(filename, content) pairs
    // sc.sequenceFile(path, keyClass, valueClass); //对应于 mapreduce 的 SequenceFileInputFormat
   //  sc.hadoopRDD(conf, inputFormatClass, keyClass, valueClass)
@@ -45,6 +54,6 @@ public class SimpleApp {
     JavaPairRDD<String, Integer> pairs = lines.mapToPair(s -> new Tuple2<String, Integer>(s, 1));//返回是两个类型的用 Tuple2
     JavaPairRDD<String, Integer> counts = pairs.reduceByKey((a, b) -> a + b);
     counts.sortByKey();
-    */
+     
   }
 }

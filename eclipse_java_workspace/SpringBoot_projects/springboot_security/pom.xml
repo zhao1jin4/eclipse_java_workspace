@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.zhojin</groupId>
+	<artifactId>springboot_security</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging> <!-- jar, war for jsp and tomcat-->
+	
+
+	<name>springboot_security</name>
+	<description>my project for Spring Boot</description>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.1.RELEASE</version>  
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!--
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+		<java.version>11</java.version>
+			-->
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<java.version>1.8</java.version>
+		
+		<mybatis.version>3.3.0</mybatis.version> <!-- 3.4.5没有SqlSession只可3.3.0 -->
+		<docker.image.prefix>springio</docker.image.prefix>
+   </properties>
+
+	<dependencies>
+		 
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId> spring-boot-starter-security</artifactId>
+		</dependency> 
+		 <dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId> 
+		</dependency>
+  
+	   <!--  
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-taglibs</artifactId> 
+			</dependency>	
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId> 
+			</dependency>
+			
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-crypto</artifactId> 
+			</dependency>
+			 <dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-oauth2-client </artifactId> 
+			</dependency>
+			 --> 
+ 	
+	</dependencies>
+	<dependencyManagement>
+	  
+	</dependencyManagement>
+	<build>
+		<plugins>
+			
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin> 
+			<!-- 当有多个@SpringBootApplication的类时才需要加mainClass配置
+			   mvn spring-boot:run 来启动,打包直接mvn package就是可执行jar包
+			   (会生成 x.jar.original,在MANIFEST.MF中没有指定Main-Class,里面没有jar包)
+				自己的东西在BOOT-INF目录中,有lib目录和classes目录
+				新版本2.1 是可以带resources下所有的东西，老版 1.4.2 本就不会带所有的
+				//File file=org.springframework.util.ResourceUtils.getFile("classpath:config/my.ini");//打成jar包就不行了
+				ClassPathResource classPathResource = new org.springframework.core.io.ClassPathResource("config/my.ini");
+				InputStream inputStream = classPathResource.getInputStream(); 
+			-->
+			 
+		</plugins>
+	</build>
+	 
+
+</project>

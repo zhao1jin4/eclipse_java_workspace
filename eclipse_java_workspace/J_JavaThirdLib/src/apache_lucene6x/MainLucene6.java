@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 
@@ -53,6 +54,7 @@ import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 import org.apache.lucene.search.highlight.SimpleSpanFragmenter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.store.NRTCachingDirectory;
 import org.apache.lucene.util.BitDocIdSet;
 import org.apache.lucene.util.BytesRef;
@@ -146,7 +148,8 @@ public class MainLucene6
 			  //this is my football ,  I  very like it
 			  Analyzer analyzer = new StandardAnalyzer();  // (my)(football)(i)(very)(like)
 			  Analyzer analyzerSimple= new SimpleAnalyzer();//(this)(is)(my)(football)(i)(very)(like)(it)
-			  Analyzer analyzerStop= new StopAnalyzer();//(my)(football)(i)(very)(like)
+//			  Analyzer analyzerStop= new StopAnalyzer();//新版本8没有这个,(my)(football)(i)(very)(like)
+			  
 			  Analyzer analyzerWhite= new WhitespaceAnalyzer();//(this)(is)(my)(football)(,)(I)(very)(like)(it)
 			  //这是我的足球，我非常喜欢它
 			  //(这)(是)(我)(的)(足球)(我)(非常)(喜欢)(它)
@@ -190,7 +193,9 @@ public class MainLucene6
 			  analyzer.close();
 		}
 		public static void sameWordSearch() throws Exception{
-		    Directory directory = new RAMDirectory();
+//		    Directory directory = new RAMDirectory();//新版本8没有这个构造器，类过时,用MMapDirectory
+		    Directory directory =new MMapDirectory(  Paths.get("/tmp"));//MMap=memory mapping 
+//		    Directory dir = FSDirectory.open(Paths.get("c:/tmp/testindex"));
 		    Analyzer analyzer = new MySameAnalyzer(); //同义词
 		    IndexWriterConfig config = new IndexWriterConfig(analyzer);
 		    IndexWriter iwriter = new IndexWriter(directory, config);
@@ -253,7 +258,8 @@ public class MainLucene6
 			System.out.println(fileContent);
 		}
 		public static void tikaSearch() throws Exception{
-		    Directory directory = new RAMDirectory();
+//		    Directory directory = new RAMDirectory();//新版本8没有这个构造器，类过时,用MMapDirectory
+		    Directory directory =new MMapDirectory(  Paths.get("/tmp"));//MMap=memory mapping 
 		    Analyzer analyzer = new SmartChineseAnalyzer();  
 		    IndexWriterConfig config = new IndexWriterConfig(analyzer);
 		    IndexWriter iwriter = new IndexWriter(directory, config);

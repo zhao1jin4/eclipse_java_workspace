@@ -19,14 +19,21 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-public class MainTestCase extends TestCase 
+public class MainTestCase //extends TestCase 
 {
 	String namespace="mybatis_xml.ns";
 	SqlSession session;
 	
+	@BeforeEach
 	protected void setUp() throws Exception 
 	{
 		String resource = "mybatis_xml/Configuration.xml";
@@ -34,6 +41,7 @@ public class MainTestCase extends TestCase
 		SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader);//Properties,Enviroment
 		session = sessionFactory.openSession();
 	}
+	@AfterEach
 	protected void tearDown() throws Exception {
 		session.close();
 	}
@@ -82,8 +90,7 @@ public class MainTestCase extends TestCase
 		session.close();
 	}
 	
-	
-	
+	@Test
 	public  void testInsertEmpoloyee() throws Exception
 	{
 		for(int i =0;i<30;i++)

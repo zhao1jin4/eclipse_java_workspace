@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 public class TestClasspath {
 
 	public static void main(String[] args) { 
-		org.springframework.boot.bind.RelaxedPropertyResolver x;
 		
 		/*
 		@ConditionalOnBean，仅在当前上下文中存在某个bean时，才会实例化这个Bean。

@@ -33,7 +33,7 @@ import org.springframework.util.ReflectionUtils;
 log4j.logger.org.apache.ibatis=debug,stdout 
 log4j.logger.java.sql=debug,stdout
  */
-@Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }) })
+@Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class,Integer.class }) })
 public class SQLLogInterceptor implements Interceptor 
 {
     public Object intercept(Invocation invocation) throws Exception

@@ -219,7 +219,7 @@ public class JDBCConnectionTest
     }
 	
 	
-	public static void  metaDataTest()throws Exception
+	public static void  testMySQLMetaData()throws Exception
 	{
 		// create table student(id int,name varchar(4));
 		com.mysql.cj.jdbc.Driver d;
@@ -279,8 +279,9 @@ public class JDBCConnectionTest
 		//testConnectH2();
 		//testConnectDB2();
 		//testOracleNvarchar2();
+		
 		//testMySQLutf8mb4();
-		metaDataTest();
+		testMySQLMetaData();
 		//testMySQLAutoIncrement();
 	}
 

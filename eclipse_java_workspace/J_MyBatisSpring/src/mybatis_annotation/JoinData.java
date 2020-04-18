@@ -2,7 +2,7 @@ package mybatis_annotation;
 
 import org.apache.ibatis.type.Alias;
 
-//@Alias("joinData")
+//@Alias("joinData")//何用？？？
 public class JoinData {
 	private String username;
 	private int works;

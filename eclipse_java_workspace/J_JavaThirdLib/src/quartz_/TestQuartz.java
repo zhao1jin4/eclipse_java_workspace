@@ -31,7 +31,22 @@ import org.quartz.TriggerKey;
 import static org.quartz.SimpleScheduleBuilder.*;
 public class TestQuartz
 {
+	/*
+	 *  
+ <dependency>
+  <groupId>org.quartz-scheduler</groupId>
+  <artifactId>quartz</artifactId>
+  <version>2.2.3</version>
+</dependency>
+<dependency>
+  <groupId>org.quartz-scheduler</groupId>
+  <artifactId>quartz-jobs</artifactId>
+  <version>2.2.3</version>
+</dependency>  
 
+使用c3p0数据源
+*/
+ 
 	public static void quartz_2_2() throws Exception
 	{
 		SchedulerFactory schedFact = new StdSchedulerFactory();
@@ -128,26 +143,49 @@ public class TestQuartz
 		  }
 		*/
 	}
-	public static void quartz_read_config_file()throws Exception
+	public static void quartz_file_jdbc_cluster()throws Exception
 	{
-		//org/quartz/quartz.properties文件,可以被src\下的文件覆盖 ,示例在quartz-2.1.6\examples\example10\quartz.properties
-		//org/quartz/xml/job_scheduleing_data_2_0.xsd,
+		//分布式 配置 org.quartz.jobStore.isClustered = true
 		
+		
+		//org/quartz/quartz.properties文件,可以被src\下的文件覆盖 ,示例在quartz-2.2.3\examples\example10\quartz.properties
+		//quartz.properties中插件配置去读 quartz_data.xml
+		//org/quartz/xml/job_scheduleing_data_2_0.xsd
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler(); //会读classpath 下的quartz.properties
         
-        scheduler.start();  //quartz.properties中配置去读 quartz_data.xml
-
-        scheduler.shutdown(); 
+        scheduler.start();   
         
+        
+        JobDetail job = JobBuilder.newJob(MyQuartzJob.class)
+    			//.usingJobData(dataKey, value)
+//    			.storeDurably().withDescription("desc")
+    			.withIdentity("myJob", "group1")
+    			.build();
+      
+    		job.getJobDataMap().put("user_id", "zhangsan");
+    	Trigger trigger = TriggerBuilder.newTrigger()
+    			.withIdentity("myTrigger", "group1")
+    			//.startNow()
+    			.startAt(new java.util.Date(Calendar.getInstance().getTimeInMillis()+5000))
+    			 
+    			.withSchedule(SimpleScheduleBuilder.simpleSchedule()
+    				.withIntervalInSeconds(3)
+    				.withRepeatCount(10)) 
+    			.build();
+    			
+    	scheduler.scheduleJob(job, trigger);
+    			  
+        //scheduler.shutdown(); 
+        org.quartz.impl.jdbcjobstore.StdJDBCDelegate mysql; //mysql
         org.quartz.impl.jdbcjobstore.JobStoreCMT containerManageTransaction;
-        org.quartz.impl.jdbcjobstore.oracle.OracleDelegate oracle;
 	}
+	
+	// java -DinstanceName=node1
 	public static void main(String[] args)throws Exception
 	{
-		
-//		quartz_2_2();
-		quartz_read_config_file(); //未成功
-		org.quartz.impl.jdbcjobstore.StdJDBCDelegate mysql; //mysql
+		  String instance=System.getProperty("instanceName");//取不到-D的值
+		//quartz_2_2();
+		quartz_file_jdbc_cluster(); //		
 		//内部类不能有 static的变量
 	}
 }

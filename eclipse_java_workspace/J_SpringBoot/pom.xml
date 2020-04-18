@@ -45,16 +45,7 @@
 	        <groupId>org.springframework</groupId>
 	        <artifactId>spring-context</artifactId>
 	    </dependency>
-	   
-	    <dependency>
-		    <groupId>javax.jms</groupId>
-		    <artifactId>jms</artifactId>
-		    <version>1.1</version>
-		</dependency>
-	    <dependency>
-	        <groupId>org.springframework</groupId>
-	        <artifactId>spring-jms</artifactId>
-	    </dependency>
+	  
 		 <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
@@ -63,7 +54,9 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		 
+		
+		
+		
 		<!--	 默认tomcat,如要用jetty 
 		 <dependency>
 		    <groupId>org.springframework.boot</groupId>
@@ -80,45 +73,9 @@
 		    <artifactId>spring-boot-starter-jetty</artifactId>
 		  </dependency>
 		  -->
-		  <!--     
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-		<dependency>
-		    <groupId>com.mchange</groupId>
-		    <artifactId>c3p0</artifactId>
-		     <version>0.9.5.2</version> 
-		</dependency> 
 		  
-		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>1.2.1</version>
-		</dependency> 
-		 -->
-	 	<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
-		</dependency>
-		
+ 
 		 <!--
-  		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.session</groupId>
-			<artifactId>spring-session-data-redis</artifactId>
-			<version>2.0.4.RELEASE</version>
-		</dependency>
-		<dependency>
-		    <groupId>redis.clients</groupId>
-		    <artifactId>jedis</artifactId>
-		    <version>2.9.0</version> 
-		</dependency>
-		 
-		   
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-freemarker</artifactId>
@@ -135,22 +92,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency> 
-		 <dependency>
-			<groupId>org.springframework.boot</groupId>  
-			<artifactId>spring-boot-starter-amqp</artifactId>  
-		</dependency>
-		<!-- 
-		<dependency>  
-            <groupId>org.springframework.boot</groupId>  
-            <artifactId>spring-boot-starter-activemq</artifactId>  
-        </dependency>
-         -->  
-       <dependency>
-	        <groupId>org.springframework.kafka</groupId>
-	        <artifactId>spring-kafka</artifactId>
-	    </dependency>
-	    
-	
+
+
+
+
 		<!--  sockjs_stomp -->
 		<dependency>
 		   <groupId>org.webjars</groupId>
@@ -173,12 +118,8 @@
 		    <version>2.3.3</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		
+				
+	   <!-- 为socket_p2p -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId> spring-boot-starter-security</artifactId>
@@ -187,166 +128,25 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId> 
 		</dependency>
- 
-		<!--  
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-taglibs</artifactId> 
-		</dependency>	
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId> 
-		</dependency>
 		
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-crypto</artifactId> 
-		</dependency>
-		 <dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-oauth2-client </artifactId> 
-		</dependency>
-		 --> 
+		
 		 <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId> spring-boot-starter-websocket</artifactId>
-		</dependency>
+		</dependency> 
+		
 		 <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 		</dependency> 
-		 <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-		</dependency> 
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-solr</artifactId>
-		</dependency> 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-neo4j</artifactId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
-		<dependency>
-		    <groupId>org.activiti</groupId>
-		    <artifactId>activiti-spring-boot-starter</artifactId>
-		    <version>7.0.0.GA</version>
-		</dependency>
-	 
-		<dependency>
-		   <groupId> org.springframework.data </groupId>
-		   <artifactId> spring-data-neo4j </artifactId>
-		   <version>5.1.0.RELEASE</version>
-		</dependency>
-		 
-		<dependency>
-		    <groupId>org.neo4j</groupId>
-		    <artifactId>neo4j-ogm-core</artifactId>
-		    <version>3.1.4</version>
-		</dependency> 
-		
-		<dependency>  
-		    <groupId>org.neo4j</groupId>
-		    <artifactId>neo4j-ogm-bolt-driver</artifactId>
-		    <version>3.1.4</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.neo4j</groupId>
-		    <artifactId>neo4j-ogm-embedded-driver</artifactId>
-		    <version>3.1.4</version> 
-		</dependency>
-		 <!-- 运行依赖于 org.neo4j.graphdb.GraphDatabaseService  -->
-		 <dependency>
-		  <groupId>org.apache.httpcomponents</groupId>
-		  <artifactId>httpclient</artifactId>
-		  <version>4.5.6</version>
-		</dependency>
-		
-		<dependency>  
-		    <groupId>org.neo4j</groupId>
-		    <artifactId>neo4j-ogm-http-driver</artifactId>
-		    <version>3.1.4</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpcore</artifactId>
-		    <version>4.4.10</version>
-		</dependency>
-	
-	   
-		<!--  thymeleaf 禁用使用freemarker时neo4j要 ant,jython,javarebel-utils,jaxen,xalan,jdom,jsp-api,rhino,dom4j,
-		org.apache.log.Logger找不到？？，单独建立项目就 OK
-		
-		<dependency>
-		  <groupId>org.apache.ant</groupId>
-		  <artifactId>ant</artifactId>
-		  <version>1.10.5</version>
-		</dependency>
-		<dependency>
-		  <groupId>org.python</groupId>
-		  <artifactId>jython</artifactId>
-		  <version>2.7.1b3</version>
-		</dependency>
-		<dependency>
-		  <groupId>org.zeroturnaround</groupId>
-		  <artifactId>javarebel-utils</artifactId>
-		  <version>2.0.2</version>
-		</dependency>
-		 <dependency>
-		    <groupId>jaxen</groupId>
-		    <artifactId>jaxen</artifactId>
-		    <version>1.1.6</version>
-		</dependency>
-		<dependency>
-		  <groupId>xalan</groupId>
-		  <artifactId>xalan</artifactId>
-		  <version>2.7.2</version>
-		</dependency>
-		 <dependency>
-		  <groupId>jdom</groupId>
-		  <artifactId>jdom</artifactId>
-		  <version>1.1</version>
-		</dependency>
-		<dependency>
-		    <groupId>javax.servlet.jsp</groupId>
-		    <artifactId>javax.servlet.jsp-api</artifactId>
-		    <version>2.3.3</version> 
-		</dependency>
-		<dependency>
-		    <groupId>org.mozilla</groupId>
-		    <artifactId>rhino</artifactId>
-		    <version>1.7.10</version>
-		</dependency>
-		<dependency>
-		    <groupId>dom4j</groupId>
-		    <artifactId>dom4j</artifactId>
-		    <version>1.6.1</version>
-		</dependency>
-		  -->
-
-		
-		
-		
-		
-	<!--  for other project copy  use  area 
-		<dependency>
-		    <groupId>org.jasypt</groupId>
-		    <artifactId>jasypt</artifactId>
-		    <version>1.9.2</version>
-		</dependency>
-		 
-		<dependency>
-		    <groupId>org.jasypt</groupId>
-		    <artifactId>jasypt-spring31</artifactId>
-		    <version>1.9.2</version>
-		</dependency>
-		 
-		<dependency>
-		    <groupId>org.jasypt</groupId>
-		    <artifactId>jasypt-springsecurity3</artifactId>
-		    <version>1.9.2</version>
-		</dependency>
--->
+ 
+ 
 	  <dependency>
 	      <groupId>org.webjars</groupId>
 	      <artifactId>sockjs-client</artifactId>
@@ -367,33 +167,33 @@
 	   <artifactId>jquery</artifactId>
 	   <version>3.3.0</version>
 	</dependency>
-  
-  
-  
-  
-  
+   
    
  	
 	</dependencies>
 	<dependencyManagement>
-	    <dependencies>
-			<dependency>
-				<groupId>org.activiti.dependencies</groupId>
-				<artifactId>activiti-dependencies</artifactId>
-				<version>7.0.0.GA</version>
-				<type>pom</type>
-			</dependency>
-	    </dependencies>
+	  
 	</dependencyManagement>
 	<build>
 		<plugins>
 			
-			<!--  
+			
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId> 
-			</plugin>
-			 -->
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+			        <mainClass>config.MainApplication</mainClass>
+			    </configuration>
+			</plugin> 
+			<!-- 当有多个@SpringBootApplication的类时才需要加mainClass配置
+			   mvn spring-boot:run 来启动,打包直接mvn package就是可执行jar包
+			   (会生成 x.jar.original,在MANIFEST.MF中没有指定Main-Class,里面没有jar包)
+				自己的东西在BOOT-INF目录中,有lib目录和classes目录
+				新版本2.1 是可以带resources下所有的东西，老版 1.4.2 本就不会带所有的
+				//File file=org.springframework.util.ResourceUtils.getFile("classpath:config/my.ini");//打成jar包就不行了
+				ClassPathResource classPathResource = new org.springframework.core.io.ClassPathResource("config/my.ini");
+				InputStream inputStream = classPathResource.getInputStream(); 
+			-->
 			<plugin>
 	            <groupId>com.spotify</groupId>
 	            <artifactId>docker-maven-plugin</artifactId>

@@ -61,7 +61,7 @@ public class MyTestNG
 	
 	
 
-	@Test
+	@Test //方法的返回类型一定要为void
 	public void testMethod1() {
 		String email = "abc";
 		Assert.assertNotNull(email);

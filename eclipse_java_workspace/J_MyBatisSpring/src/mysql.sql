@@ -57,8 +57,8 @@ commit;
 
 ----========== H2 MySQL table
 CREATE TABLE IF NOT EXISTS  USER  ( 
- --userId   int auto_increment NOT NULL,
- userId   int  NOT NULL,
+ userId   int auto_increment NOT NULL,
+ -- userId   int  NOT NULL,
  user_Name   varchar(30) NOT NULL ,
  password   varchar(80) NOT NULL ,
  comment   varchar(250)  ,

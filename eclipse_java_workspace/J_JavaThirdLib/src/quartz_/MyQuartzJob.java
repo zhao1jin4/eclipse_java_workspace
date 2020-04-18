@@ -11,6 +11,9 @@ public class MyQuartzJob implements Job {
 	public void execute(JobExecutionContext context) throws JobExecutionException { 
 	    JobKey jobKey = context.getJobDetail().getKey();
 	    String user_id=context.getJobDetail().getJobDataMap().getString("user_id");
-		System.out.println("in MyQuartzJob ,key= "+jobKey+",user_id="+user_id);
+	    String instance=System.getProperty("instanceName");
+	    
+	    System.out.println(instance+ " in MyQuartzJob ,key= "+jobKey+",user_id="+user_id);
+		
 	}
 }

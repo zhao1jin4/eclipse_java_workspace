@@ -66,10 +66,10 @@
                         http://www.springframework.org/schema/batch/spring-batch.xsd">
 						
 	 				 
-	<context:component-scan base-package="spring_jsp.annotation" />
+	
 	<context:component-scan base-package="hateoas" />
 	<context:component-scan base-package="reset" />
-	<context:component-scan base-package="swagger1x" />
+	<context:component-scan base-package="spring_jsp.annotation" />
 	<context:component-scan base-package="myservlet.spring" />
 	<!-- 
 	<context:component-scan base-package="myservlet.filter" />

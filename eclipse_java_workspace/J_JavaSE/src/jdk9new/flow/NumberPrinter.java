@@ -4,6 +4,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.SubmissionPublisher;
 import java.util.stream.LongStream;
 public class NumberPrinter {
+	//响应式编程 Flow 不需要使用 Project Reactor
+	//流处理意味着高效的内存
+	
     public static void main(String[] args) {        
         CompletableFuture<Void> subTask = null;
         // The publisher is closed when the try block exits

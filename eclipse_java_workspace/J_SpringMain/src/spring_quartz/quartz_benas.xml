@@ -104,7 +104,7 @@
 			<ref bean="myCronTrigger"/>
 		</list>
 	</property>
-	<!-- 持久化,quartz-2.1.6\docs\dbTables\[数据库].sql,示例在quartz-2.1.6\examples\example10\quartz.properties -->
+	<!-- 持久化,quartz-2.2.3\docs\dbTables\tables_mysql_innodb.sql,示例在quartz-2.1.6\examples\example10\quartz.properties -->
 	<property name="configLocation" value="classpath:spring_quartz/quartz.properties"/>
 </bean> 
 

@@ -1,4 +1,28 @@
-mybatis-3.3.0.jar
+<dependency>
+    <groupId>org.mybatis</groupId>
+    <artifactId>mybatis</artifactId>
+    <version>3.5.4</version>
+</dependency>
+<dependency>
+    <groupId>org.mybatis</groupId>
+    <artifactId>mybatis-spring</artifactId>
+    <version>2.0.4</version>
+</dependency>
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-webmvc</artifactId>
+	<version>5.2.4.RELEASE</version>
+</dependency>
+
+<dependency>
+    <groupId>org.mybatis.dynamic-sql</groupId>
+    <artifactId>mybatis-dynamic-sql</artifactId>
+    <version>1.1.4</version>
+</dependency>
+	
+mybatis-3.5.4.jar
+mybatis-dynamic-sql-1.1.4.jar
+
 cglib-nodep-2.1_3.jar
 
 mysql-connector-java-5.1.21-bin.jar
@@ -25,6 +49,6 @@ dom4j-1.6.1.jar
 c3p0-0.9.1.jar
 aopalliance-1.0.jar
 
-mybatis-spring-1.1.0.jar
+mybatis-spring-2.0.4.jar
 
 mybatis-ehcache-1.0.0.jar    未测试出效果 ???

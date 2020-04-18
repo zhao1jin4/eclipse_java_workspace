@@ -29,7 +29,6 @@ public class SpringMain
 		
 		//修改可持久化的配置 
 		org.quartz.impl.jdbcjobstore.JobStoreCMT containerManageTransaction;
-		org.quartz.impl.jdbcjobstore.oracle.OracleDelegate oracle;
 		//
 		Scheduler scheduler=(Scheduler)context.getBean("schedulerFactory");
 		JobDetail myJobStore=scheduler.getJobDetail(new JobKey("myStoreJob"));
@@ -55,11 +54,8 @@ public class SpringMain
 		} 
 		scheduler.scheduleJob(myJobStore, trigger);//如果trigger是从DB中取,而job是new的,而是不行的??????
 		
-		
-		//如何使用指定路径的log4j.xml 修改输出日志级别??????
 		Thread.sleep(5000*1000);
 		scheduler.shutdown();
-		
 	}
 	
 	public static void main(String[] args) throws Exception

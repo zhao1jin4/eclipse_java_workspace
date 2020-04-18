@@ -212,7 +212,7 @@ public class IndexFiles {
       TextField f=new TextField("contents", new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8)));
       if(file.getFileName().toString().contains("deprecated"))
       {
-    	  f.setBoost(5.5f);//默认1.0,建立索引时在原有基础上加权,为某些特定的内容,分值高,可做优先显示
+    	  //f.setBoost(5.5f);//新版本8没有这个方法，默认1.0,建立索引时在原有基础上加权,为某些特定的内容,分值高,可做优先显示
       }
       doc.add(f);
       

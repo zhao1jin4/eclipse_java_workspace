@@ -46,27 +46,25 @@ public class ControllerMockRequestTest
         request.setCharacterEncoding("UTF-8");
         
         String rootPath=request.getServletContext().getRealPath("/");
-        System.out.println(rootPath);
+        System.out.println("fs rootPath="+rootPath);
         
         String reqContextPath=request.getServletContext().getContextPath();
-        System.out.println(reqContextPath);
+        System.out.println("ContextPath="+reqContextPath);
         
         request.setRequestURI("http://127.0.0.1:/J_SpingMVC/page.mvc");
-        System.out.println(request.getRequestURI());//如不set就返回空串
+        System.out.println("RequestURI="+request.getRequestURI());//如不set就返回空串
        
         request.setContextPath(contextPath); 
         response = new MockHttpServletResponse();
         
-        //web.xml中有filter,listener怎么办？
-        
     }
     @Test
-    public void test() {
+    public void testWithSpringRequestObject() {
         HttpSession session = request.getSession(true);
         session.setAttribute("currentDate", new Date());
         Employee emp=new Employee ();
-        
-        System.out.println(  request.getLocale() );
+        System.out.println("local="+request.getLocale() );
+        //真实的请求了，但使用了spring的mock的Request
         EmployeeResult res= jsonController.queryEmployeeVO(request, emp);
         System.out.println(res);
     }

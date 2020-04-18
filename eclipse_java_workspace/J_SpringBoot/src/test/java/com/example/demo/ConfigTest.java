@@ -13,15 +13,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import config.MainApplication;
+import config.MainConfigApplication;
 import config.MyProps;
-import mybatis.MybatisSpringBoot;
-import mybatis.dao.UserMapper;
-import mybatis.vo.User;
 
 //测试 OK
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes=MainApplication.class)  
+@SpringBootTest(classes=MainConfigApplication.class)  //如不指定class=,包名要和src/main/java里的包名一样，为了找到 @SpringBootApplication
 //@SpringBootConfiguration
 @ContextConfiguration
 public class ConfigTest { 

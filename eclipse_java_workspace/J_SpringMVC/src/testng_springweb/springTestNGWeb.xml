@@ -69,15 +69,14 @@
 						
 	 <bean id="userDao" class="testng_springweb.UserDAOImpl"></bean>
 	 <bean id="userService" class="testng_springweb.UserServiceImpl"></bean>
-	 
-	 <!-- 
-	<context:component-scan base-package="testng_springweb"></context:component-scan>
-	<context:component-scan base-package="spring_jsp.annotation" /> 
-	<mvc:annotation-driven  validator="validator" />
+	  <!-- 
+	  <context:component-scan base-package="spring_jsp.annotation" /> 
+	 <mvc:annotation-driven  validator="validator" />
 	<bean id="validator"  class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="providerClass"  value="org.hibernate.validator.HibernateValidator"/>
-        <property name="validationMessageSource" ref="messageSource"/> 
+        <property name="validationMessageSource" ref="messageSource"/>  
 	</bean> 
+	<context:component-scan base-package="testng_springweb"></context:component-scan> 
   -->
 	  
 </beans>

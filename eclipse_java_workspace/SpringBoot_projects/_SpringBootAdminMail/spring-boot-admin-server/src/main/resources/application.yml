@@ -1,0 +1,36 @@
+server:
+  port: 8769
+  
+spring:
+  application:
+    name: admin-server
+
+ #spring boot admin mail ,testOK
+  boot:
+    admin:
+      notify:
+        mail:
+          to: xx@163.com
+          from: yy@sina.com  
+          enabled:  true  #默认值true
+#        template:
+#        ignore-changes: 
+  mail:
+    host: smtp.sina.com    #SMTP server host
+#    port:      #SMTP server port
+    username: xx
+    password: 123
+    properties: #properties后的是JavaMail的属性,设置SMTP服务器需要权限认证
+      smtp:
+        auth:true  
+#ssl
+#      smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory
+#      smtp.socketFactory.port=465
+#      smtp.ssl.enable=true
+#      smtp.starttls.enable=true
+
+
+  
+
+
+        
