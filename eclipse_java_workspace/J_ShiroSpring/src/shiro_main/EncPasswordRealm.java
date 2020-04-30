@@ -32,7 +32,6 @@ public class EncPasswordRealm extends AuthorizingRealm
 		//查数据库
 		if(!"lisi".equals(username))//模拟无此用户
 			return null;
-		
 		String password="123";
 		//SimpleAuthenticationInfo authInfo=new SimpleAuthenticationInfo(username,password,getName());
 		

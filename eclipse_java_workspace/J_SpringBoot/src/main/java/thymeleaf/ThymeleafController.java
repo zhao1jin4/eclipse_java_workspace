@@ -45,8 +45,7 @@ spring.thymeleaf.encoding=UTF-8
 spring.thymeleaf.mode=HTML
 
 spring.thymeleaf.prefix=classpath:/templates/ 
-#spring.thymeleaf.suffix=.html
-spring.thymeleaf.suffix=
+spring.thymeleaf.suffix=.xhtml
 		
 		 */
 	@Autowired
@@ -75,7 +74,17 @@ spring.thymeleaf.suffix=
         mv.getModelMap().put("currentUser",emp);
 		mv.getModelMap().put("name", "张三");
 		mv.getModelMap().put("serverHTML", "<p style='color:red'>内容<p>"); 
-		mv.setViewName("springFirst"); //找不到？？？？？？？
+		mv.setViewName("springFirst");
+		
+		
+		/*
+		//--不行？？？
+		Locale locale = RequestContextUtils.getLocale(request);
+       System.out.println("Locale:" + locale.getLanguage());
+       String msg1 = this.messageSource.getMessage("title", null, Locale.SIMPLIFIED_CHINESE); 
+       System.out.println("title:" + msg1);
+	       */
+	       
 		return mv;
 	}
 	
@@ -113,59 +122,6 @@ spring.thymeleaf.suffix=
 	}
 	
 	///-----------------
-	
-	@RequestMapping("/thymeleaf") //http://127.0.0.1:8081/J_SpringBoot/thymeleaf
-	public ModelAndView sayFree(HttpServletRequest request) {
-	
-		
-		ModelAndView mv=new ModelAndView();
-		mv.setViewName("springFirst");
-		
-		mv.getModelMap().put("user", "li123");
-		
-		
-		 Locale locale = RequestContextUtils.getLocale(request);
-        System.out.println("Locale:" + locale.getLanguage());
-
-//	    String msg1 = this.messageSource.getMessage("try", null, Locale.CHINA);
-        String msg1 = this.messageSource.getMessage("try", null, Locale.CHINESE); 
-        System.out.println("Msg:" + msg1);
-        
-		return mv;
-	} 
-	 
-	@RequestMapping("json")  // http://127.0.0.1:8081/json  
-	@ResponseBody  //返回jSON
-	public UserVO json() {
-		List<UserVO> list=new ArrayList<>();
-		
-		UserVO user=new UserVO();
-		user.setId(32);
-		user.setUsername("李");
-		user.setBirthday(new Date());
-		
-		list.add( user); 
-		
-		
-		
-		UserVO user2=new UserVO();
-		user2.setId(322);
-		user2.setUsername("李2");
-		user2.setBirthday(new Date());
-		
-		list.add( user2); 
-		return user;
-	}
-	
-	@RequestMapping(value="reqJson",method= {RequestMethod.POST})  // http://127.0.0.1:8081/reqJson  
-	@ResponseBody  
-	public UserVO reqJson(@RequestBody UserVO req) { //请求JSON
-		System.out.println("收到请求为"+req);
-		return json();
-	}
-	//Content-Type=application/json
-	//{"username":"李req","id":32,"birthday":"2018-06-30T08:21:39.956+0000"}
-	
 	
 	
 }

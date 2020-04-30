@@ -28,7 +28,7 @@ import apache_dubbo27.DemoService;
 
 @Component("demoServiceComponent")
 public class DemoServiceComponent implements DemoService {
-    @Reference
+    @Reference( ) //DubboµÄ check=false
     private DemoService demoService;
 
     @Override

@@ -23,6 +23,7 @@
 		<shiro:notAuthenticated>notAuthenticated</shiro:notAuthenticated>  <br/>
 		
 	 ${request.contextPath} 用法错误<br/>
+	 权限没有缓存，每次都重新取数据？？？<br/>
 	<a href="<%=request.getContextPath()%>/employee/create.mvc">employee create </a> <br/>
  	<a href="${pageContext.request.contextPath}/employee/query.mvc">employee query </a> <br/>
 	<a href="${pageContext.request.contextPath}/employee/delete.mvc">employee delete </a> <br/>

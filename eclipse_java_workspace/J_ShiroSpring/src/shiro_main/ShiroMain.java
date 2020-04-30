@@ -16,7 +16,7 @@ import org.apache.shiro.util.Factory;
 
 public class ShiroMain {
 	public static void main(String[] args) {
-		//iniLogin("classpath:shiro_main/shiro.ini");
+		iniLogin("classpath:shiro_main/shiro.ini");
 		//iniLogin("classpath:shiro_main/shiro-realm.ini");
 		encPassword();
 		//iniLogin("classpath:shiro_main/shiro-cryptography.ini");
@@ -25,7 +25,7 @@ public class ShiroMain {
 		//hasRole();
 		//hasPermission();
 		//---
-		iniLogin("classpath:shiro_main/shiro-permisson-realm.ini");
+		//iniLogin("classpath:shiro_main/shiro-permisson-realm.ini");
 		hasRole();
 		hasPermission();//没有缓存，每次都重新取数据？？？
 	}
@@ -81,6 +81,8 @@ public class ShiroMain {
 	public static void hasRole()
 	{  
 		Subject subject = SecurityUtils.getSubject();
+		Object obj=subject.getPrincipal();//就是认证时放SimpleAuthenticationInfo中的UserInfo类
+		//如使用的是UsernamePasswordToken，这就是字串用户名
 		System.out.println(subject.hasRole("role1"));//看源码
 		List<String> list=new ArrayList<>();
 		list.add("role1");

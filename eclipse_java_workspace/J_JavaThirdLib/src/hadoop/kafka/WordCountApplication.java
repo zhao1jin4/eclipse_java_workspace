@@ -19,6 +19,7 @@ public class WordCountApplication {
     public static void main(final String[] args) throws Exception {
     	org.rocksdb.RocksDBException  x;
     	//Ҫ rocksdbjni-5.7.3.jar
+    	
     	//kafka-topics  --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic TextLinesTopic
         Properties config = new Properties();
         config.put(StreamsConfig.APPLICATION_ID_CONFIG, "wordcount-application");

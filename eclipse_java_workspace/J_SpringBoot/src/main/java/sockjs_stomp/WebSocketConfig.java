@@ -3,9 +3,13 @@ package sockjs_stomp;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.handler.TextWebSocketHandler;
+import org.springframework.web.socket.server.jetty.JettyRequestUpgradeStrategy;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
@@ -20,24 +24,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     }
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("gs-guide-websocket")
+        registry.addEndpoint("gs-guide-websocket")//对应于前端的 SockJS('gs-guide-websocket')
         .addInterceptors(new HttpSessionHandshakeInterceptor())
-        //.setHandshakeHandler(handshakeHandler())
-        .withSockJS() //浏览器不支持websocket用socketjs 模拟
+//        .setHandshakeHandler( )
+        .withSockJS() 
         ; 
-    } 
-    /*
-    @Bean
-    public DefaultHandshakeHandler handshakeHandler() {
-
-        WebSocketPolicy policy = new WebSocketPolicy(WebSocketBehavior.SERVER);
-        policy.setInputBufferSize(8192);
-        policy.setIdleTimeout(600000);
-
-        return new DefaultHandshakeHandler(
-                new JettyRequestUpgradeStrategy(new WebSocketServerFactory(policy)));
-    }
-    */
- 
+    }  
  
 }
+ 

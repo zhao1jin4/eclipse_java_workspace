@@ -4,8 +4,17 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.net.CookieStore;
+import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 
 public class URLHttpUtil
 {
@@ -18,6 +27,14 @@ public class URLHttpUtil
 	        BufferedReader reader=null;
 	        try
 	        {
+	        	/*
+	        	//方式二
+    			//每次在使用HttpURLConnection时,工具类来解析http响应头中的Set-Cookie，把cookie存在一个全局的地方，以后就直接从这里取				
+				CookieManager manager = new CookieManager(); 
+				manager.setCookiePolicy(CookiePolicy.ACCEPT_ORIGINAL_SERVER);//设置cookie策略，只接受与你对话服务器的cookie，而不接收Internet上其它服务器发送的cookie
+				CookieHandler.setDefault(manager);//这几句，要在URL .openConnection之前
+	        	*/
+	        	
 	            URL url= new URL(strUrl);
 	            HttpURLConnection http=(HttpURLConnection)url.openConnection();
 	            //http.setReadTimeout(10000);//设置读取超时时间          
@@ -44,7 +61,24 @@ public class URLHttpUtil
 	            {
 	                builder.append(line);
 	            }
-
+	            /*
+	            //读cookie在响应头中
+	            Map<String, List<String>> maps = http.getHeaderFields();
+    			String cookieskey = "Set-Cookie";//响应头Set-Cookie
+    			List<String> coolist = maps.get(cookieskey);
+    			Iterator<String> it = coolist.iterator();
+    			while(it.hasNext()){
+    				String val=it.next();//loginId=lisi; Max-Age=1800; Expires=Mon, 20-Apr-2020 14:04:55 GMT 
+    			} 
+    			
+    			//方式二,比自己解析字串强多了
+				CookieStore cookieJar = manager.getCookieStore();
+				List<HttpCookie> storeCookies = cookieJar.getCookies();
+				for(HttpCookie c:storeCookies){
+    				System.out.println("store cookie: "+c);
+    			} 
+    			
+	            */
 	        }catch(Exception e)
 	        {
 	        	e.printStackTrace(); 

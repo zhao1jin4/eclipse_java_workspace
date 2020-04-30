@@ -1,0 +1,30 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Main</title>
+</head>
+<body>
+
+	<h1>首页不用登录 </h1>
+		<shiro:guest>
+			你没有登录，点击 <a href="initLogin">这里</a> 登录
+		</shiro:guest>  <br/>
+		
+		<a href="initLoginNoFilter">登录不使用Filter</a>   <br/>
+		
+		<a href="clearCache">clear cache</a> <br/>
+		
+		 context1:<span th:text="${#httpServletRequest.getContextPath()}"></span> <br/>
+ 		context2:<span th:text="${#servletContext.contextPath}"></span>  <br/> 
+	<a th:href="@{/employee/create}">employee create </a> <br/>
+ 	<a th:href="@{/employee/query}">employee query </a> <br/>
+	<a th:href="@{/employee/delete}">employee delete </a> <br/>
+	<a th:href="@{/logout}">logout   </a>  <br/>
+	
+	<hr/>
+	spring session :  context1:<span th:text="${#httpServletRequest.getSession().getAttribute('mySessionAttr')}"></span> <br/> 
+ 
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body> 
+
+<script type="text/javascript">
+//https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS
+
+function testCors()
+{
+
+	var xhr = new XMLHttpRequest();  
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4 ) 
+		{
+			if( xhr.status === 200)
+				document.querySelector("#out").innerText=xhr.responseText;
+			else
+			{
+				alert("error status code="+xhr.status+",statusText="+xhr.statusText);
+			}
+		}
+	};
+	
+	//这里假设127.0.0.1是远程,浏览器用localhost打开
+	var remoteUrl="http://127.0.0.1:8080/J_SpringMVC/cors/responseBodyJSON.mvc";
+	xhr.open("POST",remoteUrl , false);//是否异步,true 异步,false同步
+	
+	
+	
+	//以下几个头设置，firefox/chrome被禁止, 浏览器自动设置 
+	//xhr.setRequestHeader("Access-Control-Request-Method","POST"); 
+	//xhr.setRequestHeader("Access-Control-Request-Headers","content-type,mycors");
+	//xhr.setRequestHeader("Origin","http://xxx:8080/");
+	//xhr.setRequestHeader("Referer","http://xxx:8080/S_HTML5CSS3/pureAjax/crossDomain1.html"); 
+	
+	//如xhr不设置任何Header是可以请求到服务端的
+	//服务返回加头response.addHeader("Access-Control-Allow-Origin", "http://localhost:8080");
+	//服务端 response.setContentType("application/json;charset=UTF-8");没有影响
+	xhr.send('{"employee_id":a,"first_name":"李四"}');
+
+}
+
+function testCorsComplex()
+{
+	var xhr = new XMLHttpRequest();  
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4 ) 
+		{
+			if( xhr.status === 200)
+				document.querySelector("#out").innerText=xhr.responseText;
+			else
+			{
+				alert("error status code="+xhr.status+",statusText="+xhr.statusText);
+			}
+		}
+	};
+	//这里假设127.0.0.1是远程,浏览器用localhost打开
+	var remoteUrl="http://127.0.0.1:8080/J_SpringMVC/cors/reqRespJSON.mvc";
+	xhr.open("POST",remoteUrl , false);//是否异步,true 异步,false同步
+
+	//被认为是非简单请求
+	xhr.setRequestHeader("Content-Type","application/json;charset=UTF-8");//open方法后 调用   
+	//---对 非简单请求的CORS请求，会在正式通信之前，增加一次HTTP查询请求，称为"预检"请求（preflight）。
+	//"预检"请求用的请求方法是OPTIONS,服务端取Origin，Access-Control-Request-Method，Access-Control-Request-Headers做验证成功加http头
+	 
+	//-----
+	xhr.send('{"employee_id":a,"first_name":"李四"}');
+}
+</script>
+xml配置,代码配置类CorsRegistry ,CorsFilter都 测试成功 <br/>
+<button onclick="testCors()">test cors  简单请求（simple request）测试成功(不能加http头)</button> 使用代理类CorsFilter是可以的<br/>
+<button onclick="testCorsComplex()">cors 非简单请求, 测试成功</button>
+
+<div id="out"></div>
+
+</body>
+</html>

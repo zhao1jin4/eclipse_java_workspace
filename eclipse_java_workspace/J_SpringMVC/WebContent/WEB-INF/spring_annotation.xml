@@ -272,8 +272,16 @@
     </bean>
 	 -->
 	
-	
-	
+	 <!-- 可配置多个mvc:mapping ,也可使用CorsRegistry在代码级配置
+	<mvc:cors>
+		 <mvc:mapping path="/cors/**"  
+	        allowed-origins="http://localhost:8080, http://127.0.0.1:8080"  
+	        allowed-methods="GET, POST"  
+	        allowed-headers="content-type"
+	        allow-credentials="false"  
+	        max-age="123" />  
+	</mvc:cors>
+	-->
 	
 </beans>
 

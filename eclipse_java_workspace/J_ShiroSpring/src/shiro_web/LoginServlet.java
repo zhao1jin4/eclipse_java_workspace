@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet
 			}else if(IncorrectCredentialsException.class.getName().equals(exceptClassName))
 			{
 				request.setAttribute("error","√‹¬Î¥ÌŒÛ");
-			}else if(IncorrectCredentialsException.class.getName().equals(exceptClassName))
+			}else 
 			{
 				request.setAttribute("error","œµÕ≥“Ï≥£");
 			}

@@ -39,6 +39,7 @@ public class SpringMain
 
 		// let's include the infamous windows Sample file (this time copied to c:/)
 		FileSystemResource res = new FileSystemResource(new File("c:/Sample.jpg"));
+		
 		helper.addInline("identifier1234", res);
 
 		sender.send(message);

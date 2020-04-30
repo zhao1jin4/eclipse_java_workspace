@@ -79,10 +79,10 @@
 		<property name="hashAlgorithmName" value="md5"></property>
 		<property name="hashIterations" value="3"></property> 
 	</bean>
-	<bean id="mySpringRealm" class="shiro_spring.MySpringRealm" >
+	<bean id="mySpringRealm" class="shiro_spring_xml.MySpringRealm" >
 		<property name="credentialsMatcher" ref="hashedCredentialsMatcher"></property>
 	</bean>
-	<bean id="mySpringRealm2" class="shiro_spring.MySpringRealm2" >
+	<bean id="mySpringRealm2" class="shiro_spring_xml.MySpringRealm2" >
 		<property name="credentialsMatcher" ref="hashedCredentialsMatcher"></property>
 	</bean>
 	
@@ -111,6 +111,7 @@
 	</bean>
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="cacheManager" ref="cacheManager"></property>
+		
 		<!-- 
 		<property name="realm" ref="mySpringRealm" />
 		 -->
@@ -131,7 +132,7 @@
 	</bean>
 	
 	<bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-		<property name="configLocation" value="classpath:shiro_spring/ehcache.xml"></property>
+		<property name="configLocation" value="classpath:shiro_spring_xml/ehcache.xml"></property>
 		<property name="shared" value="true"></property>
 	</bean>
 	

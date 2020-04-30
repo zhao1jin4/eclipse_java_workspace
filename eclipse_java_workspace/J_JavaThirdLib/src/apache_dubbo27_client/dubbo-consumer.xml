@@ -23,8 +23,8 @@
 
     <dubbo:application name="demo-consumer"/>
 
-    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
-
+    <dubbo:registry   address="zookeeper://127.0.0.1:2181"/>
+	<!--  check="false" 半闭注册中心启动时检查  ,如果服务端没有启动,客户端不能能启动   -->
     <dubbo:reference id="greetingService" check="false" interface="apache_dubbo27.GreetingService"/>
 
 </beans>

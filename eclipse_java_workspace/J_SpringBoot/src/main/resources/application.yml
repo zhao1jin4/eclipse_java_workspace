@@ -1,4 +1,13 @@
+#--config for *.mvc
 spring:
+  mvc:
+    pathmatch:
+      use-suffix-pattern: false
+      use-registered-suffix-pattern: true
+    contentnegotiation:
+      favor-path-extension: false 
+
+
   profiles:
     active: usage_message
 #used for rabbitmq

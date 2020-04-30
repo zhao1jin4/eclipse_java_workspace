@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Freemarker Test</title>
-<script src="jquery-3.2.1.min.js"></script>
+<script src="jquery-3.5.0.min.js"></script>
 <script>
 $(function (){
 

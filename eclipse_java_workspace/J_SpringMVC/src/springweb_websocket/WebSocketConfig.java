@@ -10,23 +10,19 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
-@Configuration
-@EnableWebMvc //可以不加的
+//@方式
+@Configuration 
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
-
-	 //@Lazy
-	 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(myHandler(), "/myHandler").addInterceptors(new HttpSessionHandshakeInterceptor())
-        .withSockJS()
+        registry.addHandler(myHandler(), "/myHandler/{ID}")
+        .addInterceptors(new HttpSessionHandshakeInterceptor())
+        //.setAllowedOrigins("*")
         ;
     }
-
     @Bean
     public WebSocketHandler myHandler() {
         return new MyHandler();
     }
-
 }

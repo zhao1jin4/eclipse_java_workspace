@@ -8,7 +8,7 @@ import org.springframework.web.util.HtmlUtils;
 @Controller
 public class GreetingController { 
     @MessageMapping("hello")
-    @SendTo("topic/greetings")
+    @SendTo("topic/greetings")//返回的对象广播到所有订阅的，对应前端的 stompClient.subscribe('topic/greetings' 
     public Greeting greeting(HelloMessage message) throws Exception {
         Thread.sleep(1000); // simulated delay
         return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");

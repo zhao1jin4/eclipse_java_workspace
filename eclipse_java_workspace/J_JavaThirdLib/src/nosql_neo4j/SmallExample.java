@@ -1,7 +1,12 @@
 package nosql_neo4j;
-import org.neo4j.driver.v1.*;
-
 import static org.neo4j.driver.v1.Values.parameters;
+
+import org.neo4j.driver.v1.AuthTokens;
+import org.neo4j.driver.v1.Driver;
+import org.neo4j.driver.v1.GraphDatabase;
+import org.neo4j.driver.v1.Session;
+import org.neo4j.driver.v1.StatementResult;
+import org.neo4j.driver.v1.Transaction;
 
 public class SmallExample
 {
@@ -39,7 +44,7 @@ public class SmallExample
             // Each Cypher execution returns a stream of records.
             while (result.hasNext())
             {
-                Record record = result.next();
+            	org.neo4j.driver.v1.Record  record = result.next();
                 // Values can be extracted from a record by index or name.
                 System.out.println(record.get("name").asString());
             }

@@ -76,11 +76,12 @@
 						http://www.springframework.org/schema/ldap/spring-ldap.xsd">
     
     <context:annotation-config/>
-    <context:component-scan base-package="shiro_spring" />
+    <context:component-scan base-package="shiro_spring_xml" />
     <mvc:annotation-driven/> 
     <mvc:default-servlet-handler/>
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />
+	
 	<bean  class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<props>

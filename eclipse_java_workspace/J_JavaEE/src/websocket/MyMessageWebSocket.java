@@ -12,6 +12,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+//文档上还支持 @ServerEndpoint("/chat/{user}")
 @ServerEndpoint(value = "/myMsgWebSocket",
 		decoders = {MyMessageDecoder.class}, //implements Decoder.Text<T> 请求时如@OnMessage方法的第一个参数是自定义类型,把String->T
 		encoders = { MyMessageEncoder.class  }) //implements Encoder.Text<T>   T->String

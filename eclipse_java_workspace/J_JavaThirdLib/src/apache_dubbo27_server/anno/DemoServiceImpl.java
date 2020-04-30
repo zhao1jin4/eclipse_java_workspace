@@ -28,7 +28,7 @@ import apache_dubbo27.DemoService;
 
 import java.util.concurrent.CompletableFuture;
 
-@Service
+@Service //DubboµÄ
 public class DemoServiceImpl implements DemoService {
     private static final Logger logger = LoggerFactory.getLogger(DemoServiceImpl.class);
     @Override

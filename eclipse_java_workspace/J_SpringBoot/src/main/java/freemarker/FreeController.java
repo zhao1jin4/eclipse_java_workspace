@@ -33,6 +33,7 @@ public class FreeController {
 	
 	
 	@RequestMapping("/free")  // http://127.0.0.1:8081/J_SpringBoot/free 测试OK
+	//*.mvc不行???
 	public ModelAndView sayFree(HttpServletRequest request) {
 		
 /*		
