@@ -1,0 +1,94 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.my</groupId>
+  <artifactId>M_JPASpring</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>M_JPASpring</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+   	<maven.compiler.source>1.8</maven.compiler.source>
+	<maven.compiler.target>1.8</maven.compiler.target>
+	<querydsl.version>4.3.1</querydsl.version>
+  </properties>
+
+  <dependencies>
+  
+  	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId> 
+		<version>8.0.15</version>
+	</dependency>
+
+    <dependency>
+	    <groupId>org.hibernate</groupId>
+	    <artifactId>hibernate-core</artifactId>
+	    <version>5.4.17.Final</version>
+	</dependency>
+ 
+
+ 	<dependency>
+	    <groupId>org.hibernate</groupId>
+	    <artifactId>hibernate-hikaricp</artifactId>
+	    <version>5.4.17.Final</version>
+	</dependency>   
+
+  <!-- 
+    <dependency>
+	    <groupId>org.hibernate</groupId>
+	    <artifactId>hibernate-c3p0</artifactId>
+	    <version>5.4.17.Final</version>
+	</dependency>
+  -->
+	
+ 
+	<!--  
+	<dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>slf4j-api</artifactId>
+	    <version>1.7.30</version>
+	</dependency> -->
+	<dependency>
+	  <groupId>org.apache.logging.log4j</groupId>
+	  <artifactId>log4j-slf4j-impl</artifactId>
+	  <version>2.11.1</version>
+	</dependency>
+	
+  <dependency>
+    <groupId>org.springframework.data</groupId>
+    <artifactId>spring-data-jpa</artifactId>
+  </dependency>
+ 
+ 
+<dependency>
+  <groupId>com.querydsl</groupId>
+  <artifactId>querydsl-jpa</artifactId>
+  <version>${querydsl.version}</version>
+</dependency>
+
+    <dependency>
+		<groupId>org.junit.jupiter</groupId>
+		<artifactId>junit-jupiter</artifactId>
+		<version>5.5.2</version>
+	</dependency>  
+    
+  </dependencies>
+ 
+<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-releasetrain</artifactId>
+      <version>Neumann-SR1</version>
+      <scope>import</scope>
+      <type>pom</type>
+    </dependency>
+  </dependencies>
+</dependencyManagement> 
+
+</project>

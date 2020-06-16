@@ -8,6 +8,8 @@ public class ArrSum {
     public static void main(String[] args) {
         int[] a = { 0, 2, 3, 1, 4, 10, 23, 7, 8, 9, 6, 3 };
         int initVal = 10;
+        System.out.println(  a.length);
+        System.out.println(1<< a.length);
         for (int i = 1; i < 1 << a.length; i++) {
             int sum = 0;
             StringBuffer sb = new StringBuffer();

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				xmlns="http://java.sun.com/xml/ns/persistence" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence 
+						http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0">
+	<persistence-unit name="MyJPA" transaction-type="RESOURCE_LOCAL"> <!-- JTA,RESOURCE_LOCAL -->
+	     
+	    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+	     
+	    <!-- 
+	    <jta-data-source>jndi/myjta</jta-data-source>
+	    <mapping-file>META-INF/orm.xml</mapping-file>
+	    <exclude-unlisted-classes/>
+	   -->
+	    <class>jpa.one2one.IdCard</class>
+	    <class>jpa.one2one.Person</class>
+	    
+	    <class>jpa_mapping.M_IdCard</class>
+	    <class>jpa_mapping.M_Person</class>
+	    
+	    <class>jpa.single.UserBean</class>
+	  	<class>jpa.composite_id.AirLine</class>
+	  	 
+	    <class>jpa_school.Student</class>
+	    <class>jpa_school.LeaderStudent</class>
+	    <class>jpa_school.GoodStudent</class>
+	    <class>jpa_school.Teacher</class>
+		<class>jpa_school.Address</class>
+		<class>jpa_school.Course</class>	    
+	    <class>jpa_school.Favorite</class>	
+	    <class>jpa_school.Score</class>    
+		<properties>
+ 			<!-- Hibernate 的配置不能有 value属性,而JPA必须有value属性,Environment,AvailableSettings 类中有所有的hibernate.开头的属性 
+ 		    <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+ 			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver" />
+			<property name="hibernate.connection.url" value="jdbc:oracle:thin:@localhost:1521:XE" />
+			<property name="hibernate.connection.username" value="hr" />
+ 			<property name="hibernate.connection.password" value="hr" />
+			-->
+			<!-- 
+			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test" />
+            <property name="javax.persistence.jdbc.user" value="sa" />
+            <property name="javax.persistence.jdbc.password" value="" /> -->
+             
+        	<!--  使用c3p0 
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mydb?characterEncoding=UTF-8&amp;serverTimezone=UTC" />
+            <property name="javax.persistence.jdbc.user" value="zh" />
+            <property name="javax.persistence.jdbc.password" value="123" /> 
+			<property name="hibernate.connection.provider_class" value="org.hibernate.service.jdbc.connections.internal.C3P0ConnectionProvider"/>
+			<property name="hibernate.c3p0.max_size" value="15"/>
+			<property name="hibernate.c3p0.min_size" value="1"/>
+			<property name="hibernate.c3p0.timeout" value="1800"/>
+			<property name="hibernate.c3p0.max_statements" value="1800"/>
+			<property name="hibernate.c3p0.idle_test_period" value="3000"/>
+			<property name="hibernate.c3p0.acquire_increment" value="1"/>
+			<property name="hibernate.c3p0.validate" value="false"/>
+			 -->
+			 <!--  使用 Hikari   -->
+			 <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+			 <property name="hibernate.connection.provider_class" value="org.hibernate.hikaricp.internal.HikariCPConnectionProvider"/>
+             <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver" /> 
+             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/mydb?characterEncoding=UTF-8&amp;serverTimezone=UTC" />  
+             <property name="hibernate.connection.username" value="zh" />
+             <property name="hibernate.connection.password" value="123" /> 
+             <property name="hibernate.connection.autocommit" value="false" /> 
+            
+            
+ 			<!--
+ 			<property name="hibernate.ejb.cfgfile" value="hibernate.cfg.xml" /> 
+			日志文件中是有的,最好打开,并<hibernate-mapping auto-import="false">,
+			-->
+			
+ 			<!--  
+			<property name="hibernate.archive.autodetection" value="class, hbm" />
+			默认是class, hbm,如项目中有.hbm.xml日志中显示Detect class: true; detect hbm: true ,可修改为false
+			-->
+			<property name="hibernate.archive.autodetection" value="false" />
+			
+ 			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
+			<property name="hibernate.use_sql_comments" value="true"/>
+			<property name="hibernate.hbm2ddl.auto" value="update" /><!-- update, create, create-drop ,validate-->
+			<property name="hibernate.max_fetch_depth" value="3" />
+				
+			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
+		</properties>
+	</persistence-unit>
+</persistence>

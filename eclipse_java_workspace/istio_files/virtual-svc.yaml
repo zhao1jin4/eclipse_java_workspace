@@ -1,0 +1,17 @@
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: web-svc-vs
+spec:
+  hosts:
+  - web-svc
+  #全名为 web-svc.default.svc.cluster.local ,istio的虛拟service是建立在k8s的service上
+  http:
+  - route:
+    - destination:
+        host: tomcat-svc
+      weight: 20
+    - destination:
+        host: httpd-svc
+      weight: 80

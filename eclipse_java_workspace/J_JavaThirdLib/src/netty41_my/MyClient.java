@@ -9,11 +9,13 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 
  
 public final class MyClient {
 
-      static final String HOST = System.getProperty("host", "127.0.0.1");
+    static final String HOST = System.getProperty("host", "127.0.0.1");
     static final int PORT = Integer.parseInt(System.getProperty("port", "8007"));
     static final int SIZE = Integer.parseInt(System.getProperty("size", "256"));
 
@@ -28,13 +30,19 @@ public final class MyClient {
                  @Override
                  public void initChannel(SocketChannel ch) throws Exception {
                      ChannelPipeline p = ch.pipeline();
+                    // p.addLast(new StringDecoder());
                      p.addLast(new MyClientHandler());
+                     //p.addLast(new StringEncoder());
                  }
              });
 
             // Start the client.
             ChannelFuture f = b.connect(HOST, PORT).sync();
 
+           // f.channel().writeAndFlush("client Ð´ÏûÏ¢");
+           // f.channel().writeAndFlush("\r\n");
+            
+            
             // Wait until the connection is closed.
             f.channel().closeFuture().sync();
         } finally {

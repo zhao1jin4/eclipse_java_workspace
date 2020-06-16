@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.my</groupId>
+	<artifactId>cloud-kubernetes</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>cloud-kubernetes</name>
+	<description>Demo project for Spring Boot</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.1.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<dependencies> 
+		
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-configuration-processor</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.cloud</groupId>
+		    <artifactId>spring-cloud-starter-kubernetes</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.cloud</groupId>
+		    <artifactId>spring-cloud-starter-kubernetes-config</artifactId>
+		</dependency>
+		 
+		<dependency>
+		    <groupId>org.springframework.cloud</groupId>
+		    <artifactId>spring-cloud-starter-kubernetes-all</artifactId>
+		</dependency>
+		
+		
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+		 
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Hoxton.SR4</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<finalName>cloud-k8s</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>kubernetes.MainKubernetesApp</mainClass>
+				</configuration>
+			</plugin> 
+
+			<!--发布仓库上 https://github.com/spotify/dockerfile-maven 
+			mvn package
+			mvn dockerfile:build 本机的docker image 中就有了,Dockerfile和pom.xml文件同级
+			mvn dockerfile:push  失败???
+			-->
+			<plugin> 
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.13</version>
+				<!-- 如果package时不想用docker打包
+				<executions>
+				  <execution>
+					<id>default</id>
+					<goals>
+					  <goal>build</goal>
+					  <goal>push</goal>
+					</goals>
+				  </execution>
+				</executions>
+				-->
+				<configuration> 
+				   <username>admin</username>
+				  <password>Harbor12345</password> 
+				  <repository>127.0.0.1/harbor/library/cloud-k8s</repository>
+				  <tag>${project.version}</tag>
+				  <buildArgs>
+					<!--可以传给Dockerfile中的ARG JAR_FILE -->
+					<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+				  </buildArgs>
+				</configuration>
+			  </plugin>
+
+		</plugins>
+	</build>
+ 
+
+
+</project>

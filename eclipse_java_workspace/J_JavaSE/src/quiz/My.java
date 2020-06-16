@@ -74,6 +74,10 @@ public class My {
     	System.out.println(i3==i4);  //false ???  大坑
     	//对于Integer var=?在-128至127之间的赋值，Integer对象是在IntegerCache.cache产生，会复用已有对象，这个区间内的Integer值可以直接使用==进行判断，但是这个区间之外的所有数据，都会在堆上产生
     	
+    	Integer i5= new Integer(100); 
+    	Integer i6= new Integer(100); ;
+    	System.out.println(i5==i6); //false ，是new就不同
+    	
     	
     	//Arrays.sort(a);
     	//Collections.synchronizedMap(m); //所有方法用一个锁

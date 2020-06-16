@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: kubernetesApp
+  profiles:
+    active: dev
+ 
+  cloud:
+    kubernetes: 
+      config:
+        enabled: true  #--bootstrap
+        name:  my-cloud-config  #--bootstrap  
+        #(默认就是${spring.application.name},找kubernetes中哪个configMap,即kind: ConfigMap中对应有名为这个为metadata级下的name的值 
+        namespace: my-ns
+        #sources: #这里name和namespace可覆盖config下name和namespace
+        #- namespace: n3 
+        #  name: c3  

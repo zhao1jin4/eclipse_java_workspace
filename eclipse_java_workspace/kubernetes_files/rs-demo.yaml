@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+	name: myapp  #删以前的myapp
+	namespace: default
+spec:
+	replicas: 2 
+	selector:
+		matchLabels:
+			app: myapp
+			release: canary
+	template: #的内容就是以前的pod的内容
+		metadata:
+			name: myapp-pod
+			labels:
+				app: myapp #要符合上面的 selector
+				release: canary
+				enviroment: qa
+		spec:
+			containers:
+			- name: myapp-container
+			#可以做存活检查
+			  image: nginx:latest
+			  ports:
+			  - name: http
+			    containerPort: 80

@@ -10,7 +10,7 @@ public class MainProtoBuf {
     <version>3.5.1</version>
 </dependency>
 protoc -I=. --java_out=. persion.proto   
-protoc.exe -I=proto的输入目录 --java_out=java类输出目录 proto的输入目录包括包括proto文件
+protoc.exe -I=proto的输入目录 --java_out=java类输出目录 proto的输入目录包含proto文件
 
 
 */

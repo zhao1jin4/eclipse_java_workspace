@@ -15,8 +15,9 @@ public class TestThreadInterupt
                 mainThread.interrupt();
             }
         });
-
+                
         anotherThread.start();
+        
 
         try {
             Thread.sleep(2000);

@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: configConsulApp
+  profiles:
+    active: dev
+ 
+
+
+  cloud:
+    config:
+      uri:  #--bootstrap
+      - http://localhost:8888
+      discovery:
+        enabled: true   #--bootstrap
+        service-id: configConsulApp  
+ 

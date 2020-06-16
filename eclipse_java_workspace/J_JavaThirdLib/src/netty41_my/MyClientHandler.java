@@ -20,6 +20,8 @@ public class MyClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
        // ctx.write(msg);
+//    	ctx.channel().writeAndFlush("aa");
+    	
     	ByteBuf buf=(ByteBuf)msg;
     	System.out.println("客户收到："+buf.toString(CharsetUtil.UTF_8));
     }

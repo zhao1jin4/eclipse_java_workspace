@@ -1,0 +1,16 @@
+server:
+  port: 8081 
+
+logging.level:
+  root: INFO
+logging.file: /tmp/logs/cloud-k8s.log
+
+spring:
+  profiles:
+    active:
+    - dev
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true #--默认关闭 
+        strategy: refresh #--默认refresh 对 @ConfigurationProperties 或  @RefreshScope的做刷新

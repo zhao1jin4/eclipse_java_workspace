@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+	name: myapp 
+	labels:
+		app: myapp
+spec: 
+	ports:
+	- name: http
+	  port: 80
+ 	clusterIP: None
+ 	selector: 
+ 		app: myapp-pod 
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+	name: myapp
+spec: 
+	 serviceName: myapp   #无头服务
+	 replicas: 3
+	 selector:
+	 	matchLabels:
+	 		app: myapp-pod
+	 template:
+	 	metadata:
+	 		labels:
+	 			app: myapp-pod
+	 	spec:
+	 		containers:
+	 		- name: myapp
+	 		  image: nginx:latest
+	 		  ports:
+	 		  - containerPort: 80
+	 		    name: web
+	 		  volumeMounts:
+	 		  - name: myappdata
+	 		    mountPath: /usr/share/nginx/html
+	 volumeClaimTemplates: #会为每个pod生成一个PVC
+	 - metadata:
+	 		name: myappdata
+	   spec:
+	 		accessModes: ["ReadWriteOnce"] 
+			resources:
+				requests:
+					storage: 1Gi

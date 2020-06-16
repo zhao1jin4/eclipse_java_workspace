@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+	name: liveness-httpget
+	namespace: default
+	labels:
+		app: myapp
+		tier: frontend
+	#annotations:
+	#	created-by: cluster admin
+spec:
+	containers:
+	-	name: myapp
+		image: nginx:latest	
+		ports:
+		-	name: http
+			containerPort: 80
+		-	name: https
+			containerPort: 443
+		livenessProbe:
+		#readinessProbe:
+			httpGet:
+				port: http #是前面定义的端口名
+				path: /index.html
+			initialDelaySeconds: 1
+			periodSeconds: 3

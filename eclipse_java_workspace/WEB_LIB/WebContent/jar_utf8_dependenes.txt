@@ -311,6 +311,8 @@ xercesImpl.jar
 commons-fileupload-1.2.2.jar
 	commons-io-2.4.jar
 
+commons-cli-1.4.jar
+
 mysql-connector-java-8.0.15-bin.jar
 	protobuf-java-3.6.1.jar
 	
@@ -556,7 +558,30 @@ elasticsearch-rest-high-level-client-7.4.2.jar
 	queries/lucene-queries-8.3.0.jar
 	
 	
+--gRPC
+grpc-api-1.29.0.jar
+grpc-stub-1.29.0.jar
+grpc-protobuf-1.29.0.jar
+grpc-context-1.29.0.jar
+grpc-netty-shaded-1.29.0.jar  	运行时才要的
+grpc-core-1.29.0.jar    		运行时才要的
+grpc-protobuf-lite-1.29.0.jar  	运行时才要的
+perfmark-api-0.19.0.jar   		运行时才要的
+
+---camel
+camel-api-3.3.0.jar
+camel-base-3.3.0.jar
+camel-core-3.3.0.jar
+camel-core-engine-3.3.0.jar
+camel-util-3.3.0.jar
+camel-support-3.3.0.jar
+camel-core-languages-3.3.0.jar
+camel-file-3.3.0.jar 用来处理file://协议
 
 --large file
 aocr.jar 		62.5M asprise-ocr-java-5.01    验证码识别
+hazelcast   	这个服务端 jar包大小10MB
+
+
+
 

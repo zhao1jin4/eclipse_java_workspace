@@ -17,6 +17,9 @@ import org.elasticsearch.client.Response;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClient.FailureListener;
 import org.elasticsearch.client.RestClientBuilder;
+
+//ElaticSearch 8将移除 Transport Client，使用新的 Java High Level REST Client
+
 public class ElasticSearchRest {
 	public static void main(String[] args) throws Exception {
 		RestClientBuilder builder =RestClient.builder(

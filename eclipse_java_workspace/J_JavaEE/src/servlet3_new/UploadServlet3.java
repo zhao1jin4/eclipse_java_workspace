@@ -47,7 +47,7 @@ public class UploadServlet3 extends HttpServlet{
 		if(!"".equals(path))
 		{
 			String filename=path.substring(path.lastIndexOf("\\")+1);//只IE是带C:\,和req.setCharacterEncoding("UTF-8")中文 OK
-			file1.write("d:/temp/"+filename);//一个Part要调用一次write
+			file1.write("e:/tmp/"+filename);//一个Part要调用一次write
 		}
 	
 		String type=file1.getContentType();
@@ -56,12 +56,17 @@ public class UploadServlet3 extends HttpServlet{
 		
 		Part file2=req.getPart("attache2");
 		String pairs2=file2.getHeader("content-disposition");
+		String cnPairs2=new String(pairs2.getBytes(),"UTF-8");
 		System.out.println(pairs2);
-		
 		InputStream input=file2.getInputStream();
-		String param=req.getParameter("username");
-		System.out.println(new String(param.getBytes("iso8859-1"),"UTF-8"));//中文 OK
 		
+		String username=req.getParameter("username");
+		System.out.println("username="+username);
+		System.out.println("username="+new String(username.getBytes("iso8859-1"),"UTF-8"));//中文 OK
+		
+		String departName=req.getParameter("departName");
+		System.out.println("departName="+departName);
+		System.out.println("username="+new String(departName.getBytes("iso8859-1"),"UTF-8"));
 	}
 
 }

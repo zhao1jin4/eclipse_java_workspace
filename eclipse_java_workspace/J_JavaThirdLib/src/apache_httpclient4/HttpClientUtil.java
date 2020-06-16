@@ -8,7 +8,9 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
@@ -62,8 +64,7 @@ public class HttpClientUtil {
      */
     public String sendPost(Map<String, Object> paramMap, String url) {
         String responseString = "";
-        HttpClient httpclient = new DefaultHttpClient();
-
+    	CloseableHttpClient httpclient = HttpClients.createDefault();
         try {
 
             List<NameValuePair> parameters = new ArrayList<NameValuePair>();
@@ -85,9 +86,7 @@ public class HttpClientUtil {
             logger.info(String.format("http 请求地址:%s,返回参数>%s",url,responseString));
         } catch (Exception e) {
             logger.error(String.format("Exception%s,q请求失败",url),e);
-        } finally {
-            httpclient.getConnectionManager().shutdown();
-        }
+        }  
 
         return responseString;
     }

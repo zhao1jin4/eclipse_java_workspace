@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,25 +20,38 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.NTCredentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.params.ConnRoutePNames;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 public class TestHttpClient4 
 {
+	public static void main(String[] args) throws Exception
+	{
+		//download();//OK
+		//async();//OK
+		
+		postFormRequest(true);//上传 ,文件名  带中文不行???????????
+		//postFormRequest(false);//无上传 ,OK
+		//proxyTest();
+	}
+	
 	public static void sessionTest() throws Exception
 	{
 		//Cookie
@@ -48,12 +62,11 @@ public class TestHttpClient4
 	}
 	public static void async() throws Exception
 	{
-		HttpClient httpclient = new DefaultHttpClient();
-		httpclient.getParams().setParameter(HttpConnectionParams.CONNECTION_TIMEOUT,3000);//连接时间
-		httpclient.getParams().setParameter(HttpConnectionParams.SO_TIMEOUT,3000);//数据传送时间
+		CloseableHttpClient httpclient = HttpClients.createDefault();
 		
-		//HttpGet httpMehtod = new HttpGet("http://localhost:8080/J_JavaEE/");//POST
+		//HttpGet httpMehtod = new HttpGet("http://localhost:8080/J_JavaEE/");
 		HttpPost httpMehtod=new HttpPost("http://127.0.0.1:8080/J_JavaEE/receiveForm");
+		
 		ResponseHandler<byte[]> handler = new ResponseHandler<byte[]>()
 			{
 			    public byte[] handleResponse(  HttpResponse response) throws ClientProtocolException, IOException 
@@ -68,25 +81,34 @@ public class TestHttpClient4
 			};
 		byte[] response = httpclient.execute(httpMehtod, handler);
 		System.out.println("返回="+new String(response,"UTF-8"));
-		httpclient.getConnectionManager().shutdown();
+		
 	}
-	public static void postFormRequest(boolean isUpload) throws Exception //上传不支持中文
+	public static void postFormRequest(boolean isUpload) throws Exception  
 	{
-		DefaultHttpClient httpClient = new DefaultHttpClient();
+		CloseableHttpClient httpClient = HttpClients.createDefault();
 	    HttpPost httppost = new HttpPost(); //POST
-	    
+	   
 	    httppost.setHeader("user-agent","NX_Browser");//header中不能有中文
 	    if(isUpload)//要加 httpmime-4.2.1.jar
 	    {
-			httppost.setURI(URI.create("http://127.0.0.1:8080/J_JavaEE/upload"));
-			 //FileBody file = new FileBody(new File("c:/temp/中文名.txt"),"text/plain","UTF-8");//UTF-8,文件名上传带中文不行???????????
-			FileBody file = new FileBody(new File("c:/temp/file.txt"),"text/plain","UTF-8");
+	    	httppost.setURI(URI.create("http://127.0.0.1:8080/J_JavaEE/uploadServlet3"));
+	    	ContentType textContentType= ContentType.create("text/plain", "UTF-8"); 
+	    	
+	    	FileBody file1 = new FileBody(new File("d:/tmp/my.jpg"),ContentType.IMAGE_JPEG,"my.jpg");
+	    	
+			FileBody file2 = new FileBody(new File("d:/tmp/中文.jpg"),textContentType ,"中文.jpg"); //文件名  中文不行 ??????????? 
+			//String charset=file2.getCharset();
 			
-			MultipartEntity reqEntity = new MultipartEntity(null,null,Charset.forName("UTF-8"));//显示在http头中
-			reqEntity.addPart("userfile", file);   
-			reqEntity.addPart("comment", new StringBody("文件描述",Charset.forName("UTF-8")));//部分OK
-			
-			httppost.setEntity(reqEntity);//debug时看还是有ASCII的编码
+//			FileBody file3 = new FileBody(new File("d:/tmp/my.txt"),ContentType.TEXT_PLAIN ,"my.txt"); 
+			 HttpEntity reqEntity = MultipartEntityBuilder.create()
+					 .setCharset(Charset.forName("UTF-8"))
+					 .addPart("attache1", file1)
+					 .addPart("attache2", file2)
+					 .addTextBody("departName", "部门名1",textContentType)//中文正常
+					 .addPart("username", new StringBody("用户名1",textContentType))//中文正常
+//					 .addPart("username", new StringBody("user01",ContentType.MULTIPART_FORM_DATA))
+					.build();
+			httppost.setEntity(reqEntity);
 			
 	    }else
 	    {
@@ -109,7 +131,6 @@ public class TestHttpClient4
 	    {
 	    	  System.out.println(allHeader[i].getName()+"="+allHeader[i].getValue());
 		}
-	    List<Cookie> cookies = httpClient.getCookieStore().getCookies();//JSESSIONID,Session用
 	    
 	    HttpEntity respEntity = response.getEntity();
 	    System.out.println(response.getStatusLine());
@@ -128,40 +149,11 @@ public class TestHttpClient4
 	    }
 	    reader.close();
 	   
-	    httpClient.getConnectionManager().shutdown();
-	}
-	public static void proxyTest() throws Exception //测试OK,注意看日志
-	{
-		String password="xxx";
-		
-		DefaultHttpClient httpclient = new DefaultHttpClient();
-		HttpHost targetHost = new HttpHost("cn.bing.com");
-		//UsernamePasswordCredentials 	creds= new UsernamePasswordCredentials("APAC\476425", "Zhao1@@Jin4");//这个会报NTLM authentication error
-		NTCredentials creds = new NTCredentials("476425",password , "workstation", "APAC");
-		httpclient.getCredentialsProvider().setCredentials(new AuthScope("172.52.17.184", 8080), creds);   
-		HttpHost proxy = new HttpHost("172.52.17.184", 8080);//要设置两次IP
-		httpclient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy); 
-		HttpGet httpget = new HttpGet("/");
-		System.out.println("请求: " + httpget.getRequestLine());
-		HttpResponse response = httpclient.execute(targetHost, httpget);
-		HttpEntity entity = response.getEntity();
-		System.out.println("响应状态:"+response.getStatusLine());
-		// 显示结果
-		BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent(), "UTF-8"));
-		String line = null;
-		while ((line = reader.readLine()) != null) 
-		{
-		  System.out.println(line);
-		}
-		reader.close();
-		
-		httpclient.getConnectionManager().shutdown();
 	}
 	public static void download() throws Exception
 	{
-		DefaultHttpClient httpclient = new DefaultHttpClient();
-		//HttpHost targetHost = new HttpHost("127.0.0.1",8080);
-		HttpGet httpget = new HttpGet("http://127.0.0.1:8080/J_JavaEE/download");
+		CloseableHttpClient httpclient = HttpClients.createDefault();
+		HttpGet httpget = new HttpGet("http://127.0.0.1:8080/J_JavaEE/download?filename="+URLEncoder.encode("文件1.txt","UTF-8"));
 		HttpResponse response =httpclient.execute(httpget);
 		if(HttpStatus.SC_OK==response.getStatusLine().getStatusCode())
 		{
@@ -184,18 +176,51 @@ public class TestHttpClient4
 			output.close();
 		}
 	}
-	public static void simpleRequest() throws Exception
-	{
 
-	}
-	public static void main(String[] args) throws Exception
+	public static void proxyTest() throws Exception  
 	{
-		//proxyTest();//OK
-		//download();//OK
-		//postFormRequest(true);//上传 ,文件名上传带中文不行???????????
-		//postFormRequest(false);//无上传 ,OK
-		 async();//OK
+		String domainUserId="domain/userid";
+		String domain ="domain";
+		String userId="userid";
+		String password="xxx";
+		String proxyIp="172.52.17.184";
+		int port=8080;
+	        
+        
+        // 设置代理HttpHost
+        HttpHost proxy = new HttpHost(proxyIp, port, "http");
+        // 设置认证
+        CredentialsProvider provider = new BasicCredentialsProvider();
+        provider.setCredentials(new AuthScope(proxy), new UsernamePasswordCredentials(userId, password));
+
+        CloseableHttpClient httpClient = HttpClients.custom().setDefaultCredentialsProvider(provider).build();
+
+        RequestConfig config = RequestConfig.custom().setProxy(proxy)
+        		 .setConnectTimeout(10000)
+                .setSocketTimeout(10000)
+                .setConnectionRequestTimeout(3000)
+                .build();
+
+        HttpGet httpGet = new HttpGet("/");
+        httpGet.setConfig(config);
+
+        HttpHost target = new HttpHost("baidu.com", 80);
+        CloseableHttpResponse response = httpClient.execute(target, httpGet);
+
+        if (response.getStatusLine().getStatusCode() == 200)
+        {
+            System.out.println("OK");
+        }
+		HttpEntity entity = response.getEntity();
+		System.out.println("响应状态:"+response.getStatusLine());
+		// 显示结果
+		BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent(), "UTF-8"));
+		String line = null;
+		while ((line = reader.readLine()) != null) 
+		{
+		  System.out.println(line);
+		}
+		reader.close();
 	}
-		
 		
 }

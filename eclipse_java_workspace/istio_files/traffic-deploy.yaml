@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd
+  labels:
+    app: web
+    server: httpd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+      server: httpd
+  template:
+    metadata:
+      name: httpd 
+      labels:
+        app: web
+        server: httpd
+    spec:
+      containers:
+      - name: busybox
+        image: busybox:latest
+        imagePullPolicy: IfNotPresent 
+        command: ["/bin/sh","-c","echo 'hello httpd'> /var/www/index.html;httpd -f -p 8080 -h /var/www"]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat
+  labels:
+    app: web
+    server: tomcat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+      server: tomcat
+  template:
+    metadata: 
+      name: tomcat
+      labels:
+        app: web
+        server: tomcat
+    spec:
+      containers:
+      - name: tomcat
+        image: tomcat:9.0.34-jdk11
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/sh","-c","mkdir webapps/ROOT;echo 'tomcat' > webapps/ROOT/index.html;catalina.sh run"]
+        

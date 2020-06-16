@@ -1,0 +1,29 @@
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: ingress-myapp
+    #name: ingress-tomcat
+    namespace: default
+    annotations:
+        kubernetes.io/ingress.class: "nginx"  #指定ingress是用nginx
+spec:
+    #tls:
+    #- hosts:
+    #   - tomcat.mycluster
+    #  secretName: tomcat-ingress-secret #下面创建的
+    rules:
+    - host: myapp.mycluster #要是互联网上可解析的主机名,也可用路径来做
+    #- host: tomcat.mycluster:8080
+      http:
+         paths:
+         -  path: #如host有值，这里可没值/testpath
+            backend:
+              serviceName: myapp
+              servicePort: 80
+              #serviceName: tomcat
+              #servicePort: 8080
+         #-  path: #tomcat可同时暴露两个端口
+         #   backend: 
+         #     serviceName: tomcat
+         #     servicePort: 8009

@@ -1,0 +1,23 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my
+  labels:
+    app: my
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my
+  template:
+    metadata: 
+      labels:
+        app: my
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.18-alpine
+        imagePullPolicy: IfNotPresent 
+        ports:
+        - containerPort: 80
