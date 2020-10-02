@@ -55,7 +55,7 @@ public class IdCard
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH },
 			  optional = false, fetch = FetchType.EAGER)//从方来加 optional = false
 	@JoinColumn(name = "PERSON_ID",nullable=false,foreignKey =@ForeignKey(name="FK_IDCARD_PERSON"))
-	//生产的索引名是随机的，和外键名不同？？学生表不是的
+	//产生的索引名是随机的???(唯一约束)
 	public Person getPerson()
 	{
 		return person;

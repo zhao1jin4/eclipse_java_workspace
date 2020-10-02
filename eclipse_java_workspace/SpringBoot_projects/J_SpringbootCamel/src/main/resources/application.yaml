@@ -1,0 +1,15 @@
+server:
+  port: 8888
+   
+logging:
+  level:
+    root: info
+    
+    
+camel:
+  springboot:
+    name: CamelRestJpa
+  component:
+    servlet:
+      mapping:
+        contextPath: /camel-rest-jpa/*

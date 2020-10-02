@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 @Entity
 @Table(name = "orders")
 public class Order
@@ -45,7 +47,8 @@ public class Order
 	/*
 	 * OnToMany 一对多,一方 cascade 级连方式 fetch 抓取策略 mappedBy 由指定属性维护关系
 	 */
-	@OneToMany(cascade = { CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.LAZY, mappedBy = "order")
+	@Where(clause = "sellPrice > 0") //java属性,FetchType.EAGER时，同一事务中，如有有更新为符合@Where条件的数据，不会立即应用条件，只是在新事务第一次取数据时应用@Where条件
+	@OneToMany(cascade = { CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE }, fetch = FetchType.EAGER, mappedBy = "order")
 	public Set<OrderItem> getItems()
 	{
 		return items;

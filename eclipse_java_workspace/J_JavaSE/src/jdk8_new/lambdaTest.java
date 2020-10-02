@@ -2,6 +2,8 @@ package jdk8_new;
 
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 //@FunctionalInterface //即只可有一个未实现的方法,如不加这个默认就是
 interface IntegerMath 
@@ -107,4 +109,15 @@ public class lambdaTest
     	System.out.println(res);
     	
     }
+    public void init() {
+    	new Thread(this::connect);
+    }
+    public void connect() {
+    	Map<String,String> override=new HashMap<>();
+    	override.forEach(this::setString);
+    }
+    public void setString(String key ,String val) {
+    }
+    
+    
 }

@@ -1,0 +1,154 @@
+<configuration  debug="true" scan="true" scanPeriod="30 seconds">
+	
+	<!-- <include file="src/logback/includedConfig.xml" />  -->
+	<include resource="logback/propInclude.xml" />
+	
+	<contextName>${CONTEXT_NAME}</contextName>
+
+	<!-- 如有配置错误,不配置这个也会显示在控制台,配置有无都显示 -->
+	<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" /> 
+
+<!--   
+ 	<contextListener class="logback.MyListener"/>
+ -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			 <pattern> [%contextName] %d{yyyy-MM-dd HH:mm:ss.SSS'Z',Etc/UTC} [%thread] %-5level %logger{36}[%M]:%line - %msg%n </pattern> 
+			<!-- <pattern> [%contextName] %d{HH:mm:ss.SSS} [%thread]%.-1level %logger{3} - %msg%n </pattern>  -->
+		</encoder>
+	</appender>
+	<!-- 	
+	全包名(最后一个.前的内容)
+	类名(最后一个.后的内容)
+	%logger  显示全包名.类名
+	%logger{0} 只显示类名
+	%logger{5} 包名.类名 缩短的长度,(包名.前至少1个字符,类名全部)
+	
+	%.-1level  把INFO 变为  I
+ -->
+	
+	
+	
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender" >
+		<file>${LOG_HOME}/All.log</file>
+		<encoder>
+			<pattern>[%contextName] %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n </pattern>
+		</encoder>
+	</appender>
+	  
+	 <appender name="bizRolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	    <file>${APP_BIZ_HOME}/biz.log</file>
+	    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+	      <fileNamePattern>${APP_BIZ_HOME}/biz-%d{yyyy-MM-dd}.%i.log</fileNamePattern> <!-- .zip 可有可无,压缩会节约20倍的空间-->
+	       <maxFileSize>100MB</maxFileSize>    
+	       <maxHistory>30</maxHistory>
+	       <totalSizeCap>10GB</totalSizeCap>
+	    </rollingPolicy>
+	    <encoder>
+	      <pattern>[%contextName] %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+	    </encoder>
+	 </appender>
+  
+	<!-- 变量值可再引用变量   :- 表示变量如未赋值使用后的面的默认值  -->
+	 <appender name="daoRolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	    <file>${APP_DAO_HOME:-${LOG_HOME}/${CONTEXT_NAME}/dao}/dao.log</file>
+	    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+	      <fileNamePattern>${APP_DAO_HOME:-${LOG_HOME}/${CONTEXT_NAME}/dao}/dao-%d{yyyy-MM-dd}.%i.zip</fileNamePattern> 
+	       <maxFileSize>100MB</maxFileSize>    
+	       <maxHistory>30</maxHistory>
+	       <totalSizeCap>10GB</totalSizeCap>
+	    </rollingPolicy>
+	    <encoder>
+	      <pattern>[%contextName] %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+	    </encoder>
+	 </appender> 
+	<define name="APP_SERVICEOUT_HOME" class="logback.ServcieOutPropertyDefiner"> <!-- 变量值来自程序 -->
+		 <logHome>${LOG_HOME}</logHome>
+	</define>
+	
+	<appender name="serviceOutRolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	    <file>${APP_SERVICEOUT_HOME}/serviceout.log</file>
+	    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+	      <fileNamePattern>${APP_SERVICEOUT_HOME}/serviceout_%d{yyyyMMdd}.log</fileNamePattern> 
+	       <maxFileSize>100MB</maxFileSize>    
+	       <maxHistory>30</maxHistory>
+	       <totalSizeCap>10GB</totalSizeCap>
+	    </rollingPolicy>
+	    <encoder>
+	      <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %msg%n </pattern>
+	    </encoder>
+	 </appender>
+	 
+	<!--  logback可以把日志推送给 logstash  -->
+	<appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<writeBufferSize>16384</writeBufferSize> <!-- 默认缓存是8192 -->
+		<destination>127.0.0.1:4560</destination><!-- 可以配置多个destination标签，或一个标签多个值用,分隔-->
+		<keepAliveDuration>5 minutes</keepAliveDuration>
+		
+		 <!-- LogstashEncoder输出( kibana查看)信息有，@timestamp时间 ,host主机，level级别,message日志信息，thread_name线程，logger_name(有时不是类名)
+	 但没有类名，方法名，行号？？-->
+	 <!-- customFields表示输出的json多加一个字段 
+		<encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
+			<timestampPattern>yyyy-MM-dd'T'HH:mm:ss.SSS</timestampPattern>
+			<timeZone>UTC</timeZone>
+			<customFields>{"AppName":"myProject"}</customFields>
+		</encoder>
+		 -->
+		<!--
+		 <arguments ></arguments>为代码中使用StructuredArgument用的
+		  LoggingEventCompositeJsonEncoder  %使用logback的PatternLayout格式  
+		  "position": "%class.%method:%-3L",   // kibana显示？ %class{-20}也不行 不认？？
+		    官方上的"line_str": "%line", 也不行？？？
+		    
+		   -->
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+		  <providers>
+		    <timestamp/>
+		    <pattern>
+		      <pattern>
+		        {
+		        "AppName": "myProject",  
+		        "LO": "%logger",
+		        "LE": "%level",
+		        "TH": "%thread",
+		        
+		        "line_str": "%line",
+		        "position": "%class{-20} . %method : %-3L",
+		        
+		        "ME": "%message"
+		        }
+		      </pattern>
+		    </pattern>
+		    <arguments ></arguments>
+		  </providers>
+		</encoder>
+		  
+	</appender>
+	 
+	 
+	 
+
+	<logger name="${CONTEXT_NAME}.biz" level="INFO"  >
+		<appender-ref ref="bizRolling" /> 
+	</logger>
+ 
+	<logger name="${CONTEXT_NAME}.dao" level="INFO" additivity="false" >  <!-- Dao层的日志只写文件,不写其它的地方 -->
+		<appender-ref ref="daoRolling" />
+	</logger>
+  	
+  	<logger name="${CONTEXT_NAME}.serviceOut" level="INFO"  >  
+		<appender-ref ref="serviceOutRolling" />
+	</logger>
+	
+	<!-- 关闭某个类的INFO日志
+	<logger name="org.hibernate.engine.internal.StatisticalLoggingSessionEventListener" level="WARN"  >   
+		<appender-ref ref="STDOUT" />
+	</logger>
+	-->
+	
+	<root level="debug">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+		<appender-ref ref="logstash" /> 
+	</root>
+</configuration>

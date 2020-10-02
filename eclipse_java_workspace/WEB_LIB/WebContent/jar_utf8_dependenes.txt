@@ -111,6 +111,9 @@ spring-data-redis-2.0.7.RELEASE.jar
 	jackson-core-2.9.6.jar
 	jackson-databind-2.9.6.jar
 		classmate-1.3.0.jar
+		
+------spring-statemachine-core-2.2.0.RELEASE.jar
+
 --------MyBatis
 mybatis-3.5.4.jar
 mybatis-dynamic-sql-1.1.4.jar
@@ -578,10 +581,32 @@ camel-support-3.3.0.jar
 camel-core-languages-3.3.0.jar
 camel-file-3.3.0.jar 用来处理file://协议
 
+camel-direct-3.3.0.jar
+camel-seda-3.3.0.jar
+camel-bean-3.3.0.jar  
+
+
+--zeromq
+jeromq-0.5.2.jar
+	jnacl-1.0.0.jar
+
+--
+jjwt-api-0.11.2.jar
+jjwt-impl-0.11.2.jar
+jjwt-jackson-0.11.2.jar
+
+--
+dozer-core-6.5.0.jar
+
+
+javax.inject-1.jar
+
+hazelcast-spring-4.0.1.jar
+liquibase-core-4.0.0.jar
+
 --large file
 aocr.jar 		62.5M asprise-ocr-java-5.01    验证码识别
 hazelcast   	这个服务端 jar包大小10MB
-
 
 
 

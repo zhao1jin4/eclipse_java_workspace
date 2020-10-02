@@ -26,6 +26,6 @@ REFERENCED_TABLE_NAME = 'jpa_student';
 
 
 mvn dependency:copy-dependencies
-
+ 
 
 

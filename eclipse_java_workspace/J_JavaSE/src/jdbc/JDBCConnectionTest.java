@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.sql.ResultSet;
 import java.sql.DriverManager;
 import java.util.concurrent.CountDownLatch;
@@ -51,16 +52,17 @@ public class JDBCConnectionTest
 	{
 		
 		//Class.forName("com.mysql.jdbc.jdbc2.optional.MysqlXADataSource");
-		Class.forName("com.mysql.jdbc.Driver");
+		//Class.forName("com.mysql.jdbc.Driver");
+		Class.forName("com.mysql.cj.jdbc.Driver");
 		
 		//MySQL JDBC Driver可不指定DB
-		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306?useUnicode=true&amp;characterEncoding=UTF-8","root","root");
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306?useUnicode=true&characterEncoding=UTF-8","zh","123");
 		
 		//Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8","root","root");
 		//Connection con=DriverManager.getConnection("jdbc:mysql://address=(protocol=tcp)(host=localhost)(port=3306)/mydb?useUnicode=true&amp;characterEncoding=UTF-8","user1","user1");
 		
 		
-		con.setTransactionIsolation(Connection.TRANSACTION_NONE);
+//		con.setTransactionIsolation(Connection.TRANSACTION_NONE);//mysql不支持NONE
 		//MySQL 与 JDBC 支持的完全一致
 		con.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 		con.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);//Oracle 默认
@@ -70,18 +72,25 @@ public class JDBCConnectionTest
 		
 		Statement state=con.createStatement();
 		state.executeUpdate("use mydb");
+		con.setAutoCommit(false);
+		 
+		state.executeUpdate("create table student(id int,name varchar(20),grade DECIMAL(5,2))");
+		con.createStatement().executeUpdate("insert into student(id,name,grade)values(1,'lisi',70.9)");
 		
-//		state.executeUpdate("create table student(id int,name varchar(20))");
-//		state=con.createStatement();
-		
-		PreparedStatement prepare=con.prepareStatement("select * from student");
+		PreparedStatement prepare=con.prepareStatement("select * from mydb.student");//也可直接加数据库名
 		ResultSet rs=prepare.executeQuery();
-		
-		
-//		PreparedStatement prepare=con.prepareStatement("select * from mydb.student");//也可直接加数据库名
-//		ResultSet rs=prepare.executeQuery();
+		while(rs.next())
+			System.out.println("grade="+rs.getBigDecimal(3));//JDBC可以直接getBigDecimal
 
+		Savepoint savePoint2=	con.setSavepoint("savePoint1");//JDBC可以SavePoint,MySQL也可
+		con.createStatement().executeUpdate("insert into student(id,name,grade)values(2,'wang',80.9)");
 		
+			Savepoint savePoint3=	con.setSavepoint("savePoint2");
+			con.createStatement().executeUpdate("insert into student(id,name,grade)values(3,'sun',88.9)");
+			con.commit();//不能 commit 某一个savepoint,不能嵌入式事务，commit后再rollback报错
+			
+		con.rollback(savePoint2);
+		 
 		//state.close();
 		con.close();
 	
@@ -225,6 +234,7 @@ public class JDBCConnectionTest
 		com.mysql.cj.jdbc.Driver d;
 		//Class.forName("com.mysql.jdbc.Driver");
 		Class.forName("com.mysql.cj.jdbc.Driver");
+		
 		//&useSSL=true
 		Connection conn=DriverManager.getConnection("jdbc:mysql://address=(protocol=tcp)(host=localhost)(port=3306)/mydb?useUnicode=true&characterEncoding=UTF-8","user1","user1");
 		DatabaseMetaData dbMetaData= conn.getMetaData();
@@ -274,14 +284,14 @@ public class JDBCConnectionTest
 	}
 	public static void main(String[] args) throws Exception
 	{
-		//testConnectMySQL();
 		//testConnectOracle();
 		//testConnectH2();
 		//testConnectDB2();
 		//testOracleNvarchar2();
 		
+		testConnectMySQL();
 		//testMySQLutf8mb4();
-		testMySQLMetaData();
+		//testMySQLMetaData();
 		//testMySQLAutoIncrement();
 	}
 

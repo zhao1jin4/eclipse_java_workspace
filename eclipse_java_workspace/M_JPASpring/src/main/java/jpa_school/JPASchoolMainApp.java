@@ -29,6 +29,11 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.Temporal;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.annotations.Formula;
 import org.hibernate.cfg.Environment;
@@ -37,6 +42,39 @@ import org.hibernate.cfg.Environment;
 public class JPASchoolMainApp 
 {
 	public static SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+
+	public static void main(String[] args) throws Exception 
+	{
+		EntityManagerFactory  emf = Persistence.createEntityManagerFactory("MyJPA");
+		 
+		//Map<String,Object> map=emf.getProperties();//就是在persistence.xml中配置的属性，这里应该可以put
+		 EntityManager em = emf.createEntityManager();
+	     em.getTransaction().begin();
+		
+	     
+	     //如没有配置<provider>会查所有classpath下(在hibernate-core-5.4.17.Final.jar中)的META-INF/services/javaxpersitence.spi.PersistenceProvider文件,有写Provider实现类,可复制
+	     
+	     
+		//save(em);
+		//find_reference(em);//reference?????
+		JPSQL_query(em);
+		//criteria(em);//栈溢出
+		//one2Many(em);//lazy,fetch
+		//one2One(em);//???
+		//many2Many(em);//reverse,cascade
+		//lock(em);
+		//blobCreate(em);
+		//blobRead(em);
+		//extendObject(em);
+		//many2ManyWithScore(em);
+	     
+	     if(em.isOpen())
+	     {
+	    	  em.getTransaction().commit();
+	          em.close();
+	     } 
+	}
+	
 	public static void save(EntityManager manager) throws Exception 
 	{
 		Teacher t=new Teacher();
@@ -48,6 +86,8 @@ public class JPASchoolMainApp
 		lisi.setName("lisi");
 		lisi.setBirthday(format.parse("1985-01-20"));
 		lisi.setTeacher(t);
+		lisi.setGender(Gender.MALE);
+		lisi.setIsLeague(Boolean.TRUE);
 		
 		Student wang =new Student ();
 		//wang.setId(2002);
@@ -61,8 +101,8 @@ public class JPASchoolMainApp
 		t.setStudents(students);
 		
 		manager.persist(t);
-//		manager.persist(lisi);
-//		manager.persist(wang);
+		manager.persist(lisi);
+		manager.persist(wang);
 		
 	}
 	public static void find_reference(EntityManager em)  
@@ -79,8 +119,12 @@ public class JPASchoolMainApp
 	public static void JPSQL_query(EntityManager em) 
 	{
 		
-		Query query=em.createQuery("from Student s where s.name=?2",Student.class);//JPQL,
-		query.setParameter(2, "lisi");//JPA都是setParameter,JPA和JDBC一样是1开始的,而Hibernate是0开始的,也可在?后加1,?1表示这个位置就是1
+		//Query query=em.createQuery("from Student s where s.name=?",Student.class);//JPSqL
+		//query.setParameter(1, "lisi");//JPA都是setParameter,JPA和JDBC一样是1开始的,而Hibernate是0开始的,也可在?后加1,?1表示这个位置就是1
+
+		
+		Query query=em.createQuery("from Student s where s.name=?2",Student.class); 
+		query.setParameter(2, "lisi");
 		List<Student> list=query.getResultList();//JPA是getResultList
 		for (Student o :list)
 		{
@@ -125,6 +169,7 @@ public class JPASchoolMainApp
 		Query sqlQuery=em.createNativeQuery("select count(*) from JPA_STUDENT s,JPA_TEACHER t where s.teacher_id=t.id and t.name=:t_name ");
 		sqlQuery.setParameter("t_name" , "teacher1");
 		Object count=sqlQuery.getSingleResult();//JAP是getSingleResult
+		//这里返回类型为BigInteger ,可能是老版本或者有配置返回为BigDecimal(  createNativeQuery  的 count(*) )
 		System.out.println("JPQL Query查询teacher1老师的学生数:"+count);
 		
 		sqlQuery=em.createNativeQuery("select  * from JPA_TEACHER ",Teacher.class);
@@ -144,7 +189,24 @@ public class JPASchoolMainApp
 //		byte[]buffer=(byte[])query.getSingleResult();
 //		System.out.println("学生照片大小是:"+buffer.length);
 	}
-	
+	public static void criteria(EntityManager em) //栈溢出
+	{
+		CriteriaBuilder builder=em.getCriteriaBuilder();
+		CriteriaQuery<Student> query=builder.createQuery(Student.class);
+		
+		Root<Student> root=query.from(Student.class);
+		
+		Path<Set<String>> names =root.get("name");//get方法的doc有示例代码 
+		Expression<Boolean> restriction=builder.and(builder.equal(names,"lisi") , builder.upper(root.get("gender")).in(Gender.MALE,Gender.FEMALE));
+		
+		query.select(root)
+		.where(restriction)  
+		.orderBy(builder.desc(root.get("birthday")));
+		
+		 
+		List<Student> res=em.createQuery(query).getResultList();
+		System.out.println(res);//Teacher.toString,Student.toString两个相互一直调用 ，栈溢出,和cascade没关系 
+	}
 	public static void one2Many(EntityManager em) //lazy,fetch
 	{
 		Student wang=(Student)em.find(Student.class, 1);
@@ -391,37 +453,5 @@ public class JPASchoolMainApp
 	}
 	*/
 	
-	public static void main(String[] args) throws Exception 
-	{
-		org.jboss.logging.Logger x;
-		Environment s;
-		 
-		EntityManagerFactory  emf = Persistence.createEntityManagerFactory("MyJPA");
-		 //Map<String,Object> map=emf.getProperties();//就是在persistence.xml中配置的属性，这里应该可以put
-		 EntityManager em = emf.createEntityManager();
-	     em.getTransaction().begin();
-		
-	     
-	     //如没有配置<provider>会查所有classpath下(在hibernate-core-5.4.17.Final.jar中)的META-INF/services/javaxpersitence.spi.PersistenceProvider文件,有写Provider实现类,可复制
-	     
-	     
-		save(em);
-		//find_reference(em);//reference?????
-		//JPSQL_query(em);
-		//one2Many(em);//lazy,fetch
-		//one2One(em);//???
-		//many2Many(em);//reverse,cascade
-		//lock(em);
-		//blobCreate(em);
-		//blobRead(em);
-		//extendObject(em);
-		//many2ManyWithScore(em);
-	     
-	     if(em.isOpen())
-	     {
-	    	  em.getTransaction().commit();
-	          em.close();
-	     } 
-	}
 
 }

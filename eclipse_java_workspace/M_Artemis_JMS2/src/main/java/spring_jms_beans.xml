@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jee="http://www.springframework.org/schema/jee"	
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/jee
+						http://www.springframework.org/schema/jee/spring-jee.xsd
+						http://www.springframework.org/schema/jms
+						http://www.springframework.org/schema/jms/spring-jms.xsd
+  						http://activemq.apache.org/schema/core
+						http://activemq.apache.org/schema/core/activemq-core.xsd">
+<!-- 
+
+Tomcat目录下的conf/context.xml
+
+<Resource name="jms/ConnectionFactory"   
+  auth="Container"     
+  type="org.apache.activemq.ActiveMQConnectionFactory"   
+  description="JMS Connection Factory"  
+  factory="org.apache.activemq.jndi.JNDIReferenceFactory"   
+  brokerURL="vm://localhost"   
+  brokerName="LocalActiveMQBroker"/>  
+   
+<Resource name="jms/Queue"   
+auth="Container"   
+type="org.apache.activemq.command.ActiveMQQueue"  
+description="my Queue"  
+factory="org.apache.activemq.jndi.JNDIReferenceFactory"   
+physicalName="FOO.BAR"/>  
+
+<Resource name="jms/Topic"   
+auth="Container"   
+type="org.apache.activemq.command.ActiveMQTopic"  
+description="my Topic"  
+factory="org.apache.activemq.jndi.JNDIReferenceFactory"   
+physicalName="my.Topic"/>  
+ 
+ 
+ -->
+ 
+ 
+<!--    二选 一
+	<bean id="jmsConnectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jms/ConnectionFactory"></property>
+	</bean>
+  -->  
+  
+  
+      <bean id="jmsConnectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
+        <property name="targetConnectionFactory" >
+            <bean  class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="brokerURL" value="tcp://localhost:61616" />
+                 <property name="userName" value="#{jms['mq.username']}" />
+			  	 <property name="password" value="#{jms['mq.password']}" />
+			 	 <property name="sendTimeout" value="10000" />  <!-- 如果不设置,会一直卡住好多个小时 -->
+            </bean>
+        </property>
+    </bean>
+    
+   <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="jmsConnectionFactory"></property>
+        <property name="defaultDestination" ref="jmsQueue"></property>
+    </bean>
+
+    <bean id="sender" class="activemq_web.Sender">
+        <property name="jmsTemplate" ref="jmsTemplate"></property>
+        <property name="theQueue" ref="jmsQueue"></property>
+         <property name="theTopic" ref="jmsTopic"></property>
+    </bean>
+   
+   
+    <bean id="queueReceive" class="activemq_web.QueueReceiverListener"></bean>
+	<bean id="jmsQueue" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<!-- <property name="jndiName" value="java:comp/env/jms/Queue"></property> -->
+		<property name="jndiName" value="jms/Queue"></property>
+		  
+	</bean>
+	<bean id="listenerContainerQueue" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="jmsConnectionFactory"></property>
+		<property name="destination" ref="jmsQueue"></property>
+		<property name="messageListener" ref="queueReceive"></property>
+	</bean>
+	
+	
+	<bean id="topicReceive" class="activemq_web.TopicReceiverListener"></bean>
+    <bean id="jmsTopic" class="org.springframework.jndi.JndiObjectFactoryBean">
+      <!--   <property name="jndiName" value="java:comp/env/jms/Topic"></property> -->
+        <property name="jndiName" value="jms/Topic"></property>
+    </bean>
+    <bean id="listenerContainerTop" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"></property>
+        <property name="destination" ref="jmsTopic"></property>
+        <property name="messageListener" ref="topicReceive"></property>
+    </bean>
+    
+</beans>

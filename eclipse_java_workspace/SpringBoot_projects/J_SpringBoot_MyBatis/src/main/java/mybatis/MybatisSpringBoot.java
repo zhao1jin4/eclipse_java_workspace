@@ -54,6 +54,9 @@ public class MybatisSpringBoot {
 	    @ConfigurationProperties(prefix = "c3p0")
 	    public DataSource dataSource() {
 	    	 return DataSourceBuilder.create().type(com.mchange.v2.c3p0.ComboPooledDataSource.class).build();
+	    	 //DataSourceBuilder 优先使用hikari
+			//return DataSourceBuilder.create().url("").username("").password("").build();
+
 	    }
  		*/
 	

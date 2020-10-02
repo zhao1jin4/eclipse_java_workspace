@@ -1,11 +1,13 @@
 
 package cache_hazelcast;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.map.IMap;
 
 public class DistributedMap {
 /*
@@ -38,6 +40,7 @@ Hazelcast IMDG ¿ªÔ´µÄ in-memory data grid
 
 		map.forEach((k, v) -> System.out.println(k + " => " + v));
 
+		 
 		h.shutdown();
 
 	}

@@ -19,9 +19,13 @@ public class TestJSCH_SFTP {
         ChannelSftp sftp = null;
         try {
             JSch jsch = new JSch();
-            jsch.getSession(username, host, port);
             Session sshSession = jsch.getSession(username, host, port);
-            sshSession.setPassword(password);
+            
+            //sshSession.setPassword(password);
+            
+            String pemPrivateKey="C:\\cygwin64\\home\\dell\\.ssh\\id_rsa";
+            jsch.addIdentity(pemPrivateKey);//私钥只是使用 ssh-keygen -m PEM 生成的id_rsa 文件
+            
             Properties sshConfig = new Properties();
             sshConfig.put("StrictHostKeyChecking", "no");
             sshSession.setConfig(sshConfig);

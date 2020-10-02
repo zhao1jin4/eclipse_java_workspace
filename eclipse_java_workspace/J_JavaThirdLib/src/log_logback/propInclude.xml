@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<included>
+ 
+	<!-- 
+	<property name="LOG_HOME" value="C:/jboss1/logs" />
+	<property name="CONTEXT_NAME" value="MyAppName" />
+	<property name="APP_BIZ_HOME" value="${LOG_HOME}/${CONTEXT_NAME}/biz" />
+	 -->
+  
+	<!-- 也可用于DEV,SIT,UTA 环境的切换  ,日志报要 Janino 库 janino-2.7.5.jar 依赖 commons-compiler-2.7.5.jar -->
+	<if condition='property("os.name").contains("Windows")'>  
+		<then>
+			<property file="./src/logback/windows.properties" />
+			<!-- 	相对于 应用程序运行的当前目录 ,或者绝对目录,如在windows下如果路径/开头,则是C:下   -->
+		</then>
+		<else>
+    		<property file="./src/logback/linux.properties" />
+    	</else>  
+	</if>
+
+	<property resource="logback/app.properties" />
+	<!--  resource 是从classpath路径中找文件,做为变量 -->
+		
+</included>

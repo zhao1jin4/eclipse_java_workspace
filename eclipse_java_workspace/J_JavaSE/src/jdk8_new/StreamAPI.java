@@ -2,6 +2,7 @@ package jdk8_new;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class StreamAPI {
 	                .filter(e -> e > 2)
 	                //.sequential()//串行
 	                .distinct()
-	                .collect(Collectors.toList());
+	                .collect(Collectors.toList()); //toList,toMap返回的对象还是原来的引用
 	        System.out.println("testInt result is: " + r);
 	        
 	       List<Integer> list1=Arrays.stream(numbers).mapToInt( Integer::parseInt).mapToObj(Integer::new).collect(Collectors.toList());
@@ -71,7 +72,9 @@ public class StreamAPI {
                 });
         System.out.println("accResult: " + accResult.get()); 
        
-         
+         List<Integer> ten=Stream.iterate(0,n->n+1).limit(10).collect(Collectors.toList());
+         Collections.shuffle(ten);//随机置换
+         System.out.println("ten: " + ten); 
     }
 	public static void testObject()
 	{

@@ -1,5 +1,6 @@
 package jdk8_new;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.OptionalInt;
 
@@ -23,7 +24,8 @@ public class Main {
                                   .max();
     System.out.println("Number of calories:" + maxCalories);
 
-
+    Comparator<Dish> comparator= Comparator.comparing(Dish::getName).reversed().thenComparing(Dish::getType);
+    
   }
 
 }

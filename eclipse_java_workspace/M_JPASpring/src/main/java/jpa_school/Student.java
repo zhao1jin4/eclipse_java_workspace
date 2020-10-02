@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EntityResult;
 import javax.persistence.EnumType;
@@ -32,6 +33,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -57,8 +59,21 @@ import jpa.one2one.Person;
 public class Student implements Serializable 
 {
 
+
+/*
+生成下面的样子
+create table all_table_id_gen
+( 
+	table_name varchar(255),
+	seq_val bigint 
+);
+insert into  all_table_id_gen (table_name,seq_val)values('jpa_student',101);
+第一批次是102,103,第二次就是203，204，不是按顺序来的
+*/
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@TableGenerator(name="myGen" , table="all_table_id_gen",pkColumnName = "table_name",valueColumnName = "seql_val",pkColumnValue = "jpa_student",initialValue = 101 )
+	@GeneratedValue(strategy=GenerationType.TABLE,generator = "myGen")
+	//@GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
 	 
 	private String name;
@@ -78,7 +93,8 @@ public class Student implements Serializable
     //@Embedded 可以不加
     private Favorite fav;
     
-    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},optional=true)//从方optional=true表示一个学生可以没有老师
+    @ManyToOne( cascade={CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},
+    		optional=true)//从方optional=true表示一个学生可以没有老师
     @JoinColumn(name="TEACHER_ID",nullable=false,foreignKey =@ForeignKey(name="FK_JPA_STUDENT_TEACHER"))
     private  Teacher teacher;
     
@@ -105,8 +121,17 @@ public class Student implements Serializable
     @Basic(fetch=FetchType.LAZY)
     private String remark;
     
+    @Column(length = 1,nullable = true,name="IS_LEAGUE")
+    @Convert(converter = YNConverter.class)
+    private Boolean isLeague;
     
-    public Favorite getFav() {
+    public Boolean getIsLeague() {
+		return isLeague;
+	}
+	public void setIsLeague(Boolean isLeague) {
+		this.isLeague = isLeague;
+	}
+	public Favorite getFav() {
 		return fav;
 	}
 	public void setFav(Favorite fav) {

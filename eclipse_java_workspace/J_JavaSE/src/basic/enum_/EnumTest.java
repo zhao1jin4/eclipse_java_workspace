@@ -33,7 +33,7 @@ public class EnumTest
 		System.out.println( EnumSet.complementOf(colorSet) ); //complement补足 ,  除了给定的元素外的其它元素
 		
 		
-		
+		//Map key是enum类型,EnumMap会根据enum的顺序来排序Map 
 		EnumMap<ColorEnum,String> map =new EnumMap<>(ColorEnum.class);
 		map.put(ColorEnum.RED, "255");
 		

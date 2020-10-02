@@ -8,12 +8,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Where;
+
 @Entity
 public class OrderItem
 {
 	private Integer id;
 	private String productName;
-	private Float sellProce = 0f;
+	
+	@Column(name="SELL_PRICE",nullable = false)
+	private Float sellPrice = 0f;
+	
 	private Order order;
 
 	@Id
@@ -39,15 +44,12 @@ public class OrderItem
 		this.productName = productName;
 	}
 
-	@Column(nullable = false)
-	public Float getSellProce()
-	{
-		return sellProce;
+	public Float getSellPrice() {
+		return sellPrice;
 	}
 
-	public void setSellProce(Float sellProce)
-	{
-		this.sellProce = sellProce;
+	public void setSellPrice(Float sellPrice) {
+		this.sellPrice = sellPrice;
 	}
 
 	/*
@@ -63,6 +65,11 @@ public class OrderItem
 	public void setOrder(Order order)
 	{
 		this.order = order;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderItem [id=" + id + ", productName=" + productName + ", sellPrice=" + sellPrice + "]";
 	}
 
 }

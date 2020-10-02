@@ -12,14 +12,18 @@
 	    <mapping-file>META-INF/orm.xml</mapping-file>
 	    <exclude-unlisted-classes/>
 	   -->
-	    <class>jpa.one2one.IdCard</class>
+	   
+        <class>jpa.one2one.IdCard</class>
 	    <class>jpa.one2one.Person</class>
+	    
+	    <class>jpa.one2many.Order</class>
+	    <class>jpa.one2many.OrderItem</class>
 	    
 	    <class>jpa_mapping.M_IdCard</class>
 	    <class>jpa_mapping.M_Person</class>
 	    
 	    <class>jpa.single.UserBean</class>
-	  	<class>jpa.composite_id.AirLine</class>
+	  	<class>jpa.composite_id.AirLine</class>  
 	  	 
 	    <class>jpa_school.Student</class>
 	    <class>jpa_school.LeaderStudent</class>
@@ -29,6 +33,9 @@
 		<class>jpa_school.Course</class>	    
 	    <class>jpa_school.Favorite</class>	
 	    <class>jpa_school.Score</class>    
+	    
+	    <class>jpa.collections.Employee</class>    
+	      
 		<properties>
  			<!-- Hibernate 的配置不能有 value属性,而JPA必须有value属性,Environment,AvailableSettings 类中有所有的hibernate.开头的属性 
  		    <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
