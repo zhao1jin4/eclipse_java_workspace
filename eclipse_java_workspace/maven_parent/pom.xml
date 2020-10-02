@@ -197,7 +197,7 @@
 	    <dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>24.1-jre</version>   <!--  24.1-jre , 24.1-android -->
+			<version>24.1.1-jre</version>   <!--  24.1.1-jre , 24.1-android -->
 		</dependency>
 	
 	    <dependency>
