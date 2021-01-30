@@ -8,4 +8,5 @@ import mybatis.vo.User;
 public interface UserMapper {
 	 
 	public List<User> selectAll();
+	public User selectById(int id);  
 }

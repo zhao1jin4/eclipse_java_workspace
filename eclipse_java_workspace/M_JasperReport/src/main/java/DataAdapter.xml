@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jdbcDataAdapter
+	class="net.sf.jasperreports.data.jdbc.JdbcDataAdapterImpl">
+	<name>theMysql</name>
+	<driver>com.mysql.jdbc.Driver</driver>
+	<username>zh</username>
+	<password>123</password>
+	<savePassword>true</savePassword>
+	<url>jdbc:mysql://localhost/mydb</url>
+	<autoCommit>false</autoCommit>
+	<readOnly>true</readOnly>
+	<transactionIsolation>REPEATABLE_READ</transactionIsolation>
+	<database></database>
+	<serverAddress></serverAddress>
+	<classpath>H:\MVN_REPO\mysql\mysql-connector-java\8.0.20\mysql-connector-java-8.0.20.jar
+	</classpath>
+</jdbcDataAdapter>

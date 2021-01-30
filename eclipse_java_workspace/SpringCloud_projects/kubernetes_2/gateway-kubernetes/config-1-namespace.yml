@@ -1,0 +1,7 @@
+#kubectl create namespace my-ns
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: my-ns
+  #labels:
+    #aa: bb

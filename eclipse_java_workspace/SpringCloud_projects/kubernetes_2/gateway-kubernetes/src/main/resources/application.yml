@@ -1,0 +1,33 @@
+server:
+  port: 8082
+
+logging.level:
+  root: INFO
+logging.file: /tmp/logs/gateway-k8s.log
+
+spring:
+  application:
+    name: gateway-k8s
+  cloud:
+    gateway:
+      discovery:
+        #enabled: false #表示禁用 DiscoveryClient
+        locator:
+          enabled: false                 #为true，表明gateway开启服务注册和发现的功能，false使用下面的routes配置
+          lowerCaseServiceId: true       #是将请求路径上的服务名配置为小写
+      routes:
+      - id: kubernetes-app
+        #uri: lb://myk8s-app:9000    #是建服务的端口,在k8s上service为clusterIP 用lb不行，
+        uri: http://myk8s-app:9000
+        predicates:
+          - Path=/remote/**     #.discovery.locator.enabled 改为false 就可  
+        filters:
+          - StripPrefix=1       #自带的，去除第1个，转发之前将/demo去掉
+      
+      
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
+
+
+

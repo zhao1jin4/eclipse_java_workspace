@@ -1,7 +1,10 @@
 package com.forezp;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +13,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
+
  
 
 @SpringBootApplication
@@ -25,17 +31,28 @@ import com.netflix.discovery.EurekaClient;
 @EnableDiscoveryClient
 @RestController
 public class ServiceHiApplication {
-	//启动两个服务  http://localhost:8762/hi?name=lisi  
+	//启动两个服务  http://localhost:8762/hi?name=lisi    响应gzip
 				 //http://localhost:8763/hi?name=lisi
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceHiApplication.class, args);
 	}
 
-	@Value("${server.port}")
-	String port;
+ 
+	@Value("${server.port}")//  cloud-2020,boot-2.4 不能识别 @Value("${server.port}"),也不能正常的注册到eureka 上
+	String port="123";
 	
 	@RequestMapping("/hi")
-	public String home(@RequestParam String name) {
+	public String home(HttpServletRequest request,@RequestParam String name) {
+		 
+		String header=null;
+		for(Enumeration<String> enumerate=request.getHeaderNames();enumerate.hasMoreElements();  header=enumerate.nextElement())
+		{
+			if(header!=null)
+			{ 
+				String val=request.getHeader(header);
+				System.out.println("header name="+header+",val="+val); 
+			} 
+		}
 		return "hi "+name+",i am from port:" +port;
 	}
 	 
@@ -50,8 +67,18 @@ public class ServiceHiApplication {
 	}
 	
 	@GetMapping("/feignMVC/{owner}/")//针对@FeignClient中加	configuration= {config.FooConfiguration.class},/
-	public String feignMVC(@PathVariable("owner") String owner)
+	public String feignMVC(HttpServletRequest request,@PathVariable("owner") String owner)
 	{
+		String header=null;
+		for(Enumeration<String> enumerate=request.getHeaderNames();enumerate.hasMoreElements();  header=enumerate.nextElement())
+		{
+			if(header!=null)
+			{ 
+				String val=request.getHeader(header);
+				System.out.println("header name="+header+",val="+val); 
+			} 
+		}
+
 		return "hello "+owner+",i am from port:" +port;
 	}
 	

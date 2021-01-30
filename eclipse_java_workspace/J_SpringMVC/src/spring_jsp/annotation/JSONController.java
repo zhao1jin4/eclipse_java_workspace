@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
+import javax.validation.Valid;
 import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +85,9 @@ public class JSONController //OK
 		EmployeeResult result=	genData();
 		
 		return result;
-	}
+	} 
+	
+	 
 	@RequestMapping(value="/queryEmployeeVO2" , method=RequestMethod.POST)
     public ResponseEntity<EmployeeResult> testJson2(HttpEntity<Employee> entity)
     {  

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  
 //基于接口的注解 负载均衡客户端
 @FeignClient(value = "testZookeeperApp", // 同@LoadBalanced 
-		fallback = SchedualServiceHiHystric.class) //调用服务全断   不会调用对应的错误实现类的方法???? 
+		fallback = SchedualServiceHiHystric.class)  
 public interface SchedualServiceHi {
     @RequestMapping(value = "/hi",method = RequestMethod.GET)
     String sayHiFromClientOne(@RequestParam(value = "name") String name);

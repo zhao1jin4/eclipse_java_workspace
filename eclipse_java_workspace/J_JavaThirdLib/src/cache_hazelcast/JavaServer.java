@@ -2,14 +2,21 @@ package cache_hazelcast;
 
 import com.hazelcast.collection.IQueue;
 import com.hazelcast.config.Config;
+import com.hazelcast.config.NetworkConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
 public class JavaServer {
 
 	public static void main(String[] args) {
+		
 		Config config = new  Config();
-		config.setClusterName("myHazelInst");
+		config.setClusterName("myHazelCluster");
+		
+		NetworkConfig network=config.getNetworkConfig();
+		System.out.println(network.getPort());//默认5701
+		network.setPort(6701);//修改监听端口，如被占用+1，直到可用
+		
 		HazelcastInstance server = Hazelcast.newHazelcastInstance(config);
 		
 		IMap<Integer, String> mapCustomers = server.getMap("MyMap"); //creates the map proxy

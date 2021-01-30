@@ -10,18 +10,24 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.type.JdbcType;
 
+import mybatis_annotation.typehandler.MyXMLTypeHandler;
+
 //@CacheNamespace(size = 512)
 public interface JobDao {
 	//有时要 Job implements Serializable
 	@Select("select * from job_history where user_Id=#{value}")//如参数是int要使用#{value}
 	@Results(value = {
 			@Result(property="id", column="job_id" ),
-			@Result(property="requirement", column="job_requirement",
-					javaType=java.util.List.class,jdbcType=JdbcType.VARCHAR,typeHandler=MyXMLTypeHandler.class),
+			@Result(property="requirement", column="job_requirement"
+				,	javaType=java.util.List.class,jdbcType=JdbcType.VARCHAR,typeHandler=MyXMLTypeHandler.class
+			),
 			@Result(property="jobTitle", column="job_title" )
 	   })
 	public List<Job> getJobsByUserId( int userid); 
  
+	@Insert("insert into job_history(jod_Id,level) values(11,#{level})")
+	public void insertJob(Job job);
+	
 	
 	//示例@One
 	@Select("select job_id,job_title,user_Id from job_history where job_title like 'java%'")
@@ -55,7 +61,7 @@ public interface JobDao {
 	public List<Job> getJobByStartDate(@Param("startDate") java.util.Date startDate);
 	
 	
-	@Insert("insert into job_history(job_requirement,job_title,user_id) values(#{requirement,javaType=java.util.List,jdbcType=VARCHAR,typeHandler=mybatis_annotation.MyXMLTypeHandler},#{jobTitle},1)")
+	@Insert("insert into job_history(job_requirement,job_title,user_id) values(#{requirement,javaType=java.util.List,jdbcType=VARCHAR,typeHandler=mybatis_annotation.typehandler.MyXMLTypeHandler},#{jobTitle},1)")
 	public void saveJob(Job job);
    
 		

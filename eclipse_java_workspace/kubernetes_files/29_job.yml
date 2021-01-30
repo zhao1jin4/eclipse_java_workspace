@@ -1,0 +1,17 @@
+#https://kubernetes.io/zh/docs/concepts/workloads/controllers/job/
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: myjob
+spec:
+  template:
+    spec:
+      containers:
+      - name: myjob
+        image: busybox
+        command: ["/bin/sh",  "-c", "date;echo $(date) >> /tmp/job.log"]
+      restartPolicy: Never #OnFailure
+  backoffLimit: 4  #最多失败多少次
+  
+  

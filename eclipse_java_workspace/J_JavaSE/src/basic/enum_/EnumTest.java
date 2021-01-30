@@ -46,3 +46,13 @@ enum ColorEnum
 {
 	RED,BLUE,GREEN,WHITE
 }
+enum AbstractEnum{
+	ONE{
+		@Override
+		public void execute() {
+			
+		}
+	}
+	;
+	public abstract void execute(); //enum中可有abstract方法
+}

@@ -30,7 +30,7 @@ public class MyClientApplication {
 	}
  
 	@Bean
-	@LoadBalanced //表明这个restRemplate开启负载均衡的功能,ribbon或balancer
+	@LoadBalanced //表明这个restRemplate开启负载均衡的功能,ribbon或 LoadBalance
 	RestTemplate restTemplate() {
 		return new RestTemplate();
 	}

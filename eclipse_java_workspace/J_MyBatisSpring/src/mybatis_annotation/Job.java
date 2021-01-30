@@ -3,7 +3,9 @@ package mybatis_annotation;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
+enum LevelEnum{
+	ONE,TWO
+}
 public class Job implements Serializable
 {
 	private int id;
@@ -11,10 +13,23 @@ public class Job implements Serializable
 	Date startDate;
 	Date endDate;
 	String jobTitle;
+	
+	LevelEnum level;
+	
 //	private int user_id;
 	
 	//为@one,@Many
 	private User user;
+	
+	
+	public LevelEnum getLevel() {
+		return level;
+	}
+
+	public void setLevel(LevelEnum level) {
+		this.level = level;
+	}
+
 	public User getUser() {
 		return user;
 	}

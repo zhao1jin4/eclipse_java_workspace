@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-kubernetes
+  namespace: my-ns
+  labels:
+    app: gateway-kubernetes
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: gateway-kubernetes
+  template:
+    metadata:
+      labels:
+        app: gateway-kubernetes
+    spec:
+      containers:
+        - name: gateway-kubernetes
+          image: centos71.com/library/gateway-kubernetes:1.0
+          imagePullPolicy: Always
+          #imagePullPolicy: IfNotPresent
+          #env:
+          ports:
+            - containerPort: 8082
+          readinessProbe:
+            tcpSocket:
+              port: 8082
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          volumeMounts:
+            - mountPath: /app/tmp
+              name: tmp-volume
+      volumes:
+        - name: tmp-volume
+          emptyDir: { }
+      #imagePullSecrets:
+      #  - name: xxx

@@ -17,12 +17,12 @@ public class MyBatisResetController {
 	 @Autowired
 	private  UserMapper userMapper;
 	
-	@RequestMapping("mybatis")  //http://127.0.0.1:8081/mybatis
+	@RequestMapping("mybatis")  //http://127.0.0.1:8081/springboot_mybatis/mybatis
 	public List mybatis() {
  
  		org.apache.ibatis.session.SqlSession x;
-		List<User> list= userMapper.selectAll();
-		
+		List<User> list= userMapper.selectAll(); 
+ 		User u= userMapper.selectById(1); 
 		return list;
 	}
   

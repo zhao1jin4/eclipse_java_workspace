@@ -35,6 +35,7 @@
 	
 	<a href="ajaxAbortServletErrorLog.html">ajax abort()  servlet ErrorLog 测试  </a> <br/>
 	
+	<a href="forward_redirect.jsp">test forward,sendRedirect cors</a>
 	
 </body>
 </html>

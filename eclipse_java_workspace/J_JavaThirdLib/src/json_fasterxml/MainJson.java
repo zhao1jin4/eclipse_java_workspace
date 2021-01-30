@@ -12,12 +12,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MainJson {
 	public static void main(String ... args  ) throws Exception {
-		obj2Json();
+//		obj2Json();
 //		json2Obj();
+//		json2CommonObj();
+		commonObj2Json();
 	}
 	public static String obj2Json() throws Exception {
 		UserJson user=new UserJson();
@@ -41,6 +44,7 @@ public class MainJson {
 		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);//全局范围，如果该属性为NULL,生成joson没有该字段 
 		//mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 	    String jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
+//	    String jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(JsonNode);//通用对象
 	    System.out.println(jsonString);
 	    return jsonString;
 	}
@@ -52,8 +56,30 @@ public class MainJson {
 		mapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true); //允许使用单引号
 		String str= obj2Json();
 		UserJson user=mapper.readValue(str, UserJson.class);
+//		JsonNode node=mapper.readTree( str);   //通用对象
 		System.out.println(user.getUserName());
 		System.out.println(user.getJoinDate());
 	}
 
+	public static JsonNode json2CommonObj() throws Exception {
+		ObjectMapper mapper = new  ObjectMapper();
+		//mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+		mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);//反序列化遇到未知属性不报异常
+		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);//允许使用未带引号的字段名
+		mapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true); //允许使用单引号
+		String str= obj2Json();
+		JsonNode node=mapper.readTree( str);   
+		System.out.println(node);
+		return node;
+	}
+	
+	public static void commonObj2Json() throws Exception {
+		JsonNode node= json2CommonObj();
+		
+		ObjectMapper mapper = new ObjectMapper(); 
+		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);//全局范围，如果该属性为NULL,生成joson没有该字段 
+		//mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+	    String jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node);
+	    System.out.println(jsonString);
+	}
 }

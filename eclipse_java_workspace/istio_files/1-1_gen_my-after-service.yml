@@ -1,0 +1,52 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2021-01-03T07:35:47Z"
+    labels:
+      app: my
+    managedFields:
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            .: {}
+            f:app: {}
+        f:spec:
+          f:ports:
+            .: {}
+            k:{"port":80,"protocol":"TCP"}:
+              .: {}
+              f:port: {}
+              f:protocol: {}
+              f:targetPort: {}
+          f:selector:
+            .: {}
+            f:app: {}
+          f:sessionAffinity: {}
+          f:type: {}
+      manager: kubectl
+      operation: Update
+      time: "2021-01-03T07:35:47Z"
+    name: my
+    namespace: my-ns
+    resourceVersion: "41416"
+    selfLink: /api/v1/namespaces/my-ns/services/my
+    uid: 21d09396-f21d-4ecf-b2f6-d2112c59ea02
+  spec:
+    clusterIP: 10.97.242.119
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: my
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata: {}
+---

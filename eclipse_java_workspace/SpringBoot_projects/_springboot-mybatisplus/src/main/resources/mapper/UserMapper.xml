@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baomidou.mybatisplus.samples.quickstart.mapper.UserMapper">
+
+    <delete id="deleteBatchIds" parameterType="list">
+        update user set age=-1 where id in
+        <foreach  item="myid" collection="param1" open="(" separator="," close=")">
+            #{myid}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,67 @@
+
+<html>
+	<head>
+		<meta http-equiv="pragma" content="no-cache">
+		<meta http-equiv="cache-control" content="no-cache">
+		<meta http-equiv="expires" content="0">    
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+<body> 
+----------JSON <br/>
+要打开JSON,关闭 InternalResourceViewResolver  <br/>
+请求和响应都是JSON 
+<script type="text/javascript" src="jquery-3.5.0.min.js"></script>
+<script type="text/javascript">
+var root="/J_SpringBoot";
+function createXmlHttp()
+{
+	if (window.XMLHttpRequest)
+	{
+	  xmlHttp=new XMLHttpRequest(); 
+	}
+	else if (window.ActiveXObject)
+	{
+	  xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	if (xmlHttp==null)
+	{
+		  alert("Your browser does not support XMLHTTP.");
+	}
+	return xmlHttp;
+} 
+function jQueryJSONRequest()  
+{
+	var config=
+	{
+		type: 'POST',
+		contentType:'application/json;charset=UTF-8',//请求是JSON   
+		dataType: 'json',//响应是JSON 
+		//url:root+'/json/queryEmployeeValid.mvc' , //try 测试中
+		url:root+'/json/queryEmployeeValid' , //try 测试中
+		data:JSON.stringify({
+						employee_id:'123',first_name:'李四',
+						birthDay:'2010-03-15 18:10:20',
+						createTime:'2009-03-15 18:10:20',
+						other:'',//多的字段不会报错,配置了
+						}), 
+		//data:'{"employee_id":123,"first_name":"李四"}',//OK,内部Key必须是"
+		success:function(response)
+		{
+			//alert("success:"+response.allClothes[1]);
+			alert("success:"+response.underEmp[0].birthDay); 
+		},
+		error:function(  jqXHR,  textStatus,  errorThrown )
+		{ 
+			alert(textStatus);
+		}
+	};
+	$.ajax (config);
+}
+
+ 
+</script> 
+<input type="button" value="ajax POST JSON" onclick="jQueryJSONRequest()"/><br/>
+ 
+ 
+</body>
+</html>

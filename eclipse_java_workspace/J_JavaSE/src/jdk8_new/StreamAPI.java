@@ -1,6 +1,7 @@
 package jdk8_new;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -10,11 +11,20 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class StreamAPI {
 	
+	public static void main(String[] args) {
+//		testInt(2, 3, 4, 2, 3, 5, 1);
+//		testString("2", "3", "4", "2", "3", "5", "1");
+		testObject();
+//		testFlatMap(); 
+		
+	}	
 	//抄Scala 
 	public static void testString(String ... numbers) {
 		  List<String> l = Arrays.asList(numbers);
@@ -87,13 +97,21 @@ public class StreamAPI {
 		
 		boolean isEmpty=Arrays.stream(emps).anyMatch(item -> item.getSalary()>3500);//.allMatch 
 				
+		Map<Integer,Employee> map=Arrays.stream(emps).collect(Collectors.toMap(Employee::getSalary, i->i));//key重复会报错
+		//key重复如何处理,Function.identity()同 i->i
+		Map<Integer,Employee> map2=Arrays.stream(emps).collect(Collectors.toMap(Employee::getSalary, Function.identity(),(newVal,oldVal)-> newVal ));
+		
 		List<Employee> employees=Arrays.asList(emps);
 		List<Student> students=Arrays.asList(new Student(80),new Student(45));
 		int PASS_THRESHOLD=60;
 		//JDK 8
 		
 		Map<String,List<Employee>> titleEmp=Arrays.stream(emps).collect(Collectors.groupingBy(Employee::getTitle));
+		Map<String,Long> titleEmpCoutn=Arrays.stream(emps).collect(Collectors.groupingBy(Employee::getTitle, Collectors.counting()));
 		
+		Map<String,List<Employee>> titleEmp1=Arrays.stream(emps).collect(Collectors.groupingBy(Employee::getTitle,
+					 ConcurrentHashMap::new,Collectors.toList()));
+
 		// Accumulate names into a List
 		 List<String> list = people.stream()
 		   .map(Person::getName)
@@ -126,14 +144,26 @@ public class StreamAPI {
 		 Map<Boolean, List<Student>> passingFailing = students.stream()
 		   .collect(Collectors.partitioningBy(s -> s.getGrade() >= PASS_THRESHOLD));
 	 
+		 
+		 Map<Department, Set<String>> totalByDept1 = employees.stream()
+				   .collect(Collectors.groupingBy(Employee::getDepartment,
+				                                  Collectors.mapping(emp->emp.getTitle(), Collectors.toSet())));
+
+		 
 	}
-	
-	public static void main(String[] args) {
+	public  static void testFlatMap()
+	{
+		List<Integer> a=new ArrayList<>();
+		a.add(Integer.valueOf(3));
+		a.add(Integer.valueOf(4));
+		List<Integer> b=new ArrayList<>();
+		b.add(Integer.valueOf(3));
+		b.add(Integer.valueOf(6));
 		
-		testInt(2, 3, 4, 2, 3, 5, 1);
-		testString("2", "3", "4", "2", "3", "5", "1");
-		testObject();
-	}	
+		List<Integer> res=Stream.of(a,b).flatMap(u->u.stream()).collect(Collectors.toList());
+		System.out.println(res);//3,4,5,6
+	}
+
 	
 }
 class Department {
@@ -173,6 +203,7 @@ class Department {
 	
 }
 class Employee {
+	
 	private Department department;
 	private int salary;
 	private String  title;

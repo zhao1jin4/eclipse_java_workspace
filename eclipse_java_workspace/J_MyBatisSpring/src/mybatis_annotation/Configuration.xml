@@ -14,7 +14,22 @@
    <typeAliases><!-- 测试中 -->
 		<typeAlias alias="joinData" type="mybatis_annotation.JoinData"/>
 	</typeAliases>
-
+	
+	
+	<typeHandlers>
+		<!-- 调用不到BooleanTypeHandler ？？ -->
+		<!--  <package name="mybatis_annotation"/> -->
+		<!-- 
+		<typeHandler handler="mybatis_annotation.BooleanTypeHandler"  jdbcType="CHAR" javaType="Boolean"/>
+		<typeHandler handler="mybatis_annotation.BooleanTypeHandler"  jdbcType="VARCHAR" javaType="Boolean"/>
+		 -->
+		 
+		 <!-- 
+ 		 <typeHandler  javaType="java.util.List" jdbcType="VARCHAR" 
+	      	handler="mybatis_annotation.typehandler.MyXMLTypeHandler"/> 
+	      	 --> 
+	</typeHandlers>
+		 
 	<plugins>
 		<plugin interceptor="mybatis_annotation.SQLLogInterceptor" />
 	</plugins>
@@ -31,8 +46,7 @@
         </environment>
     </environments>
     
-    
-    
+   
     
     <mappers><!-- 测试中 -->
 		<mapper resource="mybatis_annotation/ResultMapper.xml" />

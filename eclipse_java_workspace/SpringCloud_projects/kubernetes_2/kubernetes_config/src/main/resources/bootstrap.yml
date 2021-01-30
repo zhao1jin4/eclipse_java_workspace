@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: kubernetesApp
+  profiles:
+    active: dev
+ 
+  cloud: 
+    loadbalancer:
+       ribbon:
+         enabled: false 
+    kubernetes: #k8s config可以覆盖spring boot的application.yml中的配置
+      config:
+        enabled: true  #--bootstrap
+        name:  my-cloud-config  #--bootstrap  
+        #(默认就是${spring.application.name},找kubernetes中哪个configMap,即kind: ConfigMap中对应有名为这个为metadata级下的name的值 
+        namespace: my-ns
+         
+        #sources: #这里name和namespace可覆盖config下name和namespace
+        #- namespace: n3 
+        #  name: c3  
+        
+      secrets:
+        enabled: true
+        enable-api: true
+        name: my-cloud-secret
+        namespace: my-ns
+        
+        
+      discovery:
+        all-namespaces: true
+        service-name: ${spring.application.name}
+      loadbalancer:
+        mode: SERVICE
+     
+        
+        
+        
+        
+        

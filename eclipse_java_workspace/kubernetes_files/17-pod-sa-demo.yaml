@@ -1,0 +1,24 @@
+#kubectl create serviceaccount admin 
+#kubectl create serviceaccount admin -o yaml --dry-run=client 
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin
+  annotations:
+    a: b
+  labels:
+    c: d
+  namespace: default
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-sa-demo
+spec:
+  containers:
+  - name: myapp
+    image: localhost:5000/myapp:v3
+    ports:
+    - name: http
+      containerPort: 80
+  serviceAccountName: admin

@@ -1,0 +1,14 @@
+spring: 
+  cloud: 
+    kubernetes:  
+      discovery:
+        all-namespaces: true
+        service-name: ${spring.application.name}
+      loadbalancer:
+        mode: SERVICE
+     
+        
+        
+        
+        
+        

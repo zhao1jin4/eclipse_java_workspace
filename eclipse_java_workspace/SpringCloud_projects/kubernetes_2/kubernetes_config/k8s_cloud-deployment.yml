@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-service
+  namespace: my-ns
+  labels:
+    app: cloud-service
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: cloud-service
+  template:
+    metadata:
+      labels:
+        app: cloud-service
+    spec:
+      containers:
+        - name: cloud-service
+          image:  centos71.com/library/cloud-service:1.0
+          
+          imagePullPolicy: Always
+          #imagePullPolicy: IfNotPresent
+         #env:
+          ports:
+            - containerPort: 8081
+          readinessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          volumeMounts:
+            - mountPath: /app/tmp
+              name: tmp-volume
+      volumes:
+        - name: tmp-volume
+          emptyDir: { }
+      #imagePullSecrets:
+      #  - name: xxx

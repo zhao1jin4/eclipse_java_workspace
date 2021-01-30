@@ -1,0 +1,56 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp
+  #name: tomcat    
+  namespace: default
+spec: 
+  selector:   
+    app: myapp  
+    #app: tomcat
+    release: canary
+  ports:
+  - name: http
+    port: 80  
+    targetPort: 80
+    #port: 8080  
+    #targetPort: 8080   
+  #- name: ajp
+  #  port: 8009
+  #  targetPort: 8009
+
+---
+#这是前面建过的deploy-demo.yaml，一个文件两个区
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deploy
+  #name: tomcat-deploy
+  namespace: default
+spec:
+  replicas: 2
+  selector: 
+    matchLabels:
+      app: myapp #删除kubectl delete rs myapp
+      #app: tomcat
+      release: canary 
+  template:
+    metadata: 
+      labels:
+        #要匹配上面的标签选择器
+        app: myapp  
+        #app: tomcat
+        release: canary 
+    spec:
+      containers:
+      - name: myapp
+        image: nginx:latest
+     #- name: tomcat
+     #  image: tomcat:9.0.24-jdk8
+        ports:
+        - name: http
+          containerPort: 80
+          #containerPort: 8080
+        #- name: ajp
+        #  containerPort: 8009

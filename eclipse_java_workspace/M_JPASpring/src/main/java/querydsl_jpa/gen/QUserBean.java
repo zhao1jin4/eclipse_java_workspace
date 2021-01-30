@@ -7,7 +7,8 @@ import com.querydsl.core.types.dsl.*;
 import jpa.single.UserBean;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
+//import javax.annotation.Generated;//jdk15 变 javax.annotation.processing.Generated
+import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
 
 

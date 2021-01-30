@@ -1,0 +1,46 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8764
+spring:
+  application:
+    name: service-ribbon
+    
+    
+#management.endpoints.web.exposure.include: hystrix.stream
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      cors:
+        allowed-origins: "*"
+        allowed-methods: "*"
+         
+#16.4 Customizing the Ribbon Client by Setting Properties#优先级高于@RibbonClient(name="SERVICE-HI",configuration=config.Config.class)
+service-hi:
+  ribbon: 
+     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+#     listOfServers: 127.0.0.1:8762   #  对ribbon不使用eureka
+#对 ribbon不使用eureka
+#ribbon:
+#  eureka:
+#  enabled: false   
+   
+   
+#spring.cloud.loadbalancer.ribbon.enabled: false #没有成功
+
+
+
+
+
+
+
+
+
+
+
+
+    

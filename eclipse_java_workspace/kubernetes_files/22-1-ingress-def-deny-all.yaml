@@ -1,0 +1,10 @@
+#拒绝全部进入
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-all-ingress
+spec:
+  podSelector: {} #空表示选中全部
+  policyTypes:
+    - Ingress   #这type为Ingress表示控制，又没有定 表示全部拒绝进入，type没有Egress表示不控制,也没定义表示全部允许出去
+    

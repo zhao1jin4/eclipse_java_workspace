@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: web-svc-vs-m
+spec:
+  hosts:
+  - web-svc
+  http:
+  #写在上面的优先级高
+  - match:
+    - headers:
+        content-type:
+          exact: application/json  #可以有prefix或regex
+      #method:
+      #  exact: POST
+      uri:
+        prefix: "/portal" 
+      ignoreUriCase: true  
+      #上面所有条件同时成立,并且的关系
+    #rewrite: 可以地址重写 kubectl explain vs.spec.http.rewrite.uri
+    #  uri: "/portal2"
+    route:
+    - destination:
+        host: tomcat-svc
+  - route:
+    - destination:
+        host: httpd-svc

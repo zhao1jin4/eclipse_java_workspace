@@ -1,0 +1,29 @@
+server:
+  port: 8081 
+
+logging.level:
+  root: INFO
+logging.file: /tmp/logs/cloud-k8s.log
+
+spring: 
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true #--默认关闭 
+        #strategy: refresh #--默认refresh 对 @ConfigurationProperties 或  @RefreshScope的做刷新
+        strategy: restart_context
+        monitoring-config-maps: true
+        monitoring-secrets: true
+        mode: event
+        
+#如 strategy: restart_context 要加如下 
+management:
+  endpoint:
+    restart:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: restart 
+        
+        

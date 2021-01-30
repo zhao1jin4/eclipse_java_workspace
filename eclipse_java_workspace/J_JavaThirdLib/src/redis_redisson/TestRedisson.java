@@ -17,6 +17,7 @@ import org.redisson.api.RList;
 import org.redisson.api.RLock;
 import org.redisson.api.RMap;
 import org.redisson.api.RQueue;
+import org.redisson.api.RReliableTopic;
 import org.redisson.api.RSet;
 import org.redisson.api.RTopic;
 import org.redisson.api.RedissonClient;
@@ -30,7 +31,8 @@ import io.netty.resolver.dns.DnsServerAddressStreamProvider;
 
 public class TestRedisson 
 {
-	String ipPort="redis://127.0.0.1:6379";
+//	String ipPort="redis://127.0.0.1:6379";
+	String ipPort="redis://192.168.42.129:6379";
 	String masterIPPort="redis://192.168.1.59:7001";
 	String slaveIPPort="redis://192.168.1.59:7004";
 	@Test
@@ -154,12 +156,25 @@ public class TestRedisson
 		    //...
 		    lock.unlock();
 	
-		    // Lock time-to-live support
-		    // releases lock automatically after 10 seconds
-		    // if unlock method not invoked
-		    lock.lock(10, TimeUnit.SECONDS);
+		    
+		    lock.lock(10, TimeUnit.SECONDS); // acquire lock and automatically unlock it after 10 seconds
 		    //...
 		    lock.unlock();
+		    
+		    
+		    long waitTime=3;
+		    long releaseTime=10;
+		    lock.tryLock(waitTime, releaseTime, TimeUnit.SECONDS);
+			 // or wait for lock aquisition up to 100 seconds 
+			 // and automatically unlock it after 10 seconds
+			 boolean res = lock.tryLock(100, 10, TimeUnit.SECONDS);
+			 if (res) {
+			    try {
+			    	 //...
+			    } finally {
+			        lock.unlock();
+			    }
+			 } 
 	    }
 	    
 	    
@@ -208,6 +223,34 @@ public class TestRedisson
 	 
 	    
 	    redisson.shutdown();
+	}
+	
+	@Test // org/jboss/marshalling/ClassResolver  
+	public void testTopic()  throws Exception{
+		//--单机 
+		Config config = new Config();
+		SingleServerConfig singConfig= config.useSingleServer();
+		singConfig.setAddress(ipPort);//ip:port
+		singConfig.setDatabase(0);
+		//singConfig.setPassword("");
+		RedissonClient redisson = Redisson.create(config);
+
+		RReliableTopic topic = redisson.getReliableTopic("anyTopic");
+		topic.addListener(SomeObject.class, new MessageListener<SomeObject>() {
+		    @Override
+		    public void onMessage(CharSequence channel, SomeObject message) {
+		       System.out.println("收到message"+message);
+		    }
+		});
+		//会打印很多DEBUG日志
+		
+		// in other thread or JVM
+		RReliableTopic topic1 = redisson.getReliableTopic("anyTopic");
+		long receivedNums = topic1.publish(new SomeObject()); 
+		 System.out.println("receivedNums="+receivedNums);
+		//会调用xadd ，即要新版本redis
+		
+		
 	}
 }
 

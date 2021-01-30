@@ -1,0 +1,55 @@
+#这个redis用于接收filebeat的数据,教程也未成功写入数据
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: default
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: redis  
+      role: logstore 
+  template:
+    metadata: 
+      labels:
+        #要匹配上面的标签选择器
+        app: redis  
+        role: logstore 
+    spec:
+      containers:
+      - name: redis
+        image: redis:latest
+        ports:
+        - name: redis
+          containerPort: 6379
+--- 
+#一个配置文件中定义多个资源使用3个-分隔
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: filebeat-ds
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: filebeat
+      realease: stable
+  template:
+    metadata:
+      labels:
+        #要匹配上面的标签选择器
+        app: filebeat
+        realease: stable
+    spec:
+      containers:
+      - name: filebeat
+        image: ikubernetes/filebeat:5.6.5-alpine
+        #image: docker.elastic.co/beats/filebeat:7.10.0
+        env:
+        - name: REDIS_HOST
+          value: redis.default.svc.cluster.local
+          #是pod的服务名，redis是服务名，default 是名称空间，svc.cluster.local内建的域名后缀
+        - name: REDIS_LOG_LEVEL
+          value: info
+      #hostNetwork:

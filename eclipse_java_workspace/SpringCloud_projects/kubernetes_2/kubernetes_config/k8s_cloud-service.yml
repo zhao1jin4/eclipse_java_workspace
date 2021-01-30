@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: myk8s-app
+  #namespace: my-ns
+spec: 
+   selector:  
+    app: cloud-service 
+   #clusterIP: 172.21.5.97 #可不指定动态分配，指定容易冲突
+   type: ClusterIP
+   ports: 
+   - port: 9000 
+     targetPort: 8081  

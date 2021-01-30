@@ -1,0 +1,20 @@
+#kubectl create namespace my-ns
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: my-ns
+  #labels:
+    #aa: bb
+---
+apiVersion: v1
+kind: ConfigMap 
+metadata:
+  name: my-cloud-config
+  namespace: my-ns
+data:
+  application.yaml: |-
+    spring:
+      profiles: dev
+    myprop:
+      greeting: Say Hello to the Developers
+      name: prop_val_dev

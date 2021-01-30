@@ -1,0 +1,20 @@
+#kubectl create quota quota-test --hard=count/deployments.extensions=2,count/replicasets.extensions=4,count/pods=3,count/secrets=4 --namespace=my-ns
+#kubectl  delete quota quota-test -n my-ns
+#kubectl describe ns my-ns
+#kubectl get deploy xxx -o yaml 看status区的日志
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: quota-test
+  namespace: my-ns
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: 2Gi
+    limits.cpu: "4"
+    limits.memory: 4Gi
+    requests.nvidia.com/gpu: 4
+    pods: "3"
+    services: "6"
+	

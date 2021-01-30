@@ -17,7 +17,11 @@ public  class DemoControllerService {
         return cbFactory.create("myid")
         		.run(
         			() -> rest.getForObject("http://"+MyController.remoteServiceName+"/hi?name="+name, String.class), 
-        			throwable -> { throwable.printStackTrace(); return "fallback"; }
+        			
+        			throwable -> {
+        				throwable.printStackTrace(); 
+        				return "fallback with Resilience4J"; 
+        				}
         		 );
     }
 }

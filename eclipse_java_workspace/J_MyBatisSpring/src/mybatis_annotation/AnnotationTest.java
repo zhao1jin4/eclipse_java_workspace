@@ -41,11 +41,12 @@ public class AnnotationTest
 		sessionFactory.getConfiguration().addMapper(JobDao.class);
 		//sessionFactory.getConfiguration().addMapper(JoinData.class);
 		//sessionFactory.getConfiguration().addResultMap(rm);
- 
+		
+		
 		
 		session = sessionFactory.openSession();
 		//session=sessionFactory.openSession(ExecutorType.BATCH, false);//像是开新的连接，在连接池外的，像是
-	
+	 
 	}
 	@BeforeClass
 	public static void init()//必须是static
@@ -63,7 +64,9 @@ public class AnnotationTest
 		sessionFactory.getConfiguration().addMapper(JoinData.class);
 		//sessionFactory.getConfiguration().addResultMap(rm);
  
+//		sessionFactory.getConfiguration().getTypeHandlerRegistry().register(BooleanTypeHandler.class);//  调用不到BooleanTypeHandler ??
 		
+
 		session = sessionFactory.openSession();
 		//session=sessionFactory.openSession(ExecutorType.BATCH, false);//像是开新的连接，在连接池外的，像是
 		
@@ -84,6 +87,14 @@ public class AnnotationTest
 		user.setUserName("hongye");
 		user.setPassword("123456");
 		user.setComment("备注");
+		
+		user.setLikeColor(Color.Black);
+//		user.setGender(true);
+//		user.setManager(true);
+		
+		user.setGender(false);
+		user.setManager(false);
+		
 		userDao.insert(user);
 		
 		System.out.println("记录条数："+userDao.countAll());
@@ -165,8 +176,9 @@ public class AnnotationTest
 		List<String> req=new ArrayList<>();
 		req.add("Auto Test");
 		req.add("LoadRunner");
+			
 		job.setRequirement(req);
-		
+		job.setLevel(LevelEnum.ONE); //默认支持enum类型，是以名字name()返回
 		jobDao.saveJob(job);
 		
 		session.commit();
@@ -182,6 +194,10 @@ public class AnnotationTest
 		params.put("password", "123");
 		long recouds=userDao.getRecordCountByMap(params);
 		System.out.println(recouds);
+		
+		//默认一级缓存是开启的，下面同一个会话，相同的查询，不会再输入SQL日志
+		long recouds2=userDao.getRecordCountByMap(params);
+		System.out.println(recouds2);
 		
 //		params.put("start","1");//Oracle ,H2
 //		params.put("end","20");

@@ -6,4 +6,7 @@
     mybatis.type-aliases-package=mybatis.vo，别名无用？？？-->
         SELECT * FROM User 
     </select>
+      <select id="selectById" parameterType="int" resultType="mybatis.vo.User">  
+        SELECT * FROM User where id=#{value}
+    </select>
 </mapper>

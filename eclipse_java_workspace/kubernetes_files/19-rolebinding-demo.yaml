@@ -1,0 +1,14 @@
+#kubectl create rolebinding user1-read-pods --role=pods-readers --user=user1 -o yaml --dry-run=client > rolebinding-demo.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  creationTimestamp: null
+  name: user1-read-pods
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: pods-readers
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User #可为Group,SerivceAccount
+  name: user1 

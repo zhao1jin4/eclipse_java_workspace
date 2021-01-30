@@ -1,0 +1,48 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8769
+spring:
+  application:
+    name: service-zuul
+zuul:
+  #prefix: /api
+  #测试变为 http://localhost:8769/api/api-a/hi?name=lisi 
+  #strip-prefix: false #如加上 是找controller为/api/api-a/hi
+     
+#禁用zuul filter
+#zuul.<SimpleClassName>.<filterType>.disable=true 
+  MyFilter:
+    pre:
+      disable: false
+ 
+  ignoredServices: '*'
+  routes:
+    api-a:
+      path: /api-a/**
+      serviceId: service-ribbon
+#---   
+#    api-a:
+#      path: /api-a/**
+#      url: http://localhost:8769/
+#地址写死,不会做负载均衡，不会HystrixCommand
+#-- 
+#    service-ribbon: /api-a/** #方式二 格式<application-name>:/路径/**
+      
+    api-b:
+      path: /api-b/**
+      serviceId: service-feign 
+#负载均衡         FallbackProvider
+    api-hi:
+      path: /api-hi/**
+      serviceId: service-hi 
+#ribbon:
+#  eureka:
+#    enabled: false
+#service-hi: #是<application-name>
+#  ribbon:
+#      listOfServers: localhost:8762,localhost:8763
+  
+     

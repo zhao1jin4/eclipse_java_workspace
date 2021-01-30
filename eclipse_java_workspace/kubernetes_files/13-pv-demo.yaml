@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv001 
+  labels:
+    name: pv001
+spec:
+  #accessModes:
+  #- ReadWriteOnce
+  #- ReadOnlyMany
+  accessModes: ["ReadWriteOnce","ReadOnlyMany"]
+  capacity: 
+    storage: 2Gi
+  nfs:
+    path: /nfs_dir/v1
+    server: store01.myDomain
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv002 
+  labels:
+    name: pv002
+spec:
+  accessModes:
+  - ReadOnlyMany
+  capacity: 
+    storage: 1Gi
+  nfs:
+    path: /nfs_dir/v2
+    server: store01.myDomain 

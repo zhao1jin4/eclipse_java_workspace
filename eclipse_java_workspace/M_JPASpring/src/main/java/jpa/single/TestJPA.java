@@ -69,7 +69,8 @@ import org.junit.jupiter.api.Test;
          em.getTransaction().begin();
          //查找id为1的User,进行更新
          UserBean user = em.find(UserBean.class, 1L);//User 的主键id为Long型
-         em.clear();//将实体管理器中的所有实体变成了游离态(脱管)
+         em.detach(user);
+         //em.clear();//将实体管理器中的所有实体变成了游离态(脱管)
          user.setName("李寻欢");
          em.merge(user);//处于游离态的实体必须使用该方法才能更新
          em.getTransaction().commit();

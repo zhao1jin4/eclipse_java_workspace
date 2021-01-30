@@ -9,6 +9,7 @@ import java.util.Map;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import json_fasterxml.OrderJson;
@@ -22,8 +23,9 @@ public class MainAliJson {
 		json2Obj();
 
 		//用 FasterXml
-		//obj2Json();
-		
+		String jsonStr=obj2Json();
+		String formatJson=formatJSONString1(jsonStr);
+		System.out.println(formatJson);
 		//json2Map();
 		//map2Json();
 		
@@ -31,6 +33,13 @@ public class MainAliJson {
 		
 		//json2List();
 	}
+    public static String formatJSONString1(String strJson) { 
+    	JSONObject object = JSONObject.parseObject(strJson);
+        String pretty = JSON.toJSONString(object, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue, 
+                SerializerFeature.WriteDateUseDateFormat);
+        return pretty; 
+    }
+    
 	public static String obj2JsonIgnore() throws Exception {
 		MyIgnoreObject obj=new MyIgnoreObject();
 		obj.setUserName("李"); //@JSONField(name="_userName")才有用

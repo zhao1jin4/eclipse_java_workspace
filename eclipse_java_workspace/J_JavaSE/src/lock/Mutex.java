@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
-
+//这个是AQS的java doc示例程序 
 class Mutex implements Lock, java.io.Serializable {
 
 	// Our internal helper class

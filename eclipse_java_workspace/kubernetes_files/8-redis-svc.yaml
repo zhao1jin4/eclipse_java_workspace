@@ -1,0 +1,15 @@
+#依赖于 7-ds-demo.yaml 的redis
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: default
+spec: 
+   selector:  
+    app: redis  
+    role: logstore 
+   clusterIP: 10.97.97.97 #可不指定动态分配，指定容易冲突
+   type: ClusterIP
+   ports: 
+   - port: 6379 
+     targetPort: 6379  

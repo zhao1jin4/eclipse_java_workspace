@@ -7,7 +7,7 @@ spring:
     config:
       server:
         git:
-          uri: file:/E:/tmp/git_config 
+          uri: file:/D:/tmp/git_config 
           searchPaths: repos
       label: master
     
@@ -18,7 +18,7 @@ spring:
 #spring.cloud.config.server.git.password=
 
 #如config服务连接不上就启动失败
-spring.cloud.config.fail-fast=true
+#spring.cloud.config.fail-fast=true
 #pom中可加 spring-retry 和 spring-boot-starter-aop 还可配置spring.cloud.config.retry.*
 
 #如config服务端 请求http://127.0.0.1:8888/master/config-client-dev.yml 要密码，pom增加spring-boot-starter-security

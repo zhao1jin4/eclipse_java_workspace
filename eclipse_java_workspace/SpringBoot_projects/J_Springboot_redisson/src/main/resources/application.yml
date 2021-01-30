@@ -1,0 +1,15 @@
+
+logging:
+  level:
+    org: info
+    
+
+spring:
+  redis:
+    database: 0
+    host: 192.168.42.129
+    port: 6379
+    password: redisPass
+     
+#    redisson: 
+#      file: classpath:redisson.yaml

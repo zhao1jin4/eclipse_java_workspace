@@ -10,12 +10,35 @@ public class User implements Serializable{
 	private int userId=-1;
     private String userName;
     private String password;
+    
+    private boolean gender; //boolean -> bit 0/1
+    private boolean manager; //boolean -> varchar Y/N (TypeHandler)
+    private Color likeColor; //enum -> varchar 
     private String comment;
     
     //为@one,@Many
     private List<Job> jobs;
     
-    public List<Job> getJobs() {
+    
+    public boolean isGender() {
+		return gender;
+	}
+	public void setGender(boolean gender) {
+		this.gender = gender;
+	}
+	public boolean isManager() {
+		return manager;
+	}
+	public void setManager(boolean manager) {
+		this.manager = manager;
+	}
+	public Color getLikeColor() {
+		return likeColor;
+	}
+	public void setLikeColor(Color likeColor) {
+		this.likeColor = likeColor;
+	}
+	public List<Job> getJobs() {
 		return jobs;
 	}
 	public void setJobs(List<Job> jobs) {

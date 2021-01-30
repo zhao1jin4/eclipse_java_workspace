@@ -80,13 +80,31 @@ public class QueryDSLMain {
 		  .fetchOne();
 		System.out.println(user.getPassword());//abc123
 		
-		entityManager.createQuery("update UserBean u set u.password='123'").executeUpdate();//这SQL的修改不会更新缓存
-		entityManager.flush();
+		new Thread() {
+			@Override
+			public void run() {//线程+断点, 模拟另一节点(即新的EntityManager)
+				 EntityManagerFactory emf   = Persistence.createEntityManagerFactory("MyJPA");
+				 EntityManager entityManager = emf.createEntityManager();
+				 JPAQueryFactory factory=new JPAQueryFactory(entityManager);
+				 entityManager.getTransaction().begin();
+				 //update必须在事务中
+				 factory.update(QUserBean.userBean).where(QUserBean.userBean.name.startsWith("叶"))
+				 .set(QUserBean.userBean.password, "456").execute();
+				 entityManager.getTransaction().commit();
+			}
+		}.start();
+//		entityManager.createQuery("update UserBean u set u.password='123'").executeUpdate();//这SQL的修改不会更新缓存
+//		entityManager.flush();
+		
+		//entityManager.clear();
 		query = new JPAQuery<Void>(entityManager);
 		  user = query.select(userBean)
 		  .from(userBean).where(userBean.name.startsWith("叶"))
 		  .fetchOne();
-		System.out.println(user.getPassword());//abc123这还是老值
+		//JPA QueryDSL也是有一缓存的
+		System.out.println(user.getPassword());//abc123这还是老值(多线程用新的EntityManager 模拟另一节点也是)
+		//代码逻辑复杂不能保证同一个查询是否前面查过的话，就会有问题,每次查询前entityManager.clear()吗
+
 		entityManager.getTransaction().commit();
 	}
 }

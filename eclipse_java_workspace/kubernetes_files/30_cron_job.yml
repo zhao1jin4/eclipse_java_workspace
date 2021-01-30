@@ -1,0 +1,22 @@
+#https://kubernetes.io/zh/docs/concepts/workloads/controllers/cron-jobs/
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: hello
+spec:
+  schedule: "*/1 * * * *"
+  #分，时，日，月，周，@daily (or @midnight)相当于 0 0 * * *
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox
+            imagePullPolicy: IfNotPresent
+            args:
+            - /bin/sh
+            - -c
+            - date;echo $(date) >> /tmp/cron.log
+          restartPolicy: OnFailure

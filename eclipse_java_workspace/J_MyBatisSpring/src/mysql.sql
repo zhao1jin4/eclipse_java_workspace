@@ -62,6 +62,9 @@ CREATE TABLE IF NOT EXISTS  USER  (
  user_Name   varchar(30) NOT NULL ,
  password   varchar(80) NOT NULL ,
  comment   varchar(250)  ,
+ gender bit,
+manager char(1) comment 'Y/N',
+like_color varchar(8) ,
 PRIMARY KEY (userId)
 );
  
@@ -72,6 +75,7 @@ CREATE TABLE  IF NOT EXISTS job_history  (
  job_title   varchar(30)  NOT NULL ,
  job_requirement varchar(200)  NOT NULL ,
  user_Id   int   NOT NULL,
+ level varchar(10),
  PRIMARY KEY (job_id)
 );
 
@@ -79,20 +83,20 @@ CREATE TABLE  IF NOT EXISTS job_history  (
 insert into USER(user_Name,password,comment) values('lisi','123','test for lisi');
 insert into USER(user_Name,password,comment) values('王5','123','test for 王');
 
-insert into job_history(start_date,end_date,job_title,job_requirement,user_Id) 
+insert into job_history(start_date,end_date,job_title,job_requirement,user_Id,level) 
 values('2012-01-02','2012-09-08','java developer',
 		'<?xml version="1.0" encoding="UTF-8"?>
 		 <useSkills> 
 			<name>JavaEE</name>
 			 <name>Oracle</name>
-		  </useSkills>',1);
+		  </useSkills>',1,'ONE');
 
-insert into job_history(start_date,end_date,job_title,job_requirement,user_Id) 
+insert into job_history(start_date,end_date,job_title,job_requirement,user_Id,level) 
 values('2012-09-02','2013-09-08','C developer',
 	'<?xml version="1.0" encoding="UTF-8"?>
 		<useSkills> 
 			<name>Weblogic</name>
 			 <name>SQL Server</name>
-		  </useSkills>',1);
+		  </useSkills>',1,'TWO');
 
 commit;	

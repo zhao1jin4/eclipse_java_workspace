@@ -4,6 +4,7 @@ package cache_hazelcast;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
@@ -23,7 +24,12 @@ public class IMapLock {
 			public void run() {
 				 IMap<String, String> mapLock = h.getMap("my-map-lock");
 				 mapLock.putIfAbsent("record1","value1");//上一线程在锁中，这里阻塞,多个Java进程间也是一样的
-				 mapLock.lock("record1");
+				 try {
+					mapLock.tryLock("record1",5,TimeUnit.SECONDS);//tryLock类似redisson
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				 //mapLock.lock("record1");
 				 System.out.println("locking");
 				 mapLock.unlock("record1");
 				 

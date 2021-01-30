@@ -28,8 +28,11 @@ public interface UserDao {
 	
 	//MySQL
 	@SelectKey(statement="select cast(rand()*100 as SIGNED )", keyProperty="userId", before= true, resultType= int.class)//call identity()
-    @Insert("insert into user(userId,user_Name,password,comment) values(#{userId},#{userName},#{password},#{comment})")//参数是User类,#{}中的类的属性名
-    public int insert(User user123);
+    @Insert("insert into user(userId,user_Name,password,comment,gender,manager,like_color) "+
+	" values(#{userId},#{userName},#{password},#{comment},#{gender},#{manager},#{likeColor})")//参数是User类,#{}中的类的属性名
+	
+	//#{manager,javaType=Boolean,jdbcType=CHAR,typeHandler=mybatis_annotation.typehandler.BooleanTypeHandler} // OK
+	public int insert(User user123);
     
     
     @Update("update user set user_Name=#{userName},password=#{password},comment=#{comment} where user_Name=#{userName}")

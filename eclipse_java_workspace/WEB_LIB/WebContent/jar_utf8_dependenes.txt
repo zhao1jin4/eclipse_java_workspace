@@ -107,9 +107,9 @@ spring-data-redis-2.0.7.RELEASE.jar
 		spring-data-commons-2.1.1.RELEASE.jar
 
 -------Spring MVC JSON
-	jackson-annotations-2.9.6.jar   fastxml的
-	jackson-core-2.9.6.jar
-	jackson-databind-2.9.6.jar
+	jackson-annotations-2.11.3.jar   fastxml的 (老版本有安全问题)
+	jackson-core-2.11.3.jar
+	jackson-databind-2.11.3.jar
 		classmate-1.3.0.jar
 		
 ------spring-statemachine-core-2.2.0.RELEASE.jar
@@ -353,7 +353,7 @@ zxing_javase-3.0.0-SNAPSHOT.jar
 xstream-1.4.7.jar
 	xmlpull-1.1.3.1.jar
  
----apache dubbo-2.7.x  不能和2.6一起用，在not-offen里
+---apache dubbo-2.7.x (老版本有安全问题)  不能和2.6一起用，在not-offen里
 如使用spring.xml 不能使用 dubbo-2.7.4.1.jar (xml名称空间为alibabatech)
  dubbo-config-api-2.7.4.1.jar
 	dubbo-common-2.7.4.1.jar
@@ -391,9 +391,12 @@ lettuce-core-5.0.4.RELEASE.jar
 	reactor-core-3.1.7.RELEASE.jar
 	reactive-streams-1.0.2.jar
 	
-redisson-3.9.1.jar  (实现javax.cache)
-	jackson-dataformat-yaml-2.9.5.jar  依赖 fasterxml的jackson 
+redisson-3.14.1.jar  (实现javax.cache)
+	jackson-dataformat-yaml-2.11.3.jar  依赖 fasterxml的jackson 
 	netty-all-4.1.27.Final.jar   
+	jboss-marshalling-2.0.10.Final.jar
+	jboss-marshalling-river-2.0.10.Final.jar
+	
 --
 ehcache-3.6.1.jar (org.ehcache支持分布式  实现javax.cache )
 caffeine-2.6.2.jar (加 jcache-2.6.2.jar(无) 就实现javax.cache )
@@ -450,9 +453,7 @@ bcprov-ext-1.4.9.jar --java security provider
 	
 libthrift-0.11.0.jar
 
-avro-1.8.2.jar
-	jackson-core-asl-1.9.13.jar
-	jackson-mapper-asl-1.9.13.jar
+avro-1.8.2.jar 
 avro-ipc-1.8.2.jar
 
 
@@ -604,9 +605,16 @@ javax.inject-1.jar
 hazelcast-spring-4.0.1.jar
 liquibase-core-4.0.0.jar
 
+
+gson-2.8.6.jar
+
+
 --large file
 aocr.jar 		62.5M asprise-ocr-java-5.01    验证码识别
 hazelcast   	这个服务端 jar包大小10MB
+
+
+
 
 
 

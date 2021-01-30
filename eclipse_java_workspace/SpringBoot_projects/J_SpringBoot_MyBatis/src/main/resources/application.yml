@@ -1,5 +1,13 @@
 logging:
   level:
-    org: info
-    
-    
+    java:
+      sql: DEBUG
+#        Connection: DEBUG  #不起作用
+#        PreparedStatement: DEBUG #不起作用
+    org:
+      apache:
+        ibatis: DEBUG  #不起作用
+#mybatis:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #会显示查询的结果 
+

@@ -1,13 +1,14 @@
 package mybatis_spring;
 
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
+
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 /**
  * 为数据库连接配置信息加密处理
  */
-public class MyPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
+public class MyPropertyPlaceholderConfigurer extends PropertySourcesPlaceholderConfigurer {
 	private String[] encryptPropNames = { "usernameEnc", "passwordEnc" };
-	@Override
+	 
 	protected String convertProperty(String propertyName, String propertyValue) {
 		if (isEncryptProp(propertyName)) 
 		{ 

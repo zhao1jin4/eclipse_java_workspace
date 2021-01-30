@@ -2,7 +2,9 @@ package freemarker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication 
 //@Import(Application.class)//没发现有什么用 
 public class FreeMarkerSpringBoot { 
-	
-	
+	 
 	//测试成功 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(FreeMarkerSpringBoot.class, args);
