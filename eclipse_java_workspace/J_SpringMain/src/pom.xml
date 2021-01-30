@@ -19,7 +19,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<spring.version>4.3.7.RELEASE</spring.version>
-		<spring-batch.version>3.0.6.RELEASE</spring-batch.version>
+		<spring-batch.version>4.0.0.RELEASE</spring-batch.version>
 		<spring-retry.version>1.1.2.RELEASE</spring-retry.version>
 		<c3p0.version>0.9.1.2</c3p0.version>
 		<commons-io.version>2.4</commons-io.version>
