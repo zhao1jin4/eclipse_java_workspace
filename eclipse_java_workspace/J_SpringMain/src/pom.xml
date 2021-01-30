@@ -28,7 +28,7 @@
 		<junit.version>4.12</junit.version>
 		<slf4j.version>1.7.12</slf4j.version>
 		<commons-net.version>3.3</commons-net.version>
-		<quartz.version>2.2.1</quartz.version>
+		<quartz.version>2.3.2</quartz.version>
 		<mybatis.version>3.1.1</mybatis.version>
 		<mybatis-spring>1.1.1</mybatis-spring>
         <com.caucho.version>4.0.38</com.caucho.version>
